@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Conversion from NUPACK 3 - NUPACK Documentation</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">NUPACK Documentation</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../installation/">Installation</a>
+</li>
+                                    
+<li >
+    <a href="../basics/">Conventions</a>
+</li>
+                                    
+<li >
+    <a href="../model/">Model</a>
+</li>
+                                    
+<li >
+    <a href="../analysis/">Analysis</a>
+</li>
+                                    
+<li >
+    <a href="../design/">Design</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../analysis/Analysis/">Analysis</a>
+</li>
+                                    
+<li >
+    <a href="../design/">Design</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Conversion from NUPACK 3</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Python API <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../api/model/">Model</a>
+</li>
+                                    
+<li >
+    <a href="../api/analysis/">Analysis</a>
+</li>
+                                    
+<li >
+    <a href="../api/design/">Design</a>
+</li>
+                                    
+<li >
+    <a href="../api/concentration/">Concentrations</a>
+</li>
+                                    
+<li >
+    <a href="../api/drawing/">Drawing</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../design/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../api/model/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#secondary-structure-model-specification">Secondary structure model specification</a></li>
+        <li class="main "><a href="#example-2-partition-function-for-a-complex">Example 2: Partition function for a complex.</a></li>
+            <li><a href="#input-file-contents">Input file contents:</a></li>
+            <li><a href="#command">Command:</a></li>
+        <li class="main "><a href="#example-3-test-tube-analysis">Example 3: Test tube analysis.</a></li>
+            <li><a href="#input-file-contents_1">Input file contents:</a></li>
+            <li><a href="#list-file-contents">List file contents:</a></li>
+            <li><a href="#strand-concentrations-file-contents">Strand concentrations file contents:</a></li>
+            <li><a href="#commands">Commands:</a></li>
+        <li class="main "><a href="#example-4">Example 4:</a></li>
+        <li class="main "><a href="#input-file-contents_2">Input file contents:</a></li>
+        <li class="main "><a href="#prevent-file-contents">Prevent file contents:</a></li>
+        <li class="main "><a href="#seed-file-contents">Seed file contents:</a></li>
+        <li class="main "><a href="#command_1">Command:</a></li>
+        <li class="main "><a href="#example-5-test-tube-design">Example 5: Test tube design.</a></li>
+            <li><a href="#script-file-contents">Script file contents:</a></li>
+            <li><a href="#command_2">Command:</a></li>
+        <li class="main "><a href="#example-6-test-tube-ensemble-defect">Example 6: Test tube ensemble defect.</a></li>
+            <li><a href="#script-file-contents_1">Script file contents:</a></li>
+            <li><a href="#command_3">Command:</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<pre><code class="python">import nupack
+import math
+import matplotlib.pyplot as plt
+</code></pre>
+
+<h1 id="secondary-structure-model-specification">Secondary structure model specification<a class="headerlink" href="#secondary-structure-model-specification" title="Permanent link">&para;</a></h1>
+<p>Specify a free energy model including:
+- <code>parameters</code>: the parameter set description to use. If &lsquo;RNA&rsquo; or &lsquo;DNA&rsquo; are specified, the default parameter sets for those materials will be used. A full parameter file may be specified, for example, by <code>parameters=nupack.ParameterFile(material='RNA', dG='rna1995.dG', dH='rna1995.dH')</code>
+- <code>T</code>: the temperature, in Kelvin (default=<code>310.15</code>)
+- <code>mg</code>: the magnesium ion concentration <span><span class="MathJax_Preview"><code>\textrm{Mg}^{2+}</code></span><script type="math/tex"><code>\textrm{Mg}^{2+}</code></script></span>, in moles per liter (default=<code>0.0</code>)
+- <code>na</code>: the sodium ion concentration <span><span class="MathJax_Preview">\textrm{Na}^{+}</span><script type="math/tex">\textrm{Na}^{+}</script></span>, in moles per liter (default=<code>1.0</code>)
+- <code>gt</code>: whether wobble pairs (G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U or G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T) are allowed (default=<code>True</code>)
+- <code>dangles</code>: the recursions to use, from <code>['none', 'min', 'all', 'coax']</code> (default=<code>'min'</code>). Using <code>'none'</code>, no dangle or stacking energies will be incorporated. Using <code>'min'</code>, a dangle energy is incorporated for each unpaired base flanking a duplex (a base flanking two duplexes contributes only the minimum of the two possible dangle energies). Using <code>'all'</code>, a dangle energy is incorporated for each base flanking a duplex regardless of whether it is paired. Using <code>'coax'</code>, every possible coaxial stacking and dangle state is incorporated into the recursions.</p>
+<pre><code class="python">model = nupack.Model(parameters='DNA', T=(23+273.15), mg=0, na=0.1, gt=True, dangles='min')
+</code></pre>
+
+<h1 id="example-2-partition-function-for-a-complex">Example 2: Partition function for a complex.<a class="headerlink" href="#example-2-partition-function-for-a-complex" title="Permanent link">&para;</a></h1>
+<p>Calculate the partition function for a complex of four DNA strands at 23 ◦C, two of which are indistinguishable.</p>
+<h2 id="input-file-contents">Input file contents:<a class="headerlink" href="#input-file-contents" title="Permanent link">&para;</a></h2>
+<pre><code>3
+AGTCTAGGATTCGGCGTGGGTTAA 
+TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG
+AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG
+1223
+</code></pre>
+
+<h2 id="command">Command:<a class="headerlink" href="#command" title="Permanent link">&para;</a></h2>
+<pre><code class="bash">pfunc -T 23 -multi -material dna $NUPACKHOME/doc/examples/complex-analysis/advanced/input/hcr
+</code></pre>
+
+<pre><code class="python">analysis = nupack.Analysis(model=model)
+
+strands = (
+    'AGTCTAGGATTCGGCGTGGGTTAA',
+    'TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG',
+    'TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG',
+    'AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG'
+)
+
+analysis.partition_function(strands)
+complex_result = analysis.compute()[strands]
+
+print('Free energy = %.2f kcal/mol' % complex_result.free_energy)
+print('Partition function = %.3e' % math.exp(complex_result.log_partition_function))
+</code></pre>
+
+<pre><code>Free energy = -104.47 kcal/mol
+Partition function = 1.254e+77
+</code></pre>
+<h1 id="example-3-test-tube-analysis">Example 3: Test tube analysis.<a class="headerlink" href="#example-3-test-tube-analysis" title="Permanent link">&para;</a></h1>
+<p>Calculate the partition function, equilibrium pair probabilities, MFE structure(s), and equilibrium concentration for each complex in a test tube containing three DNA strand species that interact to form all complex species of up to four strands, plus additional larger complexes specified in a .list file.</p>
+<h2 id="input-file-contents_1">Input file contents:<a class="headerlink" href="#input-file-contents_1" title="Permanent link">&para;</a></h2>
+<pre><code>3
+AGTCTAGGATTCGGCGTGGGTTAA
+TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG
+AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG
+4
+</code></pre>
+
+<h2 id="list-file-contents">List file contents:<a class="headerlink" href="#list-file-contents" title="Permanent link">&para;</a></h2>
+<pre><code>1 2 2 3 3
+1 2 3 2 3
+2 3 2 3 2
+1 2 2 2 3 3
+</code></pre>
+
+<h2 id="strand-concentrations-file-contents">Strand concentrations file contents:<a class="headerlink" href="#strand-concentrations-file-contents" title="Permanent link">&para;</a></h2>
+<pre><code>1e-6
+1.1e-6
+0.9e-6
+</code></pre>
+
+<h2 id="commands">Commands:<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<pre><code class="bash">complexes -T 23 -material dna -pairs -mfe -degenerate $NUPACKHOME/doc/examples/tube-analysis/advanced/input/hcr
+concentrations -pairs $NUPACKHOME/doc/examples/tube-analysis/advanced/input/hcr
+</code></pre>
+
+<pre><code class="python">analysis = nupack.Analysis(model=model)
+
+strands = (
+    &quot;AGTCTAGGATTCGGCGTGGGTTAA&quot;,
+    &quot;TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG&quot;,
+    &quot;AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG&quot;,
+)
+
+analysis.pair_probability(strands, max_size=4)
+analysis.min_free_energy(strands, max_size=4)
+
+larger_complex_specs = [
+    [1, 2, 2, 3, 3],
+    [1, 2, 3, 2, 3],
+    [2, 3, 2, 3, 2],
+    [1, 2, 2, 2, 3, 3],
+]
+
+additional_complexes = [[strands[i-1] for i in x] for x in larger_complex_specs]
+
+for cx in additional_complexes:
+    analysis.pair_probability(cx)
+    analysis.min_free_energy(cx)
+
+complex_results = analysis.compute()
+
+tube_solver = nupack.ConcentrationSolver(strands, complex_results)
+
+strand_concentrations = [1e-6, 1.1e-6, 0.9e-6]
+
+complex_concentrations = tube_solver.compute(strand_concentrations).complex_concentrations()
+
+# tube = Tube(strands=strands, max_size=4, additional_complexes=additional_complexes)
+# shows the sequences of the complexes in the tube
+for cx, result in complex_concentrations.items():
+    complex_result = complex_results[cx]
+    print('Complex =', '+'.join(cx))
+    print('    Strand indices =', [strands.index(strand) for strand in cx])
+    print('    Concentration = %.3e M' % result)
+    print('    Complex free energy = %.3f kcal/mol' % complex_result.free_energy)
+    print('    MFE = %.3f kcal/mol' % complex_result.min_free_energy)
+    print('    MFE structure = %s' % complex_result.suboptimal_structure[0][0])
+    plt.matshow(complex_result.pair_probability, cmap='viridis')
+    plt.colorbar()
+    plt.grid(False)
+    plt.show()    
+</code></pre>
+
+<pre><code>Complex = AGTCTAGGATTCGGCGTGGGTTAA+AGTCTAGGATTCGGCGTGGGTTAA+AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG
+    Strand indices = [0, 0, 2]
+    Concentration = 3.380e-13 M
+    Complex free energy = -38.941 kcal/mol
+    MFE = -38.026 kcal/mol
+
+
+
+---------------------------------------------------------------------------
+
+AttributeError                            Traceback (most recent call last)
+
+&lt;ipython-input-4-d0d1f458d482&gt; in &lt;module&gt;
+     40     print('    Complex free energy = %.3f kcal/mol' % complex_result.free_energy)
+     41     print('    MFE = %.3f kcal/mol' % complex_result.min_free_energy)
+---&gt; 42     print('    MFE structure = %s' % complex_result.suboptimal_structure[0][0])
+     43     plt.matshow(complex_result.pair_probability, cmap='viridis')
+     44     plt.colorbar()
+
+
+AttributeError: 'ComplexResult' object has no attribute 'suboptimal_structure'
+</code></pre>
+<h1 id="example-4">Example 4:<a class="headerlink" href="#example-4" title="Permanent link">&para;</a></h1>
+<p>Design a sequence for a complex of three DNA strands intended to adopt a target secondary structure at 23 ◦C. The first 24 nucleotides are constrained to nucleotide H (corresponding to a 3-letter alphabet) and the specified list of patterns are prevented throughout. A seed is set to make the design repeatable.</p>
+<h1 id="input-file-contents_2">Input file contents:<a class="headerlink" href="#input-file-contents_2" title="Permanent link">&para;</a></h1>
+<pre><code>((((((((((((((((((((((((+((((((((((((((((((((((((.......................
+.+))))))))))))))))))))))))))))))))))))))))))))))))
+HHHHHHHHHHHHHHHHHHHHHHHH
+</code></pre>
+
+<h1 id="prevent-file-contents">Prevent file contents:<a class="headerlink" href="#prevent-file-contents" title="Permanent link">&para;</a></h1>
+<pre><code>AAAA
+CCCC
+GGGG
+UUUU
+KKKKKK
+MMMMMM
+RRRRRR
+SSSSSS
+WWWWWW
+YYYYYY
+</code></pre>
+
+<h1 id="seed-file-contents">Seed file contents:<a class="headerlink" href="#seed-file-contents" title="Permanent link">&para;</a></h1>
+<pre><code>93
+</code></pre>
+
+<h1 id="command_1">Command:<a class="headerlink" href="#command_1" title="Permanent link">&para;</a></h1>
+<pre><code class="bash">complexdesign -T 23 -material dna -pairs -loadseed -prevent $NUPACKHOME/doc/examples/complex-design/advanced/input/hcr-design.prevent $NUPACKHOME/doc/examples/complex-design/advanced/input/hcr-design
+</code></pre>
+
+<pre><code class="python">structure = &quot;((((((((((((((((((((((((+((((((((((((((((((((((((........................+))))))))))))))))))))))))))))))))))))))))))))))))&quot;
+design = nupack.design.complex_design(structure)
+
+design.model = nupack.design.ModelSettings(material=&quot;DNA&quot;, temperature=(23+273.15))
+design.parameters.seed = 93
+
+design.domains[0].allowed_bases = &quot;HHHHHHHHHHHHHHHHHHHHHHHH&quot;
+
+patterns = [&quot;AAAA&quot;, &quot;CCCC&quot;, &quot;GGGG&quot;, &quot;UUUU&quot;, &quot;KKKKKK&quot;, &quot;MMMMMM&quot;, &quot;RRRRRR&quot;, &quot;SSSSSS&quot;, &quot;WWWWWW&quot;, &quot;YYYYYY&quot;]
+design.add_pattern_constraints(patterns)
+
+print(design)
+print(&quot;\n&quot;)
+print(design())
+</code></pre>
+
+<h1 id="example-5-test-tube-design">Example 5: Test tube design.<a class="headerlink" href="#example-5-test-tube-design" title="Permanent link">&para;</a></h1>
+<p>Design a sequence for a target test tube at default temperature 37 ◦C. The target test tube contains 1 on-target dimer (with a target structure and target concentration) and all off-target complexes of up to 2 strands (each with vanishing target concentration).</p>
+<h2 id="script-file-contents">Script file contents:<a class="headerlink" href="#script-file-contents" title="Permanent link">&para;</a></h2>
+<pre><code class="python"># set properties
+material = dna
+seed = 93 # set seed to make design repeatable
+# define target structure for 1 on-target complex
+structure legs = ((((((((((((((((((((.......................+.......................))))))))))))))))))))
+# define target test tube containing 1 on-target complex
+tube walker = legs
+# define target concentration for 1 on-target complex (molar)
+# default: 1.0e-6
+walker.legs.conc = 1.0e-6
+# augment tube with all off-target complexes of up to 2 strands
+# default: 0
+walker.maxsize = 2
+</code></pre>
+
+<h2 id="command_2">Command:<a class="headerlink" href="#command_2" title="Permanent link">&para;</a></h2>
+<pre><code class="bash">tubedesign $NUPACKHOME/doc/examples/tube-design/simple/input/walker-design
+</code></pre>
+
+<pre><code class="python">design = nupack.design.Design()
+design.model = nupack.design.ModelSettings(material='DNA')
+
+structure = '((((((((((((((((((((.......................+.......................))))))))))))))))))))'
+lengths = [len(s) for s in structure.split('+')]
+
+design.add_domain('left', 'N'*lengths[0])
+design.add_domain('right', 'N'*lengths[1])
+
+design.add_strand('sleft', ['left'])
+design.add_strand('sright', ['right'])
+
+design.add_complex(&quot;legs&quot;, ['sleft', 'sright'], structure=structure)
+
+design.add_tube(&quot;walker&quot;, {&quot;legs&quot;: 1e-6})
+design.add_off_targets(&quot;walker&quot;, maxsize=2)
+
+design.parameters.seed = 93
+
+print(design)
+print(&quot;\n&quot;)
+print(design())
+</code></pre>
+
+<h1 id="example-6-test-tube-ensemble-defect">Example 6: Test tube ensemble defect.<a class="headerlink" href="#example-6-test-tube-ensemble-defect" title="Permanent link">&para;</a></h1>
+<p>Calculate the test tube ensemble defect for a specified set of sequences and target test tube at default temperature 37 ◦C. The target test tube contains 1 on-target dimer (with a target structure and target concentration) and all off-target complexes of up to 2 strands (each with vanishing target concentration).</p>
+<h2 id="script-file-contents_1">Script file contents:<a class="headerlink" href="#script-file-contents_1" title="Permanent link">&para;</a></h2>
+<pre><code class="python"># set properties
+material = dna
+# define 2 sequence domains
+domain a = CGTGAACATCGGCGTGGTCGACCAACCCCACACAAAAAACCTA
+domain b = TTCCCTCTATATTTCTACACTCCCGACCACGCCGATGTTCACG
+# define 2 strands
+strand leg1 = a
+strand leg2 = b
+# define target structure for 1 on-target complex
+structure legs = ((((((((((((((((((((.......................+.......................))))))))))))))))))))
+# define strand ordering for 1 on-target complex
+legs.seq = leg1 leg2
+# define target test tube containing 1 on-target complex
+tube walker = legs
+# define target concentration for 1 on-target complex (molar)
+# default:  1.0e-6
+walker.legs.conc = 1.0e-6
+# augment tube with all off-target complexes of up to 2 strands
+# default:  0
+walker.maxsize = 2
+</code></pre>
+
+<h2 id="command_3">Command:<a class="headerlink" href="#command_3" title="Permanent link">&para;</a></h2>
+<pre><code class="bash">tubedefect $NUPACKHOME/doc/examples/tube-design/simple/input/walker-defect
+</code></pre>
+
+<pre><code class="python">design = nupack.design.Design()
+design.model = nupack.design.ModelSettings(material='DNA')
+
+design.add_domain('a', 'CGTGAACATCGGCGTGGTCGACCAACCCCACACAAAAAACCTA')
+design.add_domain('b', 'TTCCCTCTATATTTCTACACTCCCGACCACGCCGATGTTCACG')
+
+design.add_strand('leg1', ['a'])
+design.add_strand('leg2', ['b'])
+structure = '((((((((((((((((((((.......................+.......................))))))))))))))))))))'
+
+design.add_complex('legs', ['leg1', 'leg2'], structure=structure)
+design.add_tube('walker', {'legs': 1e-6})
+design.add_off_targets('walker', maxsize=2)
+
+print(design.evaluate())
+</code></pre>
+
+<pre><code class="python">
+</code></pre>
+
+<div class="references"></div></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
