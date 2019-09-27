@@ -8,5 +8,3 @@ git add 22442bb9aba38be019268cfdd1e26d30ab22d9a2
 git commit -m "Update upstream branch"
 # git branch -D gh-pages
 # git push origin --delete gh-pages
-git pull
-git push
