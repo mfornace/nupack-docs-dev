@@ -167,16 +167,22 @@
 <li>notebook</li>
 </ul>
 <h2 id="installing-nupack-via-the-anaconda-python-package">Installing NUPACK via the Anaconda Python package<a class="headerlink" href="#installing-nupack-via-the-anaconda-python-package" title="Permanent link">&para;</a></h2>
-<p>The easiest way to install NUPACK is to install <a href="https://www.anaconda.com/distribution/">Anaconda</a>, which comes with many Python packages preinstalled. Alternatively, you can install <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> for a smaller installation size. Make sure the distribution you use contains Python 3.6 or newer. You can verify your installation by running the terminal command:</p>
+<p>The easiest way to install NUPACK is to install <a href="https://www.anaconda.com/distribution/">Anaconda</a>, which comes with many Python packages preinstalled. Alternatively, you can install <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> for a smaller installation size. Make sure the distribution you use contains Python 3.6 or newer.</p>
+<p>Next, open a new window in your terminal. It is often helpful to update your installation of Anaconda by running the following terminal commands:</p>
+<pre><code class="bash">conda update conda
+conda update --all
+</code></pre>
+
+<p>You can verify your installation by running the terminal command:</p>
 <pre><code class="bash">conda info
 </code></pre>
 
 <p>The output of this command should show your Python version and other information. (If this command cannot be run, troubleshoot your Anaconda installation. You may not have your <code>$PATH</code> environmental variable set correctly.)</p>
-<p>The following instructions will assume you are installing NUPACK 4.0.0; replace any instances of <code>4.0.0</code> with your downloaded version number if it differs. After installing your preferred distribution, download the NUPACK package <code>nupack-4.0.0</code> into your Downloads folder. If you have a <code>tar.bz2</code> file, decompress it. Then open Terminal and run the following command:</p>
+<p>The following instructions will assume you are installing NUPACK 4.0.0; replace any instances of <code>4.0.0</code> with your downloaded version number if it differs. After installing your preferred distribution, download the NUPACK package <code>nupack-4.0.0</code> into your Downloads folder. If you have a <code>tar.gz</code> file, decompress it. Then open Terminal and run the following command:</p>
 <pre><code class="bash">conda install -c conda-forge -c ~/Downloads/nupack-4.0.0 nupack
 </code></pre>
 
-<p>You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, run the following:</p>
+<p>This step should usually complete in 1 minute or less; it should always take less than 5 minutes. You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, run the following:</p>
 <pre><code class="bash">conda install pytest
 pytest -v --pyargs nupack
 </code></pre>
