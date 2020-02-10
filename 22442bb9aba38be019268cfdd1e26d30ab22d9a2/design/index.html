@@ -88,7 +88,7 @@
 </li>
                                     
 <li >
-    <a href="../ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
+    <a href="../ConversionFromNUPACK3/ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
 </li>
                                 </ul>
                             </li>
@@ -131,7 +131,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../ConversionFromNUPACK3/">
+                                <a rel="prev" href="../ConversionFromNUPACK3/ConversionFromNUPACK3/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -160,13 +160,16 @@
         <li class="main "><a href="#examples">Examples</a></li>
             <li><a href="#design-evaluation-example-example-7-from-nupack-32-user-guide">Design Evaluation Example (Example 7 from NUPACK 3.2 User Guide)</a></li>
             <li><a href="#design-evaluation-example-example-8-from-nupack-32-user-guide">Design Evaluation Example (Example 8 from NUPACK 3.2 User Guide)</a></li>
+        <li class="main "><a href="#saving-and-restarting-a-design">Saving and restarting a Design</a></li>
+            <li><a href="#saving-the-final-design-outputs-in-a-text-file">Saving the final design outputs in a text file</a></li>
+            <li><a href="#running-from-a-checkpoint-file">Running from a checkpoint file</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="preliminaries">Preliminaries<a class="headerlink" href="#preliminaries" title="Permanent link">&para;</a></h1>
 <p>This notebook will show how to create, define, and run a <code>Design</code> object to perform sequence design of nucleic acids.</p>
-<p>Following a generic introduction, example designs will</p>
+<p>Following a generic introduction, example designs will </p>
 <h2 id="importing-the-necessary-classes">Importing the necessary classes<a class="headerlink" href="#importing-the-necessary-classes" title="Permanent link">&para;</a></h2>
 <p>The <code>Design</code> class must be imported to build up a design:</p>
 <pre><code class="python">from nupack import Design
@@ -184,24 +187,24 @@
 <p>The following instruction will assume that a design object called <code>design</code> has already been created.</p>
 <h1 id="specifying-a-design">Specifying a design<a class="headerlink" href="#specifying-a-design" title="Permanent link">&para;</a></h1>
 <h2 id="physical-parameters">Physical parameters<a class="headerlink" href="#physical-parameters" title="Permanent link">&para;</a></h2>
-<p>A <code>Design</code> object has a property called model that can be overwritten with a new <code>ModelSettings</code> object to change the material, dangles/coaxial stacking model, temperature, and sodium and magnesium concentrations.</p>
+<p>A <code>Design</code> object has a property called model that can be overwritten with a new <code>ModelSettings</code> object to change the material, dangles/coaxial stacking model, temperature, and sodium and magnesium concentrations. </p>
 <p><code>temperature</code> is specified in Kelvin (K), and ion concentrations are specified in Molar (M).</p>
-<p>Options for <code>dangles</code> are:
-* &ldquo;none&rdquo; (the default): No dangle interactions are considered.
+<p>Options for <code>ensemble</code> are:
+* &ldquo;nostacking&rdquo;: No dangle and coaxial stacking states in the expanded energy model are considered.
+* &ldquo;stacking&rdquo; (the default): All dangle and coaxial stacking states in the expanded energy model are considered.
+* &ldquo;none&rdquo;: No dangle interactions are considered.
 * &ldquo;min&rdquo;: Unpaired nucleotides adjacent to base pairs always dangle stack. In cases were an unpaired nucleotide can dangle on either of two adjacent base pairs, the lower energy contribution is added
-* &ldquo;all&rdquo;: Unpaired nucleotides adjacent to base pairs always dangle stack. In cases were an unpaired nucleotide can dangle on either of two adjacent base pairs, the sum of the two contributions is added.
-* &ldquo;coax&rdquo;: All dangle and coaxial stacking states in the expanded energy model are considered.</p>
-<pre><code class="python">design.model = ModelSettings(material='RNA', temperature=310.15, sodium=1.0, magnesium=0.0, dangles='min')
+* &ldquo;all&rdquo;: Unpaired nucleotides adjacent to base pairs always dangle stack. In cases were an unpaired nucleotide can dangle on either of two adjacent base pairs, the sum of the two contributions is added.</p>
+<pre><code class="python">design.model = ModelSettings(material='RNA', temperature=310.15, sodium=1.0, magnesium=0.0, ensemble='stacking')
 </code></pre>
 
-<p>Additionally, custom parameter files can be specified as arguments to the <code>ModelSettings</code> constructor. For instance, to use use the rna1999.dG parameter set, the following line would suffice:</p>
-<pre><code class="python">design.model = ModelSettings(material='RNA', dG_file='rna1999.dg')
+<p>Additionally, custom parameter files can be specified as arguments to the <code>ModelSettings</code> constructor. For instance, to use use the RNA 2006 parameter set, the following line would suffice:</p>
+<pre><code class="python">design.model = ModelSettings(material='rna06')
 </code></pre>
 
 <h2 id="specifying-a-domain">Specifying a domain<a class="headerlink" href="#specifying-a-domain" title="Permanent link">&para;</a></h2>
 <p>A domain is a set of consecutive nucleotides that appear as a subsequence of one or more strands in the design. Each domain is given a string name to allow reference to it when specifying strands. The method <code>add_domain</code> is used to define the domain in the design in terms of a string of <a href="https://www.bioinformatics.org/sms/iupac.html">degenerate nucleotides codes</a>. These strings are just Python strings, and as such can be constructed using string multiplication and concatenation, as shown in the following examples.</p>
-<pre><code class="python">
-design.add_domain('a', 'AAAA')
+<pre><code class="python">design.add_domain('a', 'AAAA')
 design.add_domain('b', 'A'*4) # equivalent sequence specification
 
 design.add_domain('c', 'NNNNNNNNNN')
@@ -245,9 +248,9 @@ design.add_complex('C5', ('B', 'C'), '.10(10+)10.10')
 <p>A test tube ensemble is defined in two steps. First, the <code>add_tube</code> method is used to add a new tube to the design with a given name and a dictionary mapping the names of on-target complexes (<span><span class="MathJax_Preview">\Psi^\text{on}</span><script type="math/tex">\Psi^\text{on}</script></span>) in the tube to their concentrations. Concentrations are always in units of Molar (M). Second, the method <code>add_off_targets</code> specifies the set of off-target complexes (<span><span class="MathJax_Preview">\Psi^\text{off}</span><script type="math/tex">\Psi^\text{off}</script></span>) in the tube through three keywords, which can be combined arbitrarily:</p>
 <ul>
 <li><code>maxsize</code>, integer in <span><span class="MathJax_Preview">[0,\infty]</span><script type="math/tex">[0,\infty]</script></span>, default=0: Adds all complexes of up to <code>maxsize</code> composed of the strands of complexes in <span><span class="MathJax_Preview">\Psi^\text{on}</span><script type="math/tex">\Psi^\text{on}</script></span> to <span><span class="MathJax_Preview">\Psi^\text{off}</span><script type="math/tex">\Psi^\text{off}</script></span> such that <span><span class="MathJax_Preview">\Psi^\text{off} \cap \Psi^\text{on} = \varnothing</span><script type="math/tex">\Psi^\text{off} \cap \Psi^\text{on} = \varnothing</script></span>.</li>
-<li><code>explicit</code>, list of strings or iterables of strings, default=<code>None</code>: Each item in <code>explicit</code> is either a name of a complex, name of single strand, or iterable of names of strands.
+<li><code>explicit</code>, list of strings or iterables of strings, default=<code>None</code>: Each item in <code>explicit</code> is either a name of a complex, name of single strand, or iterable of names of strands. 
 The implied complexes are added to <span><span class="MathJax_Preview">\Psi^\text{off}</span><script type="math/tex">\Psi^\text{off}</script></span>, provided they are not already in <span><span class="MathJax_Preview">\Psi^\text{on}</span><script type="math/tex">\Psi^\text{on}</script></span>.</li>
-<li><code>exclude</code>, list of strings or iterables of strings, default=<code>None</code>: Each item in <code>exclude</code> is either a name of a complex, name of single strand, or iterable of names of strands.
+<li><code>exclude</code>, list of strings or iterables of strings, default=<code>None</code>: Each item in <code>exclude</code> is either a name of a complex, name of single strand, or iterable of names of strands. 
 The implied complexes are prevented from being added to <span><span class="MathJax_Preview">\Psi^\text{off}</span><script type="math/tex">\Psi^\text{off}</script></span> when processing <code>maxsize</code> and <code>explicit</code>.</li>
 </ul>
 <pre><code class="python"># specify tubes by their names and on-target complexes with on-target concentrations
@@ -270,7 +273,7 @@ design.add_off_targets('T3', explicit=['C3', ('A', 'A', 'B', 'B'), 'C', ('D', 'D
 
 # specify off-targets combinatorially:
 # all complexes of up to 2 strands that are not on-targets in tube `T4'
-design.add_off_targets('T4', maxsize=2)
+design.add_off_targets('T4', maxsize=2) 
 
 # specify off-targets as the sum of sets
 design.add_off_targets('T5', maxsize=2, explicit=['C3', ('B', 'B', 'B', 'B')] )
@@ -296,7 +299,7 @@ design.add_match_constraint(['a', 'b'], ['d', 'd', 'e'])
 
 <h3 id="complementarity-constraint">Complementarity constraint<a class="headerlink" href="#complementarity-constraint" title="Permanent link">&para;</a></h3>
 <p>Complementarity constraints are used to constraint the concatenation of one list of domains to be the reverse complement of the concatenation of another list of domains. Therefore, the sum of the lenghts of the domains in each list must be the same.</p>
-<p>Currently only Watson-Crick complementarity constraints are allowed.</p>
+<p>Currently only Watson-Crick complementarity constraints are allowed. </p>
 <p>In addition to explicit domain list based specification of complementarity constraints, nucleotides that are base paired in the target structure of an on-target complex will have a complementarity constraint applied automatically once user specification is finished and the design algorithm begins.</p>
 <pre><code class="python">design.add_complementarity_constraint(['a', 'b'], ['c', 'd', 'e'])
 </code></pre>
@@ -321,10 +324,10 @@ design.add_similarity_constraint('b', 'S'*20, [0.45, 0.55])
 </code></pre>
 
 <h3 id="window-constraint">Window constraint<a class="headerlink" href="#window-constraint" title="Permanent link">&para;</a></h3>
-<p>A window constraint is used to constrain a concatenation of domains to have a sequence that is a substring of a given source sequence.
-It is specified in two steps.
-First, the source is defined by a name and a sequence.
-Then, the constraint itself is specified by giving the list of domains to concatenate and the name of the source sequence.
+<p>A window constraint is used to constrain a concatenation of domains to have a sequence that is a substring of a given source sequence. 
+It is specified in two steps. 
+First, the source is defined by a name and a sequence. 
+Then, the constraint itself is specified by giving the list of domains to concatenate and the name of the source sequence. 
 The constraint can also allow the concatenated domains to have a sequence that is any window from several source sequences by giving a list of their names, instead of just one.</p>
 <pre><code class="python">design = Design()
 
@@ -368,7 +371,7 @@ design.add_domain('b', 'N'*12)
 # define a library of sequences
 design.add_library('toeholds', ['CAGUGG', 'AGCUCG', 'CAGGGC'])
 
-# define a library of codons for each amino acid
+# define a library of codons for each amino acid 
 design.add_library('aaI', ['AUU', 'AUC', 'AUA'])
 design.add_library('aaL', ['CUU', 'CUC', 'CUA', 'CUG', 'UUA', 'UUG'])
 design.add_library('aaV', ['GUU', 'GUC', 'GUA', 'GUG'])
@@ -423,13 +426,13 @@ design.add_pattern_constraints(['AAAA', 'UUUU'], names='B')
 # preventing the same patterns for strand `A' and domain `b'
 design.add_pattern_constraints(['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
 
-# global pattern prevention
-design.add_pattern_constraints(['AAAA', 'CCCC', 'GGGG', 'UUUU',
+# global pattern prevention 
+design.add_pattern_constraints(['AAAA', 'CCCC', 'GGGG', 'UUUU', 
         'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'])
 </code></pre>
 
 <h3 id="diversity-constraint">Diversity constraint<a class="headerlink" href="#diversity-constraint" title="Permanent link">&para;</a></h3>
-<p>New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity.
+<p>New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity. 
 For instance, specifying the constraints that no AAAA, CCCC, GGGG, or UUUU should appear in a strand is equivalent to specifying the constraint that every length 4 window of the strand must have at least 2 nucleotide constraints within. When specified as a diversity constraint, both the intention is more clear and the CSP solver is able to more rapidly make sequence mutations.</p>
 <p>Diversity constraints are specified by two numbers:</p>
 <ul>
@@ -468,7 +471,7 @@ design.add_pattern_objective(patterns=['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], name
 
 # global pattern prevention
 # explicitly specify weight
-design.add_pattern_objective(patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU',
+design.add_pattern_objective(patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU', 
         'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'], weight=0.5)
 </code></pre>
 
@@ -520,7 +523,7 @@ design.add_energy_equalization_objective(['a', 'b'], energy=-17, weight=0.5)
 </code></pre>
 
 <h2 id="specifying-weights">Specifying weights<a class="headerlink" href="#specifying-weights" title="Permanent link">&para;</a></h2>
-<p>The user may wish to alter the relative weighting of defect contributions within the design objective function, <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span>, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval <span><span class="MathJax_Preview">[0,\infty)</span><script type="math/tex">[0,\infty)</script></span>. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the <a href="https://pubs.acs.org/doi/10.1021/jacs.6b12693">multistate design paper</a> for details). With the default value of unity for all weights, <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:</p>
+<p>The user may wish to alter the relative weighting of defect contributions within the design objective function, <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span>, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval <span><span class="MathJax_Preview">[0,\infty)</span><script type="math/tex">[0,\infty)</script></span>. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the <a href="https://pubs.acs.org/doi/10.1021/jacs.6b12693">multistate design paper</a> for details). With the default value of unity for all weights, <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:    </p>
 <pre><code class="python">design = Design()
 
 # domains
@@ -599,7 +602,7 @@ design.parameters.M_reopt = 1
 <li><code>thermo_log</code>: Primarily for debugging/development purposes. After every thermodynamic evaluation, the type of calculation (pair probability, bonused pair probability, partition function), number of nucleotides evaluated, and duration of the calculation are logged.</li>
 </ul>
 <h2 id="running-the-design">Running the design<a class="headerlink" href="#running-the-design" title="Permanent link">&para;</a></h2>
-<p>Running a design is done by using the <code>Design</code> object&rsquo;s function call operator, e.g. <code>design()</code>.</p>
+<p>Running a design is done by using the <code>Design</code> object&rsquo;s function call operator, e.g. <code>design()</code>. </p>
 <pre><code class="python">design = Design()
 
 design.add_domain('a', 'N'*20)
@@ -620,11 +623,10 @@ finished = design()
 print(&quot;design defect:&quot;, finished.results[0].defects[0])
 </code></pre>
 
-<pre><code>design defect: 0.010166388750076293
+<pre><code>design defect: 0.0195444017648697
 </code></pre>
 <h1 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h1>
-<p>The following cell imports functions from packages necessary for bokeh visualization of design progress and design results. The function <code>run_and_display</code> runs the design in a separate thread to allow visualization of design progress in the notebook during design.</p>
-<p>The function <code>notebook_results</code> takes a <code>DesignResult</code> object, saves it to a file (temporary or user specified), and the loads this file into an interactive panel for exploring design defects. You may need to enter the URL of the current notebook when requested.</p>
+<p>The following cell imports functions from packages necessary for bokeh visualization of design progress and design results. The function <code>run_and_display</code> runs the design in a separate thread to allow visualization of design progress in the notebook during design. The function <code>notebook_results</code> takes a <code>DesignResult</code> object, saves it to a file (temporary or user specified), and the loads this file into an interactive panel for exploring design defects.</p>
 <pre><code class="python">from nupack.visualize import run_and_display
 from nupack.residuals import notebook_results
 </code></pre>
@@ -633,7 +635,7 @@ from nupack.residuals import notebook_results
 <pre><code class="python">from nupack import *
 # set physical parameters
 design = Design()
-design.model = ModelSettings(material='RNA', temperature=(37 + 273.15), dG_file='rna1999.dG')
+design.model = ModelSettings(material='rna06', temperature=(37 + 273.15))
 design.parameters.seed = 93 # set seed to make design repeatable
 
 
@@ -732,142 +734,34 @@ design.add_window_constraint(('w', 'x', 'y', 'z'), 'desm')
 design.add_pattern_constraints(['AAAA','CCCC','GGGG','UUUU'])
 
 # Global stop condition
-design.parameters.f_stop = 0.05
-# design.add_global_objective()
-# design.parameters.log = 'blahblahblah.log'
+design.parameters.f_stop = 0.1
 
-running_design = run_and_display(design)
+results = run_and_display(design)
 </code></pre>
 
 <div class="bk-root">
-    <a href="https://bokeh.pydata.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+    <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
     <span id="1001">Loading BokehJS ...</span>
 </div>
 
-<script src="http://localhost:60149/autoload.js?bokeh-autoload-element=1002&bokeh-absolute-url=http://localhost:60149&resources=none" id="1002"></script>
+<pre><code>Input your notebook URL (default: 'localhost:8888'):localhost:8889
+</code></pre>
+<script src="http://localhost:56685/autoload.js?bokeh-autoload-element=1002&bokeh-absolute-url=http://localhost:56685&resources=none" id="1002"></script>
 
-<p>You can check if your interactive design is still running via the <code>running()</code> method.</p>
-<pre><code class="python">print(running_design.running())
+<pre><code class="python">results.running()
 </code></pre>
 
 <pre><code>True
 </code></pre>
-<p>You can retrieve your design result via the <code>result()</code> method, which will wait until the design is finished. When it&rsquo;s design, you can open an interactive result display using <code>notebook_results()</code>.</p>
-<pre><code class="python">result = running_design.result()
-notebook_results(result)
+<pre><code class="python">res = results.result()
+notebook_results(res)
 </code></pre>
 
-<script src="http://localhost:60151/autoload.js?bokeh-autoload-element=1003&bokeh-absolute-url=http://localhost:60151&resources=none" id="1003"></script>
+<pre><code>Input your notebook URL (default: 'localhost:8888'):localhost:8889
+</code></pre>
+<script src="http://localhost:56687/autoload.js?bokeh-autoload-element=1003&bokeh-absolute-url=http://localhost:56687&resources=none" id="1003"></script>
 
-<p>For a full readout of the design result, you can use <code>print</code>&ndash;but it&rsquo;s a lot of text sometimes!</p>
-<pre><code class="python">print(result)
-</code></pre>
-
-<pre><code>DesignResult
-    model: ModelKey {parameters: ParameterFile {material: RNA, dG: rna1999.dG, dH: }, dangle_type: none, conditions: ModelConditions {temperature: 310.15, na_molarity: 1, mg_molarity: 0}}
-    parameters: DesignParameters {rng_seed: 93, f_stop: 0.05, f_passive: 0.01, H_split: 2, N_split: 12, f_split: 0.99, f_stringent: 0.99, dG_clamp: -20, M_bad: 300, M_reseed: 50, M_reopt: 3, f_redecomp: 0.03, f_refocus: 0.03, cache_bytes_of_RAM: 0, min_ppair: 1e-05, slowdown: 0, log: /var/folders/hz/0sysjyq97dj2y0sr07c6gfww0000gn/T/tmpkct78u8_, decomposition_log: , thermo_log: , time_analysis: 1}
-    stats: DesignStats {num_leaf_evaluations: 159, num_reseeds: 1, num_redecompositions: [2, 0, 0, 0], offtargets_added_per_refocus: [1], design_time: 3.58478, analysis_time: 0.0445954, final_Psi: EnsemblePartition {mask: [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], deflate: 0.0005}}
-    objectives: [Objective {variant: MultitubeObjective()}]
-    results: [SingleResult
-            domains: {(a : AGCAGA), (a* : TCTGCT), (b : TGAG), (b* : CTCA), (c : GCAGAAGA), (c* : TCTTCTGC), (s : CTAAC), (s* : GTTAG), (w : TG), (w* : CA), (x : TACGAGGAGGAG), (x* : CTCCTCCTCGTA), (y : ATGA), (y* : TCAT), (z : GAG), (z* : CTC)}
-            strands: {(A_s : TCTTCTGCCTCATCTGCTCTCTCAT), (A_toe_s : TCTTCTGC), (B_s : TACGAGGAGGAGATGAGAGAGCAGATGAG), (C_loop_s : CTAACTCTGCTCTC), (C_s : TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA), (Cout_s : TGTACGAGGAGGAGATGACTAAC), (Xs_s : AGCAGATGAGGCAGAAGA)}
-            complexes: [ComplexResult {name: C, sequence: [TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA], structure: Structure("(18.14)18"), log_partition_function: 50.9934, defect: 0.919755, normalized_defect: 0.0183951},
-                ComplexResult {name: B, sequence: [TACGAGGAGGAGATGAGAGAGCAGATGAG], structure: Structure(".29"), log_partition_function: 0.055459, defect: 0.201872, normalized_defect: 0.00696111},
-                ComplexResult {name: C_loop, sequence: [CTAACTCTGCTCTC], structure: Structure(".14"), log_partition_function: 0.0025602, defect: 0.00516975, normalized_defect: 0.000369268},
-                ComplexResult {name: A_B, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT, TACGAGGAGGAGATGAGAGAGCAGATGAG], structure: Structure(".8(17+.12)17"), log_partition_function: 52.5802, defect: 0.436725, normalized_defect: 0.00808749},
-                ComplexResult {name: X, sequence: [AGCAGATGAGGCAGAAGA], structure: Structure(".18"), log_partition_function: 0.166459, defect: 0.595948, normalized_defect: 0.0331082},
-                ComplexResult {name: X_A, sequence: [AGCAGATGAGGCAGAAGA, TCTTCTGCCTCATCTGCTCTCTCAT], structure: Structure("(18+)18.7"), log_partition_function: 58.3421, defect: 0.242773, normalized_defect: 0.00564589},
-                ComplexResult {name: C_out, sequence: [TGTACGAGGAGGAGATGACTAAC], structure: Structure(".23"), log_partition_function: 0.165015, defect: 0.715439, normalized_defect: 0.031106},
-                ComplexResult {name: B_C, sequence: [TACGAGGAGGAGATGAGAGAGCAGATGAG, TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA], structure: Structure("(25.4+.23)25.2"), log_partition_function: 86.2538, defect: 2.89235, normalized_defect: 0.036612},
-                ComplexResult {name: A_toe, sequence: [TCTTCTGC], structure: Structure(".8"), log_partition_function: 0.00290139, defect: 0.00579437, normalized_defect: 0.000724297},
-                ComplexResult {name: A_s, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT], structure: Structure(""), log_partition_function: 0.0837992, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_s-A_s, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT, TCTTCTGCCTCATCTGCTCTCTCAT], structure: Structure(""), log_partition_function: 4.25241, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_s-C_s, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT, TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA], structure: Structure(""), log_partition_function: 47.0206, defect: 0, normalized_defect: 0},
-                ComplexResult {name: B_s-B_s, sequence: [TACGAGGAGGAGATGAGAGAGCAGATGAG, TACGAGGAGGAGATGAGAGAGCAGATGAG], structure: Structure(""), log_partition_function: 3.91493, defect: 0, normalized_defect: 0},
-                ComplexResult {name: B_s-Xs_s, sequence: [TACGAGGAGGAGATGAGAGAGCAGATGAG, AGCAGATGAGGCAGAAGA], structure: Structure(""), log_partition_function: 5.36327, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_s-C_s, sequence: [TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA, TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA], structure: Structure(""), log_partition_function: 111.829, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_s-Xs_s, sequence: [TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA, AGCAGATGAGGCAGAAGA], structure: Structure(""), log_partition_function: 46.69, defect: 0, normalized_defect: 0},
-                ComplexResult {name: Xs_s-Xs_s, sequence: [AGCAGATGAGGCAGAAGA, AGCAGATGAGGCAGAAGA], structure: Structure(""), log_partition_function: 6.7672, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_s-A_toe_s, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT, TCTTCTGC], structure: Structure(""), log_partition_function: 3.69556, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_s-C_loop_s, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT, CTAACTCTGCTCTC], structure: Structure(""), log_partition_function: 3.74963, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_s-Cout_s, sequence: [TCTTCTGCCTCATCTGCTCTCTCAT, TGTACGAGGAGGAGATGACTAAC], structure: Structure(""), log_partition_function: 28.6057, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_toe_s-A_toe_s, sequence: [TCTTCTGC, TCTTCTGC], structure: Structure(""), log_partition_function: 2.224, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_toe_s-B_s, sequence: [TCTTCTGC, TACGAGGAGGAGATGAGAGAGCAGATGAG], structure: Structure(""), log_partition_function: 15.3278, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_toe_s-C_loop_s, sequence: [TCTTCTGC, CTAACTCTGCTCTC], structure: Structure(""), log_partition_function: 2.93912, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_toe_s-C_s, sequence: [TCTTCTGC, TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA], structure: Structure(""), log_partition_function: 45.7582, defect: 0, normalized_defect: 0},
-                ComplexResult {name: A_toe_s-Cout_s, sequence: [TCTTCTGC, TGTACGAGGAGGAGATGACTAAC], structure: Structure(""), log_partition_function: 13.8292, defect: 0, normalized_defect: 0},
-                ComplexResult {name: B_s-Cout_s, sequence: [TACGAGGAGGAGATGAGAGAGCAGATGAG, TGTACGAGGAGGAGATGACTAAC], structure: Structure(""), log_partition_function: 4.97097, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_loop_s-C_loop_s, sequence: [CTAACTCTGCTCTC, CTAACTCTGCTCTC], structure: Structure(""), log_partition_function: 2.2841, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_loop_s-C_s, sequence: [CTAACTCTGCTCTC, TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA], structure: Structure(""), log_partition_function: 46.2487, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_loop_s-Cout_s, sequence: [CTAACTCTGCTCTC, TGTACGAGGAGGAGATGACTAAC], structure: Structure(""), log_partition_function: 15.9152, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_loop_s-Xs_s, sequence: [CTAACTCTGCTCTC, AGCAGATGAGGCAGAAGA], structure: Structure(""), log_partition_function: 19.7648, defect: 0, normalized_defect: 0},
-                ComplexResult {name: C_s-Cout_s, sequence: [TGTACGAGGAGGAGATGACTAACTCTGCTCTCTCATCTCCTCCTCGTACA, TGTACGAGGAGGAGATGACTAAC], structure: Structure(""), log_partition_function: 69.1092, defect: 0, normalized_defect: 0},
-                ComplexResult {name: Cout_s-Cout_s, sequence: [TGTACGAGGAGGAGATGACTAAC, TGTACGAGGAGGAGATGACTAAC], structure: Structure(""), log_partition_function: 6.42722, defect: 0, normalized_defect: 0},
-                ComplexResult {name: Cout_s-Xs_s, sequence: [TGTACGAGGAGGAGATGACTAAC, AGCAGATGAGGCAGAAGA], structure: Structure(""), log_partition_function: 4.23791, defect: 0, normalized_defect: 0}]
-            tubes: [TubeResult
-                    name: Step_0
-                    nucleotide_concentration: 1.22e-06
-                    defect: 1.97132e-08
-                    normalized_defect: 0.0161584
-                    complexes: [TubeComplex {name: C, concentration: 9.99812e-09, target_concentration: 1e-08, defect: 9.28962e-09, structural_defect: 9.19582e-09, concentration_defect: 9.37999e-11, normalized_defect_contribution: 0.00761444}, TubeComplex {name: X, concentration: 1e-08, target_concentration: 1e-08, defect: 5.95952e-09, structural_defect: 5.95948e-09, concentration_defect: 4.06654e-14, normalized_defect_contribution: 0.00488485}, TubeComplex {name: A_B, concentration: 9.99819e-09, target_concentration: 1e-08, defect: 4.46408e-09, structural_defect: 4.36646e-09, concentration_defect: 9.76213e-11, normalized_defect_contribution: 0.00365908}, TubeComplex {name: A_s, concentration: 1.80782e-12, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: A_s-A_s, concentration: 3.52263e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: A_s-C_s, concentration: 5.67353e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B, concentration: 5.12141e-18, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B_s-B_s, concentration: 2.13494e-35, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B_C, concentration: 1.80781e-12, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B_s-Xs_s, concentration: 1.5878e-25, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: C_s-C_s, concentration: 3.40921e-14, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: C_s-Xs_s, concentration: 2.07593e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: Xs_s-Xs_s, concentration: 1.12958e-15, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}],
-                TubeResult
-                    name: Step_1
-                    nucleotide_concentration: 7.2e-07
-                    defect: 4.44926e-08
-                    normalized_defect: 0.0617953
-                    complexes: [TubeComplex {name: X_A, concentration: 9.44035e-09, target_concentration: 1e-08, defect: 2.63569e-08, structural_defect: 2.29186e-09, concentration_defect: 2.40651e-08, normalized_defect_contribution: 0.0366068}, TubeComplex {name: B, concentration: 9.44035e-09, target_concentration: 1e-08, defect: 1.81357e-08, structural_defect: 1.90574e-09, concentration_defect: 1.62299e-08, normalized_defect_contribution: 0.0251884}, TubeComplex {name: A_s, concentration: 5.48976e-23, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: A_s-A_s, concentration: 3.24836e-45, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: A_B, concentration: 5.59653e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B_s-B_s, concentration: 7.2541e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B_s-Xs_s, concentration: 1.638e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: X, concentration: 5.59653e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: Xs_s-Xs_s, concentration: 3.53799e-18, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}],
-                TubeResult {name: Step_2, nucleotide_concentration: 7.9e-07, defect: 3.02033e-08, normalized_defect: 0.038232, complexes: [TubeComplex {name: B_C, concentration: 9.98318e-09, target_concentration: 1e-08, defect: 3.02033e-08, structural_defect: 2.88749e-08, concentration_defect: 1.32843e-09, normalized_defect_contribution: 0.038232}, TubeComplex {name: B, concentration: 1.68156e-11, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: B_s-B_s, concentration: 2.3016e-22, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: C, concentration: 1.68156e-11, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}, TubeComplex {name: C_s-C_s, concentration: 9.64361e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}]},
-                TubeResult
-                    name: Crosstalk
-                    nucleotide_concentration: 1.96e-06
-                    defect: 5.3999e-08
-                    normalized_defect: 0.0275505
-                    complexes: [TubeComplex {name: A_B, concentration: 1e-08, target_concentration: 1e-08, defect: 4.36725e-09, structural_defect: 4.36725e-09, concentration_defect: 0, normalized_defect_contribution: 0.00222819},
-                        TubeComplex {name: C, concentration: 9.88921e-09, target_concentration: 1e-08, defect: 1.4635e-08, structural_defect: 9.09565e-09, concentration_defect: 5.53939e-09, normalized_defect_contribution: 0.00746686},
-                        TubeComplex {name: X, concentration: 9.47351e-09, target_concentration: 1e-08, defect: 1.51225e-08, structural_defect: 5.64572e-09, concentration_defect: 9.47674e-09, normalized_defect_contribution: 0.00771554},
-                        TubeComplex {name: B, concentration: 9.99225e-09, target_concentration: 1e-08, defect: 2.2419e-09, structural_defect: 2.01716e-09, concentration_defect: 2.24746e-10, normalized_defect_contribution: 0.00114383},
-                        TubeComplex {name: C_out, concentration: 9.87604e-09, target_concentration: 1e-08, defect: 9.91672e-09, structural_defect: 7.06571e-09, concentration_defect: 2.85102e-09, normalized_defect_contribution: 0.00505955},
-                        TubeComplex {name: C_loop, concentration: 9.46182e-09, target_concentration: 1e-08, defect: 7.58349e-09, structural_defect: 4.89152e-11, concentration_defect: 7.53458e-09, normalized_defect_contribution: 0.00386913},
-                        TubeComplex {name: A_toe, concentration: 9.99072e-09, target_concentration: 1e-08, defect: 1.32154e-10, structural_defect: 5.78899e-11, concentration_defect: 7.42643e-11, normalized_defect_contribution: 6.74256e-05},
-                        TubeComplex {name: A_s, concentration: 9.26743e-22, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_s-A_s, concentration: 9.25713e-43, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_s-A_toe_s, concentration: 6.20023e-30, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_s-C_loop_s, concentration: 6.20035e-30, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_s-C_s, concentration: 2.87674e-33, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_s-Cout_s, concentration: 3.43027e-19, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_toe_s-A_toe_s, concentration: 1.66376e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_toe_s-B_s, concentration: 7.7492e-12, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_toe_s-C_loop_s, concentration: 3.22246e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_toe_s-C_s, concentration: 9.51563e-21, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: A_toe_s-Cout_s, concentration: 1.53377e-12, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: B_s-B_s, concentration: 8.12707e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: B_s-Cout_s, concentration: 2.06971e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: B_s-Xs_s, concentration: 2.93482e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_loop_s-C_loop_s, concentration: 1.58578e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_loop_s-C_s, concentration: 1.47212e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_loop_s-Cout_s, concentration: 1.17006e-11, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_loop_s-Xs_s, concentration: 5.26483e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_s-C_s, concentration: 3.33534e-14, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_s-Cout_s, concentration: 1.10721e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: C_s-Xs_s, concentration: 1.94521e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: Cout_s-Cout_s, concentration: 7.86483e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: Cout_s-Xs_s, concentration: 8.43692e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
-                        TubeComplex {name: Xs_s-Xs_s, concentration: 1.01377e-15, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}]]
-            defects: [0.035934]
-            weighted_defects: [0.035934]]
-    weights: Weights {specifications: [], per_complex: {}, per_tube: {}, reversed_complexes: {}, objective_weights: [1]}
-    success: 1
-</code></pre>
-<p>Instead, you may want to save a standard JSON text file with all of your results, including the sequences that were designed and much more information:</p>
-<pre><code class="python">if input('Save output file? [y/n]') == 'y':
-    with open('design-result.json', 'w') as file:
-        file.write(result.to_json(indent=4))
-</code></pre>
-
-<pre><code>Save output file? [y/n]
-</code></pre>
 <h2 id="design-evaluation-example-example-8-from-nupack-32-user-guide">Design Evaluation Example (Example 8 from NUPACK 3.2 User Guide)<a class="headerlink" href="#design-evaluation-example-example-8-from-nupack-32-user-guide" title="Permanent link">&para;</a></h2>
-<p>Here&rsquo;s a short example of evaluating a design with fully specified sequences:</p>
 <pre><code class="python">design = Design()
 
 # set physical properties
@@ -887,7 +781,7 @@ design.add_strand('bottom', ('d',))
 
 # define complex compsed of strands in a given order AND
 # Define target structure for complex
-design.add_complex('stickfigure', ('left', 'top', 'right', 'bottom'),
+design.add_complex('stickfigure', ('left', 'top', 'right', 'bottom'), 
         &quot;U2D8(U2D6(D6(U3+)D3U9D6(U2+U1))U2D8(U2+U1))U1&quot;)
 
 # define test tube
@@ -904,7 +798,135 @@ result = design.evaluate()
 notebook_results(result)
 </code></pre>
 
-<script src="http://localhost:60153/autoload.js?bokeh-autoload-element=1004&bokeh-absolute-url=http://localhost:60153&resources=none" id="1004"></script>
+<pre><code>Input your notebook URL (default: 'localhost:8888'):localhost:8889
+</code></pre>
+<script src="http://localhost:56689/autoload.js?bokeh-autoload-element=1004&bokeh-absolute-url=http://localhost:56689&resources=none" id="1004"></script>
+
+<h1 id="saving-and-restarting-a-design">Saving and restarting a Design<a class="headerlink" href="#saving-and-restarting-a-design" title="Permanent link">&para;</a></h1>
+<p>When &ldquo;calling&rdquo; the design to start the optimization process, two additional arguments must be added for checkpointing to work, <code>checkpoint_condition</code> and <code>checkpoint_handler</code>.</p>
+<p><code>checkpoint_condition</code> is a binary function that receives the stats and timer object from the C++ <code>Designer</code> object after steps in the design. The logic in <code>checkpoint_condition</code> then uses this information to determine whether a checkpoint should be made, in which case it returns True. In the call below, it is set to an object of an included class, <code>TimeInterval</code>. If <code>checkpoint_condition</code> is set to an object <code>TimeInterval(n)</code>, then a checkpoint will be emitted roughly every n seconds.</p>
+<p><code>checkpoint_handler</code> is the function which actually does something given that <code>checkpoint_condition</code> returns <code>True</code>. <code>checkpoint_handler</code> takes one argument, a Result object, and decides how it will use this information. In the call below, it is set to an object of the included class, <code>WriteToFileCheckpoint</code>. This type of <code>checkpoint_handler</code> object is instantiated with a filename prefix (&ldquo;design_test&rdquo; below) and will convert the design Result object into JSON and serialize it to a file with the given prefix and a time stamp, e.g. design_test-2020-01-27T00:16:52.170292.out</p>
+<pre><code class="python">from nupack.design import TimeInterval, WriteToFileCheckpoint 
+
+result = design(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint(&quot;design-checkpoint&quot;))
+print(result)
+</code></pre>
+
+<pre><code>DesignResult
+    model: ModelKey {parameters: ParameterFile {path: rna95.json}, ensemble: stacking, conditions: ModelConditions {temperature: 296.15, na_molarity: 1, mg_molarity: 0}}
+    parameters: DesignParameters {rng_seed: 841912177, f_stop: 0.02, f_passive: 0.01, H_split: 2, N_split: 12, f_split: 0.99, f_stringent: 0.99, dG_clamp: -20, M_bad: 300, M_reseed: 50, M_reopt: 3, f_redecomp: 0.03, f_refocus: 0.03, cache_bytes_of_RAM: 0, min_ppair: 1e-05, slowdown: 0, log: , decomposition_log: , thermo_log: , time_analysis: 1}
+    stats: DesignStats {num_leaf_evaluations: 1, num_reseeds: 0, num_redecompositions: [], offtargets_added_per_refocus: [], design_time: 0.924277, analysis_time: 0.807128, final_Psi: EnsemblePartition {mask: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], deflate: 0.0002}}
+    objectives: [Objective {variant: MultitubeObjective()}]
+    results: [SingleResult
+            domains: {(a : ACCTCCAAGCACAACTGTGGCCCCATA), (a* : TATGGGGCCACAGTTGTGCTTGGAGGT), (b : GGGGCCGGATTACAACTTTCCCTGTGAAC), (b* : GTTCACAGGGAAAGTTGTAATCCGGCCCC), (c : ATCACAGACAGTTAACCACTTGAGG), (c* : CCTCAAGTGGTTAACTGTCTGTGAT), (d : ATCAAGTGGGCTTGGAGC), (d* : GCTCCAAGCCCACTTGAT)}
+            strands: {(bottom : ATCAAGTGGGCTTGGAGC), (left : ACCTCCAAGCACAACTGTGGCCCCATA), (right : ATCACAGACAGTTAACCACTTGAGG), (top : GGGGCCGGATTACAACTTTCCCTGTGAAC)}
+            complexes: [ComplexResult
+                    name: stickfigure
+                    sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, GGGGCCGGATTACAACTTTCCCTGTGAAC, ATCACAGACAGTTAACCACTTGAGG, ATCAAGTGGGCTTGGAGC]
+                    structure: Structure(".2(8.2(12.3+)6(3.9)3(6.2+.)12.2(8.2+.)16.")
+                    log_partition_function: 129.151
+                    defect: 0.652198
+                    normalized_defect: 0.00658786,
+                ComplexResult {name: bottom, sequence: [ATCAAGTGGGCTTGGAGC], structure: Structure(""), log_partition_function: 8.71314, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-bottom, sequence: [ATCAAGTGGGCTTGGAGC, ATCAAGTGGGCTTGGAGC], structure: Structure(""), log_partition_function: 30.7563, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-bottom-bottom, sequence: [ATCAAGTGGGCTTGGAGC, ATCAAGTGGGCTTGGAGC, ATCAAGTGGGCTTGGAGC], structure: Structure(""), log_partition_function: 48.0926, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-bottom-left, sequence: [ATCAAGTGGGCTTGGAGC, ATCAAGTGGGCTTGGAGC, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 66.5632, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-bottom-right, sequence: [ATCAAGTGGGCTTGGAGC, ATCAAGTGGGCTTGGAGC, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 59.227, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-bottom-top, sequence: [ATCAAGTGGGCTTGGAGC, ATCAAGTGGGCTTGGAGC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 52.2993, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-left, sequence: [ATCAAGTGGGCTTGGAGC, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 46.5626, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-left-left, sequence: [ATCAAGTGGGCTTGGAGC, ACCTCCAAGCACAACTGTGGCCCCATA, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 67.6208, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-left-right, sequence: [ATCAAGTGGGCTTGGAGC, ACCTCCAAGCACAACTGTGGCCCCATA, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 75.0568, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-left-top, sequence: [ATCAAGTGGGCTTGGAGC, ACCTCCAAGCACAACTGTGGCCCCATA, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 82.4741, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-right, sequence: [ATCAAGTGGGCTTGGAGC, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 39.3921, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-right-left, sequence: [ATCAAGTGGGCTTGGAGC, ATCACAGACAGTTAACCACTTGAGG, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 58.8139, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-right-right, sequence: [ATCAAGTGGGCTTGGAGC, ATCACAGACAGTTAACCACTTGAGG, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 55.6661, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-right-top, sequence: [ATCAAGTGGGCTTGGAGC, ATCACAGACAGTTAACCACTTGAGG, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 55.3148, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-top, sequence: [ATCAAGTGGGCTTGGAGC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 32.1384, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-top-left, sequence: [ATCAAGTGGGCTTGGAGC, GGGGCCGGATTACAACTTTCCCTGTGAAC, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 65.7289, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-top-right, sequence: [ATCAAGTGGGCTTGGAGC, GGGGCCGGATTACAACTTTCCCTGTGAAC, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 68.1066, defect: 0, normalized_defect: 0},
+                ComplexResult {name: bottom-top-top, sequence: [ATCAAGTGGGCTTGGAGC, GGGGCCGGATTACAACTTTCCCTGTGAAC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 58.2446, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 9.23003, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-left, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 27.609, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-left-left, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ACCTCCAAGCACAACTGTGGCCCCATA, ACCTCCAAGCACAACTGTGGCCCCATA], structure: Structure(""), log_partition_function: 45.8795, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-left-right, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ACCTCCAAGCACAACTGTGGCCCCATA, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 53.9845, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-left-top, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ACCTCCAAGCACAACTGTGGCCCCATA, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 65.7507, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-right, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 31.2484, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-right-right, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ATCACAGACAGTTAACCACTTGAGG, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 50.2585, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-right-top, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, ATCACAGACAGTTAACCACTTGAGG, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 57.7334, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-top, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 48.3159, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-top-right, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, GGGGCCGGATTACAACTTTCCCTGTGAAC, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 85.177, defect: 0, normalized_defect: 0},
+                ComplexResult {name: left-top-top, sequence: [ACCTCCAAGCACAACTGTGGCCCCATA, GGGGCCGGATTACAACTTTCCCTGTGAAC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 71.143, defect: 0, normalized_defect: 0},
+                ComplexResult {name: right, sequence: [ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 6.57108, defect: 0, normalized_defect: 0},
+                ComplexResult {name: right-right, sequence: [ATCACAGACAGTTAACCACTTGAGG, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 26.0572, defect: 0, normalized_defect: 0},
+                ComplexResult {name: right-right-right, sequence: [ATCACAGACAGTTAACCACTTGAGG, ATCACAGACAGTTAACCACTTGAGG, ATCACAGACAGTTAACCACTTGAGG], structure: Structure(""), log_partition_function: 42.6987, defect: 0, normalized_defect: 0},
+                ComplexResult {name: right-right-top, sequence: [ATCACAGACAGTTAACCACTTGAGG, ATCACAGACAGTTAACCACTTGAGG, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 54.1083, defect: 0, normalized_defect: 0},
+                ComplexResult {name: right-top, sequence: [ATCACAGACAGTTAACCACTTGAGG, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 35.525, defect: 0, normalized_defect: 0},
+                ComplexResult {name: right-top-top, sequence: [ATCACAGACAGTTAACCACTTGAGG, GGGGCCGGATTACAACTTTCCCTGTGAAC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 64.0134, defect: 0, normalized_defect: 0},
+                ComplexResult {name: top, sequence: [GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 13.5486, defect: 0, normalized_defect: 0},
+                ComplexResult {name: top-top, sequence: [GGGGCCGGATTACAACTTTCCCTGTGAAC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 40.0906, defect: 0, normalized_defect: 0},
+                ComplexResult {name: top-top-top, sequence: [GGGGCCGGATTACAACTTTCCCTGTGAAC, GGGGCCGGATTACAACTTTCCCTGTGAAC, GGGGCCGGATTACAACTTTCCCTGTGAAC], structure: Structure(""), log_partition_function: 62.0574, defect: 0, normalized_defect: 0}]
+            tubes: [TubeResult
+                    name: figuretube
+                    nucleotide_concentration: 9.9e-05
+                    defect: 6.8218e-07
+                    normalized_defect: 0.00689071
+                    complexes: [TubeComplex {name: stickfigure, concentration: 9.99695e-07, target_concentration: 1e-06, defect: 6.8218e-07, structural_defect: 6.51999e-07, concentration_defect: 3.0181e-08, normalized_defect_contribution: 0.00689071},
+                        TubeComplex {name: bottom, concentration: 1.67614e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-bottom, concentration: 3.13566e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-bottom-bottom, concentration: 5.29885e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-bottom-left, concentration: 2.9797e-17, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-bottom-right, concentration: 2.43844e-18, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-bottom-top, concentration: 2.3401e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-left, concentration: 1.22811e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-left-left, concentration: 4.5896e-18, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-left-right, concentration: 9.77726e-13, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-left-top, concentration: 1.59333e-12, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-right, concentration: 1.1862e-11, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-right-left, concentration: 8.63038e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-right-right, concentration: 4.65574e-19, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-right-top, concentration: 3.20779e-22, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-top, concentration: 8.21711e-18, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-top-left, concentration: 8.51105e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-top-right, concentration: 1.1524e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: bottom-top-top, concentration: 5.8804e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left, concentration: 1.50351e-11, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-left, concentration: 3.85581e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-left-left, concentration: 8.87101e-29, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-left-right, concentration: 3.68937e-23, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-left-top, concentration: 4.6533e-21, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-right, concentration: 1.84373e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-right-right, concentration: 1.11636e-22, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-right-top, concentration: 1.92702e-22, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-top, concentration: 4.6644e-12, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-top-right, concentration: 1.59777e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: left-top-top, concentration: 1.25726e-19, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: right, concentration: 1.3224e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: right-right, concentration: 1.28881e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: right-right-right, concentration: 7.30523e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: right-right-top, concentration: 6.45021e-22, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: right-top, concentration: 1.63237e-15, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: right-top-top, concentration: 1.26505e-20, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: top, concentration: 1.38822e-10, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: top-top, concentration: 1.53616e-16, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0},
+                        TubeComplex {name: top-top-top, concentration: 1.75159e-24, target_concentration: 0, defect: 0, structural_defect: 0, concentration_defect: 0, normalized_defect_contribution: 0}]]
+            defects: [0.00689071]
+            weighted_defects: [0.00689071]]
+    weights: Weights {specifications: [], per_complex: {}, per_tube: {}, reversed_complexes: {}, objective_weights: [1]}
+    success: 1
+</code></pre>
+<h2 id="saving-the-final-design-outputs-in-a-text-file">Saving the final design outputs in a text file<a class="headerlink" href="#saving-the-final-design-outputs-in-a-text-file" title="Permanent link">&para;</a></h2>
+<pre><code class="python">with open('design-output.json', 'w') as f:
+    f.write(result.to_json(indent=4))
+</code></pre>
+
+<h2 id="running-from-a-checkpoint-file">Running from a checkpoint file<a class="headerlink" href="#running-from-a-checkpoint-file" title="Permanent link">&para;</a></h2>
+<p>The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design <code>Result</code> object, in this case loaded from a file containing a valid JSON representation of a <code>Result</code> object.</p>
+<pre><code class="python">from nupack.design import Result
+newer_result = design(restart=Result(json_file=&quot;design-output.json&quot;))
+</code></pre>
+
+<pre><code class="python">
+</code></pre>
 
 <div class="references"></div></div>
         </div>

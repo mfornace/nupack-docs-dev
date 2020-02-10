@@ -88,7 +88,7 @@
 </li>
                                     
 <li >
-    <a href="../../ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
+    <a href="../../ConversionFromNUPACK3/ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
 </li>
                                 </ul>
                             </li>
@@ -154,8 +154,7 @@ import numpy as np
 import nupack
 </code></pre>
 
-<pre><code class="python">pfile = nupack.ParameterFile(material='RNA', dG='rna1995.dG', dH='rna1995.dH')
-mod = nupack.Model(T=310, dangles='coax', gt=True, parameters=pfile)
+<pre><code class="python">mod = nupack.Model(T=310, ensemble=nupack.Ensemble.stacking, parameters='RNA')
 </code></pre>
 
 <h2 id="schedule-the-calculations-to-perform">Schedule the calculations to perform<a class="headerlink" href="#schedule-the-calculations-to-perform" title="Permanent link">&para;</a></h2>
@@ -180,7 +179,7 @@ analysis.boltzmann_sample(strands, number=10)
 analysis.suboptimal_structure(strands, gap=0.4)
 </code></pre>
 
-<pre><code>&lt;nupack.analysis.Analysis at 0x13c3cff98&gt;
+<pre><code>&lt;nupack.analysis.Analysis at 0x135b68450&gt;
 </code></pre>
 <pre><code class="python">results = analysis.compute()
 </code></pre>
@@ -215,31 +214,31 @@ plt.colorbar(fraction=0.046, pad=0.04);
 The complex MFE is -10.0045 kcal/mol
 
 All complex partition functions up to size 3
-    8.0464e+07 is the partition function of ATCGACGTA+CAGTCGATC
-    3.7914e+09 is the partition function of ATCGACGTA+CAGTCGATC+CAGTCGATC
-    2.6950e+05 is the partition function of ATCGACGTA+ATCGACGTA
-    1.1215e+00 is the partition function of CAGTCGATC
-    1.0531e+00 is the partition function of ATCGACGTA
-    2.0540e+09 is the partition function of ATCGACGTA+ATCGACGTA+ATCGACGTA
-    1.4563e+05 is the partition function of CAGTCGATC+CAGTCGATC
-    1.1227e+10 is the partition function of ATCGACGTA+ATCGACGTA+CAGTCGATC
-    2.6365e+07 is the partition function of CAGTCGATC+CAGTCGATC+CAGTCGATC
+    1.2547e+10 is the partition function of ATCGACGTA+ATCGACGTA+CAGTCGATC
+    2.7050e+05 is the partition function of ATCGACGTA+ATCGACGTA
+    3.9439e+06 is the partition function of CAGTCGATC+CAGTCGATC
+    8.0474e+07 is the partition function of ATCGACGTA+CAGTCGATC
+    2.5624e+08 is the partition function of CAGTCGATC+CAGTCGATC+CAGTCGATC
+    1.0911e+00 is the partition function of ATCGACGTA
+    5.4143e+09 is the partition function of ATCGACGTA+CAGTCGATC+CAGTCGATC
+    1.1315e+00 is the partition function of CAGTCGATC
+    2.0810e+09 is the partition function of ATCGACGTA+ATCGACGTA+ATCGACGTA
 
 The single strand free energies:
-    CAGTCGATC: -0.0706 kcal/mol
-    ATCGACGTA: -0.0319 kcal/mol
+    CAGTCGATC: -0.0761 kcal/mol
+    ATCGACGTA: -0.0537 kcal/mol
 
 Some Boltzmann samples, done simultaneously:
     0 .(((((...+..)))))..
     1 ((((((...+..)))))).
-    2 .(((((...+..)))))..
+    2 ((((((...+..)))))).
     3 ((((((...+..)))))).
     4 ((((((...+..)))))).
     5 .(((((...+..)))))..
     6 .(((((...+..)))))..
-    7 ..((((...+..))))...
-    8 .(((((...+..)))))..
-    9 ((((((...+..)))))).
+    7 ((((((...+..)))))).
+    8 ((((((...+..)))))).
+    9 .(((((...+..)))))..
 
 Subopt structures, done simultaneously:
     0 ((((((...+..)))))). -10.005
@@ -260,15 +259,15 @@ for seqs, c in concentration_result.items():
     print('%.3e is the concentration of %s' % (c, '+'.join(seqs)))
 </code></pre>
 
-<pre><code>5.384e-08 is the concentration of ATCGACGTA+CAGTCGATC
-3.874e-14 is the concentration of ATCGACGTA+CAGTCGATC+CAGTCGATC
-4.693e-12 is the concentration of ATCGACGTA+ATCGACGTA
-9.443e-07 is the concentration of CAGTCGATC
-4.615e-08 is the concentration of ATCGACGTA
-1.895e-17 is the concentration of ATCGACGTA+ATCGACGTA+ATCGACGTA
-9.362e-10 is the concentration of CAGTCGATC+CAGTCGATC
-5.971e-15 is the concentration of ATCGACGTA+ATCGACGTA+CAGTCGATC
-1.725e-15 is the concentration of CAGTCGATC+CAGTCGATC+CAGTCGATC
+<pre><code>6.470e-15 is the concentration of ATCGACGTA+ATCGACGTA+CAGTCGATC
+4.820e-12 is the concentration of ATCGACGTA+ATCGACGTA
+2.277e-08 is the concentration of CAGTCGATC+CAGTCGATC
+5.162e-08 is the concentration of ATCGACGTA+CAGTCGATC
+1.427e-14 is the concentration of CAGTCGATC+CAGTCGATC+CAGTCGATC
+4.837e-08 is the concentration of ATCGACGTA
+5.026e-14 is the concentration of ATCGACGTA+CAGTCGATC+CAGTCGATC
+9.028e-07 is the concentration of CAGTCGATC
+1.987e-17 is the concentration of ATCGACGTA+ATCGACGTA+ATCGACGTA
 </code></pre>
 <pre><code class="python">
 </code></pre>

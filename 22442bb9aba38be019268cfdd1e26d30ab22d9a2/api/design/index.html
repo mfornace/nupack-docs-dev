@@ -88,7 +88,7 @@
 </li>
                                     
 <li >
-    <a href="../../ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
+    <a href="../../ConversionFromNUPACK3/ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
 </li>
                                 </ul>
                             </li>
@@ -156,26 +156,13 @@
 
 <p>A representation of a multistate test tube design problem containing
 sequences, complexes, tubes, and constraints</p>
-<h3 id="nupack.design.Design.complexes">complexes</h3>
+<h3 id="nupack.design.Design.__init__">__init__</h3>
 
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.constraints">constraints</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.domains">domains</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.model">model</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.objectives">objectives</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.parameters">parameters</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.strands">strands</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.tubes">tubes</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.weights">weights</h3></p>
-<p>Member of type <code>None</code>
-<h3 id="nupack.design.Design.to_json">to_json</h3></p>
+<pre><code class="python">Design.__init__(self, json=None, _fun_=None)
+</code></pre>
+
+<h3 id="nupack.design.Design.to_json">to_json</h3>
+
 <pre><code class="python">Design.to_json(self, _fun_=None, **kwargs)
 </code></pre>
 
@@ -195,11 +182,6 @@ sequences, complexes, tubes, and constraints</p>
 </code></pre>
 
 <p>add a strand defined by list of domains
-<h3 id="nupack.design.Design.copy">copy</h3></p>
-<pre><code class="python">Design.copy(self)
-</code></pre>
-
-<p>Make a copy of self using the C++ copy constructor
 <h3 id="nupack.design.Design.add_complex">add_complex</h3></p>
 <pre><code class="python">Design.add_complex(self, name, strands, structure=None)
 </code></pre>
@@ -339,12 +321,50 @@ windows of word_length within each domain/strand in names</p>
 </code></pre>
 
 <p>Adds objective for particular named complex to design
-<h3 id="nupack.design.Design.add_similarity_objective">add_similarity_objective</h3></p>
+<h3 id="nupack.design.Design.add_pattern_objective">add_pattern_objective</h3></p>
+<pre><code class="python">Design.add_pattern_objective(self, patterns=None, names=None, weight=None)
+</code></pre>
+
+<h3 id="nupack.design.Design.add_similarity_objective">add_similarity_objective</h3>
+
 <pre><code class="python">Design.add_similarity_objective(self, names, reference_sequences, limits, weight=None)
 </code></pre>
 
 <p>Adds objective version of similarity constraint
-<h3 id="nupack.design.Design.evaluate">evaluate</h3></p>
+<h3 id="nupack.design.Design.add_energy_equalization_objective">add_energy_equalization_objective</h3></p>
+<pre><code class="python">Design.add_energy_equalization_objective(self, names, energy=None, weight=None)
+</code></pre>
+
+<h3 id="nupack.design.Design.add_SSM_objective">add_SSM_objective</h3>
+
+<pre><code class="python">Design.add_SSM_objective(self, names, word_size, weight=None)
+</code></pre>
+
+<h3 id="nupack.design.Design.add_weight">add_weight</h3>
+
+<pre><code class="python">Design.add_weight(self, scale, tube=None, complex=None, strand=None, domain=None)
+</code></pre>
+
+<h3 id="nupack.design.Design.__call__">__call__</h3>
+
+<pre><code class="python">Design.__call__(self, env=None, restart=None, checkpoint_condition=None, checkpoint_handler=None, _fun_=None)
+</code></pre>
+
+<p>create the designer from the fully specified design and run and
+return results</p>
+<p>Arguments:
+    env (Local): a C++ compute environment
+    restart: a design.results.Result object that can be used to initialize the
+        sequence state of the design.
+    checkpoint_condition: A 2-argument callable that takes the current design&rsquo;s
+        statistics and timer and outputs True if a checkpoint should be emitted
+        and False otherwise, e.g. if time has elapsed a certain amount
+    checkpoint_handler: A single argument callable that receives a
+        design.results.Result object and decides how to process it as a checkpoint,
+        e.g. printing to a file</p>
+<p>Returns: Result: the result of a finished design</p>
+<h3 id="nupack.design.Design.evaluate">evaluate</h3>
+
 <pre><code class="python">Design.evaluate(self, env=None, _fun_=None)
 </code></pre>
 
@@ -355,6 +375,13 @@ variable nucleotides.</p>
     env (Local): a C++ compute environment</p>
 <p>Returns:
     Result: the result of a finished design</p>
+<h2 id="nupack.design.complex_design">complex_design</h2>
+
+<pre><code class="python">complex_design(structure)
+</code></pre>
+
+<p>create all the necessary multitube design interface components to
+do a single complex design.</p>
 <div class="references"></div></div>
         </div>
 

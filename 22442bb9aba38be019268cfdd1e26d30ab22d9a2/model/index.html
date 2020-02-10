@@ -88,7 +88,7 @@
 </li>
                                     
 <li >
-    <a href="../ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
+    <a href="../ConversionFromNUPACK3/ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
 </li>
                                 </ul>
                             </li>
@@ -154,61 +154,49 @@
 
 <h1 id="secondary-structure-model">Secondary structure model<a class="headerlink" href="#secondary-structure-model" title="Permanent link">&para;</a></h1>
 <h2 id="model-settings">Model settings<a class="headerlink" href="#model-settings" title="Permanent link">&para;</a></h2>
-<p>NUPACK algorithms use a <strong>secondary structure model</strong> to predict the free energy of any single secondary structure. The first step to using NUPACK will usually be to specify the secondary structure model that you want to use. For example, a model may be created via the following syntax:</p>
-<pre><code class="python">model = nupack.Model(dangles='min', gt=True, T=310.15, na=1.0, mg=0.0, parameters='RNA')
+<p>NUPACK algorithms use a <strong>secondary structure model</strong> to predict the free energy of any single secondary structure. The first step to using NUPACK will usually be to specify the secondary structure model that you want to use. For example, a model could be created via the following syntax:</p>
+<pre><code class="python">model = nupack.Model(ensemble='stacking', T=310.15, na=1.0, mg=0.0, parameters='RNA')
 </code></pre>
 
 <p>There are several options to customize this model, which we will outline below.</p>
 <h3 id="coaxial-stacking-and-dangle-contributions">Coaxial stacking and dangle contributions<a class="headerlink" href="#coaxial-stacking-and-dangle-contributions" title="Permanent link">&para;</a></h3>
-<p>The way in which dangle energies are incorporated is specified by <code>dangles</code>, which may have the following values:</p>
+<p>The way in which dangle energies are incorporated is specified by <code>ensemble</code>, which may have the following values:</p>
 <ul>
-<li>
-<p><code>'none'</code>: No dangle energies are incorporated.</p>
-</li>
-<li>
-<p><code>'min'</code>: (default) A dangle energy is incorporated for each unpaired base flanking a duplex (a base flanking two duplexes contributes only the minimum of the two possible dangle energies).</p>
-</li>
-<li>
-<p><code>'all'</code>: A dangle energy is incorporated for each base flanking a duplex regardless of whether it is paired.</p>
-</li>
-<li>
-<p><code>'coax'</code>: Structure free energies fully incorporate all possible dangle and coaxial stacking states.</p>
-</li>
+<li><code>'stacking'</code>: (default) Structure free energies fully incorporate all possible dangle and coaxial stacking states.</li>
+<li><code>'nostacking'</code>: No dangle or stacking energies are incorporated.</li>
+<li><code>'none'</code>: No dangle or stacking energies are incorporated.</li>
+<li><code>'min'</code>: A dangle energy is incorporated for each unpaired base flanking a duplex (a base flanking two duplexes contributes only the minimum of the two possible dangle energies).</li>
+<li><code>'all'</code>: A dangle energy is incorporated for each base flanking a duplex regardless of whether it is paired.</li>
 </ul>
 <h3 id="wobble-pairs">Wobble pairs<a class="headerlink" href="#wobble-pairs" title="Permanent link">&para;</a></h3>
-<p>G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U and G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T base pairs may be enabled using the <code>gt</code> parameter (default: <code>True</code>). There are certain restrictions on wobble pairs in NUPACK. For instance, a duplex terminated by a wobble pair is forbidden.</p>
+<p>G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U RNA wobble pairs are enabled by default. G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T DNA wobble pairs are disabled by default. Wobble pairs may be manually enabled or disabled using the additional <code>wobble</code> parameter during model construction (e.g. <code>Model(..., wobble=True)</code>). In the historical ensembles, a duplex terminated by a wobble pair is forbidden.</p>
 <h3 id="temperature">Temperature<a class="headerlink" href="#temperature" title="Permanent link">&para;</a></h3>
 <p>Temperature is specified by the <code>T</code> parameter in Kelvin (default: 310.15). (Note that the temperature units have been changed from NUPACK 3, which used Celsius.) Free energy parameters are usually specified in NUPACK via enthalpy (<span><span class="MathJax_Preview">\Delta H</span><script type="math/tex">\Delta H</script></span>) and entropy terms (<span><span class="MathJax_Preview">\Delta S</span><script type="math/tex">\Delta S</script></span>). Parameters are adjusted for a given temperature using the formula <span><span class="MathJax_Preview">\Delta G = \Delta H - T \Delta S</span><script type="math/tex">\Delta G = \Delta H - T \Delta S</script></span>.</p>
 <h3 id="salt-concentrations">Salt concentrations<a class="headerlink" href="#salt-concentrations" title="Permanent link">&para;</a></h3>
-<p>Salt corrections are only applied when the material is <code>DNA</code>. Salt corrections are applied simply as a flat bonus for each base pair in a secondary structure.</p>
+<!-- Salt corrections are only applied when the material is `DNA`.  -->
+
+<p>Salt corrections are applied simply as a flat bonus for each base pair in a secondary structure.</p>
 <ul>
 <li>
-<p><strong>Sodium:</strong> The Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> concentration of the solution is specified by the keyword <code>na</code> in units of molar (default: 1.0, range: [0.05,1.1]) is specified by  [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
+<p><strong>Sodium:</strong> The Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> concentration of the solution is specified by the keyword <code>na</code> in units of molar (default: 1.0, range: [0.05,1.1]) is specified by <a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>.</p>
 </li>
 <li>
-<p><strong>Magnesium:</strong> The Mg<span><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> concentration of the solution is specified by the keyword <code>mg</code> in units of molar (default: 0.0, range: [0.0,0.2]) is specified by [<a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>].</p>
+<p><strong>Magnesium:</strong> The Mg<span><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> concentration of the solution is specified by the keyword <code>mg</code> in units of molar (default: 0.0, range: [0.0,0.2]) is specified by @Koehler05.</p>
 </li>
 </ul>
 <h2 id="model-parameters">Model parameters<a class="headerlink" href="#model-parameters" title="Permanent link">&para;</a></h2>
 <p>The parameter files defining the nucleic acid material may be specified via the argument <code>parameters</code>, which represents a shorthand key for an included parameter set. Available parameter set keys currently include:</p>
 <ul>
-<li>
-<p><code>'RNA'</code> or <code>'rna1995'</code>: Parameters for RNA allowing calculations at different temperatures from [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>; <a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]</p>
-</li>
-<li>
-<p><code>'DNA'</code> or <code>'dna1998'</code>: Parameters for DNA allowing calculations at different temperatures from [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>; <a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]</p>
-</li>
-<li>
-<p><code>'rna1999'</code>: Parameters for RNA for calculations at 37 <span><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>; <a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]</p>
-</li>
+<li><code>'rna95'</code> based on <a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a> with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>;<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>;<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>;<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</li>
+<li><code>'dna04'</code> based on <a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a> and <a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a> with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>] and dangle stacking [<a class="citation" href="#ref-Bommarito00" id="cite-Bommarito00">Bommarito00</a>;<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] in user-specified concentrations of Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>;<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>;<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</li>
+<li><code>'rna06'</code> based on <a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a> and @Lu06 with additional parameters [@Xia98;@Zuker03] including coaxial stacking [@Mathews99;@Turner10] and dangle stacking [@Serra95;@Zuker03;@Turner10] in 1M Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</li>
 </ul>
-<p>DNA/RNA hybrids are not currently allowed.</p>
+<p>The shorthands <code>'RNA'</code> and <code>'DNA'</code> redirect to <code>'rna06'</code> and <code>'dna04'</code>, respectively. DNA/RNA hybrids are not currently allowed.</p>
 <h3 id="custom-parameters">Custom parameters<a class="headerlink" href="#custom-parameters" title="Permanent link">&para;</a></h3>
-<p>You may also specify any pair of <code>dG</code> and <code>dH</code> files as in the following example:</p>
-<pre><code class="python">model = nupack.Model(nupack.ParameterFile(material='RNA', dG='mypath/custom.dG', dH='mypath/custom.dH'))
+<p>Parameters are now stored in the JSON format. A parameter file contains both <span><span class="MathJax_Preview">\Delta G</span><script type="math/tex">\Delta G</script></span> and (optionally) <span><span class="MathJax_Preview">\Delta H</span><script type="math/tex">\Delta H</script></span> parameters. You may specify a specific parameter JSON file as in the following example:</p>
+<pre><code class="python">model = nupack.Model(parameters='path/to/my/custom-parameters.json')
 </code></pre>
 
-<p>The specified material should be either <code>'RNA'</code> or <code>'DNA'</code>. You may also specify just a <code>dG</code> file, in which case no temperature correction will be made.</p>
 <h2 id="using-the-model">Using the model<a class="headerlink" href="#using-the-model" title="Permanent link">&para;</a></h2>
 <p>Typically a <code>Model</code> will be used as an input to thermodynamic analysis via dynamic programming algorithms. However, a <code>Model</code> also contains a few useful methods (below) to analyze individual secondary structures.</p>
 <h3 id="calculate-the-free-energy-of-a-nucleic-acid-loop">Calculate the free energy of a nucleic acid loop<a class="headerlink" href="#calculate-the-free-energy-of-a-nucleic-acid-loop" title="Permanent link">&para;</a></h3>
@@ -225,29 +213,41 @@
 <div class="references">
 <table>
 <tbody>
-<tr id="ref-SantaLucia04">
-<td>SantaLucia04</td>
-<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
+<tr id="ref-Zuker03">
+<td>Zuker03</td>
+<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
 </tr>
-<tr id="ref-Koehler05">
-<td>Koehler05</td>
-<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic Properties of DNA Sequences: Characteristic Values for the Human Genome</i>. Bioinformatics. <b>21</b>, (2005)</p></td>
+<tr id="ref-Mathews99">
+<td>Mathews99</td>
+<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
+</tr>
+<tr id="ref-Turner10">
+<td>Turner10</td>
+<td><p>Turner D.H., Mathews D.H.: <i>NNDB: The Nearest Neighbor Parameter Database for Predicting Stability of Nucleic Acid Secondary Structure</i>. Nucleic Acids Res.. <b>38</b>, (2010)</p></td>
 </tr>
 <tr id="ref-Serra95">
 <td>Serra95</td>
 <td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
 </tr>
-<tr id="ref-Zuker03">
-<td>Zuker03</td>
-<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
+<tr id="ref-Peyret00">
+<td>Peyret00</td>
+<td><p>Peyret N.: <i>Prediction of nucleic acid hybridization: parameters and algorithms</i>. (2000)</p></td>
+</tr>
+<tr id="ref-Bommarito00">
+<td>Bommarito00</td>
+<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic Parameters for DNA Sequences with Dangling Ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
 </tr>
 <tr id="ref-SantaLucia98">
 <td>SantaLucia98</td>
 <td><p>SantaLucia J.: <i>A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
 </tr>
-<tr id="ref-Mathews99">
-<td>Mathews99</td>
-<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
+<tr id="ref-SantaLucia04">
+<td>SantaLucia04</td>
+<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
+</tr>
+<tr id="ref-Xia98">
+<td>Xia98</td>
+<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>Thermodynamic Parameters for an Expanded Nearest-Neighbor Model for Formation of RNA Duplexes with Watson-Crick Base Pairs</i>. Biochemistry. <b>37</b>, (1998)</p></td>
 </tr>
 </tbody>
 </table>

@@ -88,7 +88,7 @@
 </li>
                                     
 <li >
-    <a href="../../ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
+    <a href="../../ConversionFromNUPACK3/ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
 </li>
                                 </ul>
                             </li>
@@ -126,7 +126,7 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../../ConversionFromNUPACK3/">
+                                <a rel="next" href="../../ConversionFromNUPACK3/ConversionFromNUPACK3/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -151,60 +151,106 @@
 
 <h2 id="nupack.model.Model">Model</h2>
 
-<pre><code class="python">Model(self, bits=64, dangles='min', gt=True, parameters='RNA', T=310.15, na=1.0, mg=0.0, _fun_=None)
+<pre><code class="python">Model(self, ensemble=&lt;Ensemble.stacking: 1&gt;, wobble=None, parameters='RNA', T=310.15, na=1.0, mg=0.0, rates=None, bits=64, _fun_=None)
 </code></pre>
 
 <h3 id="nupack.model.Model.__init__">__init__</h3>
 
-<pre><code class="python">Model.__init__(self, bits=64, dangles='min', gt=True, parameters='RNA', T=310.15, na=1.0, mg=0.0, _fun_=None)
+<pre><code class="python">Model.__init__(self, ensemble=&lt;Ensemble.stacking: 1&gt;, wobble=None, parameters='RNA', T=310.15, na=1.0, mg=0.0, rates=None, bits=64, _fun_=None)
 </code></pre>
 
 <p>Construct a Model</p>
 <ul>
+<li><code>ensemble</code>: Ensemble, one of (&lsquo;min&rsquo;, &lsquo;all&rsquo;, &lsquo;none&rsquo;, &lsquo;nostacking&rsquo;, &lsquo;stacking&rsquo;)</li>
+<li><code>wobble</code>: enable wobble pairs or not</li>
+<li><code>parameters</code>: ParameterFile or equivalent object</li>
+<li><code>T</code>: temperature in Kelvin</li>
+<li><code>Na</code>: molarity of sodium in moles per liter</li>
+<li><code>Mg</code>: molarity of magnesium in moles per liter</li>
 <li><code>bits</code>: number of bits in the floating type used (probably 32 or 64)</li>
-<li><code>gt</code>: enable wobble pairs or not</li>
-<li><code>parameters</code>: ParameterFile object</li>
-<li><code>dangles</code>: one of (&lsquo;min&rsquo;, &lsquo;all&rsquo;, &lsquo;none&rsquo;, &lsquo;coax&rsquo;)</li>
-<li><code>conditions</code>: Conditions object with temperature and salt concentrations</li>
 </ul>
-<h2 id="nupack.model.ParameterFile">ParameterFile</h2>
+<h3 id="nupack.model.Model.ensemble">ensemble</h3>
 
-<pre><code class="python">ParameterFile(self, material='rna', dG=None, dH=None, _fun_=None)
+<p>Member of type <code>Ensemble</code>
+<h3 id="nupack.model.Model.beta">beta</h3></p>
+<p>Member of type <code>float</code>
+<h3 id="nupack.model.Model.parameters">parameters</h3></p>
+<p>Member of type <code>ParameterSet</code>
+<h3 id="nupack.model.Model.conditions">conditions</h3></p>
+<p>Member of type <code>Conditions</code>
+<h3 id="nupack.model.Model.boltz">boltz</h3></p>
+<pre><code class="python">Model.boltz(self, energy) -&gt; float
 </code></pre>
 
-<p>Descriptor of the chosen parameter files</p>
-<h3 id="nupack.model.ParameterFile.default_materials">default_materials</h3>
+<p>Return the Boltzmann factor corresponding to a given free energy (kcal/mol)
+<h3 id="nupack.model.Model.loop_energy">loop_energy</h3></p>
+<pre><code class="python">Model.loop_energy(self, sequences, nick=None, _fun_=None)
+</code></pre>
 
-<p>dict() -&gt; new empty dictionary
-dict(mapping) -&gt; new dictionary initialized from a mapping object&rsquo;s
-    (key, value) pairs
-dict(iterable) -&gt; new dictionary initialized as if via:
-    d = {}
-    for k, v in iterable:
-        d[k] = v
-dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
-    in the keyword argument list.  For example:  dict(one=1, two=2)
-<h3 id="nupack.model.ParameterFile.default_parameters">default_parameters</h3></p>
-<p>dict() -&gt; new empty dictionary
-dict(mapping) -&gt; new dictionary initialized from a mapping object&rsquo;s
-    (key, value) pairs
-dict(iterable) -&gt; new dictionary initialized as if via:
-    d = {}
-    for k, v in iterable:
-        d[k] = v
-dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
-    in the keyword argument list.  For example:  dict(one=1, two=2)
-<h3 id="nupack.model.ParameterFile.dG">dG</h3></p>
-<p>Member of type <code>str</code>
-<h3 id="nupack.model.ParameterFile.dH">dH</h3></p>
-<p>Member of type <code>str</code>
-<h3 id="nupack.model.ParameterFile.material">material</h3></p>
+<p>Return energy of loop
+<h3 id="nupack.model.Model.structure_energy">structure_energy</h3></p>
+<pre><code class="python">Model.structure_energy(self, strands, structure)
+</code></pre>
+
+<p>Free energy of a given secondary structure (kcal/mol)
+<h3 id="nupack.model.Model.save">save</h3></p>
+<pre><code class="python">Model.save(self)
+</code></pre>
+
+<h2 id="nupack.model.ParameterFile">ParameterFile</h2>
+
+<pre><code class="python">ParameterFile(self, name_or_file='RNA')
+</code></pre>
+
+<p>Descriptor of the chosen parameter file</p>
+<h3 id="nupack.model.ParameterFile.path">path</h3>
+
 <p>Member of type <code>str</code>
 <h3 id="nupack.model.ParameterFile.copy">copy</h3></p>
 <pre><code class="python">ParameterFile.copy(self)
 </code></pre>
 
-<p>Make a copy of self using the C++ copy constructor</p>
+<p>Make a copy of self using the C++ copy constructor
+<h2 id="nupack.model.Conditions">Conditions</h2></p>
+<pre><code class="python">Conditions(self, T=310.15, na=1.0, mg=0.0, _fun_=None)
+</code></pre>
+
+<p>Specification of environmental conditions for the simulated system</p>
+<h3 id="nupack.model.Conditions.__init__">__init__</h3>
+
+<pre><code class="python">Conditions.__init__(self, T=310.15, na=1.0, mg=0.0, _fun_=None)
+</code></pre>
+
+<p><code>T</code>: temperature in Kelvin
+<code>Na</code>: molarity of sodium in moles per liter
+<code>Mg</code>: molarity of magnesium in moles per liter</p>
+<h2 id="nupack.model.Ensemble">Ensemble</h2>
+
+<pre><code class="python">Ensemble(self, /, *args, **kwargs)
+</code></pre>
+
+<p>Set of recursions to use in dynamic programs</p>
+<h3 id="nupack.model.Ensemble.all">all</h3>
+
+<p>Set of recursions to use in dynamic programs</p>
+<h3 id="nupack.model.Ensemble.min">min</h3>
+
+<p>Set of recursions to use in dynamic programs</p>
+<h3 id="nupack.model.Ensemble.none">none</h3>
+
+<p>Set of recursions to use in dynamic programs</p>
+<h3 id="nupack.model.Ensemble.nostacking">nostacking</h3>
+
+<p>Set of recursions to use in dynamic programs</p>
+<h3 id="nupack.model.Ensemble.stacking">stacking</h3>
+
+<p>Set of recursions to use in dynamic programs</p>
+<h3 id="nupack.model.Ensemble.get">get</h3>
+
+<pre><code class="python">Ensemble.get(key)
+</code></pre>
+
+<p>Construct Ensemble from either a string or an integer</p>
 <div class="references"></div></div>
         </div>
 

@@ -88,7 +88,7 @@
 </li>
                                     
 <li >
-    <a href="../ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
+    <a href="../ConversionFromNUPACK3/ConversionFromNUPACK3/">Conversion from NUPACK 3</a>
 </li>
                                 </ul>
                             </li>
@@ -199,12 +199,10 @@ jupyter notebook
 
 <p>If no browser window appears, you may try navigating to the displayed link in your terminal (this URL should look like <a href="http://127.0.0.1:8889/?token=78f1ffcdcf04cec0e97e74912e36b4eb5b530aa546411ea3">http://127.0.0.1:8889/?token=78f1ffcdcf04cec0e97e74912e36b4eb5b530aa546411ea3</a>). If this doesn&rsquo;t work, troubleshoot your Jupyter installation. Browse to open the desired notebook using the GUI in your web browser.</p>
 <h2 id="installing-nupack-from-source">Installing NUPACK from source<a class="headerlink" href="#installing-nupack-from-source" title="Permanent link">&para;</a></h2>
-<h3 id="dependencies-for-c-libraries">Dependencies for C++ libraries<a class="headerlink" href="#dependencies-for-c-libraries" title="Permanent link">&para;</a></h3>
+<h3 id="external-dependencies-for-c-libraries">External dependencies for C++ libraries<a class="headerlink" href="#external-dependencies-for-c-libraries" title="Permanent link">&para;</a></h3>
 <ul>
 <li>C++17 compliant compiler (works with Clang 3.6+, AppleClang, maybe GCC 5+)</li>
 <li><a href="https://www.boost.org">Boost</a> (1.58+, optionally including Boost Context)</li>
-<li><a href="https://github.com/wjakob/tbb">Intel TBB</a></li>
-<li><a href="https://arma.sourceforge.net/">Armadillo matrix library</a> (9.5+)</li>
 </ul>
 <p>All are available on <a href="https://brew.sh">Homebrew</a> for Mac. For example, after Homebrew is installed, run <code>brew install tbb armadillo boost</code>. They are also commonly available in Linux package managers (e.g. <code>apt-get</code>, <code>pacman</code>).</p>
 <h3 id="directions">Directions<a class="headerlink" href="#directions" title="Permanent link">&para;</a></h3>
@@ -233,15 +231,16 @@ pip3 install .
 </code></pre>
 
 <h2 id="bundled-packages">Bundled packages<a class="headerlink" href="#bundled-packages" title="Permanent link">&para;</a></h2>
+<p>Each of the following packages is included as a git subrepository.</p>
 <h3 id="included-c-packages">Included C++ packages<a class="headerlink" href="#included-c-packages" title="Permanent link">&para;</a></h3>
 <ul>
+<li><a href="https://arma.sourceforge.net/">Armadillo</a> (a local installation of version 9.500 or later can also be used)</li>
 <li><a href="https://github.com/nlohmann/json&gt;">JSON for Modern C++</a></li>
 <li><a href="https://github.com/nickporubsky/boost-simd-clone&gt;">Boost.SIMD</a></li>
 </ul>
 <h3 id="included-cmake-packages">Included CMake packages<a class="headerlink" href="#included-cmake-packages" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://github.com/sakra/cotire&gt;">cotire.cmake</a></li>
-<li><a href="https://github.com/justusc/FindTBB&gt;">FindTBB.cmake</a></li>
 <li><a href="https://github.com/Eyescale/CMake&gt;">CMake common modules</a></li>
 <li><a href="https://github.com/rpavlik/cmake-modules&gt;">CMake modules (for git revision)</a></li>
 </ul>
