@@ -1,12 +1,29 @@
 
-# Building documentation
+# NUPACK web documentation
 
-## Markdown introduction
+## Editing the documentation
+
+### Editing the layout
+
+See the [MkDocs](https://www.mkdocs.org) site for help on configuration.
+
+The relevant configuration is in `mkdocs.yml` as a relatively readable YAML format. You can change the page layout there as desired. You can edit this file from within GitHub or offline using any plain text editor.
+
+### Editing the contents
+
+See the following links for help on Markdown:
 
 - [Cheat sheet](https://www.markdownguide.org/cheat-sheet/)
 - [Table generator for convenience](https://www.tablesgenerator.com/markdown_tables)
 
-## Prerequisites
+You can edit each `.md` file by:
+
+- editing them directly from GitHub in your browser (click `Commit changes` once done)
+- editing them offline by cloning the repository and using any plain text editor (requires basic git know-how).
+
+## Deploying the documentation
+
+### Prerequisites for deploying documentation
 
 Install the prerequisite packages: `mkdocs` and `pydoc-markdown`:
 
@@ -22,9 +39,7 @@ cd mdx_bib
 python setup.py install
 ```
 
-## Build documentation with mkdocs
-
-The relevant configuration is in `mkdocs.yml`. You can change the page layout there as normal.
+### Building and deploying
 
 1. Navigate to the directory containing `mkdocs.yml`.
 2. Run `mkdocs serve` to host the server locally.
@@ -35,21 +50,23 @@ The relevant configuration is in `mkdocs.yml`. You can change the page layout th
 
 The served website should change dynamically as text is changed.
 
-## Generate markdown files from Jupyter notebooks
+## Other tips
+
+### Generate markdown files from Jupyter notebooks
 
 1. Run the desired notebook to get all the output.
 2. Click `File->Save as->Markdown`.
 3. Move the output file or decompressed folder into `$BUILD_DIR/docs/sources`.
 
-## Generate automatic Python API
+### Generate automatic Python API
 
-The relevant configuration is in `pydocmd.yml`.
+The relevant configuration is in `pydocmd.yml` in the NUPACK master branch.
 
 1. Build Python targets `ninja mkdocs copy_python`.
 2. Run `cd $BUILD_DIR/docs/`
 3. Run `pydocmd generate`
 
-## Copy the documentation directory
+### Copy the documentation directory
 
 You can use this `rsync` command to copy the folder to an output location:
 
@@ -57,6 +74,6 @@ You can use this `rsync` command to copy the folder to an output location:
 rsync --copy-links --exclude '_build/' -r docs/ output/
 ```
 
-## Generate Doxygen HTML API reference
+### Generate Doxygen HTML API reference
 
-Doxygen documentation may be built from the build directory using `cmake --build . --target docs`.
+Doxygen documentation may be built from the NUPACK build directory using `cmake --build . --target docs`.
