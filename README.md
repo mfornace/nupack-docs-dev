@@ -8,4 +8,4 @@ Do not edit the `master` branch (this one) by using the `update.sh` script. Edit
 
 Do not edit the `build` branch as it is automatically generated.
 
-For development, please see the `docs` branch. (On GitHub, see button above on left).
+For development, please see the `docs` branch. (On GitHub, see `Branch: master` toggle above on left).
