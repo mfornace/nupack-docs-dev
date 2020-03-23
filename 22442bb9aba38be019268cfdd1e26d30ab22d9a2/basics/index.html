@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Conventions - NUPACK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">NUPACK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Overview</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../installation/" class="dropdown-item">Installation</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Conventions</a>
+</li>
+                                    
+<li>
+    <a href="../model/" class="dropdown-item">Model</a>
+</li>
+                                    
+<li>
+    <a href="../analysis/" class="dropdown-item">Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../design/" class="dropdown-item">Design</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../examples/" class="nav-link">Examples</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../installation/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../model/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#conventions" class="nav-link">Conventions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#common-notation" class="nav-link">Common notation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#conventions_1" class="nav-link">Conventions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#citations" class="nav-link">Citations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="conventions">Conventions<a class="headerlink" href="#conventions" title="Permanent link">&para;</a></h1>
+<h2 id="common-notation">Common notation<a class="headerlink" href="#common-notation" title="Permanent link">&para;</a></h2>
+<p>NUPACK algorithms are formulated in terms of nucleic acid secondary structure. In NUPACK 4, pseudoknots are always excluded from the structural ensemble.</p>
+<ul>
+<li>The <strong>sequence</strong>, <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>, of one or more interacting RNA strands is specified as a list of bases <span><span class="MathJax_Preview">\phi^a\in\{</span><script type="math/tex">\phi^a\in\{</script></span>A,C,G,U<span><span class="MathJax_Preview">\}</span><script type="math/tex">\}</script></span> for <span><span class="MathJax_Preview">a=1,\dots,|\phi|</span><script type="math/tex">a=1,\dots,|\phi|</script></span> (T replaces U for DNA).</li>
+<li>A <strong>secondary structure</strong>, <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>, of one or more interacting RNA strands is defined by a set of base pairs (each a Watson&ndash;Crick pair [A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U or C<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G] or a wobble pair [G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U]).</li>
+<li>A <strong>polymer graph</strong> representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> around the circumference with a <em>nick</em> between each strand, and drawing straight lines connecting paired bases.</li>
+<li>A secondary structure is <em>unpseudoknotted</em> if there exists a strand ordering for which the polymer graph has no crossing lines. A secondary structure is <em>connected</em> if no subset of the strands is free of the others.</li>
+<li>A <strong>complex</strong> of <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> interacting strands with strand ordering, <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span>, has a <strong>structural ensemble</strong> containing all connected polymer graphs with no crossing lines [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]. (We dispense with our prior convention [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>; <a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>; <a class="citation" href="#ref-Zadeh11b" id="cite-Zadeh11b">Zadeh11b</a>] of calling this entity an <strong>ordered complex</strong>.)</li>
+</ul>
+<p>If a complex contains multiple strands with the same sequence, subtleties arise in the definition of the structural ensemble and in the calculation of experimental observables [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]. Let <span><span class="MathJax_Preview">\Gamma</span><script type="math/tex">\Gamma</script></span> denote the structural ensemble in which each strand is treated as distinct (i.e., each strand has a unique identifier in <span><span class="MathJax_Preview">\{1,\dots,L\}</span><script type="math/tex">\{1,\dots,L\}</script></span>) and let <span><span class="MathJax_Preview">\Gamma'</span><script type="math/tex">\Gamma'</script></span> denote the ensemble in which strands with the same sequence are treated as indistinguishable. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases; otherwise the structures are distinct [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]. The ensemble <span><span class="MathJax_Preview">\Gamma'\subseteq\Gamma</span><script type="math/tex">\Gamma'\subseteq\Gamma</script></span> is a maximal subset of distinct secondary structures for strand ordering <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span>.</p>
+<p>A <strong>test tube</strong> may contain an arbitrary number of strand species interacting to form an arbitrary number of complex species in a dilute solution. Let <span><span class="MathJax_Preview">\Psi^0</span><script type="math/tex">\Psi^0</script></span> denote the set of strand species that interact in a test tube to form the set of complex species <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>. It is often convenient to define <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span> to contain all complexes of up to some size <span><span class="MathJax_Preview">L_{\rm max}</span><script type="math/tex">L_{\rm max}</script></span>. Each complex <span><span class="MathJax_Preview">j\in\Psi</span><script type="math/tex">j\in\Psi</script></span> corresponds to a distinct strand ordering <span><span class="MathJax_Preview">\pi_j</span><script type="math/tex">\pi_j</script></span> of <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> strands for <span><span class="MathJax_Preview">L\in\{1,\dots,L_{\rm max}\}</span><script type="math/tex">L\in\{1,\dots,L_{\rm max}\}</script></span>. <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> distinct strands can be ordered around a circle in <span><span class="MathJax_Preview">(L-1)!</span><script type="math/tex">(L-1)!</script></span> distinct ways (e.g., strands <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>, <span><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span>, and <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> can be ordered <span><span class="MathJax_Preview">ABC</span><script type="math/tex">ABC</script></span> and <span><span class="MathJax_Preview">ACB</span><script type="math/tex">ACB</script></span>). If some of the <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> strands are of the same species, there will be fewer than <span><span class="MathJax_Preview">(L-1)!</span><script type="math/tex">(L-1)!</script></span> distinct strand orderings (e.g., strands <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>, <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>, and <span><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span> can only be ordered <span><span class="MathJax_Preview">AAB</span><script type="math/tex">AAB</script></span>). For a given set of <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> strands, each unpseudoknotted connected secondary structure is found in the structural ensemble, <span><span class="MathJax_Preview">\Gamma_j</span><script type="math/tex">\Gamma_j</script></span>, corresponding to exactly one strand ordering, <span><span class="MathJax_Preview">\pi_j</span><script type="math/tex">\pi_j</script></span> (i.e., exactly one complex <span><span class="MathJax_Preview">j\in\Psi</span><script type="math/tex">j\in\Psi</script></span>) [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>].</p>
+<p>For sequence <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span> and secondary structure, <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>, the <strong>free energy</strong>, <span><span class="MathJax_Preview">\Delta G(\phi,s)</span><script type="math/tex">\Delta G(\phi,s)</script></span>, is calculated using nearest-neighbor empirical parameters for RNA [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>; <a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>; <a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] in 1M Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> or for DNA [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>; <a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] in user-specified concentrations of Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>; <a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>]. The zero free energy reference state for all calculations is a system where all relevant strands are present with no base pairs [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>].</p>
+<h2 id="conventions_1">Conventions<a class="headerlink" href="#conventions_1" title="Permanent link">&para;</a></h2>
+<p>Unlike NUPACK 3, NUPACK 4 uses zero-based indices exclusively. The first index of any sequence is 0, not 1.</p>
+<p>Nucleic acid sequences are listed <span><span class="MathJax_Preview">5'</span><script type="math/tex">5'</script></span> to <span><span class="MathJax_Preview">3'</span><script type="math/tex">3'</script></span>. The bases in a complex are indexed starting with 0 at the <span><span class="MathJax_Preview">5'</span><script type="math/tex">5'</script></span>-most base of the first strand and ending at the <span><span class="MathJax_Preview">3'</span><script type="math/tex">3'</script></span>-most base of the last strand. For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39.</p>
+<p>Valid bases are <code>A</code>, <code>C</code>, <code>G</code>, <code>T</code>, and <code>U</code>. For RNA calculations, <code>T</code> is automatically converted to <code>U</code>, and vice versa for DNA calculations.</p>
+<p>Secondary structures are specified in one of four ways:</p>
+<ol>
+<li>
+<p><strong>dot-parens-plus</strong>: Each unpaired base is represented by a dot, each base pair by matching parentheses, and each nick between strands by a plus [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>]. For example, <code>((...))</code> specifies that bases 0 and 1 are paired to bases 6 and 5, respectively, while bases 2, 3, and 4 are unpaired. <code>((+...))</code> specifies that bases 0 and 1 of strand 0 are paired to bases 4 and 3 of strand 1.</p>
+</li>
+<li>
+<p><strong>run-length encoded dot-parens-plus</strong>: As a shorthand for dot-parens-plus, any sequence of consecutive characters in dot-parens-plus may be replaced by the character followed by a number. For instance, <code>(((((+...........)))))</code>  may be written as <code>(5+.11)5</code>.</p>
+</li>
+<li>
+<p><strong>DU+</strong>: Using DU+ notation, a duplex is represented by <code>D</code> and an unpaired region of length nucleotides is represented by <code>U</code> [<a class="citation" href="#ref-Zadeh10c" id="cite-Zadeh10c">Zadeh10c</a>]. Each duplex is followed immediately by the substructure (specified in DU+ notation) that is &lsquo;enclosed&rsquo; by the duplex. If this substructure includes more than one element, parentheses are used to denote scope. A nick between strands is specified by a &lsquo;+&rsquo;. See the table below for examples.</p>
+</li>
+<li>
+<p><strong>pair list</strong>: A list of zero-based indices <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> such that if <span><span class="MathJax_Preview">p_i = j</span><script type="math/tex">p_i = j</script></span>, bases <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> and <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> are paired, and if <span><span class="MathJax_Preview">p_i = i</span><script type="math/tex">p_i = i</script></span>, base <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> is unpaired. Any secondary structure, including highly-nested pseudoknots, may be specified in this way.</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Dot-parens-plus</th>
+<th>DU+ notation</th>
+<th>Run-length encoded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>((((((((((((..........))))))))))))</code></td>
+<td><code>D12U10</code></td>
+<td><code>(12.10)12</code></td>
+</tr>
+<tr>
+<td><code>((((((((((((+))))))))))))..........</code></td>
+<td><code>D12+U10</code></td>
+<td><code>(12+)12.10</code></td>
+</tr>
+<tr>
+<td><code>((((((((((((+..........))))))))))))</code></td>
+<td><code>D12(+U10)</code></td>
+<td><code>(12+.10)12</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="citations">Citations<a class="headerlink" href="#citations" title="Permanent link">&para;</a></h2>
+<div class="references">
+<table>
+<tbody>
+<tr id="ref-Dirks07">
+<td>Dirks07</td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic Analysis of Interacting Nucleic Acid Strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
+</tr>
+<tr id="ref-Zadeh11a">
+<td>Zadeh11a</td>
+<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and Design of Nucleic Acid Systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+</tr>
+<tr id="ref-Zadeh11b">
+<td>Zadeh11b</td>
+<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic Acid Sequence Design via Efficient Ensemble Defect Optimization</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+</tr>
+<tr id="ref-Serra95">
+<td>Serra95</td>
+<td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
+</tr>
+<tr id="ref-Mathews99">
+<td>Mathews99</td>
+<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
+</tr>
+<tr id="ref-Zuker03">
+<td>Zuker03</td>
+<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
+</tr>
+<tr id="ref-SantaLucia98">
+<td>SantaLucia98</td>
+<td><p>SantaLucia J.: <i>A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
+</tr>
+<tr id="ref-SantaLucia04">
+<td>SantaLucia04</td>
+<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
+</tr>
+<tr id="ref-Koehler05">
+<td>Koehler05</td>
+<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic Properties of DNA Sequences: Characteristic Values for the Human Genome</i>. Bioinformatics. <b>21</b>, (2005)</p></td>
+</tr>
+<tr id="ref-Zadeh10c">
+<td>Zadeh10c</td>
+<td><p>Zadeh J.N.: <i>Algorithms for Nucleic Acid Sequence Design</i>. (2010)</p></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
