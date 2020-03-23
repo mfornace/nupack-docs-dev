@@ -39,16 +39,23 @@ cd mdx_bib
 python setup.py install
 ```
 
-### Building and deploying
+### Building the documentation locally
 
 1. Navigate to the directory containing `mkdocs.yml`.
 2. Run `mkdocs serve` to host the server locally.
 3. Navigate to the URL that is printed in the terminal window.
 4. Edit the markdown files as desired, for example `sources/index.md`. As you edit, the website should update automatically.
-5. When your edits are finished, commit the changes and run `mkdocs gh-deploy -b build`.
-6. Then, to deploy it online, run `bash update.sh` and then `git push` from within the master branch.
 
-The served website should change dynamically as text is changed.
+### Deploying the documentation online
+
+After your edits are finished:
+
+1. Within this branch (`docs`) commit the changes
+2. Run `mkdocs gh-deploy -b build`. 
+3. Assuming that's successful, run `git push` with your changes.
+4. Checkout the `master` branch.
+5. Run `bash update.sh`
+6. Assuming that's successful, run `git push`.
 
 ## Other tips
 
