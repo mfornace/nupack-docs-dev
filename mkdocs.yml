@@ -7,10 +7,6 @@ nav:
   - Model: model.md
   - Analysis: analysis.md
   - Design: design.md
-- NOTEBOOKS:
-  - Analysis: analysis/analysis.md
-  - Design: design.md
-  - Conversion from NUPACK 3: conversion-from-nupack3/conversion-from-nupack3.md
 - Examples: examples.md
 # - Python API:
 #   - Model: api/model.md

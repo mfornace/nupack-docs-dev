@@ -2,7 +2,7 @@
 
 This notebook will show how to create, define, and run a ```Design``` object to perform sequence design of nucleic acids.
 
-Following a generic introduction, example designs will 
+Following a generic introduction, example designs will
 
 ## Importing the necessary classes
 
@@ -35,7 +35,7 @@ The following instruction will assume that a design object called ```design``` h
 
 ## Physical parameters
 
-A ```Design``` object has a property called model that can be overwritten with a new ```ModelSettings``` object to change the material, dangles/coaxial stacking model, temperature, and sodium and magnesium concentrations. 
+A ```Design``` object has a property called model that can be overwritten with a new ```ModelSettings``` object to change the material, dangles/coaxial stacking model, temperature, and sodium and magnesium concentrations.
 
 ```temperature``` is specified in Kelvin (K), and ion concentrations are specified in Molar (M).
 
@@ -121,9 +121,9 @@ design.add_complex('C5', ('B', 'C'), '.10(10+)10.10')
 A test tube ensemble is defined in two steps. First, the ```add_tube``` method is used to add a new tube to the design with a given name and a dictionary mapping the names of on-target complexes ($\Psi^\text{on}$) in the tube to their concentrations. Concentrations are always in units of Molar (M). Second, the method ```add_off_targets``` specifies the set of off-target complexes ($\Psi^\text{off}$) in the tube through three keywords, which can be combined arbitrarily:
 
 * ```maxsize```, integer in $[0,\infty]$, default=0: Adds all complexes of up to ```maxsize``` composed of the strands of complexes in $\Psi^\text{on}$ to $\Psi^\text{off}$ such that $\Psi^\text{off} \cap \Psi^\text{on} = \varnothing$.
-* ```explicit```, list of strings or iterables of strings, default=```None```: Each item in ```explicit``` is either a name of a complex, name of single strand, or iterable of names of strands. 
+* ```explicit```, list of strings or iterables of strings, default=```None```: Each item in ```explicit``` is either a name of a complex, name of single strand, or iterable of names of strands.
 The implied complexes are added to $\Psi^\text{off}$, provided they are not already in $\Psi^\text{on}$.
-* ```exclude```, list of strings or iterables of strings, default=```None```: Each item in ```exclude``` is either a name of a complex, name of single strand, or iterable of names of strands. 
+* ```exclude```, list of strings or iterables of strings, default=```None```: Each item in ```exclude``` is either a name of a complex, name of single strand, or iterable of names of strands.
 The implied complexes are prevented from being added to $\Psi^\text{off}$ when processing ```maxsize``` and ```explicit```.
 
 
@@ -148,7 +148,7 @@ design.add_off_targets('T3', explicit=['C3', ('A', 'A', 'B', 'B'), 'C', ('D', 'D
 
 # specify off-targets combinatorially:
 # all complexes of up to 2 strands that are not on-targets in tube `T4'
-design.add_off_targets('T4', maxsize=2) 
+design.add_off_targets('T4', maxsize=2)
 
 # specify off-targets as the sum of sets
 design.add_off_targets('T5', maxsize=2, explicit=['C3', ('B', 'B', 'B', 'B')] )
@@ -181,7 +181,7 @@ design.add_match_constraint(['a', 'b'], ['d', 'd', 'e'])
 
 Complementarity constraints are used to constraint the concatenation of one list of domains to be the reverse complement of the concatenation of another list of domains. Therefore, the sum of the lenghts of the domains in each list must be the same.
 
-Currently only Watson-Crick complementarity constraints are allowed. 
+Currently only Watson-Crick complementarity constraints are allowed.
 
 In addition to explicit domain list based specification of complementarity constraints, nucleotides that are base paired in the target structure of an on-target complex will have a complementarity constraint applied automatically once user specification is finished and the design algorithm begins.
 
@@ -207,7 +207,7 @@ design = Design()
 
 design.add_domain('a','N'*10)
 design.add_similarity_constraint('a', 'S'*5 + 'K'*5, [0.25, 0.75])
-    
+
 
 # "composition constraint" special case: enforce 45-55% GC content
 design.add_domain('b','N'*20)
@@ -216,10 +216,10 @@ design.add_similarity_constraint('b', 'S'*20, [0.45, 0.55])
 
 ### Window constraint
 
-A window constraint is used to constrain a concatenation of domains to have a sequence that is a substring of a given source sequence. 
-It is specified in two steps. 
-First, the source is defined by a name and a sequence. 
-Then, the constraint itself is specified by giving the list of domains to concatenate and the name of the source sequence. 
+A window constraint is used to constrain a concatenation of domains to have a sequence that is a substring of a given source sequence.
+It is specified in two steps.
+First, the source is defined by a name and a sequence.
+Then, the constraint itself is specified by giving the list of domains to concatenate and the name of the source sequence.
 The constraint can also allow the concatenated domains to have a sequence that is any window from several source sequences by giving a list of their names, instead of just one.
 
 
@@ -230,7 +230,7 @@ design.add_domain('a', 'N'*10)
 design.add_domain('b', 'N'*10)
 design.add_domain('c', 'N'*10)
 design.add_domain('e', 'N'*10)
-    
+
 design.add_source('GFP',
 ('auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggu'
 'cgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagg'
@@ -270,7 +270,7 @@ design.add_domain('b', 'N'*12)
 # define a library of sequences
 design.add_library('toeholds', ['CAGUGG', 'AGCUCG', 'CAGGGC'])
 
-# define a library of codons for each amino acid 
+# define a library of codons for each amino acid
 design.add_library('aaI', ['AUU', 'AUC', 'AUA'])
 design.add_library('aaL', ['CUU', 'CUC', 'CUA', 'CUG', 'UUA', 'UUG'])
 design.add_library('aaV', ['GUU', 'GUC', 'GUA', 'GUG'])
@@ -329,14 +329,14 @@ design.add_pattern_constraints(['AAAA', 'UUUU'], names='B')
 # preventing the same patterns for strand `A' and domain `b'
 design.add_pattern_constraints(['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
 
-# global pattern prevention 
-design.add_pattern_constraints(['AAAA', 'CCCC', 'GGGG', 'UUUU', 
+# global pattern prevention
+design.add_pattern_constraints(['AAAA', 'CCCC', 'GGGG', 'UUUU',
         'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'])
 ```
 
 ### Diversity constraint
 
-New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity. 
+New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity.
 For instance, specifying the constraints that no AAAA, CCCC, GGGG, or UUUU should appear in a strand is equivalent to specifying the constraint that every length 4 window of the strand must have at least 2 nucleotide constraints within. When specified as a diversity constraint, both the intention is more clear and the CSP solver is able to more rapidly make sequence mutations.
 
 Diversity constraints are specified by two numbers:
@@ -393,7 +393,7 @@ design.add_pattern_objective(patterns=['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], name
 
 # global pattern prevention
 # explicitly specify weight
-design.add_pattern_objective(patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU', 
+design.add_pattern_objective(patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU',
         'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'], weight=0.5)
 ```
 
@@ -458,8 +458,8 @@ design.add_energy_equalization_objective(['a', 'b'], energy=-17, weight=0.5)
 
 ## Specifying weights
 
-The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:    
-  
+The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:
+
 
 
 ```python
@@ -511,20 +511,37 @@ design.add_global_objective(weight=2)
 
 ## Specifying algorithm parameters
 
-The default design parameters are shown below. They can be changed by assigning the named attribute.
+The default design parameters are shown below. **TODO fill out**
 
+- `rng_seed = 0`: random number generation seed
+- `f_stop = 0.02`:  stop condition
+- `f_passive = 0.01`:
+- `H_split = 2`:
+- `N_split = 12`:
+- `f_split = 0.99 `:
+- `f_stringent = 0.99`:
+- `dG_clamp = -20`:
+- `M_bad = 300`: number of bad
+- `M_reseed = 50`:
+- `M_reopt = 3`:
+- `f_redecomp = 0.03`:
+- `f_refocus = 0.03`:
+- `cache_bytes_of_RAM = 0`:
+- `min_ppair = 1e-05`:
+- `slowdown = 0`:
+- `log = None`:
+- `decomposition_log = None`:
+- `thermo_log = None`:
+- `time_analysis = 1`:
+
+They can be changed by assigning the named attribute. For example:
 
 ```python
-print('default parameters:', Design().parameters)
-
 design = Design()
 design.parameters.M_reopt = 1
 ```
 
-    default parameters: DesignParameters {rng_seed: 0, f_stop: 0.02, f_passive: 0.01, H_split: 2, N_split: 12, f_split: 0.99, f_stringent: 0.99, dG_clamp: -20, M_bad: 300, M_reseed: 50, M_reopt: 3, f_redecomp: 0.03, f_refocus: 0.03, cache_bytes_of_RAM: 0, min_ppair: 1e-05, slowdown: 0, log: , decomposition_log: , thermo_log: , time_analysis: 1}
-
-
-In addition to the multistate test tube design algorithm parameters, a few others are included in the ```DesignParameters``` object:
+In addition to the multistate test tube design algorithm parameters, a few others are included in the `DesignParameters` object:
 
 * ```seed```: The seed for the random number generator allowing reproducible design runs
 * ```cache_bytes_of_RAM```: The number of bytes of RAM to set as a maximum cache size for thermodynamic block caching
@@ -547,8 +564,7 @@ The information logged for each of these given a non-empty string is as follows:
 
 ## Running the design
 
-Running a design is done by using the ```Design``` object's function call operator, e.g. ```design()```. 
-
+Running a design is done by using the ```Design``` object's function call operator, e.g. ```design()```.
 
 ```python
 design = Design()
@@ -564,17 +580,16 @@ design.add_tube('tube', {'C': 1})
 design.add_off_targets('tube', maxsize=0)
 
 design.add_global_objective()
-design
-
 
 finished = design()
+
 print("design defect:", finished.results[0].defects[0])
 ```
 
-    design defect: 0.0195444017648697
-
+This example prints out `design defect: 0.0195444017648697`, indicating that the stop condition of 0.02 was met.
 
 # Examples
+**TODO make sure this public?**
 
 The following cell imports functions from packages necessary for bokeh visualization of design progress and design results. The function ```run_and_display``` runs the design in a separate thread to allow visualization of design progress in the notebook during design. The function ```notebook_results``` takes a ```DesignResult``` object, saves it to a file (temporary or user specified), and the loads this file into an interactive panel for exploring design defects.
 
@@ -586,14 +601,12 @@ from nupack.residuals import notebook_results
 
 ## Design Evaluation Example (Example 7 from NUPACK 3.2 User Guide)
 
-
 ```python
 from nupack import *
 # set physical parameters
 design = Design()
 design.model = ModelSettings(material='rna06', temperature=(37 + 273.15))
 design.parameters.seed = 93 # set seed to make design repeatable
-
 
 # define domains
 design.add_domain('a', 'N'*6)
@@ -696,48 +709,16 @@ results = run_and_display(design)
 ```
 
 
-
-<div class="bk-root">
-    <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
-    <span id="1001">Loading BokehJS ...</span>
-</div>
-
-
-
-
-    Input your notebook URL (default: 'localhost:8888'):localhost:8889
-
-
-
-
-<script src="http://localhost:56685/autoload.js?bokeh-autoload-element=1002&bokeh-absolute-url=http://localhost:56685&resources=none" id="1002"></script>
-
-
-
 ```python
 results.running()
 ```
 
-
-
-
     True
-
-
-
 
 ```python
 res = results.result()
 notebook_results(res)
 ```
-
-    Input your notebook URL (default: 'localhost:8888'):localhost:8889
-
-
-
-
-<script src="http://localhost:56687/autoload.js?bokeh-autoload-element=1003&bokeh-absolute-url=http://localhost:56687&resources=none" id="1003"></script>
-
 
 ## Design Evaluation Example (Example 8 from NUPACK 3.2 User Guide)
 
@@ -762,7 +743,7 @@ design.add_strand('bottom', ('d',))
 
 # define complex compsed of strands in a given order AND
 # Define target structure for complex
-design.add_complex('stickfigure', ('left', 'top', 'right', 'bottom'), 
+design.add_complex('stickfigure', ('left', 'top', 'right', 'bottom'),
         "U2D8(U2D6(D6(U3+)D3U9D6(U2+U1))U2D8(U2+U1))U1")
 
 # define test tube
@@ -779,14 +760,6 @@ result = design.evaluate()
 notebook_results(result)
 ```
 
-    Input your notebook URL (default: 'localhost:8888'):localhost:8889
-
-
-
-
-<script src="http://localhost:56689/autoload.js?bokeh-autoload-element=1004&bokeh-absolute-url=http://localhost:56689&resources=none" id="1004"></script>
-
-
 # Saving and restarting a Design
 
 When "calling" the design to start the optimization process, two additional arguments must be added for checkpointing to work, `checkpoint_condition` and `checkpoint_handler`.
@@ -797,7 +770,7 @@ When "calling" the design to start the optimization process, two additional argu
 
 
 ```python
-from nupack.design import TimeInterval, WriteToFileCheckpoint 
+from nupack.design import TimeInterval, WriteToFileCheckpoint
 
 result = design(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
 print(result)
