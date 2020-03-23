@@ -18,7 +18,7 @@ See the following links for help on Markdown:
 
 You can edit each `.md` file by:
 
-- editing them directly from GitHub in your browser (click `Commit changes` once done)
+- editing them directly from GitHub in your browser with the pencil button (click `Commit changes` once done)
 - editing them offline by cloning the repository and using any plain text editor (requires basic git know-how).
 
 ## Deploying the documentation
