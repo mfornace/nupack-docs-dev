@@ -1,8 +1,6 @@
 # Preliminaries
 
-This notebook will show how to create, define, and run a ```Design``` object to perform sequence design of nucleic acids.
-
-Following a generic introduction, example designs will
+This documentation will show how to create, define, and run a ```Design``` object to perform sequence design of nucleic acids.
 
 ## Importing the necessary classes
 
