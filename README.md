@@ -30,8 +30,8 @@ The relevant configuration is in `mkdocs.yml`. You can change the page layout th
 2. Run `mkdocs serve` to host the server locally.
 3. Navigate to the URL that is printed in the terminal window.
 4. Edit the markdown files as desired, for example `sources/index.md`. As you edit, the website should update automatically.
-5. When your edits are finished, commit the changes and run `mkdocs gh-deploy -b mkdocs`.
-6. Then, to deploy it online, run `bash update.sh` and then `git push` in the `nupack-documentation` repository.
+5. When your edits are finished, commit the changes and run `mkdocs gh-deploy -b build`.
+6. Then, to deploy it online, run `bash update.sh` and then `git push` from within the master branch.
 
 The served website should change dynamically as text is changed.
 
