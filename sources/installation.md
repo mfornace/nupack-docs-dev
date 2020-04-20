@@ -55,9 +55,12 @@ See the next section for help on opening the Jupyter notebooks.
 Open the Anaconda application and select the JupyterLab option to open a notebook browser. Browse to open the desired notebook using the left toolbar.
 
 ### Opening a Jupyter notebook from the command line
+
+Run the following commands in your terminal from your desired directory:
+
 ```bash
-conda install notebook
-jupyter notebook
+conda install jupyterlab
+jupyter lab
 ```
 
 If no browser window appears, you may try navigating to the displayed link in your terminal (this URL should look like <http://127.0.0.1:8889/?token=78f1ffcdcf04cec0e97e74912e36b4eb5b530aa546411ea3>). If this doesn't work, troubleshoot your Jupyter installation. Browse to open the desired notebook using the GUI in your web browser.
