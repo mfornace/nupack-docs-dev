@@ -1,9 +1,115 @@
 
+
+# Simple analysis
+
+Within the approximations of the secondary structure model that NUPACK uses, exact thermodynamic analysis may be performed, typically in $O(N^3)$ time in the number of nucleotides $N$. For ease of use and compatibility with NUPACK 3, we have provided simple functions for thermodynamic analysis in the `nupack.simple` submodule:
+
+- `pfunc`: calculate a partition function
+- `mfe`: calculate a complex's MFE structure(s) and free energy(s)
+- `count`: calculate the size of the secondary structure ensemble
+- `pairs`: calculate equilibrium base pair probability
+- `prob`: calculate equilibrium structure probability
+- `subopt`: determine a set of suboptimal structures
+- `sample`: randomly generate a set of secondary structures
+- `tube_analysis`: predict equilibrium complex concentrations from a given test tube ensemble
+
+For a more advanced API, see the [Complex analysis](#complex-analysis) and [Test tube analysis](#test-tube-analysis) sections.
+
+## Usage
+
+To use the simple API, you can first import the functions like this:
+
+```python
+from nupack.simple import *
+```
+
+Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`). Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Model](model.md) for help on creating a model object).
+
+`pfunc` returns the complex partition function of a single specified complex:
+
+```python
+partition_function = pfunc(['CCC', 'GGG'], model=Model(parameters='RNA', ensemble='stacking'))
+print(partition_function)
+# --> 1581.5360063360488947
+```
+
+`mfe` returns a list of MFE structures and their associated free energies. If the MFE is unique, the list will be length one:
+
+```python
+mfe_structures = mfe(['CCC', 'GGG'])
+print(mfe_structures)
+# --> [(Structure('(((+)))'), -4.181351661682129)]
+```
+
+`prob` calculates the probability of a given secondary structure appearing in a single specified complex:
+
+```python
+probability = prob(['CCC', 'GGG'], structure='(((+)))')
+print(probability)
+# --> 0.5589045601083861
+```
+
+`subopt` calculates all secondary structures within a specified free energy `gap` of the MFE. The free energy gap is specified in kcal/mol:
+
+```python
+subopt_structures = subopt(['CCC', 'GGG'], gap=1.0)
+print(subopt_structures)
+# --> [
+#   (Structure('(((+)))'), -4.181351661682129),
+#   (Structure('((.+)).'), -3.3813514709472656)
+# ]
+```
+
+`pairs` calculates the equilibrium base pair probability matrix as a `numpy.ndarray`. The diagonal of the matrix is the probability that a given base is unpaired.
+
+```python
+probability_matrix = pairs(['CCC', 'GGG'])
+import numpy as np
+print(np.round(probability_matrix, 3))
+# -->
+# [[0.17  0.    0.    0.002 0.222 0.607]
+#  [0.    0.01  0.    0.223 0.739 0.028]
+#  [0.    0.    0.288 0.683 0.029 0.   ]
+#  [0.002 0.223 0.683 0.092 0.    0.   ]
+#  [0.222 0.739 0.029 0.    0.01  0.   ]
+#  [0.607 0.028 0.    0.    0.    0.365]]
+```
+
+`sample` calculates a specified `number` of random secondary structures drawn according to the equilibrium Boltzmann distribution:
+
+```python
+sampled_structures = sample(['CCC', 'GGG'], number=3)
+print(sampled_structures)
+# --> [Structure('.((+)).'), Structure('(((+)))'), Structure('((.+)).')]
+```
+
+`count` calculates the number of secondary structures that can form for a specified complex:
+
+```python
+ensemble_size = count(['CCC', 'GGG'])
+print(ensemble_size)
+# --> 19
+```
+
+`tube_analysis` calculates the predicted complex concentrations in a test tube, given a set of strands, respective strand concentrations, and a `max_size` of complex to consider.
+
+```python
+complex_concentrations = tube_analysis(['CCCCC', 'GGGGG'], [1e-5, 1e-4], max_size=2)
+print(complex_concentrations)
+# --> {
+#   ('GGGGG', 'GGGGG'): 0.0,
+#   ('GGGGG',): 9.030597007787946e-05,
+#   ('CCCCC',): 3.0597007787941787e-07,
+#   ('CCCCC', 'CCCCC'): 0.0,
+#   ('CCCCC', 'GGGGG'): 9.694029922120778e-06
+# }
+```
+
 # Complex analysis
 
 ## Specification
 
-Within the approximations of the secondary structure model that NUPACK uses, exact thermodynamic analysis may be performed, typically in $O(N^3)$ time in the number of nucleotides $N$, To use one of the dynamic programming algorithms, create an `Analysis` object by specifying the secondary structure model to use:
+NUPACK 4 provides a more flexible and efficient interface for thermodynamic analysis as well. To use this interface, first create an `Analysis` object by specifying the secondary structure model to use:
 
 ```python
 analysis = nupack.Analysis(model=model)
