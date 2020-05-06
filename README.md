@@ -16,7 +16,7 @@ See the following links for help on Markdown:
 - [Cheat sheet](https://www.markdownguide.org/cheat-sheet/)
 - [Table generator for convenience](https://www.tablesgenerator.com/markdown_tables)
 
-You can edit each `.md` file by:
+You can edit each `.md` file in the `sources` directory by:
 
 - editing them directly from GitHub in your browser with the pencil button (click `Commit changes` once done)
 - editing them offline by cloning the repository and using any plain text editor (requires basic git know-how).
