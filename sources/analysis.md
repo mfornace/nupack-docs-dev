@@ -1,6 +1,6 @@
 
 
-# Simple analysis
+# API for Simple analysis 
 
 Within the approximations of the secondary structure model that NUPACK uses, exact thermodynamic analysis may be performed, typically in $O(N^3)$ time in the number of nucleotides $N$. For ease of use and compatibility with NUPACK 3, we have provided simple functions for thermodynamic analysis in the `nupack.simple` submodule:
 
