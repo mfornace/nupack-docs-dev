@@ -1,0 +1,3 @@
+[submodule "mdx_bib"]
+	path = mdx_bib
+	url = https://github.com/darwindarak/mdx_bib
