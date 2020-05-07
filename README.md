@@ -23,28 +23,37 @@ You can edit each `.md` file in the `sources` directory by:
 
 ## Deploying the documentation
 
-### Prerequisites for deploying documentation
+### Downloading this repository
 
-Install the prerequisite packages: `mkdocs` and `pydoc-markdown`:
+In Terminal, download the current git repository:
+
+```bash
+cd ~/where/you/want/the/repo
+git clone https://github.com/mfornace/nupack-documentation -b docs --recurse-submodules
+```
+
+### Building the documentation locally
+
+First, open a Terminal (any directory) and install the prerequisite packages: `mkdocs` and `pydoc-markdown`:
 
 ```bash
 pip install mkdocs pydoc-markdown pymdown-extensions
 ```
 
-Install this bibliography package. It doesn't seem to be on pypi so you have to do this:
+Next, navigate to the top-level directory of this repository (`mkdocs.yml` should be visible if you run `ls`). Install the bibliography package like this:
 
 ```bash
-git clone https://github.com/darwindarak/mdx_bib
 cd mdx_bib
 python setup.py install
+cd ..
 ```
 
-### Building the documentation locally
+The rest is pretty simple:
 
-1. Navigate to the directory containing `mkdocs.yml`.
-2. Run `mkdocs serve` to host the server locally.
-3. Navigate to the URL that is printed in the terminal window.
-4. Edit the markdown files as desired, for example `sources/index.md`. As you edit, the website should update automatically.
+1. Run `mkdocs serve` to host the server locally.
+2. Navigate to the URL that is printed in the terminal window.
+3. Edit the markdown files as desired, for example `sources/index.md`. As you edit, the website should update automatically. For editing, I use Visual Studio Code, but emacs, vim, or any other plain text editor will work.
+4. `CTRL-C` or close the Terminal window when you're done.
 
 ### Deploying the documentation online
 
