@@ -2,7 +2,7 @@
 
 ## Physical Model
 
-NUPACK algorithms are formulated in terms of nucleic acid secondary structure. In NUPACK 4, pseudoknots are excluded from the structural ensemble. NUPACK algorithms operate over two fundamental ensembles:
+NUPACK algorithms are formulated in terms of nucleic acid secondary structure. NUPACK algorithms operate over two fundamental ensembles:
 
 - **Complex ensemble:** The ensemble of all (unpseudoknotted connected) secondary structures for an arbitrary number of interacting RNA or DNA strands.
 - **Test tube ensemble:** The ensemble of a dilute solution containing an arbitrary number of RNA or DNA strand species (introduced at user-specified concentrations) interacting to form an arbitrary number of complex species.
@@ -12,7 +12,8 @@ Furthermore, to enable reaction pathway engineering of dynamic hybridization cas
 - The **sequence**, $\phi$, of one or more interacting RNA strands is specified as a list of bases $\phi^a\in\{$A,C,G,U$\}$ for $a=1,\dots,|\phi|$. For DNA, $\phi^a\in\{$A,C,G,T$\}$.
 - A **secondary structure**, $s$, of one or more interacting RNA strands is defined by a set of base pairs, each a Watson--Crick pair \[A$\cdot$U or C$\cdot$G\] or a wobble pair \[G$\cdot$U\]). For DNA, the corresponding Watson--Crick pairs are A$\cdot$T or C$\cdot$G and there are no wobble pairs. 
 - A **polymer graph** representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5$'$ to 3$'$ around the circumference with a *nick* between each strand, and drawing straight lines connecting paired bases.
-- A secondary structure is *unpseudoknotted* if there exists a strand ordering for which the polymer graph has no crossing lines, or *pseudoknotted* if all strand orderings contain crossing lines. A secondary structure is *connected* if no subset of the strands is free of the others.
+- A secondary structure is *unpseudoknotted* if there exists a strand ordering for which the polymer graph has no crossing lines, or *pseudoknotted* if all strand orderings contain crossing lines. In NUPACK 4, pseudoknots are excluded from the structural ensemble. 
+- A secondary structure is *connected* if no subset of the strands is free of the others.
 - A **complex** of $L$ interacting strands with strand ordering, $\pi$, has a **structural ensemble** containing all connected polymer graphs with no crossing lines [@Dirks07]. (We dispense with our prior convention [@Dirks07; @Zadeh11a; @Zadeh11b] of calling this entity an **ordered complex**.)
 
 If a complex contains multiple strands with the same sequence, subtleties arise in the definition of the structural ensemble and in the calculation of experimental observables [@Dirks07]. Let $\Gamma$ denote the structural ensemble in which each strand is treated as distinct (i.e., each strand has a unique identifier in $\{1,\dots,L\}$) and let $\Gamma'$ denote the ensemble in which strands with the same sequence are treated as indistinguishable. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases; otherwise the structures are distinct [@Dirks07]. The ensemble $\Gamma'\subseteq\Gamma$ is a maximal subset of distinct secondary structures for strand ordering $\pi$.
