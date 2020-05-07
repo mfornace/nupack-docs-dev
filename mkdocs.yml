@@ -4,10 +4,10 @@ nav:
 - Documentation:
   - Installation: installation.md
   - Conventions: basics.md
-  - Model: model.md
+  - Physical Model: model.md
   - Analysis: analysis.md
   - Design: design.md
-- Examples: examples.md
+#- Examples: examples.md
 # - Python API:
 #   - Model: api/model.md
 #   - Analysis: api/analysis.md
@@ -15,7 +15,7 @@ nav:
 #   - Concentrations: api/concentration.md
 #   - Drawing: api/drawing.md
 site_dir: _build/site
-site_name: NUPACK Documentation
+site_name: NUPACK User Guide
 
 theme: mkdocs
 # theme:
