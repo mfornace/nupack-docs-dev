@@ -1,12 +1,26 @@
 docs_dir: ./sources
 nav:
 - Overview: index.md
-- Documentation:
-  - Installation: installation.md
-  - Conventions: basics.md
   - Physical Model: model.md
-  - Analysis: analysis.md
-  - Design: design.md
+  - Conventions: conventions.md
+  - Versions: versions.md
+  - License: license.md
+- Analysis:
+  - Complex Analysis: complex-analysis.md
+  - Test Tube Analysis: tube-analysis.md
+- Design: 
+  - Complex Design: complex-design.md
+  - Test Tube Design: tube-design.md
+- Getting Started: 
+  - Installation: installation.md
+  - Examples: examples.md
+- Acknowledgments: acknowledgments.md
+- References:
+#  - Installation: installation.md
+#  - Conventions: basics.md
+#  - Physical Model: model.md
+#  - Analysis: analysis.md
+#  - Design: design.md
 #- Examples: examples.md
 # - Python API:
 #   - Model: api/model.md
@@ -15,7 +29,7 @@ nav:
 #   - Concentrations: api/concentration.md
 #   - Drawing: api/drawing.md
 site_dir: _build/site
-site_name: NUPACK Server Help
+site_name: NUPACK Source Code User Guide
 
 theme: mkdocs
 # theme:
