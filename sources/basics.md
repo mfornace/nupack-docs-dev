@@ -1,8 +1,8 @@
 # Conventions
 
-## Common notation
+## Terminology
 
-NUPACK algorithms are formulated in terms of nucleic acid secondary structure. In NUPACK 4, pseudoknots are always excluded from the structural ensemble.
+NUPACK algorithms are formulated in terms of nucleic acid secondary structure. In NUPACK 4, pseudoknots are excluded from the structural ensemble.
 
 - The **sequence**, $\phi$, of one or more interacting RNA strands is specified as a list of bases $\phi^a\in\{$A,C,G,U$\}$ for $a=1,\dots,|\phi|$ (T replaces U for DNA).
 - A **secondary structure**, $s$, of one or more interacting RNA strands is defined by a set of base pairs (each a Watson--Crick pair \[A$\cdot$U or C$\cdot$G\] or a wobble pair \[G$\cdot$U\]).
