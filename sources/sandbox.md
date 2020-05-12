@@ -5,7 +5,9 @@
 Prefix
 
 ```python
-from nupack.script import *
+#from nupack.script import *
+
+import nupack
 
 strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 strand('B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
@@ -22,9 +24,44 @@ structure('S3','U1 D3 U8 U9')
 #strand-set('myPsi0',{['A':1e-6],['B':1e-8]})
 #complex-set('myPsi',{maxsize=3,explicit=['C2'],exclude=['C1']})
 
-tube('T1', strand_set={'A': 1e-6, 'B': 1e-8}, complex_set=dict(maxsize=3, explicit='C2', exclude='C1'))
+# calculate pfuncs and concentrations in separate steps 
+# (as a result, don't define "tube")
 
-analyze('T1')
+my_complexes_ = complex_analysis(strands={'A', 'B'},   # calculate pfuncs 
+    complexes=dict(maxsize=3, explicit='C2', exclude='C1'),
+    compute = [pairs,mfe])
+
+tube_results = complex_concentrations(strands={'A': 1e-6, 'B': 1e-8}, my_complexes) #calculate concentrations
+
+# or define tube and calculate pfuncs and 
+
+tube('T1', strands={'A': 1e-6, 'B': 1e-8},  
+    complexes=dict(maxsize=3, explicit='C2', exclude='C1'))
+
+tube_results = tube_analysis('T1', compute = [pairs,mfe]) # calculate pfuncs and concentrations
+
+#tube_concentrations(strands={'A': 1e-6, 'B': 1e-8}, my_complexes) # calculate concentrations 
+
+tube_analysis(['T1','T2'])
+analyze(['T1','T2']pfunc,pairs,mfe)
+analyze(')
+tube_analysis('T1', compute = [pairs])
+```
+
+## Corresponding Utilities
+
+```python
+my_pfunc = pfunc('C1',my_model)
+my_pairs = pairs('C2')
+my_mfe = mfe('C1')
+print(my_mfe)
+
+my_energy = energy('C1','S1')
+my_prob = prob('C1','S1')
+
+my_count = count('C1')
+my_subopt = subopt('C1',gap=1.2)
+my_samples = sample('C1',numstructures = 100)
 ```
 
 ## Alternative analysis
