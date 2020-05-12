@@ -37,7 +37,7 @@ git clone https://github.com/mfornace/nupack-documentation -b docs --recurse-sub
 First, open a Terminal (any directory) and install the prerequisite packages: `mkdocs` and `pydoc-markdown`:
 
 ```bash
-pip install mkdocs pydoc-markdown pymdown-extensions
+pip install mkdocs pydoc-markdown pymdown-extensions mkdocs-material
 ```
 
 Next, navigate to the top-level directory of this repository (`mkdocs.yml` should be visible if you run `ls`). Install the bibliography package like this:
@@ -96,7 +96,7 @@ git push
 After your edits are finished:
 
 1. Within this branch (`docs`) commit the changes
-2. Run `mkdocs gh-deploy -b build`. 
+2. Run `mkdocs gh-deploy -b build`.
 3. Assuming that's successful, run `git push` with your changes.
 4. Checkout the `master` branch.
 5. Run `bash update.sh`
