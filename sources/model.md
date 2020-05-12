@@ -1,5 +1,5 @@
 
-# Secondary structure model
+
 
 ## Model settings
 
