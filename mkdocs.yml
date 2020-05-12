@@ -9,15 +9,19 @@ nav:
 #- Analysis:
 #  - Complex Analysis: complex-analysis.md
 #  - Test Tube Analysis: tube-analysis.md
-#- Design: 
+#- Design:
 #  - Complex Design: complex-design.md
 #  - Test Tube Design: tube-design.md
-#- Getting Started: 
+#- Getting Started:
 #  - Installation: installation.md
 #  - Examples: examples.md
 #- Acknowledgments: acknowledgments.md
 #- References:
 #  - Installation: installation.md
+- Sandbox: sandbox.md
+- Markdown Examples:
+  - Subsection 1: markdown.md
+  - Subsection 2: markdown-sub.md
 - Conventions: basics.md
 - Physical Model: model.md
 - Analysis: analysis.md
@@ -32,13 +36,16 @@ nav:
 site_dir: _build/site
 site_name: NUPACK User Guide
 
-theme: mkdocs
+theme:
+  name: material
+  language: en
+
 # theme:
 #   name: material
-#   language: en
-#   palette:
 #     primary: orange
 #     accent: orange
+#   language: en
+#   palette:
 
 plugins:
   - search
@@ -46,17 +53,19 @@ plugins:
 
 markdown_extensions:
   - pymdownx.arithmatex
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed
   - footnotes
   - sane_lists
   - smarty
   - admonition
+  # - codehilite
   # - abbr
   - pymdownx.betterem:
       smart_enable: all
   - toc:
       permalink: true
-  # - codehilite:
-  #     guess_lang: false
   - mdx_bib:
       bibtex_file: nupack.bib
       order: unsorted
