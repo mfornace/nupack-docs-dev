@@ -55,7 +55,43 @@ The rest is pretty simple:
 3. Edit the markdown files as desired, for example `sources/index.md`. As you edit, the website should update automatically. For editing, I use Visual Studio Code, but emacs, vim, or any other plain text editor will work.
 4. `CTRL-C` or close the Terminal window when you're done.
 
-### Deploying the documentation online
+### Committing and syncing changes with GitHub
+
+After your current round of edits are finished, open a Terminal window in the working repository:
+
+```bash
+cd /path/to/my/docs
+ls # should show mkdocs.yml and other top-level files
+```
+
+Next, look at the status of the repository by running `git status`. This should tell you which files you've added or modified.
+
+For each file or folder that you want to commit your changes, run the `git add` command:
+
+```bash
+git add sources/index.md # example
+git add sources # example to add a whole folder
+```
+
+Now your changes are staged locally. You can run `git status` again to look at the repository status. Now commit all of these staged changes, which is most easily done like this:
+
+```bash
+git commit -m "my message describing the work that was done"
+```
+
+Now your local branch is up to date, and you need to sync it with GitHub. First, you can make sure you haven't missed someone else's changes by running:
+
+```bash
+git pull
+```
+
+Normally this should just work, but if it shows any errors, you may need to run `git merge-tool` before continuing (this is a little tricky, see [here](https://stackoverflow.com/questions/13719122/how-to-use-opendiff-as-default-mergetool) to use the opendiff GUI). Assuming things are merged and `git status` looks OK, run the following to upload your changes to GitHub:
+
+```bash
+git push
+```
+
+### Deploying the documentation online (e.g. for the lab)
 
 After your edits are finished:
 
