@@ -62,6 +62,8 @@ my_samples = sample(complex = 'C1', num_sample = 100)
 
 
 ```python
+
+clear all
 domain('a', 'AAAA')
 domain('b', 'A4') # equivalent sequence specification
 
@@ -97,23 +99,23 @@ t2 = Tube('t2', on={c1: 1e-8, c2: 1e-8},
 # define hard constraints
 
 #match constraints
-match(['c'], ['b', 'e*'])
-match(['a', 'b'], ['d', 'd', 'e'])
+constraint.match('myconstraints',['c'], ['b', 'e*'])
+constraint.match('myconstraints',['a', 'b'], ['d', 'd', 'e'])
 
 #complementarity constraints
-complement(['a', 'b'], ['c', 'd', 'e'])
+constraint.complement('myconstraints',['a', 'b'], ['c', 'd', 'e'],allow_wobble=true) # or should flag be global?
 
-#allow designer to use G.U wobble pairs for RNA
-allow_wobble = true
+#allow designer to use G.U wobble pairs
+constraint.complement.allow_wobble = true
 
 #force wobble pairs
 domain('e',S2)
 domain('f',S2)
-allow_wobble = true
-complement('e','f')
+constraint.complement.allow_wobble = true ##???
+constraint.complement('myconstraints','e','f',allow_wobble = true)
 
 # similarity constraint (enforce 45-55% GC content)
-similarity('b', 'S20', [0.45, 0.55])
+constraint.similarity('myconstraints','b', 'S20', [0.45, 0.55])
 
 # window constraint
 
@@ -126,32 +128,88 @@ source('GFP',
 'ucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuuc'
 'uucaaggacgacggcaacuacaag') # do we have to split sequence into separate strings like this?
 
-window(['a', 'b*'], 'GFP')
+constraint.window('myconstraints',['a', 'b*'], 'GFP')
 
 # library constraint
 catalog('toeholds', ['CAGUGG', 'AGCUCG', 'CAGGGC'])
-library('a', 'toeholds') #hmmm...naming issue
+constraint.library('myconstraints','a', 'toeholds') #hmmm...naming issue
 
 # pattern prevention constraints
-pattern(['AAAA', 'UUUU'], names='a')
-pattern(['AAAA', 'UUUU'], names='B')
-pattern(['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
-pattern(['AAAA', 'CCCC', 'GGGG', 'UUUU',
+constraint.pattern('myconstraints',patterns = ['AAAA', 'UUUU'], names='a')
+constraint.pattern('myconstraints',['AAAA', 'UUUU'], names='B')
+constraint.pattern('myconstraints',['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
+constraint.pattern('myconstraints',['AAAA', 'CCCC', 'GGGG', 'UUUU',
         'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY']) #global constraint
 
 # diversity constraint
-diversity(word=4, diversity=2) #global
-diversity(word=6, diversity=3)
-diversity_constraints(word = 10, diversity = 4, names=['a', 'B'])
+constraint.diversity('myconstraints', word = 4, diversity = 2) #global
+constraint.diversity('myconstraints', word = 6, diversity = 3)
+constraint.diversity('myconstraints', word = 10, diversity = 4, names=['a', 'B'])
 
+# Define soft constraints
+
+penalty.pattern('mypenalties',patterns=['AAAA', 'UUUU'], names='a')
+penalty.pattern('mypenalties',patterns=['AAAA', 'UUUU'], names='B')
+penalty.pattern('mypenalties',patterns=['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
+penalty.pattern('mypenalties',patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU',
+        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'], weight=0.5) # specify weight
+
+penalty.similarity('mypenalties','b', 'S'*20, [0.45, 0.55], weight=0.25)
+
+penalty.ssm('mypenalties',['C', 'D'], word = 4, weight = 0.15)
+penalty.ssm('mypenalties',['C', 'D'], word = 5, weight = 0.15)
+penalty.ssm('mypenalties',['C', 'D'], word = 6, weight = 0.15) # can SSM penalties be applied to strands, or globally?
+
+penalty.energy_diff('mypenalties',['a', 'b']) # min energy diff to median 
+penalty.energy_diff('mypenalties',['a', 'b'], energy_ref = -17, weight=0.5) # energy diff to reference
+
+# Define defect weights
+# weights specified for a single granularity level
+weight('myweights', domain = 'a', weight = 2)
+weight('myweights', complex = 'S3', weight = 4)
+weight('myweights', tube = 'T2', weight = 2)
+
+# weights for combinations of adjacent granularity levels
+weight('myweights', weight = 5, tube = 'T1', complex = 'S1') # intersection or union?
+weight('myweights', weight = 0.75, strand = 'A', domain = 'b')
+weight('myweights', weight = 0.5, tube = 'T2', complex = 'S4', strand = 'D', domain = 'a')
+
+# weights for nonadjacent granularity levels
+weight('myweights', weight = 3, tube = 'T2', domain = 'd')
+weight('myweights', weight = 3, tube = 'T2', strand = 'C')
+weight('myweights', weight = 0.1, complex = 'S4', domain = 'b')
+
+## Specifying algorithm parameters
+
+The default design parameters are shown below. **TODO fill out**
+
+- `rng_seed = 0`: random number generation seed
+- `f_stop = 0.02`:  stop condition
+- `f_passive = 0.01`:
+- `H_split = 2`:
+- `N_split = 12`:
+- `f_split = 0.99 `:
+- `f_stringent = 0.99`:
+- `dG_clamp = -20`:
+- `M_bad = 300`: number of bad
+- `M_reseed = 50`:
+- `M_reopt = 3`:
+- `f_redecomp = 0.03`:
+- `f_refocus = 0.03`:
+- `cache_bytes_of_RAM = 0`:
+- `min_ppair = 1e-05`:
+- `slowdown = 0`:
+- `log = None`:
+- `decomposition_log = None`:
+- `thermo_log = None`:
+- `time_analysis = 1`:
+
+parameters('myparameters',stop = 0.01, seed = 1, trials = 10) 
 
 # run the job
 myresults = design(tubes=[t1, t2, crosstalk], complexes = [c1, c2],
-    hard_constraints=[GCContent(0.4, 0.6)], soft_constraints=[SSMConstraint()],
-    defect_weights={t1: 0.5}, trials=5, stop=0.05)
-```
-
-
+    constraints = 'myconstraints', penalties = 'mypenalties',
+    weights = 'myweights', parameters = 'myparameters')
 ```
 
 
