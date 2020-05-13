@@ -165,23 +165,24 @@ penalty.energy_diff('mypenalties',['a', 'b'], energy_ref = -17, weight=0.5) # en
 
 # Define defect weights
 # weights specified for a single granularity level
-weight('myweights', domain = 'a', weight = 2)
-weight('myweights', complex = 'S3', weight = 4)
-weight('myweights', tube = 'T2', weight = 2)
+weight('myweights', 2, domain = 'a')
+weight('myweights', 4, complex = 'S3')
+weight('myweights', 2, tube = 'T2')
 
 # weights for combinations of adjacent granularity levels
-weight('myweights', weight = 5, tube = 'T1', complex = 'S1') # intersection or union?
-weight('myweights', weight = 0.75, strand = 'A', domain = 'b')
-weight('myweights', weight = 0.5, tube = 'T2', complex = 'S4', strand = 'D', domain = 'a')
+weight('myweights', 5, tube = 'T1', complex = 'S1') # how to denote intersection 
+weight('myweights', 0.75, strand = 'A', domain = 'b')
+weight('myweights', 0.5, tube = 'T2', complex = 'S4', strand = 'D', domain = 'a')
 
 # weights for nonadjacent granularity levels
-weight('myweights', weight = 3, tube = 'T2', domain = 'd')
-weight('myweights', weight = 3, tube = 'T2', strand = 'C')
-weight('myweights', weight = 0.1, complex = 'S4', domain = 'b')
+weight('myweights', 3, tube = 'T2', domain = 'd')
+weight('myweights', 3, tube = 'T2', strand = 'C')
+weight('myweights', 0.1, complex = 'S4', domain = 'b')
 
 ## Specifying algorithm parameters
-# `rng_seed = 0`: random number generation seed
-# `f_stop = 0.02`:  stop condition
+# `seed = 0`: random number generation seed
+# `stop = 0.02`:  stop condition
+# 'trials = 1': number of independent design trials
 # `f_passive = 0.01`:
 # `H_split = 2`:
 # `N_split = 12`:
@@ -201,7 +202,7 @@ weight('myweights', weight = 0.1, complex = 'S4', domain = 'b')
 # `thermo_log = None`:
 # `time_analysis = 1`:
 
-parameters('myparameters',stop = 0.01, seed = 1, trials = 10) 
+parameters('myparameters', stop = 0.01, seed = 1, trials = 10) 
 
 # run the job
 myresults = tube_design(tubes=['T1', 'T2', 'Crosstalk'],
