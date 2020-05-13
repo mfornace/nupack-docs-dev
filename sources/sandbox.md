@@ -180,34 +180,31 @@ weight('myweights', weight = 3, tube = 'T2', strand = 'C')
 weight('myweights', weight = 0.1, complex = 'S4', domain = 'b')
 
 ## Specifying algorithm parameters
-
-The default design parameters are shown below. **TODO fill out**
-
-- `rng_seed = 0`: random number generation seed
-- `f_stop = 0.02`:  stop condition
-- `f_passive = 0.01`:
-- `H_split = 2`:
-- `N_split = 12`:
-- `f_split = 0.99 `:
-- `f_stringent = 0.99`:
-- `dG_clamp = -20`:
-- `M_bad = 300`: number of bad
-- `M_reseed = 50`:
-- `M_reopt = 3`:
-- `f_redecomp = 0.03`:
-- `f_refocus = 0.03`:
-- `cache_bytes_of_RAM = 0`:
-- `min_ppair = 1e-05`:
-- `slowdown = 0`:
-- `log = None`:
-- `decomposition_log = None`:
-- `thermo_log = None`:
-- `time_analysis = 1`:
+# `rng_seed = 0`: random number generation seed
+# `f_stop = 0.02`:  stop condition
+# `f_passive = 0.01`:
+# `H_split = 2`:
+# `N_split = 12`:
+# `f_split = 0.99 `:
+# `f_stringent = 0.99`:
+# `dG_clamp = -20`:
+# `M_bad = 300`: number of bad
+# `M_reseed = 50`:
+# `M_reopt = 3`:
+# `f_redecomp = 0.03`:
+# `f_refocus = 0.03`:
+# `cache_bytes_of_RAM = 0`:
+# `min_ppair = 1e-05`:
+# `slowdown = 0`:
+# `log = None`:
+# `decomposition_log = None`:
+# `thermo_log = None`:
+# `time_analysis = 1`:
 
 parameters('myparameters',stop = 0.01, seed = 1, trials = 10) 
 
 # run the job
-myresults = design(tubes=[t1, t2, crosstalk], complexes = [c1, c2],
+myresults = tube_design(tubes=['T1', 'T2', 'Crosstalk'],
     constraints = 'myconstraints', penalties = 'mypenalties',
     weights = 'myweights', parameters = 'myparameters')
 ```
