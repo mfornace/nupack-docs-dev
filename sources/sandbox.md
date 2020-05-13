@@ -1,5 +1,9 @@
 # Sandbox
 
+```python
+design.domains['a2'] = 'ATCGACTACA'
+```
+
 ## Proposed imperative approach
 
 Prefix
@@ -7,11 +11,16 @@ Prefix
 ```python
 #from nupack.script import *
 
-import nupack
+from nupack.global_job import *
 
 strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 strand('B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
 strand('C','AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
+
+from nupack import Design
+
+design = Design()
+design.strand('A', 'CATGTACGA')
 
 complex('C1', ['A'])
 complex('C2', ['A', 'B', 'B', 'C'])
@@ -24,23 +33,23 @@ structure('S3','U1 D3 U8 U9')
 #strand-set('myPsi0',{['A':1e-6],['B':1e-8]})
 #complex-set('myPsi',{maxsize=3,explicit=['C2'],exclude=['C1']})
 
-# calculate pfuncs and concentrations in separate steps 
+# calculate pfuncs and concentrations in separate steps
 # (as a result, don't define "tube")
 
-my_complexes_ = complex_analysis(strands={'A', 'B'},   # calculate pfuncs 
+my_complexes_ = complex_analysis(strands={'A', 'B'},   # calculate pfuncs
     complexes=dict(maxsize=3, explicit='C2', exclude='C1'),
     compute = [pairs,mfe])
 
 tube_results = complex_concentrations(strands={'A': 1e-6, 'B': 1e-8}, my_complexes) #calculate concentrations
 
-# or define tube and calculate pfuncs and 
+# or define tube and calculate pfuncs and
 
-tube('T1', strands={'A': 1e-6, 'B': 1e-8},  
+tube('T1', strands={'A': 1e-6, 'B': 1e-8},
     complexes=dict(maxsize=3, explicit='C2', exclude='C1'))
 
 tube_results = tube_analysis('T1', compute = [pairs,mfe]) # calculate pfuncs and concentrations
 
-#tube_concentrations(strands={'A': 1e-6, 'B': 1e-8}, my_complexes) # calculate concentrations 
+#tube_concentrations(strands={'A': 1e-6, 'B': 1e-8}, my_complexes) # calculate concentrations
 
 tube_analysis(['T1','T2'])
 analyze(['T1','T2']pfunc,pairs,mfe)
@@ -112,7 +121,7 @@ t1 = Tube(on={c1: 1e-8, c2: 1e-8},
         constraints, weights)
 
 
-t2 = Tube(on={c1: 1e-8, c2: 1e-8},
+t2 = Tube(on={c1: (1e-8, s1), c2: (1e-8, s2)},
     off={maxsize=3, include=[c2], exclude=[c1]},
     constraints=[PatternConstraint('...'), ...],
     weights={c1: 0.5})
