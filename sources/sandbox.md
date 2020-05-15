@@ -27,7 +27,7 @@ my_results = tube_analysis(tubes = ['T1', 'T2'], compute = [pairs,mfe]) # calcul
 #strand-set('myPsi0',{['A':1e-6],['B':1e-8]})
 #complex-set('myPsi',{maxsize=3,explicit=['C2'],exclude=['C1']})
 
-# calculate pfuncs and concentrations in separate steps 
+# calculate pfuncs and concentrations in separate steps
 # (as a result, don't define "tube")
 
 my_complexes = complex_analysis(strands={'A', 'B'},   # calculate pfuncs 
@@ -291,7 +291,7 @@ t1 = Tube(on={c1: 1e-8, c2: 1e-8},
         constraints, weights)
 
 
-t2 = Tube(on={c1: 1e-8, c2: 1e-8},
+t2 = Tube(on={c1: (1e-8, s1), c2: (1e-8, s2)},
     off={maxsize=3, include=[c2], exclude=[c1]},
     constraints=[PatternConstraint('...'), ...],
     weights={c1: 0.5})
