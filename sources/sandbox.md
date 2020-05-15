@@ -98,11 +98,36 @@ t2 = Tube('t2', on={c1: 1e-8, c2: 1e-8},
 
 # define hard constraints
 
+
+constraint('myconstraints', 
+    match: {['c'], ['b', 'e*']},
+    match: {['a', 'b'], ['d', 'd', 'e']},
+    complement: {allow_wobble=true}, # global flag (?)
+    complement: {['a', 'b'], ['c', 'd', 'e'],allow_wobble=true}, # local flag (?)
+    similarity: {'b', 'S20', [0.45, 0.55]},
+    library: {'a', 'toeholds'},
+    pattern: {['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b']},
+    pattern: {'AAAA', 'CCCC', 'GGGG', 'UUUU',
+        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'},
+    diversity: {word = 4, diversity = 2}
+    diversity: {word = 6, diversity = 3}
+    diversity: {word = 10, diversity = 4, names=['a', 'B']})
+
+
+
+
+constraint.match('myconstraints',['c'], ['b', 'e*'])
+constraint.match('myconstraints',['a', 'b'], ['d', 'd', 'e'])
+complement: 
+
 #match constraints
+constraint('myconstraints', match: {['c'], ['b', 'e*']})
 constraint.match('myconstraints',['c'], ['b', 'e*'])
 constraint.match('myconstraints',['a', 'b'], ['d', 'd', 'e'])
 
 #complementarity constraints
+constraint('myconstraints', complement: 
+    {['a', 'b'], ['c', 'd', 'e'],allow_wobble=true}) # or should flag be global?
 constraint.complement('myconstraints',['a', 'b'], ['c', 'd', 'e'],allow_wobble=true) # or should flag be global?
 
 #allow designer to use G.U wobble pairs
@@ -132,27 +157,31 @@ constraint.window('myconstraints',['a', 'b*'], 'GFP')
 
 # library constraint
 catalog('toeholds', ['CAGUGG', 'AGCUCG', 'CAGGGC'])
+constraint('myconstraints', library: ['a', 'toeholds']) #hmmm...naming issue
 constraint.library('myconstraints','a', 'toeholds') #hmmm...naming issue
 
 # pattern prevention constraints
-constraint.pattern('myconstraints',patterns = ['AAAA', 'UUUU'], names='a')
-constraint.pattern('myconstraints',['AAAA', 'UUUU'], names='B')
+constraint('myconstraints', pattern: ['AAAA', 'UUUU'], names='a')
+constraint('myconstraints', pattern: ['AAAA', 'UUUU'], names='B')
 constraint.pattern('myconstraints',['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
 constraint.pattern('myconstraints',['AAAA', 'CCCC', 'GGGG', 'UUUU',
         'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY']) #global constraint
 
 # diversity constraint
-constraint.diversity('myconstraints', word = 4, diversity = 2) #global
+constraint('myconstraints', diversity: [word = 4, diversity = 2]) #global
 constraint.diversity('myconstraints', word = 6, diversity = 3)
 constraint.diversity('myconstraints', word = 10, diversity = 4, names=['a', 'B'])
 
 # Define soft constraints
 
-penalty.pattern('mypenalties',patterns=['AAAA', 'UUUU'], names='a')
-penalty.pattern('mypenalties',patterns=['AAAA', 'UUUU'], names='B')
-penalty.pattern('mypenalties',patterns=['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
-penalty.pattern('mypenalties',patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU',
-        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 'RRRRRR', 'YYYYYY'], weight=0.5) # specify weight
+penalty('mypenalties', pattern: {['AAAA', 'UUUU'], names='a'})
+penalty('mypenalties', pattern: {['AAAA', 'UUUU'], names='B'})
+penalty.pattern('mypenalties',
+    patterns=['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
+penalty.pattern('mypenalties',
+    patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU',
+        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 
+        'RRRRRR', 'YYYYYY'], weight=0.5) # specify weight
 
 penalty.similarity('mypenalties','b', 'S'*20, [0.45, 0.55], weight=0.25)
 
