@@ -113,6 +113,29 @@ constraint('myconstraints',
     diversity: {word = 6, diversity = 3}
     diversity: {word = 10, diversity = 4, names=['a', 'B']})
 
+penalty('mypenalties',
+    pattern: {['AAAA', 'UUUU'], names='a'},
+    patterns: {['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b']},
+    patterns: {['AAAA', 'CCCC', 'GGGG', 'UUUU',
+        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 
+        'RRRRRR', 'YYYYYY'], weight=0.5},
+    similarity: {'b', 'S'*20, [0.45, 0.55], weight=0.25},
+    ssm: {['C', 'D'], word = 4, weight = 0.15},
+    energy_diff: {['a', 'b']}, # min energy diff to median 
+    energy_diff: {['a', 'b'], energy_ref = -17, weight=0.5}) # energy diff to reference
+
+weight('myweights', 
+    {2, domain = 'a'},
+    {4, complex = 'S3'},
+    {2, tube = 'T2'},
+    {5, [tube = 'T1', complex = 'S1']},
+    {0.75, [strand = 'A', domain = 'b']},
+    {0.5, [tube = 'T2', complex = 'S4', strand = 'D', domain = 'a']})
+
+# weights for nonadjacent granularity levels
+weight('myweights', 3, tube = 'T2', domain = 'd')
+weight('myweights', 3, tube = 'T2', strand = 'C')
+weight('myweights', 0.1, complex = 'S4', domain = 'b')
 
 
 
