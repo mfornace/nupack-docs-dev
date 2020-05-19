@@ -88,18 +88,15 @@ structure('S3','U1 D3 U8 U9')
 
 # define target test tubes
 t1 = Tube('t1', on={'C1': ['S1', 1e-8], 'C2': ['S2', 1e-8]},
-          off={maxsize=3, include=['C2'], exclude=['C1']},
-        constraints = myconstraints, weights = myweights, params = myparams, model = mymodel)
+          off={maxsize=3, include=['C2'], exclude=['C1']})
 
 t2 = Tube('t2', on={c1: 1e-8, c2: 1e-8},
-    off=dict(maxsize=3, include=[c2], exclude=[c1]),
-    constraints=[PatternConstraint('...')],
-    weights={c1: 0.5})
+    off={maxsize=3, include=[c2], exclude=[c1]})
 
 # define hard constraints
 
 
-constraint('myconstraints', 
+myconstraints = constraint(
     match: {['c'], ['b', 'e*']},
     match: {['a', 'b'], ['d', 'd', 'e']},
     complement: {allow_wobble=true}, # global flag (?)
