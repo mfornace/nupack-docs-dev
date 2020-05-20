@@ -1,6 +1,6 @@
 # Niles sandbox 2
 
-## Tinker with Mark's sandbox 
+## Tinker with Mark's sandbox
 
 Prefix
 
@@ -26,7 +26,8 @@ t2 = Tube('Tube 2', strands={A: 1e-6, B: 1e-8, C: 1e-12}, complexes = {maxsize=3
 
 tube_results = TubeAnalysis(tubes=[t1, t2], compute=['pairs', 'mfe']) # calculate pfuncs and concentrations
 
-# tube_results.t1
+tube_results[t1].conc
+tube_results[t1].epairs
 # tube_results.t1.conc
 # tube_results.t1.epairs
 # tube_results.t1.c1.ppairs
@@ -43,7 +44,7 @@ complex_results = ComplexAnalysis(strands={A, B},   # calculate pfuncs
 # complex_results.c1.mfe # mfe for complex c1
 # complex_results.c1.ppairs # ppairs matrix for complex c1
 
-conc_results = ComplexConcentrations(tubes = [t1 t2]}, precompute = complexresults) #calculate concentrations 
+conc_results = ComplexConcentrations(tubes = [t1 t2]}, precompute = complexresults) #calculate concentrations
 
 # conc_results.t1
 # conc_results.t1.conc
