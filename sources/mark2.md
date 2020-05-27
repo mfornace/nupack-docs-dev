@@ -1,4 +1,4 @@
-# Mark sandbox
+# Niles sandbox (based on Mark Sandbox)
 
 Prefix
 
@@ -19,45 +19,43 @@ c1 = Complex('Complex 1', [A])
 c2 = Complex('Complex 2', [A, B, B, C])
 c3 = Complex('Complex 3', [A, A])
 
-t1 = Tube('Tube 1', strands={A: 1e-6, B: 1e-8}, complexes=ComplexSet(maxsize=3, exclude=[c1]))
-t2 = Tube('Tube 2', strands={A: 1e-6, B: 1e-8, C: 1e-12}, complexes=ComplexSet(maxsize=3, explicit=[c2], exclude=[c1]))
+t1 = Tube('Tube 1', strands={A: 1e-6, B: 1e-8}, maxsize=3, exclude=[c1])
+t2 = Tube('Tube 2', strands={A: 1e-6, B: 1e-8, C: 1e-12}, include=[c2], maxsize=3, exclude=[c1])
 
 # Allow tube with undefined concentrations?
-t2 = Tube('Tube 2', strands=[A, B], complexes=ComplexSet(maxsize=3, explicit=[c2], exclude=[c1]))
-t2 = Tube('Tube 2', strands={A: None, B: None}, complexes=ComplexSet(maxsize=3, explicit=[c2], exclude=[c1])) # equivalent
+t3 = Tube('Tube 3', strands=[A, B], include=[c2], maxsize=3, exclude=[c1])
 ```
 
 ### Tube analysis
 
 ```python
 tube_results = tube_analysis(tubes=[t1, t2], compute=['pairs', 'mfe']) # calculate pfuncs and concentrations
-t1_result = tube_results[t1]
-# Alternative... maybe worse though
-t1_result, t2_result = tube_analysis(tubes=[t1, t2], pairs=True, mfe=True)
-
-print(type(t1_result)) # --> EvaluatedTube
 print(type(tube_results)) # --> dict?
+
+t1_result = tube_results[t1]
+print(type(t1_result)) # --> EvaluatedTube
+
+print(tube_results[t1].conc) # --> 1.5e-10
+print(tube_results[t1].epairs) # --> [[1.0, 0.0], [0.0, 1.0]]
+print(tube_results[t1][c1].ppairs) # --> [[1.0, 0.0], [0.0, 1.0]]
 
 print(t1_result.conc)
 print(t1_result.epairs)
 print(t1_result[c1].ppairs)
-print(tube_results[c1].ppairs) # allowed? Easier if not.
 ```
 
-Alternatively could allow `t1.analyze(pairs=True)`? May prevent some caching.
-
-### Complex analysis
-
 ```python
-complex_results = complex_analysis(strands=[A, B],   # calculate pfuncs
-    complexes=ComplexSet(maxsize=3, explicit=[c2], exclude=c1), compute=['pairs', 'mfe'])
+# Needs concentrations
+tube_results = tube_analysis(tubes=[t1, t2], compute=['pairs', 'mfe'])
+print(tube_results[t1])
 
-complex_results = complex_analysis(complexes=[c1, c2, c3]) # ?? strands not needed.
+# Here t1 and t2 don't need concentration
+complex_results = complex_analysis(tubes=[t1, t2], compute=['pairs', 'mfe'])
 
-# alternatively provide tubes = [t1 t2] instead of strands and complexes
-# seems easier to just provide either tubes or a list of complexes
-
+# Make a tube to look at specific complexes. (Provide a shorthand version like Ji said?)
+complex_results = complex_analysis(tubes=[Tube('My tube', strands=[A, B], include=[c1, c2, c3])], compute=['pairs', 'mfe'])
 print(type(complex_results)) # --> dict (map from Complex to AnalyzedComplex)
+print(complex_results[c1])
 
 print(complex_results) # set or results for all complexes
 print(complex_results[c1]) # all results for complex c1
@@ -65,23 +63,19 @@ print(complex_results[c1].pfunc) # pfunc for complex c1
 print(complex_results[c1].mfe) # mfe for complex c1
 print(complex_results[c1].ppairs) # ppairs matrix for complex c1
 
+# Here t1 and t2 don't need concentration if they are specified separately:
+t1_result = complex_concentrations(complex_results, t1, {A: 1e-8, B: 1e-9}) # use manually specified concentrations
+t2_result = complex_concentrations(complex_results, t2) # use concentration from t2
+
 print({k: v.mfe for k, v in complex_results.items()}) # set of mfes for all complexes
 print({k: v.ppairs for k, v in complex_results.items()}) # set of ppairs for all complexes
 
-conc_results = complex_concentrations(tubes=[t1, t2]}, precompute=complex_results) #calculate concentrations
-
-# Or since these are independent calculations... could just do:
-t1.concentrations(complex_results) # --> AnalyzedTube
-conc_results = [t.concentrations(complex_results) for t in [t1, t2]]
-
-# conc_results[t1]
-# conc_results[t1].conc
-# conc_results[t1].epairs # tube epairs matrix
-# conc_results[t1].ppairs # set of ppairs matrices
-# conc_results[t1][c1].ppairs # single ppairs matrix
-
+t1_result
+t1_result.conc
+t1_result.epairs # tube epairs matrix
+t1_result.ppairs # set of ppairs matrices
+t1_result[c1].ppairs # single ppairs matrix
 ```
-
 
 ### Utilities
 
@@ -90,9 +84,9 @@ my_pfunc = pfunc(c1, model=model) # pfunc(c1, model)
 my_pairs = pairs(c1, model=model)
 my_mfe = mfe(c1, model=model)
 
-s1 = structure('Structure 1','.1(3.8)3.9') # Is there a use for named structures?
+s1 = Structure('.1(3.8)3.9') # Is there a use for named structures?
 my_energy = energy(c1, structure='.(((........))).........')
-my_prob = prob(c1, structure=s1)
+my_prob = prob(c1, structure=s1) # 0.12385347
 
 my_count = count(c1, model=model)
 my_subopt = subopt(c1, energy_gap=1.2)
@@ -104,7 +98,8 @@ my_samples = sample(c1, num_sample=100)
 WC complements:
 
 ```python
-~A, +A, -A, A.c, A.c(), A.complement(), complement(A)
+complement(A)
+~A # shorthand
 ```
 
 ```python
@@ -120,18 +115,15 @@ B = Strand('Strand B', d, ~e)
 C = Strand('Strand C', e, a, f)
 D = Strand('Strand D', d, d, d)
 
-# Either [] or variadic arguments works ... can be decided on?
-
 c1 = TargetComplex('Complex c1', [A], structure='.(((........))).........')
 c2 = TargetComplex('Complex c2', [A, B, B, C], structure='.1(3.8)3.9')
 c3 = TargetComplex('Complex c3', [A, A], structure='U1 D3 U8 U9')
 
 # define target test tubes
-tubes = [
-    TargetTube('Tube t1', on={c1: 1e-8, c2: 1e-8}, off=ComplexSet(maxsize=3, include=[c2], exclude=[c1])),
-    TargetTube('Tube t2', on={c1: 1e-8, c2: 1e-8}, off=ComplexSet(maxsize=3, include=[c2], exclude=[c1])),
-    crosstalk = TargetTube('crosstalk tube', ...)
-]
+
+t1 = TargetTube('Tube t1', on={c1: 1e-8, c2: 1e-8}, include=[c3], maxsize=3, exclude=[c1])
+t2 = TargetTube('Tube t2', on={c1: 1e-8, c2: 1e-8}, include=[c3], maxsize=3, exclude=[c1]),
+crosstalk = TargetTube('crosstalk tube', ...)
 
 # define hard constraints
 toeholds = ['CTAGCTAC', 'TACGTAGCAT']
@@ -157,13 +149,12 @@ f = Domain('f','S2')
 
 #add another constraint to the constrain set
 constraints += [Complementarity([e],[f], allow_wobble=True)]
-constraints.append(Complementarity([e],[f], allow_wobble=True)) # same
-# Could also use {...} and .add
+constraints.append(Complementarity([e],[f], allow_wobble=True)) # same thing
 
 # define penalties for soft constraints
 penalties = [
     Pattern(['A4', 'U4'], where=a),
-    Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]),
+    Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity(b, 'S20', range=[0.45, 0.55], weight=0.25),
     SSM([C, D], word=4, weight=0.15),
@@ -214,8 +205,13 @@ parameters = DesignParameters(
 
 # run the job
 results = tube_design(tubes=tubes,
-    constraints=constraints, penalties=penalties,
-    weights=weights, parameters=parameters)
+    hardconstraints=hardconstraints, softconstraints=softconstraints,
+    defectweights=weights, parameters=parameters)
+
+# equivalent for complex design just makes a tube for each complex
+results = complex_design(complexes=[c1, c2],
+    hardconstraints=hardconstraints, softconstraints=softconstraints,
+    defectweights=weights, parameters=parameters)
 
 # The result contains fully specified tubes, complexes, strands, domains
 
