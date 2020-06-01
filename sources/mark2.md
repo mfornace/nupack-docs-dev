@@ -10,71 +10,151 @@ from nupack import *
 
 ### Definitions
 
+#### Domain
+
+A domain may be created from a single sequence. For analysis, this sequence must not contain nucleotide wildcards.
+
+```python
+a = Domain('Domain a', 'ATCGTAGCTA')
+b = Domain('Domain b', 'ATATSSSKKN') # Wildcards are permitted
+```
+
+A domain only compares equal to another one if they are the same Python object:
+
+```python
+a1 = Domain('Domain a', 'ATCGTAGCTA')
+a2 = Domain('Domain a', 'ATCGTAGCTA')
+
+a1 == a2 # --> False
+a1 == a1 # --> True
+```
+
+
+```python
+reverse_complement(A)
+~A # shorthand
+```
+
+#### Strand
+
+A strand may be initialized either from a single sequence or from a list of domains.
+
 ```python
 A = Strand('Strand A','AGTCTAGGATTCGGCGTGGGTTAA')
 B = Strand('Strand B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
 C = Strand('Strand C','AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
 
+a1 = Domain('Domain a1', 'AGTCTAGGATTCGGCGT')
+a2 = Domain('Domain a2', 'GGGTTAA')
+A = Strand('Strand A', [a1, a2]) # equivalent, but usually only useful for design.
+```
+
+A strand only compares equal to another one if they are the same Python object
+
+```python
+A1 = Strand('Strand A','AGTCTAGGATTCGGCGTGGGTTAA')
+A2 = Strand('Strand A','AGTCTAGGATTCGGCGTGGGTTAA')
+
+A1 == A2 # --> False
+A1 == A1 # --> True
+```
+
+#### Complex
+
+A complex may be created from a list of strands.
+
+```python
 c1 = Complex('Complex 1', [A])
 c2 = Complex('Complex 2', [A, B, B, C])
 c3 = Complex('Complex 3', [A, A])
+```
 
+Complexes are compared based on the lowest rotational order of the contained strands:
+
+```python
+c1a = Complex('Complex 1', [A])
+c1b = Complex('Complex 2', [A])
+
+c1a == c1b # --> True
+c1a == c1a # --> True
+```
+
+#### Tube
+
+A tube may be created from a set of strands with specified concentrations:
+
+```python
 t1 = Tube('Tube 1', strands={A: 1e-6, B: 1e-8}, maxsize=3, exclude=[c1])
 t2 = Tube('Tube 2', strands={A: 1e-6, B: 1e-8, C: 1e-12}, include=[c2], maxsize=3, exclude=[c1])
+```
 
+For convenience, the concentrations may be defaulted, in which case the strands may be given without concentrations:
+
+```python
 # Allow tube with undefined concentrations?
 t3 = Tube('Tube 3', strands=[A, B], include=[c2], maxsize=3, exclude=[c1])
 ```
 
-### Tube analysis
+A tube only compares equal to itself if it is the same Python object
 
 ```python
-tube_results = tube_analysis(tubes=[t1, t2], compute=['pairs', 'mfe']) # calculate pfuncs and concentrations
-print(type(tube_results)) # --> dict?
+t1a = Tube('Tube 1', strands={A: 1e-6, B: 1e-8}, maxsize=3, exclude=[c1])
+t1b = Tube('Tube 1', strands={A: 1e-6, B: 1e-8}, maxsize=3, exclude=[c1])
 
-t1_result = tube_results[t1]
-print(type(t1_result)) # --> EvaluatedTube
-
-print(tube_results[t1].conc) # --> 1.5e-10
-print(tube_results[t1].epairs) # --> [[1.0, 0.0], [0.0, 1.0]]
-print(tube_results[t1][c1].ppairs) # --> [[1.0, 0.0], [0.0, 1.0]]
-
-print(t1_result.conc)
-print(t1_result.epairs)
-print(t1_result[c1].ppairs)
+t1a == t1b # --> False
+t1a == t1a # --> True
 ```
 
-```python
-# Needs concentrations
-tube_results = tube_analysis(tubes=[t1, t2], compute=['pairs', 'mfe'])
-print(tube_results[t1])
+#### Tube analysis
 
+A set of tubes may be analyzed together to solve for their complex and tube ensemble properties.
+
+```python
+# Solve for the partition function, MFE structure, and Boltzmann sampled structures of all of the species in the specified tubes
+# Furthermore, also solve for the equilibrium concentrations of complexes in each tube
+tube_results = tube_analysis(tubes=[t1, t2], compute=['pairs', 'mfe', 'sample'], model=model, options={'num_sample': 100})
+
+# The results are held as a dict indexable via input tube:
+print(tube_results[t1]) # --> TubeResult
+
+print(tube_results[t1].concentrations) # --> 1.5e-10
+print(tube_results[t1].ensemble_pairs) # --> [[1.0, 0.0], [0.0, 1.0]]
+
+# You may index a tube result by a specified complex to get its complex ensemble results
+print(tube_results[t1][c1].pair_probability) # --> [[1.0, 0.0], [0.0, 1.0]]
+```
+
+#### Complex analysis
+
+Sometimes it is unnecessary to compute equilibrium concentrations, and you just want complex ensemble information.
+
+```python
 # Here t1 and t2 don't need concentration
 complex_results = complex_analysis(tubes=[t1, t2], compute=['pairs', 'mfe'])
 
 # Make a tube to look at specific complexes. (Provide a shorthand version like Ji said?)
 complex_results = complex_analysis(tubes=[Tube('My tube', strands=[A, B], include=[c1, c2, c3])], compute=['pairs', 'mfe'])
-print(type(complex_results)) # --> dict (map from Complex to AnalyzedComplex)
+```
+
+The results may be indexed by complex, similar to `TubeResult` above.
+
+```python
 print(complex_results[c1])
-
-print(complex_results) # set or results for all complexes
-print(complex_results[c1]) # all results for complex c1
-print(complex_results[c1].pfunc) # pfunc for complex c1
+print(complex_results[c1].partition_function) # pfunc for complex c1
 print(complex_results[c1].mfe) # mfe for complex c1
-print(complex_results[c1].ppairs) # ppairs matrix for complex c1
+print(complex_results[c1].pair_probability) # ppairs matrix for complex c1
+```
 
-# Here t1 and t2 don't need concentration if they are specified separately:
+After running `complex_concentrations`, you may solve for the equilibrium concentrations separately. This is done one tube at a time since no savings can be made by doing them together.
+
+```python
 t1_result = complex_concentrations(complex_results, t1, {A: 1e-8, B: 1e-9}) # use manually specified concentrations
 t2_result = complex_concentrations(complex_results, t2) # use concentration from t2
 
+print(t1_result.conc) # result concentrations
+
 print({k: v.mfe for k, v in complex_results.items()}) # set of mfes for all complexes
 print({k: v.ppairs for k, v in complex_results.items()}) # set of ppairs for all complexes
-
-t1_result
-t1_result.conc
-t1_result.epairs # tube epairs matrix
-t1_result.ppairs # set of ppairs matrices
-t1_result[c1].ppairs # single ppairs matrix
 ```
 
 ### Utilities
@@ -95,13 +175,6 @@ my_samples = sample(c1, num_sample=100)
 
 ### Design
 
-WC complements:
-
-```python
-complement(A)
-~A # shorthand
-```
-
 ```python
 a = Domain('Domain a', 'AAAA')
 b = Domain('Domain b', 'A4') # equivalent sequence specification
@@ -109,27 +182,45 @@ c = Domain('Domain c', 'NNNNNNNNNN')
 d = Domain('Domain d', 'N10') # equivalent sequence specification
 e = Domain('Domain e', 'RRSSAAACCA')
 f = Domain('Domain f', 'R2 S2 A3 C2 A') # equivalent sequence specification
+g = Domain('Domain g', 'N10')
 
-A = Strand('Strand A', a, b, 'N10')
-B = Strand('Strand B', d, ~e)
-C = Strand('Strand C', e, a, f)
-D = Strand('Strand D', d, d, d)
+# Domains should not be specified inline
+A = Strand('Strand A', [a, b, g])
+B = Strand('Strand B', [d, ~e])
+C = Strand('Strand C', [e, a, f])
+D = Strand('Strand D', [d, d, d])
+```
 
+#### Complexes
+
+A `TargetComplex` is like a `Complex` but contains an on-target structure:
+
+```python
 c1 = TargetComplex('Complex c1', [A], structure='.(((........))).........')
 c2 = TargetComplex('Complex c2', [A, B, B, C], structure='.1(3.8)3.9')
 c3 = TargetComplex('Complex c3', [A, A], structure='U1 D3 U8 U9')
+```
 
+#### Tubes
+
+A `TargetTube` is like a `Tube` but is specified by its on-target complex concentrations:
+
+```python
 # define target test tubes
 
 t1 = TargetTube('Tube t1', on={c1: 1e-8, c2: 1e-8}, include=[c3], maxsize=3, exclude=[c1])
 t2 = TargetTube('Tube t2', on={c1: 1e-8, c2: 1e-8}, include=[c3], maxsize=3, exclude=[c1]),
 crosstalk = TargetTube('crosstalk tube', ...)
+```
 
+#### Hard constraints
+
+```python
 # define hard constraints
 toeholds = ['CTAGCTAC', 'TACGTAGCAT']
 gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
 
-constraints = [
+hard = [
     Match([c], [b, complement(e)]),
     Match([a, b], [d, d, e]),
     Complementarity(allow_wobble=True), # global flag (?)
@@ -148,11 +239,15 @@ e = Domain('e','S2')
 f = Domain('f','S2')
 
 #add another constraint to the constrain set
-constraints += [Complementarity([e],[f], allow_wobble=True)]
-constraints.append(Complementarity([e],[f], allow_wobble=True)) # same thing
+hard += [Complementarity([e],[f], allow_wobble=True)]
+hard.append(Complementarity([e],[f], allow_wobble=True)) # same thing
+```
 
-# define penalties for soft constraints
-penalties = [
+#### Soft constraints
+
+```python
+# define soft for soft constraints
+soft = [
     Pattern(['A4', 'U4'], where=a),
     Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
@@ -161,7 +256,11 @@ penalties = [
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
+```
 
+#### Weights
+
+```python
 # define defect weights to prioritize design effort
 weights = Weights() # All initialized to 1
 weights[:, :, :, a] *= 2
@@ -177,8 +276,13 @@ print(weights[t1].t1)
 print(weights[t1, c2])
 print(weights[t1, c2, A])
 print(weights[t1, c2, A, d])
+```
 
-# Specifying algorithm parameters. Specify any non-defaults
+#### Algorithm parameters
+
+Specify any non-defaults.
+
+```python
 parameters = DesignParameters(
     seed=0,     # random number generation seed
     stop=0.02,  # stop condition
@@ -202,34 +306,52 @@ parameters = DesignParameters(
     thermo_log=None,
     time_analysis=1
 )
+```
 
-# run the job
-results = tube_design(tubes=tubes,
-    hardconstraints=hardconstraints, softconstraints=softconstraints,
-    defectweights=weights, parameters=parameters)
+#### Complex design
 
+```python
 # equivalent for complex design just makes a tube for each complex
 results = complex_design(complexes=[c1, c2],
     hardconstraints=hardconstraints, softconstraints=softconstraints,
     defectweights=weights, parameters=parameters)
+```
 
+#### Complex design results
+
+#### Tube design
+
+```python
+# run the job
+results = tube_design(tubes=tubes,
+    hard_constraints=hard, soft_constraints=soft,
+    defectweights=weights, parameters=parameters)
+```
+
+#### Tube design results
+
+```python
 # The result contains fully specified tubes, complexes, strands, domains
 
 results.defect # give overall defect
 results.defects # give table of defects
 
-t1_result = results[t1]
-print(type(t1_result))  # --> AnalyzedTube
-print(t1_result.defect) # --> 0.15
-print(t1_result[c1])    # --> AnalyzedComplex
+print(results[t1])        # --> TubeResult
+print(results[t1].defect) # --> 0.15
+print(results[t1][c1])    # --> ComplexResult
 
+# Not sure about this part...:
 c1_result = results[c1]
 A_result = results[A]   # --> Strand
 d1_result = results[d1] # --> Domain
+```
 
-# reanalyze, incurring analysis cost (maybe with different model)
-tube_results = tube_analysis(tubes=[results[t1], results[t2]], pairs=True, mfe=True)
+#### Going to analysis
 
-# only analyze concentrations (complex stuff already computed)
-conc_results = results.analyze_concentrations(tubes=[t1, t2]})
+```python
+# reanalyze, incurring any additional analysis cost (maybe with different model)
+tube_results = tube_analysis(tubes=results, pairs=True, mfe=True)
+
+# reanalyze concentrations with designed strands
+t2_result = complex_concentrations(results[t2], t2, {results[A]: 1e-8, results[B]: 1e-8})
 ```
