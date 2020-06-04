@@ -118,7 +118,7 @@ c2 = Complex([A, B, B, C])
 c3 = Complex([A, A])
 ```
 
-Optionally, a complex may be given a name by specifying it first:
+In general, anytime a `Complex` is expected, a list of strands may be used instead. Optionally, a complex may be given a name by specifying it first:
 
 ```python
 c4 = Complex('A+B+C', [A, B, C])
