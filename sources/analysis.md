@@ -1,7 +1,105 @@
+# Analysis
 
-# Simple usage
 
-Within the approximations of the secondary structure model that NUPACK uses, exact thermodynamic analysis may be performed, typically in $O(N^3)$ time in the number of nucleotides $N$. For ease of use and compatibility with NUPACK 3, we have provided simple functions for thermodynamic analysis in the `nupack.simple` submodule:
+Analyze the equilibrium properties over one of two ensembles:
+
+- **Complex Analysis:** analyze the equilibrium base-pairing properties of a complex of interacting nucleic acid strands [@Dirks07,@Fornace20].
+
+- **Test Tube Analysis:** analyze the equilibrium concentrations and base-pairing properties for a test tube of interacting nucleic acid strands [@Dirks07,@Fornace20].
+
+Note that a complex ensemble is subsidiary to a test tube ensemble, so complex analysis is inherent in test tube analysis (but not vice versa), and complex design is inherent in test tube design (but not vice versa). As it is typically infeasible to experimentally study a single complex in isolation, we recommend analyzing and designing nucleic acid strands in a test tube ensemble that contains the complex of interest as well as other competing complexes that might form in solution. For example, if one is experimentally studying strands A and B that are intended to predominantly form a secondary structure within the ensemble of complex A$\cdot$ B, one should not presuppose that the strands do indeed form A$\cdot$ B and simply analyze or design the base-pairing properties of that complex. Instead, it is more physically relevant to analyze a test tube ensemble containing strands A and B interacting to form multiple complex species (e.g., A, B, A$\cdot$ A, A$\cdot$ B, B$\cdot$ B) so as to capture both concentration information (how much A$\cdot$ B forms?) and structural information (what are the base-pairing properties of A$\cdot$ B when it does form?).
+
+## Tube analysis
+
+A set of tubes may be analyzed together to solve for their complex and tube ensemble properties.
+The following example computes the partition function, MFE structure, and 100 Boltzmann sampled structures of each complex in the specified tubes, as well as the equilibrium concentrations of complexes in each tube.
+
+```python
+result = tube_analysis(tubes=[t1, t2],
+    compute=['pairs', 'mfe', 'sample'], model=model,
+    options={'num_sample': 100})
+```
+
+The full list of possible computations and options is:
+
+- `'pfunc'`: compute partition function and free energy.
+- `'mfe'`: compute MFE energy and structure(s).
+- `'pairs'`: compute pair probability. `'sparsity': f` may be specified to return a sparse matrix of only the highest `f * n` pair probabilities for a given base, where `n` is the total number of bases in the complex. `f=1` (the default) returns the full pair probability matrix.
+- `'sample'`: compute Boltzmann sampled keywords. `'num_sample': n` returns `n` sampled structures. `'n'` defaults to 1.
+- `'subopt'`: compute suboptimal structures. `'energy_gap: e'` computes all structures within `e` kcal/mol of the MFE. `e` defaults to 0.
+- `'structure_count'`: compute number of possible secondary structures.
+- `'stack_count'`: compute number of possible stacking states.
+- `'prob'`: compute probability of a secondary structure. Structures must be specified via `prob_structures` as a list of structures.
+
+The result of `tube_analysis` is an `AnalysisResult` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via either a `Tube` or `Complex`:
+
+!!! note
+    I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately.
+
+```python
+print(result[t1]) # --> TubeResult
+
+print(result[t1].complex_concentrations) # --> [1.5e-10]
+print(result[t1].strand_pair_probability) # --> [[1.0, 0.0], [0.0, 1.0]]
+```
+
+You may index a tube result by a specified complex to get its complex ensemble results
+
+```python
+print(result[c1].pair_probability) # --> [[1.0, 0.0], [0.0, 1.0]]
+```
+
+## Complex analysis
+
+Sometimes it is unnecessary to compute equilibrium concentrations, and you just want complex ensemble information. You can compute the results by specifying a tube as follows:
+
+```python
+t1 = Tube('t1', strands=[A, B], include=[c1, c2, c3])
+result = complex_analysis(tubes=[t1], compute=['pairs', 'mfe'])
+```
+
+The results may be indexed by complex, similar to `TubeResult` above.
+
+```python
+print(result[c1])
+print(result[c1].partition_function) # pfunc for complex c1
+print(result[c1].min_free_energy) # mfe for complex c1
+print(result[c1].mfe_structure) # mfe structure for complex c1
+print(result[c1].pair_probability) # ppairs matrix for complex c1
+
+print({k: v.mfe for k, v in result.complexes.items()}) # set of mfes for all complexes
+print({k: v.ppairs for k, v in result.complexes.items()}) # set of ppairs for all complexes
+```
+
+## Concentration analysis
+
+After running complex analysis, you may solve for the equilibrium concentrations separately. This is done one tube at a time since no savings can be made by computing them together.
+
+```python
+t1_result = complex_concentrations(result, t1, concentrations=[1e-8, 1e-9]) # use manually specified concentrations if desired
+t2_result = complex_concentrations(result, t2) # use concentration from t2
+
+print(t1_result.complex_concentrations) # result concentrations
+```
+
+## Utilities
+
+!!! note
+    Seems less error-prone to just insist on specified model, especially for utilities?
+
+```python
+my_pfunc = pfunc(c1, model=model) # pfunc(c1, model)
+my_pairs = pairs(c1, model=model)
+my_mfe = mfe(c1, model=model)
+
+s1 = Structure('.1(3.8)3.9') # Is there a use for named structures?
+my_energy = energy(c1, structure='.(((........))).........')
+my_prob = prob(c1, structure=s1) # 0.12385347
+
+my_count = count(c1, model=model)
+my_subopt = subopt(c1, energy_gap=1.2)
+my_samples = sample(c1, num_sample=100)
+```
 
 - `pfunc`: calculate a partition function
 - `mfe`: calculate a complex's MFE structure(s) and free energy(s)
@@ -10,17 +108,6 @@ Within the approximations of the secondary structure model that NUPACK uses, exa
 - `prob`: calculate equilibrium structure probability
 - `subopt`: determine a set of suboptimal structures
 - `sample`: randomly generate a set of secondary structures
-- `tube_analysis`: predict equilibrium complex concentrations from a given test tube ensemble
-
-For a more advanced API, see the [Complex analysis](#complex-analysis) and [Test tube analysis](#test-tube-analysis) sections.
-
-## Usage
-
-To use the simple API, you can first import the functions like this:
-
-```python
-from nupack.simple import *
-```
 
 Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`). Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Model](model.md) for help on creating a model object).
 
@@ -90,29 +177,15 @@ print(ensemble_size)
 # --> 19
 ```
 
-`tube_analysis` calculates the predicted complex concentrations in a test tube, given a set of strands, respective strand concentrations, and a `max_size` of complex to consider.
-
-```python
-complex_concentrations = tube_analysis(['CCCCC', 'GGGGG'], [1e-5, 1e-4], max_size=2)
-print(complex_concentrations)
-# --> {
-#   ('GGGGG', 'GGGGG'): 0.0,
-#   ('GGGGG',): 9.030597007787946e-05,
-#   ('CCCCC',): 3.0597007787941787e-07,
-#   ('CCCCC', 'CCCCC'): 0.0,
-#   ('CCCCC', 'GGGGG'): 9.694029922120778e-06
-# }
-```
-
-# Complex analysis
-
-## Specification
+## Advanced usage
 
 NUPACK 4 provides a more flexible and efficient interface for thermodynamic analysis as well. To use this interface, first create an `Analysis` object by specifying the secondary structure model to use:
 
 ```python
 analysis = nupack.Analysis(model=model)
 ```
+
+### Queuing calculations
 
 Frequently, thermodynamic analysis can be sped up by computing quantities in aggregate, rather than one by one. For instance, caching may decrease the cost of analyzing complexes of up to $L$ strands by up to a factor of $L-1$. Therefore, the analysis API encourages queueing of all of the calculations you want to perform before computation actually takes place.
 
@@ -122,7 +195,7 @@ Each method below takes a complex specification as its first argument. This shou
 
 After queueing your desired computations, follow the directions in [Computation](#computation).
 
-### Partition function
+#### Partition function
 
 **Example code:**
 
@@ -135,7 +208,7 @@ analysis.partition_function(strands, max_size=3)
 - `log_partition_function`
 - `free_energy`
 
-### Pair probability
+#### Pair probability
 
 **Example code:**
 
@@ -151,7 +224,7 @@ Analyze the equilibrium base-pairing properties of a complex of interacting nucl
 - `log_partition_function`
 - `free_energy`
 
-### Minimum free energy
+#### Minimum free energy
 
 **Example code:**
 
@@ -164,7 +237,7 @@ analysis.min_free_energy(strands, max_size=2, structures=True)
 - `min_free_energy`
 - `mfe_structures` if `structures == True`
 
-### Structure count
+#### Structure count
 
 **Example code:**
 
@@ -177,7 +250,7 @@ analysis.structure_count(strands, stacks=False)
 - `log_structure_count` if `stacks == False`
 - `log_stack_count` if `stacks == True`
 
-### Boltzmann sampling
+#### Boltzmann sampling
 
 **Example code:**
 
@@ -191,7 +264,7 @@ analysis.boltzmann_sample(strands, number=10)
 - `free_energy`
 - `log_partition_function`
 
-### Suboptimal structures
+#### Suboptimal structures
 
 **Example code:**
 
@@ -205,7 +278,7 @@ analysis.suboptimal_structure(strands, gap=0.4)
 - `mfe_structures`
 - `min_free_energy`
 
-## Computation
+### Computation
 
 After queueing the computations you want to run, run the following command to start computation.
 
@@ -217,9 +290,9 @@ You may specify the number of threads via the `threads` keyword and the maximum 
 
  `nupack.Analysis.compute()` returns a `nupack.AnalysisResult`. This class is a thin wrapper around a `dict` mapping a tuple of strands (e.g. `('AAAA', 'TTTT)`) to a result of type `nupack.ComplexResult`.
 
-## Outputs
+### Outputs
 
-To retrieve a complex result for a desired complex of ordered strands, use the `__getitem__` method of `nupack.AnalysisResult`:
+To retrieve a complex result for a desired complex of ordered strands, use the `[]` (`__getitem__`) method of `nupack.AnalysisResult`:
 
 ```
 complex_result = analysis_result[('AAAA', 'TTTT')]
@@ -245,21 +318,7 @@ A `ComplexResult` is just a `namedtuple` of computed results for the given compl
 
 - `suboptimal_structures`: a list of each pair of a [`Structure`](#structure-type) and its respective free energy derived from the suboptimal structure algorithm with a specified free energy gap.
 
-### Structure type
-
-The output fields `mfe_structures`, `sampled_structures`, and `suboptimal_structures` contain secondary structures which are represented in NUPACK using the `Structure` type. A `Structure` instance contains two members:
-
-1. `pairs`: a `PairList` of the base pairs in a given structure such that `pairs[i] == j` if the bases of zero-based index `i` and `j` are paired, and `pairs[i] == i` if the base of index `i` is unpaired.
-
-2. `nicks`: a list of indices where each integer is the (zero-based) index of a base after a strand break
-
-```python
-s = nupack.Structure(nupack.PairList([5,4,3,2,1,0]), nicks=[3])
-print(s.dp())          # output (str): (((+)))
-print(s.pairs.array()) # output (numpy.ndarray): [5 4 3 2 1 0]
-```
-
-### Structure probability
+#### Structure probability
 
 The equilibrium probability of complex `strands` being in the secondary structure `structure` is cheap to compute once the partition function is known. For this purpose, the following method of `AnalysisResult` is provided.
 
@@ -267,11 +326,11 @@ The equilibrium probability of complex `strands` being in the secondary structur
 prob = analysis_result.structure_probability(strands, structure) # yields a float between 0 and 1
 ```
 
-# Test tube analysis
+### Concentration solving
 
 Test tube analysis enables prediction of equilibrium concentrations and related quantities for an ensemble of strands at user-specified concentrations.
 
-## Specification
+#### Specification
 
 Create an instance of `nupack.ConcentrationSolver` using an iterable of strands and a `nupack.AnalysisResult`. All partition function information from the previously calculated complex results is used by default. You must make sure that analysis was carried out on all complexes that you want to include in the test tube ensemble.
 
@@ -279,7 +338,7 @@ Create an instance of `nupack.ConcentrationSolver` using an iterable of strands 
 solver = nupack.ConcentrationSolver(strands, analysis_result)
 ```
 
-## Computation
+#### Computation
 
 Given a user-specified concentration for each strand species (in moles per liter), calculate the equilibrium concentration of each complex species or base pair in a dilute solution (e.g., a test tube) [@Dirks07]. This calculation is typically quick compared to the dynamic programming algorithms used in [Complex analysis](#complex-analysis).
 

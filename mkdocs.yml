@@ -1,6 +1,7 @@
 docs_dir: ./sources
 nav:
 - Overview: index.md
+- License: license.md
 #- Design: design.md
 #- Physical: model.md
 #- Conventions: conventions.md
@@ -18,17 +19,19 @@ nav:
 #- Acknowledgments: acknowledgments.md
 #- References:
 #  - Installation: installation.md
-- Sandbox: sandbox.md
-- Sandbox2: sandbox3.md
-- Mark sandbox: mark2.md
-- Markdown Examples:
-  - Subsection 1: markdown.md
-  - Subsection 2: markdown-sub.md
-- Conventions: basics.md
-- Physical Model: model.md
+- Sequences: sequence.md
+- Secondary structures: structure.md
+- Physical model: model.md
+- Core objects: core.md
 - Analysis: analysis.md
 - Design: design.md
-#- Examples: examples.md
+# - Sandbox: sandbox.md
+# - Sandbox2: sandbox3.md
+# - Markdown Examples:
+  # - Subsection 1: markdown.md
+  # - Subsection 2: markdown-sub.md
+- Examples: examples.md
+- Version History: versions.md
 # - Python API:
 #   - Model: api/model.md
 #   - Analysis: api/analysis.md
