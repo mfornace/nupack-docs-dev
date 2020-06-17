@@ -1,7 +1,6 @@
 # Analysis
 
-
-Analyze the equilibrium properties over one of two ensembles:
+NUPACK provides the capability to analyze equilibrium properties over one of two ensembles:
 
 - **Complex Analysis:** analyze the equilibrium base-pairing properties of a complex of interacting nucleic acid strands [@Dirks07,@Fornace20].
 
@@ -11,30 +10,48 @@ Note that a complex ensemble is subsidiary to a test tube ensemble, so complex a
 
 ## Tube analysis
 
-A set of tubes may be analyzed together to solve for their complex and tube ensemble properties.
-The following example computes the partition function, MFE structure, and 100 Boltzmann sampled structures of each complex in the specified tubes, as well as the equilibrium concentrations of complexes in each tube.
+A set of [tubes](basics.md#Tube) may be analyzed together to solve for their complex and tube ensemble properties.
 
-```python
-result = tube_analysis(tubes=[t1, t2],
-    compute=['pairs', 'mfe', 'sample'], model=model,
-    options={'num_sample': 100})
-```
+!!!example
+    The following example computes the partition function, MFE structure, and 100 Boltzmann sampled structures of each complex in the specified tubes, as well as the equilibrium concentrations of complexes in each tube.
 
-The full list of possible computations and options is:
+    ```python
+    a = Strand('a', 'CTGATCGAT')
+    b = Strand('b', 'GATCGTAGTC')
+
+    t1 = Tube('t1', [a, b], [1e-8, 1e-9], max_size=3)
+    t2 = Tube('t2', [a, b], [1e-10, 1e-9], max_size=2)
+
+    result = tube_analysis(tubes=[t1, t2],
+        compute=['pairs', 'mfe', 'sample'], model=model,
+        options={'num_sample': 100})
+    ```
+
+### Specifying computations
+
+The full list of possible computations is:
 
 - `'pfunc'`: compute partition function and free energy.
 - `'mfe'`: compute MFE energy and structure(s).
-- `'pairs'`: compute pair probability. `'sparsity': f` may be specified to return a sparse matrix of only the highest `f * n` pair probabilities for a given base, where `n` is the total number of bases in the complex. `f=1` (the default) returns the full pair probability matrix.
-- `'sample'`: compute Boltzmann sampled keywords. `'num_sample': n` returns `n` sampled structures. `'n'` defaults to 1.
-- `'subopt'`: compute suboptimal structures. `'energy_gap: e'` computes all structures within `e` kcal/mol of the MFE. `e` defaults to 0.
+- `'pairs'`: compute pair probability.
+- `'sample'`: compute Boltzmann sampled keywords.
+- `'subopt'`: compute suboptimal structures.
 - `'structure_count'`: compute number of possible secondary structures.
 - `'stack_count'`: compute number of possible stacking states.
-- `'prob'`: compute probability of a secondary structure. Structures must be specified via `prob_structures` as a list of structures.
+- `'prob'`: compute probability of a secondary structure.
+
+Several customizing options may be specified in the `options` field:
+
+- `'sparsity': f` may be specified to return a sparse matrix of only the highest `f * n` pair probabilities for a given base, where `n` is the total number of bases in the complex. `f=1` (the default) returns the full pair probability matrix.
+- `'num_sample': n` returns `n` sampled structures. `'n'` defaults to 1.
+- `'energy_gap: e'` computes all structures within `e` kcal/mol of the MFE. `e` defaults to 0.
+- Structures must be specified via `prob_structures` as a list of structures.
+
+### Results
 
 The result of `tube_analysis` is an `AnalysisResult` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via either a `Tube` or `Complex`:
 
-!!! note
-    I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately.
+<!-- I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately. -->
 
 ```python
 print(result[t1]) # --> TubeResult
@@ -51,12 +68,14 @@ print(result[c1].pair_probability) # --> [[1.0, 0.0], [0.0, 1.0]]
 
 ## Complex analysis
 
-Sometimes it is unnecessary to compute equilibrium concentrations, and you just want complex ensemble information. You can compute the results by specifying a tube as follows:
+Sometimes it is unnecessary to compute equilibrium concentrations, and you just want complex ensemble information. You can compute these results by using the `complex_analysis` function. `complex_analysis` is almost identical to `tube_analysis` but does not compute any concentraion information. It is thus unnecessary to specify strand concentrations in the input tubes:
 
 ```python
 t1 = Tube('t1', strands=[A, B], include=[c1, c2, c3])
 result = complex_analysis(tubes=[t1], compute=['pairs', 'mfe'])
 ```
+
+### Results
 
 The results may be indexed by complex, similar to `TubeResult` above.
 
@@ -87,29 +106,38 @@ print(t1_result.complex_concentrations) # result concentrations
 !!! note
     Seems less error-prone to just insist on specified model, especially for utilities?
 
-```python
+<!--
+Use `pfunc` to calculate a partition function:
 my_pfunc = pfunc(c1, model=model) # pfunc(c1, model)
-my_pairs = pairs(c1, model=model)
+
+Use `mfe` to calculate a complex's MFE structure(s) and free energy(s):
 my_mfe = mfe(c1, model=model)
 
-s1 = Structure('.1(3.8)3.9') # Is there a use for named structures?
-my_energy = energy(c1, structure='.(((........))).........')
+Use `count` to calculate the size of the secondary structure ensemble:
+my_count = count(c1, model=model)
+
+Use `pairs` to calculate equilibrium base pair probability:
+my_pairs = pairs(c1, model=model)
+
+Use `prob` to calculate equilibrium structure probability:
 my_prob = prob(c1, structure=s1) # 0.12385347
 
-my_count = count(c1, model=model)
+Use `subopt` to determine a set of suboptimal structures:
 my_subopt = subopt(c1, energy_gap=1.2)
+
+Use `sample` to randomly generate a set of secondary structures:
 my_samples = sample(c1, num_sample=100)
-```
 
-- `pfunc`: calculate a partition function
-- `mfe`: calculate a complex's MFE structure(s) and free energy(s)
-- `count`: calculate the size of the secondary structure ensemble
-- `pairs`: calculate equilibrium base pair probability
-- `prob`: calculate equilibrium structure probability
-- `subopt`: determine a set of suboptimal structures
-- `sample`: randomly generate a set of secondary structures
+s1 = Structure('.1(3.8)3.9') # Is there a use for named structures?
+my_energy = energy(c1, structure='.(((........))).........') -->
 
-Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`). Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Model](model.md) for help on creating a model object).
+
+<!-- Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`).  -->
+NUPACK includes a number of utility functions meant for simple usage.
+These functions can be very convenient, but they might involve unnecessary calculations compared to the full analysis API.
+Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Model](model.md) for help on creating a model object).
+
+### Partition function
 
 `pfunc` returns the complex partition function of a single specified complex:
 
@@ -119,31 +147,14 @@ print(partition_function)
 # --> 1581.5360063360488947
 ```
 
+### Minimum free energy structure
+
 `mfe` returns a list of MFE structures and their associated free energies. If the MFE is unique, the list will be length one:
 
 ```python
 mfe_structures = mfe(['CCC', 'GGG'])
 print(mfe_structures)
 # --> [(Structure('(((+)))'), -4.181351661682129)]
-```
-
-`prob` calculates the probability of a given secondary structure appearing in a single specified complex:
-
-```python
-probability = prob(['CCC', 'GGG'], structure='(((+)))')
-print(probability)
-# --> 0.5589045601083861
-```
-
-`subopt` calculates all secondary structures within a specified free energy `gap` of the MFE. The free energy gap is specified in kcal/mol:
-
-```python
-subopt_structures = subopt(['CCC', 'GGG'], gap=1.0)
-print(subopt_structures)
-# --> [
-#   (Structure('(((+)))'), -4.181351661682129),
-#   (Structure('((.+)).'), -3.3813514709472656)
-# ]
 ```
 
 `pairs` calculates the equilibrium base pair probability matrix as a `numpy.ndarray`. The diagonal of the matrix is the probability that a given base is unpaired.
@@ -161,6 +172,31 @@ print(np.round(probability_matrix, 3))
 #  [0.607 0.028 0.    0.    0.    0.365]]
 ```
 
+### Equilibrium structure probability
+
+`prob` calculates the probability of a given secondary structure appearing in a single specified complex:
+
+```python
+probability = prob(['CCC', 'GGG'], structure='(((+)))')
+print(probability)
+# --> 0.5589045601083861
+```
+
+### Equilibrium structure probability
+
+`subopt` calculates all secondary structures within a specified free energy `gap` of the MFE. The free energy gap is specified in kcal/mol:
+
+```python
+subopt_structures = subopt(['CCC', 'GGG'], gap=1.0)
+print(subopt_structures)
+# --> [
+#   (Structure('(((+)))'), -4.181351661682129),
+#   (Structure('((.+)).'), -3.3813514709472656)
+# ]
+```
+
+### Boltzmann sampling
+
 `sample` calculates a specified `number` of random secondary structures drawn according to the equilibrium Boltzmann distribution:
 
 ```python
@@ -169,6 +205,7 @@ print(sampled_structures)
 # --> [Structure('.((+)).'), Structure('(((+)))'), Structure('((.+)).')]
 ```
 
+### Structure and stacking state counts
 `count` calculates the number of secondary structures that can form for a specified complex:
 
 ```python
@@ -177,12 +214,14 @@ print(ensemble_size)
 # --> 19
 ```
 
+
+
 ## Advanced usage
 
-NUPACK 4 provides a more flexible and efficient interface for thermodynamic analysis as well. To use this interface, first create an `Analysis` object by specifying the secondary structure model to use:
+NUPACK 4 also provides a more flexible and efficient interface for thermodynamic analysis as well. To use this interface, first create an `Analysis` object by specifying the secondary structure model to use:
 
 ```python
-analysis = nupack.Analysis(model=model)
+analysis = Analysis(model=model)
 ```
 
 ### Queuing calculations

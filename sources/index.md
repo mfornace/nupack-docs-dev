@@ -41,6 +41,7 @@ Consider a complex of $L$ distinct strands (e.g., each with a unique identifier 
  -->
 <!-- ![Complex](/figs/complex.png)   -->
 <img src="/figs/complex.png" alt="Complex" title="Example complex" width="360" />
+
 **Figure:** A complex of 3 strands with strand ordering $\pi$ = ABC.
 
 As a matter of algorithmic necessity, all of the dynamic programs in NUPACK operate on complex ensemble $\overline\Gamma(\phi)$ treating all strands as distinct. However, in the laboratory, strands with the same sequence are typically indistinguishable with respect to experimental observables. For comparison to experimental data, physical quantities calculated over ensemble $\overline\Gamma(\phi)$ are post-processed
@@ -60,6 +61,7 @@ For $L$ strands, there are $(L-1)!$ strand orderings if all strands are differen
 It is often convenient to define $\Psi$ to contain all complex species of up to $L_\mathrm{max}$ strands, although $\Psi$ can be defined to contain arbitrary complex species formed from the strand species in $\Psi^0$.
 
 <img src="/figs/tube.png" alt="Test tube" title="Example test tube" width="190" />
+
 **Figure:** A test tube ensemble containing strain species $\Psi^0 = \{$A,B,C$\}$ interacting to form all complex species $\Psi$ of up to $L_{\rm max} = 3$ strands.
 
 <!-- A **test tube** may contain an arbitrary number of strand species interacting to form an arbitrary number of complex species in a dilute solution. Let $\Psi^0$ denote the set of strand species that interact in a test tube to form the set of complex species $\Psi$. It is often convenient to define $\Psi$ to contain all complexes of up to some size $L_{\rm max}$.

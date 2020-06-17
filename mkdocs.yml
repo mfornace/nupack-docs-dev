@@ -19,10 +19,8 @@ nav:
 #- Acknowledgments: acknowledgments.md
 #- References:
 #  - Installation: installation.md
-- Sequences: sequence.md
-- Secondary structures: structure.md
-- Physical model: model.md
-- Core objects: core.md
+- Basics: basics.md
+- Physical Model: model.md
 - Analysis: analysis.md
 - Design: design.md
 # - Sandbox: sandbox.md
