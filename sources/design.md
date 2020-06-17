@@ -2,13 +2,13 @@
 
 # Design
 
-To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs \cite{hochrein13}) or large-scale structural engineering including pseudoknots (e.g., RNA origamis \cite{geary14}), NUPACK generalizes these analysis and design capabilities to multistate ensembles:
-\blist
-\item {\bf Multi-complex ensemble:} the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
-\item {\bf Multi-tube ensemble:} the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
-\elist
+To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@hochrein13]) or large-scale structural engineering including pseudoknots (e.g., RNA origamis [@geary14]), NUPACK generalizes these analysis and design capabilities to multistate ensembles:
+
+-  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
+-  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
+
 We recommend using multi-tube sequence design, as it captures concentration and crosstalk effects that are critical in many design scenarios, and reduces to each of the other three design ensembles (complex, test tube, multi-complex) as special cases.
-For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve {\it kinetic design} of a test tube ensemble by performing {\it equilibrium optimization} of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
+For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structure engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
 
 ## Basic setup
@@ -79,32 +79,33 @@ The implied complexes are prevented from being added to $\Psi^\text{off}$ when p
 
 ```python
 # specify tubes by their names and on-target complexes with on-target concentrations
-design.add_tube('T1', {'C1': 1e-6})
-design.add_tube('T2', {'C2': 1e-6})
-design.add_tube('T3', {'C1': 0.000001, 'C2': 1e-3})
-design.add_tube('T4', {'C1': 2e-4, 'C3': 3e-5})
-design.add_tube('T5', {'C4': 4e-6, 'C5': 5e-7})
-design.add_tube('T6', {'C5': 6e-8})
-
-
-# specify named off-target complexes in tube
-design.add_off_targets('T1', explicit=['C4', 'C5'])
+Tube('T1', {C1: 1e-6}, include=[C4, C5])
 
 # specify unnamed off-targets each denoted by a strand ordering
-design.add_off_targets('T2', explicit=[('D', 'D', 'D'), ('D', 'D', 'D', 'D')])
+Tube('T2', {C2: 1e-6}, include=[(D, D, D), (D, D, D, D)])
 
-# specify combination of named and unnamed off-targets
-design.add_off_targets('T3', explicit=['C3', ('A', 'A', 'B', 'B'), 'C', ('D', 'D', 'D', 'D')])
+# Mix the two kinds of specifications
+Tube('T3', {C1: 0.000001, C2: 1e-3}, include=[C4, (D, D, D)])
 
-# specify off-targets combinatorially:
 # all complexes of up to 2 strands that are not on-targets in tube `T4'
-design.add_off_targets('T4', maxsize=2)
+Tube('T4', {C1: 2e-4, C3: 3e-5}, max_size=2)
 
 # specify off-targets as the sum of sets
-design.add_off_targets('T5', maxsize=2, explicit=['C3', ('B', 'B', 'B', 'B')] )
+Tube('T5', {C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, (B, B, B, B)])
 
 # specify off-targets as the difference of sets
-design.add_off_targets('T6', maxsize=3, exclude=['C3', ('B', 'B')])
+Tube('T6', {C5: 6e-8}, max_size=3, exclude=[C3, (B, B)])
+```
+
+## Tube design
+
+The `tube_design` function is offered to run a complete multitube design. See the below sections for information on inputs and results.
+
+```python
+# run the job
+result = tube_design(tubes=tubes,
+    hard_constraints=hard, soft_constraints=soft,
+    weights=weights, parameters=parameters)
 ```
 
 
@@ -118,17 +119,10 @@ results = complex_design(complexes=[c1, c2],
     weights=weights, parameters=parameters)
 ```
 
-## Tube design
-
-```python
-# run the job
-result = tube_design(tubes=tubes,
-    hard_constraints=hard, soft_constraints=soft,
-    weights=weights, parameters=parameters)
-```
-
 
 ## Hard constraints
+
+Hard constraints are most easily kept track of as a Python `list`. See below for an example:
 
 ```python
 # define hard constraints
@@ -157,6 +151,8 @@ f = Domain('f','S2')
 hard += [Complementarity([e],[f], allow_wobble=True)]
 hard.append(Complementarity([e],[f], allow_wobble=True)) # same thing
 ```
+
+See the below subsections for more information about each kind of constraint.
 
 ### Match
 
@@ -216,10 +212,10 @@ The constraint can also allow the concatenated domains to have a sequence that i
 
 
 ```python
-Domain('a', 'N'*10)
-Domain('b', 'N'*10)
-Domain('c', 'N'*10)
-Domain('e', 'N'*10)
+a = Domain('a', 'N'*10)
+b = Domain('b', 'N'*10)
+c = Domain('c', 'N'*10)
+e = Domain('e', 'N'*10)
 
 gfp = 'AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACGGCCACAAGUUCAGCGUGUCCGGCGAGGGCGAGGGCGAUGCCACCUACGGCAAGCUGACCCUGAAGUUCAUCUGCACCACCGGCAAGCUGCCCGUGCCCUGGCCCACCCUCGUGACCACCCUGACCUACGGCGUGCAGUGCUUCAGCCGCUACCCCGACCACAUGAAGCAGCACGACUUCUUCAAGUCCGCCAUGCCCGAAGGCUACGUCCAGGAGCGCACCAUCUUCUUCAAGGACGACGGCAACUACAAG'
 
@@ -351,7 +347,8 @@ The primary difference is that a weight can be supplied to control the relative 
 
 
 ```python
-pat = Pattern(patterns=['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
+pat = Pattern(patterns=['A4', 'C4', 'G4', 'U4', 'M6',
+    'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
 ```
 
 ### Similarity
@@ -412,8 +409,19 @@ You can define custom weights by constructing a `Weights` object from the set of
 
 ```python
 weights = Weights(tubes) # All weights are initialized to 1
-weights[:, :, :, a] *= 2
+```
 
+Weights may be freely accessed manipulated by slicing on a subset of 4 axes (in this order):
+
+1. Tube
+2. Complex
+3. Strand
+4. Domain
+
+For instance:
+
+```python
+weights[:, :, :, a] *= 2
 weights[:, :, s3] = 4
 weights[t2] = 2
 weights[t1, c1] = 5,
@@ -433,7 +441,7 @@ print(weights[t1, c2, :, d])
 
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.frame`.
 
-
+<!--
 !!!example
     ```python
 
@@ -479,12 +487,11 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
     # objectives are weighted when they are created
     design.add_global_objective(weight=2)
-    ```
-
+    ``` -->
 
 ## Algorithm parameters
 
-Specify any non-defaults.
+Specify any non-defaults. Change `stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
 
 ```python
 parameters = DesignParameters(
@@ -512,11 +519,10 @@ parameters = DesignParameters(
 )
 ```
 
-
-They can be changed by assigning the named attribute. For example:
+They can be changed afterwards by assigning the named attribute. For example:
 
 ```python
-design.parameters.M_reopt = 1
+parameters.M_reopt = 1
 ```
 
 In addition to the multistate test tube design algorithm parameters, a few others are included in the `DesignParameters` object:
@@ -587,15 +593,3 @@ conc_results = complex_concentrations(result.analysis, t1_designed, concenration
 
 !!! todo
     Graphics
-
-
-!!!todo
-    Design is accomplished primarily by minimizing the multistate test tube ensemble defect, $\mathcal{M}$. The code for adding this objective with a given stop condition follows.
-
-
-    ```python
-    design.add_global_objective()
-    design.parameters.f_stop = 0.01 # always a number in (0,1)
-    ```
-
-    If no objectives have been specified by the time running the design is requested, the design will add the multistate test tube ensemble defect automatically. The stop condition must still be set manually.
