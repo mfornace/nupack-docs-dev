@@ -80,6 +80,27 @@ s2 = PairList('(12+.10)12')
 s3 = PairList('D12 (+ U10)')
 ```
 
+You can print a `PairList` to view its raw data:
+
+```python
+s = PairList('(...)')
+
+s          # --> PairList([4, 1, 2, 3, 0])
+print(s)   # --> [4 1 2 3 0]
+```
+
+Or you can access its data and calculating its corresponding structure matrix:
+
+```python
+s.array()  # --> array([4, 1, 2, 3, 0], dtype=int32)
+
+s.structure_matrix() # --> array([[0, 0, 0, 0, 1],
+                     #            [0, 1, 0, 0, 0],
+                     #            [0, 0, 1, 0, 0],
+                     #            [0, 0, 0, 1, 0],
+                     #            [1, 0, 0, 0, 0]], dtype=int32)
+```
+
 ### Structure
 
 You might notice that the pair list specification does not include any information on structure nicks.
@@ -91,18 +112,17 @@ As a result, NUPACK provides a `Structure` class, which simply contains a `PairL
 2. `nicks`: a list of indices where each integer is the (zero-based) index of a base after a strand break
 
 ```python
-s = Structure(PairList([5,4,3,2,1,0]), nicks=[3])
-print(s.dp())          # --> (((+)))
+s = Structure('(((+)))')
+s                      # --> Structure('(((+)))')
+print(s)               # --> (((+)))
 print(s.pairs.array()) # --> [5 4 3 2 1 0]
 ```
 
 
 
-
-
 ## Named objects
 
-The remaining objects accept a first argument of `name` to be specified by the user.
+The remaining core objects accept a first argument of `name` to be specified by the user.
 
 !!!note "Note"
     The name may specified as a `tuple` or `list` instead of a `str`, in which case a `'[]'` based string will be automatically generated. This is specifically useful for repeated definitions:
@@ -126,18 +146,18 @@ print(repr(s)) # --> Domain('a', 'NNNNNN')
 ```
 
 !!! note
-    In general, you should make every user-specified name is required to be unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
+    In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
 
 ### Domain
 
-A domain is a fixed-length sequence of nucleotides, primarily useful in a design context. A domain may be created from a name and `Sequence` (or sequence string).
+A domain is a fixed-length sequence of nucleotides, primarily useful in a design context. It reflects a shared sequence that may appear multiple times in different strands. A domain may be created from a name and `Sequence` (or sequence string).
 
 ```python
 a = Domain('a', 'ATCGTAGCTA')
 b = Domain('b', 'ATATSSSKKN') # Wildcards are permitted
 ```
 
-You can access the reverse complement of a `Domain` as you would a `Sequence`, e.g. as `~a`.
+You can access the reverse complement of a `Domain` as you would a `Sequence`, e.g. as `~a`. In design, the invariant is maintained that the currently specified sequence of `a` is reverse complement to that of `~a`.
 
 You may access the sequence of a `Domain` via the `.sequence` member:
 
@@ -155,13 +175,9 @@ a1 == a2 # --> False
 a1 == a1 # --> True
 ```
 
-!!!todo
-    Note: when a domain ```x``` is added, the reverese complement domain ```x*``` is added as well, with a sequence of N's of the same length as ```x```. Despite this seeming like ```x*``` is free to be any nucleotide, complementarity constraints are added during design initialization to ensure that whatever sequence ```x``` takes, ```x*``` will be its reverse complement. However, A more specific sequence for ```x*``` can be defined as in the following example.
-
-
 ### Strand
 
-A strand representes a single physical strand of RNA or DNA. A strand may be initialized either from a single sequence or from a list of domains:
+A strand representes a single physical strand of RNA or DNA (with no nicks in the phosphate backbone). A strand may be initialized either from a single sequence or from a list of domains:
 
 ```python
 A = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')

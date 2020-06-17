@@ -6,7 +6,7 @@ NUPACK 4 analysis and design jobs are run based on a physical model created usin
 
 ```python
 model = Model(ensemble='stacking', material='rna',
-              temperature=37, sodium=1.0, magnesium=0.0)
+              celsius=37, sodium=1.0, magnesium=0.0)
 ```
 
 NUPACK uses kcal/mol across the board for energy units.
@@ -17,23 +17,23 @@ Any unspecified properties take on their default values (which happen to be the 
     NUPACK algorithms use a **secondary structure model** to predict the free energy of any single secondary structure. The first step to using NUPACK will usually be to specify the secondary structure model that you want to use. For example, a model could be created via the following syntax:
 
     ```python
-    model = Model(ensemble='stacking', T=310.15, na=1.0, mg=0.0, parameters='RNA')
+    model = Model(ensemble='stacking', celsius=37, na=1.0, mg=0.0, parameters='RNA')
     ```
 
     There are several options to customize this model, which we will outline below.
 
-!!!example
+!!!example "Old example?"
     - Define a model for DNA calculations at 20 $^\circ$C in $[{\rm Na}^{+}]= 0.0$ M and $[{\rm Mg}^{++}]= 0.01$ M:
 
     ```python
-    model2 = model(material='dna', temperature=20, sodium=0.0, magnesium=0.01)
+    model2 = Model(material='dna', celsius=20, sodium=0.0, magnesium=0.01)
     ```
     Note that `ensemble` is unspecified so it defaults to `ensemble='stacking'`.
 
     - Define a model using custom parameters at 45 $^\circ$C without coaxial and dangle stacking:
 
     ```python
-    model3 = model(ensemble='nostacking', material='path/to/my/custom-parameters.json', temperature=45)
+    model3 = Model(ensemble='nostacking', material='path/to/my/custom-parameters.json', celsius=45)
     ```
     Note that the `sodium` and `magnesium` are unspecified so they take on their default values.
 
@@ -100,14 +100,17 @@ DNA/RNA hybrids are not allowed.
 
 
 ### Temperature
-- `temperature`
-Temperature is specified by the keyword `temperature` in $^\circ$C (default: `temperature=37`).
+
+- `celsius`
+Temperature is specified by the keyword `celsius` in $^\circ$C (default: `celsius=37`).
+If desired, the temperature may also be specified via the keyword `kelvin`; this overrides the `celsius` value.
 
 !!!old
-    Temperature is specified by the `T` parameter in Kelvin (default: 310.15). (Note that the temperature units have been changed from NUPACK 3, which used Celsius.) Free energy parameters are usually specified in NUPACK via enthalpy ($\Delta H$) and entropy terms ($\Delta S$). Parameters are adjusted for a given temperature using the formula $\Delta G = \Delta H - T \Delta S$.
+    Free energy parameters are usually specified in NUPACK via enthalpy ($\Delta H$) and entropy terms ($\Delta S$). Parameters are adjusted for a given temperature using the formula $\Delta G = \Delta H - T \Delta S$.
 
 
 ### Salt concentrations
+
 The default salt conditions for RNA and DNA parameter sets are $[\mathrm{Na}^+] = 1 {\rm M}$. Only the default salt conditions are supported for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.
 
 - `sodium`
@@ -165,13 +168,15 @@ Same as `rna06` except that terminal mismatch free energies in exterior loops an
 
 ## Using the model
 
-Typically a `Model` will be used as an input to dynamic programming algorithms (see (Analysis)[analysis.md] and (Design)[design.md]).
+Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
 However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
 
 First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences `sequences`. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
 
 ```python
-energy = model.loop_energy(['AA', 'TT'], nick=None)
+energy1 = model.loop_energy(['AA', 'TT']) # stack energy
+energy2 = model.loop_energy(['AA', 'TT'], nick=1) # energy of stack with an intervening strand break
+energy3 = model.loop_energy(['AATT'], nick=0) # energy of unpaired AATT strand
 ```
 
 One may also calculate the free energy of a complex of ordered strands in a secondary structure structure:
