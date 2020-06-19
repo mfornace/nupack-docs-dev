@@ -11,6 +11,8 @@ We recommend using multi-tube sequence design, as it captures concentration and 
 For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structure engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
 
+<hr> </hr>
+
 ## Basic setup
 
 Define domains, strands, on targets, and tubes:
@@ -30,6 +32,8 @@ B = Strand('Strand B', [d, ~e])
 C = Strand('Strand C', [e, a, f])
 D = Strand('Strand D', [d, d, d])
 ```
+
+<hr> </hr>
 
 ### Specifying a `TargetComplex`
 
@@ -54,6 +58,8 @@ C4 = TargetComplex('C4', [B, A, B], 'D8(U12 +) D10(+) U10')
 # run-length encoded dot-parens-plus notation
 C5 = TargetComplex('C5', [B, C], '.10(10+)10.10')
 ```
+
+<hr> </hr>
 
 ### Specifying a `TargetTube`
 
@@ -103,6 +109,8 @@ t5 = TargetTube('t5', {C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B
 t6 = TargetTube('t6', {C5: 6e-8}, max_size=3, exclude=[C3, [B, B]])
 ```
 
+<hr> </hr>
+
 ## Tube design
 
 The `tube_design` function is offered to run a complete multitube design. See the below sections for information on inputs and results.
@@ -115,6 +123,8 @@ result = tube_design(tubes=tubes,
 ```
 
 
+<hr> </hr>
+
 ## Complex design
 
 For convenience, the `complex_design` function is provided to achieve simple complex design. It simply makes a tube for each complex and executes `tube_design`.
@@ -125,6 +135,8 @@ results = complex_design(complexes=[c1, c2],
     weights=weights, parameters=parameters)
 ```
 
+
+<hr> </hr>
 
 ## Hard constraints
 
@@ -160,6 +172,8 @@ hard.append(Complementarity([e],[f], allow_wobble=True)) # same thing
 
 See the below subsections for more information about each kind of constraint.
 
+<hr> </hr>
+
 ### Match
 
 Match constraints are used to constrain concatenations of domains to be identical to each other. They are specified by providing the ```add_match_constraint``` with two lists of domains. The sum of the lengths of the domains in each list must be the same.
@@ -175,6 +189,8 @@ match1 = Match([c], [b, ~e])
 match2 = Match([a, b], [d, d, e])
 ```
 
+<hr> </hr>
+
 ### Complementarity
 
 Complementarity constraints are used to constraint the concatenation of one list of domains to be the reverse complement of the concatenation of another list of domains. Therefore, the sum of the lenghts of the domains in each list must be the same.
@@ -187,6 +203,8 @@ In addition to explicit domain list based specification of complementarity const
 ```python
 comp = Complementarity([a, b], [c, d, e])
 ```
+
+<hr> </hr>
 
 ### Similarity
 
@@ -207,6 +225,8 @@ sim1 = Similarity('a', 'S5K5', [0.25, 0.75])
 b = Domain('b', 'N20')
 sim2 = Similarity('b', 'S20', [0.45, 0.55])
 ```
+
+<hr> </hr>
 
 ### Window
 
@@ -232,6 +252,8 @@ window1 = Window([a, ~b], [gfp])
 # OR constrain window to be drawn from more than once source
 window2 = Window([~c, e], [gfp, rfp])
 ```
+
+<hr> </hr>
 
 ### Library
 
@@ -274,6 +296,8 @@ lib1 = Library(a, toeholds)
 lib2 = Library([b], [aaI, aaM, aaC, aaG])
 ```
 
+<hr> </hr>
+
 ### Pattern prevention
 
 Pattern prevention constraints are used to prevent any subsequences of a given strand or domain from containing some fixed pattern sequence. This pattern sequence can be specified using degenerate base codes.
@@ -304,6 +328,8 @@ pat3 = Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b])
 pat4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
 ```
 
+<hr> </hr>
+
 ### Diversity
 
 New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity.
@@ -330,6 +356,8 @@ div3 = Diversity(10, 4, where=[a, B])
 ```
 
 
+<hr> </hr>
+
 ## Soft constraints
 
 ```python
@@ -346,6 +374,8 @@ soft = [
 ```
 
 
+<hr> </hr>
+
 ### Pattern prevention
 
 Pattern prevention soft constraints are specified in nearly the same way as pattern prevention hard constraints.
@@ -356,6 +386,8 @@ The primary difference is that a weight can be supplied to control the relative 
 pat = Pattern(patterns=['A4', 'C4', 'G4', 'U4', 'M6',
     'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
 ```
+
+<hr> </hr>
 
 ### Similarity
 
@@ -370,6 +402,8 @@ b = Domain('b','N20')
 # explicitly specify weight
 sim = Similarity('b', 'S20', [0.45, 0.55], weight=0.25)
 ```
+
+<hr> </hr>
 
 ### Sequence symmetry
 
@@ -393,6 +427,8 @@ ssm2 = SSM([C, D], 5, weight=0.25)
 ssm3 = SSM([C, D], 6, weight=0.45)
 ```
 
+<hr> </hr>
+
 ### Duplex structure energy equalization
 
 Currently, the only structural motif that can be equalized is a perfect duplex. This is specified by giving a list of domain names.
@@ -405,6 +441,8 @@ diff1 = EnergyDiff([a, b])
 # equalize to reference value, with explicit weight
 diff2 = EnergyDiff([a, b], energy=-17, weight=0.5)
 ```
+
+<hr> </hr>
 
 ## Custom weights
 
@@ -495,6 +533,8 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
     design.add_global_objective(weight=2)
     ``` -->
 
+<hr> </hr>
+
 ## Algorithm parameters
 
 Specify any non-defaults. Change `stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
@@ -547,16 +587,99 @@ The information logged for each of these given a non-empty string is as follows:
 * ```thermo_log```: Primarily for debugging/development purposes. After every thermodynamic evaluation, the type of calculation (pair probability, bonused pair probability, partition function), number of nucleotides evaluated, and duration of the calculation are logged.
 
 
+<hr> </hr>
+
 ## Results
 
 Both `complex_design` and `tube_design` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
 
-- `.mapping`: a dict from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
-- `.defects`: a report of the different types of defects at each level, held internally as a `pandas.DataFrame`.
+- `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
+- `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
 - `.stats`: a rundown of the statistics and timings for the design that took place.
 
-You can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
+As an example, consider the following design result:
+
+```python
+a = Domain('a', 'N20')
+
+A = Strand('A', [a])
+B = Strand('B', [~a])
+
+C = TargetComplex('C', [A, B], '(20+)20')
+
+tube = TargetTube('tube1', {C: 1e-6}, max_size=2)
+
+result = tube_design([tube], model=Model())
+```
+
+<hr> </hr>
+
+### Textual display
+
+The quickest way to look at your results is to use the built-in notebook output function by just running a cell containing the following line:
+
+```python
+result
+```
+
+This displays the result object as something like the following:
+
+> <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="750" />
+
+You may also use the `print` function, for output in a raw ASCII form:
+
+```python
+print(result)
+```
+
+Output:
+
+> ```c++
+> Results:
+>   name                 value
+> 0    a  GCATATCCACAGGAAGTTCC
+> 1   a*  GGAACTTCCTGTGGATATGC
+> 2    A  GCATATCCACAGGAAGTTCC
+> 3    B  GGAACTTCCTGTGGATATGC
+> Ensemble defect: 0.0076
+> Objectives:
+>      defect  weighted
+> 0  0.007637  0.007637
+> Tubes:
+>     tube        defect  normalized
+> 0  tube1  3.054681e-07    0.007637
+> Complexes:
+>   complex    defect  normalized
+> 0   [A+A]  0.000000    0.000000
+> 1   [B+B]  0.000000    0.000000
+> 2     [B]  0.000000    0.000000
+> 3       C  0.305447    0.007636
+> 4     [A]  0.000000    0.000000
+> Complexes in tubes:
+>     tube complex        defect  normalized  concentration    structural  \
+> 0  tube1       C  3.054681e-07    0.007637   2.080519e-11  3.054473e-07
+> 1  tube1     [A]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
+> 2  tube1   [A+A]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
+> 3  tube1     [B]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
+> 4  tube1   [B+B]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
+>
+>    actual_concentration  target_concentration
+> 0          9.999995e-07              0.000001
+> 1          5.220293e-13              0.000000
+> 2          1.145957e-23              0.000000
+> 3          5.222663e-13              0.000000
+> 4          1.479873e-22              0.000000
+> ```
+
+<hr> </hr>
+
+### Introspection
+
+You can also interface with the design `Result` within Python.
+
+
+1. For instance, you can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
 
 ```python
 print(result.mapping[t1])
@@ -565,18 +688,16 @@ print(result.mapping[A])
 print(result.mapping[a])
 ```
 
-You can look at the different defects by indexing into the `defects` field:
+2. You can look at the different defects by looking at the `defects` field, which contains the
 
 ```python
-print(result.defects.tubes[t1])
-
-print(result.defects.tubes[t1].complexes[c1])
+print(result.defects.ensemble_defect)
+print(result.defects.tubes)
+print(result.defects.complexes)
+print(result.defects.tube_complexes)
 ```
 
-!!! todo
-    Figure out defect display
-
-You can re-analyze your designed complexes and tubes via the `analysis` field:
+3. You can re-analyze your designed complexes and tubes via the `analysis` field:
 
 ```python
 t1_designed = result.mapping[t1]
@@ -588,8 +709,6 @@ tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=model, 
 conc_results = complex_concentrations(result.analysis, t1_designed, concenrations=[1e-8, 1e-9])
 ```
 
-!!! todo
-    Stats
+<hr> </hr>
 
-!!! todo
-    Graphics
+### Graphics

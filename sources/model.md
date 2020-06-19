@@ -1,5 +1,7 @@
 # Physical Model
 
+<hr> </hr>
+
 ## Defining a model
 
 NUPACK 4 analysis and design jobs are run based on a physical model created using the `Model` class:
@@ -38,6 +40,7 @@ Any unspecified properties take on their default values (which happen to be the 
     Note that the `sodium` and `magnesium` are unspecified so they take on their default values.
 
 
+<hr> </hr>
 
 ### Ensemble
 
@@ -51,6 +54,7 @@ Complex ensemble without coaxial and dangle stacking (ensemble $\overline\Gamma(
 
 
 
+<hr> </hr>
 
 ### Material and parameters
 
@@ -96,8 +100,7 @@ DNA/RNA hybrids are not allowed.
     ```
 
 
-
-
+<hr> </hr>
 
 ### Temperature
 
@@ -108,6 +111,8 @@ If desired, the temperature may also be specified via the keyword `kelvin`; this
 !!!old
     Free energy parameters are usually specified in NUPACK via enthalpy ($\Delta H$) and entropy terms ($\Delta S$). Parameters are adjusted for a given temperature using the formula $\Delta G = \Delta H - T \Delta S$.
 
+
+<hr> </hr>
 
 ### Salt concentrations
 
@@ -129,6 +134,8 @@ Based on [@Peyret00,@Koehler05] the concentration of (divalent) magnesium ions, 
     - **Magnesium:** The Mg$^{++}$ concentration of the solution is specified by the keyword `mg` in units of molar (default: 0.0, range: \[0.0,0.2\]) is specified by @Koehler05.
 
 
+<hr> </hr>
+
 ### Wobble pairs
 
 G$\cdot$U RNA wobble pairs are enabled by default in the provided RNA parameter sets.
@@ -136,6 +143,8 @@ G$\cdot$T DNA wobble pairs are disabled by default in the provided DNA parameter
 However, wobble pairs may be manually enabled or disabled using the additional `wobble` parameter during model construction (e.g. `Model(..., wobble=True)`).
 In the historical ensembles, a duplex terminated by a wobble pair is forbidden.
 
+
+<hr> </hr>
 
 ### Historical options
 
@@ -163,8 +172,7 @@ Same as `dna04` except that G$\cdot$T was treated as a wobble pair (analogous to
 Same as `rna06` except that terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies and parameters are provided only for 37 $^\circ$C.
 
 
-
-
+<hr> </hr>
 
 ## Using the model
 
@@ -184,5 +192,7 @@ One may also calculate the free energy of a complex of ordered strands in a seco
 ```python
 energy = model.structure_energy(['AAAA', 'TTTT'], '((((+))))')
 ```
+
+<hr> </hr>
 
 ## Citations

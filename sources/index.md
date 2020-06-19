@@ -6,6 +6,8 @@ When finishing a project that has benefited from NUPACK calculations, please rem
 
 — The NUPACK Team
 
+<hr> </hr>
+
 ## Introduction
 
 NUPACK algorithms address two fundamental classes of problems:
@@ -25,7 +27,7 @@ Furthermore, to enable reaction pathway engineering of dynamic hybridization cas
 
 
 
-
+<hr> </hr>
 
 ## Terminology
 - The **sequence**, $\phi$, of one or more interacting RNA strands is specified as a list of bases $\phi^a\in\{$A,C,G,U$\}$ for $a=1,\dots,|\phi|$. For DNA, $\phi^a\in\{$A,C,G,T$\}$.
@@ -33,6 +35,8 @@ Furthermore, to enable reaction pathway engineering of dynamic hybridization cas
 - A **polymer graph** representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5$'$ to 3$'$ around the circumference with a *nick* between each strand, and drawing straight lines connecting paired bases.
 - A secondary structure is **unpseudoknotted** if there exists a strand ordering for which the polymer graph has no crossing lines, or **pseudoknotted** if all strand orderings contain crossing lines. In NUPACK 4, pseudoknots are excluded from the structural ensemble.
 - A secondary structure is **connected** if no subset of the strands is free of the others.
+
+<hr> </hr>
 
 ## Complex Ensemble
 Consider a complex of $L$ distinct strands (e.g., each with a unique identifier in $\{1,\dots,L\}$) corresponding to strand ordering $\pi$. The **complex ensemble** $\overline\Gamma(\phi)$ contains all connected polymer graphs with no crossing lines for sequence $\phi$ and strand ordering $\pi$ (i.e., all unpseudoknotted secondary structures) [@Dirks07]. (We dispense with our prior convention [@Dirks07,@Zadeh11a,@Zadeh11b] of calling this entity an ''ordered complex''.)
@@ -53,6 +57,8 @@ otherwise the structures are distinct [@Dirks07].
 <!-- If a complex contains multiple strands with the same sequence, subtleties arise in the definition of the structural ensemble and in the calculation of experimental observables [@Dirks07,@Fornace20]. Let $\overline\Gamma(\phi)$ denote the structural ensemble in which each strand is treated as distinct (i.e., each strand has a unique identifier in $\{1,\dots,L\}$) and let $\Gamma(\phi)$ denote the ensemble in which strands with the same sequence are treated as indistinguishable. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases; otherwise the structures are distinct [@Dirks07]. The ensemble $\Gamma(\phi)\subseteq\overline\Gamma(\phi)$ is a maximal subset of distinct secondary structures for strand ordering $\pi$.
 
 Consider a complex of $L$ distinct strands (e.g., each with a unique identifier in $\{1,\dots,L\}$) corresponding to strand ordering $\pi$. The **complex ensemble** $\overline\Gamma(\phi)$ contains all connected polymer graphs with no crossing lines for sequence $\phi$ and strand ordering $\pi$ (i.e., all unpseudoknotted secondary structures) [@Dirks07]. (We dispense with our prior convention [\cite{@Dirks07,@Zadeh11a,@Zadeh11b] of calling this entity an **ordered complex**.) -->
+
+<hr> </hr>
 
 ## Test Tube Ensemble
 
@@ -166,5 +172,6 @@ The [Examples](examples.md) page links to example Jupyter notebooks that are bun
 4. [Concentrations](api/concentration.md)
 5. [Drawing](api/drawing.md) -->
 
+<hr> </hr>
 
 # References

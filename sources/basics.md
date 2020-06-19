@@ -10,6 +10,8 @@ For example, if a complex has three strands of length 15, 20, and 13, respective
 Valid bases are `A`, `C`, `G`, `T`, and `U`. For RNA calculations, `T` is automatically converted to `U`, and vice versa for DNA calculations.
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.
 
+<hr> </hr>
+
 ### Specifying a sequence
 
 A `Sequence` is specified by valid nucleotide letters, which can contain wildcards.  Run-length encoding may be used to specify repeats of a given nucleotide. For RNA, `'U'` is automatically replaced by `'T'` for printing purposes.
@@ -33,10 +35,7 @@ reverse_complement(s1) # --> Sequence('TTTTTAAAAA')
 
 The `~a` syntax is generally recommended for brevity. Thus `~a` corresponds to the usual complement specification `a*` (unfortunately, the latter is not valid Python).
 
-
-
-
-
+<hr> </hr>
 
 ## Secondary structures
 
@@ -64,6 +63,8 @@ Secondary structures may be specified in one of three ways:
 
 **Figure:** Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.
 
+
+<hr> </hr>
 
 ### PairList
 
@@ -101,6 +102,8 @@ s.structure_matrix() # --> array([[0, 0, 0, 0, 1],
                      #            [1, 0, 0, 0, 0]], dtype=int32)
 ```
 
+<hr> </hr>
+
 ### Structure
 
 You might notice that the pair list specification does not include any information on structure nicks.
@@ -119,6 +122,8 @@ print(s.pairs.array()) # --> [5 4 3 2 1 0]
 ```
 
 
+
+<hr> </hr>
 
 ## Named objects
 
@@ -148,6 +153,8 @@ print(repr(s)) # --> Domain('a', 'NNNNNN')
 !!! note
     In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
 
+<hr> </hr>
+
 ### Domain
 
 A domain is a fixed-length sequence of nucleotides, primarily useful in a design context. It reflects a shared sequence that may appear multiple times in different strands. A domain may be created from a name and `Sequence` (or sequence string).
@@ -175,9 +182,11 @@ a1 == a2 # --> False
 a1 == a1 # --> True
 ```
 
+<hr> </hr>
+
 ### Strand
 
-A strand representes a single physical strand of RNA or DNA (with no nicks in the phosphate backbone). A strand may be initialized either from a single sequence or from a list of domains:
+A strand representes a single physical strand of RNA or DNA (with no nicks n the phosphate backbone). A strand may be initialized either from a single sequence or from a list of domains:
 
 ```python
 A = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
@@ -198,6 +207,8 @@ A2 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 A1 == A2 # --> False
 A1 == A1 # --> True
 ```
+
+<hr> </hr>
 
 ### Complex
 
@@ -225,6 +236,8 @@ c1a == c1b # --> True
 c1a == c1a # --> True
 ```
 
+<hr> </hr>
+
 ### Tube
 
 A `Tube` is a collection of interacting strands, each at a user-specified concentration. A `Tube` may be created from a set of strands with specified concentrations. Complexes may be explicitly included via the keyword `include`. All complexes of up to size `n` may be included by specifying `max_size=n` (`max_size` defaults to 1). Complexes may be specifically excluded from the automatically generated set via the `exclude` keyword.
@@ -250,3 +263,6 @@ t1a == t1b # --> False
 t1a == t1a # --> True
 ```
 
+<hr> </hr>
+
+## References
