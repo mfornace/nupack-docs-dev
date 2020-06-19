@@ -149,13 +149,29 @@ result[c1].mfe_structure
 result[c1].pair_probability
 ```
 
-You can collect these information for all calculated complexes quite easily. For example:
+Using this, you can easily plot a pair probability matrix visually inside a Jupyter notebook. For example:
 
 ```python
-# set of mfes for all complexes
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+plt.imshow(result[c].pair_probability)
+plt.xlabel('Base index')
+plt.ylabel('Base index')
+plt.title('Pair probability of complex c')
+plt.colorbar()
+plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
+```
+
+> <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="450" />
+
+You can collect complex ensemble information for all calculated complexes quite easily. For example:
+
+```python
+# set of MFEs for all complexes
 {k: v.mfe for k, v in result.complexes.items()}
-# set of ppairs for all complexes
-{k: v.ppairs for k, v in result.complexes.items()}
+# set of pair probabilities for all complexes
+{k: v.pair_probability for k, v in result.complexes.items()}
 ```
 
 A `ComplexResult` contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
