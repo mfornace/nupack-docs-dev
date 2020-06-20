@@ -477,6 +477,12 @@ weights[t2, :, :, d] = 3
 Weights may be printed or displayed by similar slicing:
 
 ```python
+weights
+```
+
+> <img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
+
+```python
 print(weights[t1])
 print(weights[t1, c2])
 print(weights[t1, c2, A])
