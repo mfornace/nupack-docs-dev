@@ -6,7 +6,6 @@ See the following usage examples derived from Jupyter notebooks that are bundled
 2. [Design](https://github.com/mfornace/nupack-documentation/blob/docs/notebooks/Design.ipynb)
 3. [Conversion from NUPACK 3](https://github.com/mfornace/nupack-documentation/blob/docs/notebooks/ConversionFromNUPACK3.ipynb)
 
-## TODO: Other?
-
-**TODO** Currently the above links are to github, but we can switch to nbviewer once they're public. You may need to sign into GitHub to see the above links.
+!!!todo
+    Currently the above links are to github, but we can switch to nbviewer once they're public. You may need to sign into GitHub to see the above links.
 

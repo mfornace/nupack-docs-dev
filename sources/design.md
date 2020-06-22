@@ -2,7 +2,7 @@
 
 # Design
 
-To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@hochrein13]) or large-scale structural engineering including pseudoknots (e.g., RNA origamis [@geary14]), NUPACK generalizes these analysis and design capabilities to multistate ensembles:
+To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13]) or large-scale structural engineering including pseudoknots (e.g., RNA origamis [@Geary14]), NUPACK generalizes these analysis and design capabilities to multistate ensembles:
 
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
