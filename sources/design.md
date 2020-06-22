@@ -718,3 +718,66 @@ conc_results = complex_concentrations(result.analysis, t1_designed, concenration
 <hr> </hr>
 
 ### Graphics
+
+
+!!!todo
+    decide approach here
+
+<hr> </hr>
+
+## Saving, checkpointing, and restarting
+
+<hr> </hr>
+
+### Saving results to a text file
+
+!!!todo
+    decide approach here
+
+
+### Saving and loading results to a binary file
+
+Saving a `Result` from design is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
+
+```python
+result.save('design-result.o')
+```
+
+Later, you can load the result back into your Python session with the following class method syntax:
+
+```python
+result = design.Result.load('design-result.o')
+```
+
+<hr> </hr>
+
+### Running from a prior design result
+
+The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `Result` object.
+
+!!!todo
+    standardize class syntax
+
+```python
+newer_result = my_design.optimize(restart=result)
+```
+
+<hr> </hr>
+
+### Saving checkpoint files automatically
+
+When "calling" the design to start the optimization process, two additional arguments must be added for checkpointing to work, `checkpoint_condition` and `checkpoint_handler`.
+
+`checkpoint_condition` is a binary function that receives the stats and timer object from the running design optimization. The logic in `checkpoint_condition` then uses this information to determine whether a checkpoint should be made, in which case it returns True. In the call below, it is set to an object of an included class, `TimeInterval`. If `checkpoint_condition` is set to an object `TimeInterval(n)`, then a checkpoint will be emitted roughly every `n` seconds.
+
+`checkpoint_handler` is the function which actually does something given that `checkpoint_condition` returns `True`. `checkpoint_handler` takes one argument, a `Result` object, and decides how it will use this information. In the call below, it is set to an object of the included class, `WriteToFileCheckpoint`. This type of `checkpoint_handler` object is instantiated with a filename prefix (`"design-checkpoint"` below) and will convert the design Result object into JSON and serialize it to a file with the given prefix and a time stamp, e.g. design_test-2020-01-27T00:16:52.170292.out.
+
+```python
+from nupack.design import TimeInterval, WriteToFileCheckpoint
+
+result = my_design.optimize(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
+```
+
+<hr> </hr>
+
+## Citations
