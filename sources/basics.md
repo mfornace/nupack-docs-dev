@@ -1,16 +1,6 @@
-# Basics
 
-## Sequences
 
-Nucleic acid sequences are listed $5'$ to $3'$.
-<!-- Unlike NUPACK 3, NUPACK 4 uses zero-based indices exclusively. The first index of any sequence is 0, not 1. -->
-Unlike NUPACK 3, bases in NUPACK 4 are indexed starting with 0 at the $5'$-most base of the first strand and ending at the $3'$-most base of the last strand.
-For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39.
 
-Valid bases are `A`, `C`, `G`, `T`, and `U`. For RNA calculations, `T` is automatically converted to `U`, and vice versa for DNA calculations.
-A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.
-
-<hr> </hr>
 
 ### Specifying a sequence
 
@@ -37,31 +27,7 @@ The `~a` syntax is generally recommended for brevity. Thus `~a` corresponds to t
 
 <hr> </hr>
 
-## Secondary structures
 
-### Conventions
-
-Secondary structures may be specified in one of three ways:
-
-1. **dot-parens-plus notation**: Each unpaired base is represented by a dot, each base pair by matching parentheses, and each nick between strands by a plus [@Zadeh11a]. For example, `((...))` specifies that bases 0 and 1 are paired to bases 6 and 5, respectively, while bases 2, 3, and 4 are unpaired. `((+...))` specifies that bases 0 and 1 of strand 0 are paired to bases 4 and 3 of strand 1.
-
-2. **run-length encoded dot-parens-plus notation**: As a shorthand for dot-parens-plus, any sequence of consecutive characters in dot-parens-plus may be replaced by the character followed by a number. For instance, `(((((+...........)))))`  may be written as `(5+.11)5`.
-
-3. **DU+ notation**: Using DU+ notation, a duplex is represented by `D` and an unpaired region of length nucleotides is represented by `U` [@Zadeh10c]. Each duplex is followed immediately by the substructure (specified in DU+ notation) that is 'enclosed' by the duplex. If this substructure includes more than one element, parentheses are used to denote scope. A nick between strands is specified by a '+'. See the table below for examples.
-
-<!-- 4. **pair list notation**: A list of zero-based indices $p$ such that if $p_i = j$, bases $i$ and $j$ are paired, and if $p_i = i$, base $i$ is unpaired. Any secondary structure, including highly-nested pseudoknots, may be specified in this way. -->
-
-| Dot-parens-plus                       | RLE dot-parens-plus  | DU+ notation |
-| ------------------------------------- | -------------------  | ------------ |
-| `((((((((((((..........))))))))))))`  |  `(12.10)12`         | `D12 U10`    |
-| `((((((((((((+))))))))))))..........` |  `(12+)12.10`        | `D12 + U10`  |
-| `((((((((((((+..........))))))))))))` |  `(12+.10)12`        |`D12 (+ U10)` |
-
-**Table:** Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation
-
-<img src="/figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
-
-**Figure:** Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.
 
 
 <hr> </hr>
