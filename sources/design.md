@@ -11,9 +11,9 @@ We recommend using multi-tube sequence design, as it captures concentration and 
 For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structure engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
 
-<hr> </hr>
+<hr> 
 
-## Basic setup
+## Specify a domain
 
 Define domains, strands, on targets, and tubes:
 
@@ -25,7 +25,11 @@ d = Domain('Domain d', 'N10') # equivalent sequence specification
 e = Domain('Domain e', 'RRSSAAACCA')
 f = Domain('Domain f', 'R2S2A3C2A') # equivalent sequence specification
 g = Domain('Domain g', 'N10')
+```
+<hr>
 
+## Specify a strand
+```python
 # Domains should not be specified inline
 A = Strand('Strand A', [a, b, g])
 B = Strand('Strand B', [d, ~e])
@@ -33,9 +37,13 @@ C = Strand('Strand C', [e, a, f])
 D = Strand('Strand D', [d, d, d])
 ```
 
-<hr> </hr>
+<hr> 
 
-### Specifying a `TargetComplex`
+## Specify a structure
+
+<hr>
+
+## Specify a target complex
 
 A `TargetComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
 
@@ -61,7 +69,7 @@ C5 = TargetComplex('C5', [B, C], '.10(10+)10.10')
 
 <hr> </hr>
 
-### Specifying a `TargetTube`
+## Specify a target tube
 
 
 A `TargetTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
@@ -111,7 +119,7 @@ t6 = TargetTube('t6', {C5: 6e-8}, max_size=3, exclude=[C3, [B, B]])
 
 <hr> </hr>
 
-## Tube design
+## Run a tube design job
 
 The `tube_design` function is offered to run a complete multitube design. See the below sections for information on inputs and results.
 
@@ -125,7 +133,7 @@ result = tube_design(tubes=tubes,
 
 <hr> </hr>
 
-## Complex design
+## Run a complex design job
 
 For convenience, the `complex_design` function is provided to achieve simple complex design. It simply makes a tube for each complex and executes `tube_design`.
 
@@ -138,7 +146,7 @@ results = complex_design(complexes=[c1, c2],
 
 <hr> </hr>
 
-## Hard constraints
+## Specify hard constraints
 
 Hard constraints are most easily kept track of as a Python `list`. See below for an example:
 
@@ -358,7 +366,7 @@ div3 = Diversity(10, 4, where=[a, B])
 
 <hr> </hr>
 
-## Soft constraints
+## Specify soft constraints
 
 ```python
 # define soft for soft constraints
@@ -444,7 +452,7 @@ diff2 = EnergyDiff([a, b], energy=-17, weight=0.5)
 
 <hr> </hr>
 
-## Custom weights
+## Specify defect weights
 
 The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:
 
@@ -541,7 +549,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 <hr> </hr>
 
-## Algorithm parameters
+## Job options
 
 Specify any non-defaults. Change `stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
 
@@ -595,7 +603,7 @@ The information logged for each of these given a non-empty string is as follows:
 
 <hr> </hr>
 
-## Results
+## Job results
 
 Both `complex_design` and `tube_design` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
 

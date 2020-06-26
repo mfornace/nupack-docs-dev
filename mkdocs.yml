@@ -13,7 +13,7 @@ nav:
 #  - Complex Design: complex-design.md
 #  - Test Tube Design: tube-design.md
 #- Getting Started:
-#  - Installation: installation.md
+#- Installation: installation.md
 #  - Examples: examples.md
 #- Acknowledgments: acknowledgments.md
 #- References:
@@ -22,22 +22,22 @@ nav:
 - Analysis: analysis.md
 - Design: design.md
 - Utilities: utilities.md
-- Advanced: advanced.md
+- Getting Started: started.md
 # - Sandbox: sandbox.md
 # - Sandbox2: sandbox3.md
 # - Markdown Examples:
   # - Subsection 1: markdown.md
   # - Subsection 2: markdown-sub.md
-- Examples: examples.md
-- Versions: versions.md
+#- Versions: versions.md
 # - Python API:
 #   - Model: api/model.md
 #   - Analysis: api/analysis.md
 #   - Design: api/design.md
 #   - Concentrations: api/concentration.md
 #   - Drawing: api/drawing.md
-- Basics: basics.md
-- License: license.md
+#- Basics: basics.md
+#- License: license.md
+- Other: other.md
 site_dir: _build/site
 site_name: NUPACK User Guide
 

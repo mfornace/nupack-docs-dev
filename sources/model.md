@@ -1,8 +1,9 @@
 # Physical Model
 
-<hr> </hr>
+<hr> 
 
-## Defining a model
+
+## Specify a physical model
 
 NUPACK 4 analysis and design jobs are run based on a physical model created using the `Model` class:
 
@@ -40,23 +41,14 @@ Any unspecified properties take on their default values (which happen to be the 
     Note that the `sodium` and `magnesium` are unspecified so they take on their default values.
 
 
-<hr> </hr>
-
-### Ensemble
-
-NUPACK 4 algorithms perform calculations on the following complex ensembles specified by the keyword `ensemble` (default: `ensemble='stacking'`):
-
-- `stacking`
-Complex ensemble with coaxial and dangle stacking (ensemble $\overline\Gamma^\shortparallel(\phi)$).
-
-- `nostacking`
-Complex ensemble without coaxial and dangle stacking (ensemble $\overline\Gamma(\phi)$).
+<hr> 
 
 
 
-<hr> </hr>
 
-### Material and parameters
+## Model options
+
+### Free energy parameter sets
 
 NUPACK 4 algorithms use the following temperature-dependent RNA and DNA free energy parameter sets specified by the keyword `material` (default: `material='rna'`):
 
@@ -77,9 +69,27 @@ Custom parameters provided in a JSON file (e.g., `custom-parameters.json`) using
 !!!note
     Address the "same directory" comment above -- not so easy now.
 
-Base pairs are either Watson-Crick pairs (`G`$\cdot$`C` and `A`$\cdot$`U` for RNA; `G`$\cdot$`C` and `A`$\cdot$`T` for DNA) or wobble pairs (`G`$\cdot$`U` for RNA). Note that for DNA, `G` and `T` form a mismatch and not a wobble pair [@Santalucia04].
+Base pairs are either Watson-Crick pairs ($\texttt{G}\cdot \texttt{C}$ and `A`$\cdot$`U` for RNA; `G`$\cdot$`C` and `A`$\cdot$`T` for DNA) or wobble pairs (`G`$\cdot$`U` for RNA). Note that for DNA, `G` and `T` form a mismatch and not a wobble pair [@Santalucia04].
 
 DNA/RNA hybrids are not allowed.
+
+<hr>
+
+
+### Stacking
+
+NUPACK 4 algorithms perform calculations on the following complex ensembles specified by the keyword `ensemble` (default: `ensemble='stacking'`):
+
+- `stacking`
+Complex ensemble with coaxial and dangle stacking (ensemble $\overline\Gamma^\shortparallel(\phi)$).
+
+- `nostacking`
+Complex ensemble without coaxial and dangle stacking (ensemble $\overline\Gamma(\phi)$).
+
+
+
+<hr> 
+
 
 
 !!!old
@@ -100,7 +110,7 @@ DNA/RNA hybrids are not allowed.
     ```
 
 
-<hr> </hr>
+<hr>
 
 ### Temperature
 
@@ -112,9 +122,9 @@ If desired, the temperature may also be specified via the keyword `kelvin`; this
     Free energy parameters are usually specified in NUPACK via enthalpy ($\Delta H$) and entropy terms ($\Delta S$). Parameters are adjusted for a given temperature using the formula $\Delta G = \Delta H - T \Delta S$.
 
 
-<hr> </hr>
+<hr> 
 
-### Salt concentrations
+### Salt
 
 The default salt conditions for RNA and DNA parameter sets are $[\mathrm{Na}^+] = 1 {\rm M}$. Only the default salt conditions are supported for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.
 
@@ -134,7 +144,7 @@ Based on [@Peyret00,@Koehler05] the concentration of (divalent) magnesium ions, 
     - **Magnesium:** The Mg$^{++}$ concentration of the solution is specified by the keyword `mg` in units of molar (default: 0.0, range: \[0.0,0.2\]) is specified by @Koehler05.
 
 
-<hr> </hr>
+<hr> 
 
 ### Wobble pairs
 
@@ -144,7 +154,7 @@ However, wobble pairs may be manually enabled or disabled using the additional `
 In the historical ensembles, a duplex terminated by a wobble pair is forbidden.
 
 
-<hr> </hr>
+<hr> 
 
 ### Historical options
 
@@ -172,27 +182,7 @@ Same as `dna04` except that G$\cdot$T was treated as a wobble pair (analogous to
 Same as `rna06` except that terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies and parameters are provided only for 37 $^\circ$C.
 
 
-<hr> </hr>
 
-## Using the model
-
-Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
-However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
-
-First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences `sequences`. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
-
-```python
-energy1 = model.loop_energy(['AA', 'TT']) # stack energy
-energy2 = model.loop_energy(['AA', 'TT'], nick=1) # energy of stack with an intervening strand break
-energy3 = model.loop_energy(['AATT'], nick=0) # energy of unpaired AATT strand
-```
-
-One may also calculate the free energy of a complex of ordered strands in a secondary structure structure:
-
-```python
-energy = model.structure_energy(['AAAA', 'TTTT'], '((((+))))')
-```
-
-<hr> </hr>
+<hr> 
 
 ## Citations

@@ -36,29 +36,22 @@ NUPACK includes a number of utility functions meant for simple usage.
 These functions can be very convenient, but they might involve unnecessary calculations compared to the full analysis API.
 Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Model](model.md) for help on creating a model object).
 
-<hr> </hr>
 
-### Partition function
+
+### `pfunc`: calculate the partition function 
 
 `pfunc` returns the complex partition function of a single specified complex as a `decimal.Decimal`:
 
 ```python
-partition_function = pfunc(['CCC', 'GGG'], model=Model(parameters='RNA', ensemble='stacking'))
+partition_function = pfunc(['CCC', 'GGG'],  
+    model=Model(parameters='RNA', ensemble='stacking'))
 print(partition_function)
 # --> 1581.5360063360488947
 ```
 
-<hr> </hr>
 
-### Minimum free energy structure
 
-`mfe` returns a list of MFE structures and their associated free energies. If the MFE is unique, the list will be length one:
-
-```python
-mfe_structures = mfe(['CCC', 'GGG'])
-print(mfe_structures)
-# --> [(Structure('(((+)))'), -4.181351661682129)]
-```
+### `pairs`: calculate base-pairing observables
 
 `pairs` calculates the equilibrium base pair probability matrix as a `numpy.ndarray`. The diagonal of the matrix is the probability that a given base is unpaired.
 
@@ -74,21 +67,23 @@ print(probability_matrix.round(3))
 #  [0.607 0.028 0.    0.    0.    0.365]]
 ```
 
-<hr> </hr>
 
-### Equilibrium structure probability
 
-`prob` calculates the probability of a given secondary structure appearing in a single specified complex:
+
+### `mfe`: calculate the MFE structure proxy
+
+`mfe` returns a list of MFE structures and their associated free energies. If the MFE is unique, the list will be length one:
 
 ```python
-probability = prob(['CCC', 'GGG'], structure='(((+)))')
-print(probability)
-# --> 0.5589045601083861
+mfe_structures = mfe(['CCC', 'GGG'])
+print(mfe_structures)
+# --> [(Structure('(((+)))'), -4.181351661682129)]
 ```
+
 
 <hr> </hr>
 
-### Equilibrium structure probability
+### `subopt`: calculate the suboptimal structure ensemble
 
 `subopt` calculates all secondary structures within a specified free energy `gap` of the MFE. The free energy gap is specified in kcal/mol:
 
@@ -101,9 +96,25 @@ print(subopt_structures)
 # ]
 ```
 
+
+
 <hr> </hr>
 
-### Boltzmann sampling
+### `prob`: calculate the equilibrium probablity of a structure
+
+`prob` calculates the probability of a given secondary structure appearing in a single specified complex:
+
+```python
+probability = prob(['CCC', 'GGG'], structure='(((+)))')
+print(probability)
+# --> 0.5589045601083861
+```
+
+
+
+<hr>
+
+### `sample`: Boltzmann sample an ensemble of structures
 
 `sample` calculates a specified `number` of random secondary structures drawn according to the equilibrium Boltzmann distribution:
 
@@ -113,9 +124,9 @@ print(sampled_structures)
 # --> [Structure('.((+)).'), Structure('(((+)))'), Structure('((.+)).')]
 ```
 
-<hr> </hr>
+<hr> 
 
-### Structure and stacking state counts
+### `count`: calculate the number of states in the ensemble 
 `count` calculates the number of secondary structures that can form for a specified complex:
 
 ```python
@@ -124,3 +135,12 @@ print(ensemble_size)
 # --> 19
 ```
 
+<hr>
+### `des`: design the sequence for a complex ensemble intended to adopt a target secondary structure at equilibrium
+`des` designs the sequence for a complex:
+
+```python
+ensemble_size = des(['CCC', 'GGG'])
+print(ensemble_size)
+# --> 19
+```

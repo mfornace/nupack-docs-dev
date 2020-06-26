@@ -150,85 +150,26 @@ a1 == a1 # --> True
 
 <hr> </hr>
 
-### Strand
-
-A strand representes a single physical strand of RNA or DNA (with no nicks n the phosphate backbone). A strand may be initialized either from a single sequence or from a list of domains:
-
-```python
-A = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
-B = Strand('B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
-C = Strand('C','AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
-
-a1 = Domain('a1', 'AGTCTAGGATTCGGCGT')
-a2 = Domain('a2', 'GGGTTAA')
-D = Strand('D', [a1, a2]) # mostly useful in a design context
-```
-
-A strand only compares equal to another one if they are the same Python object.
-
-```python
-A1 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
-A2 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
-
-A1 == A2 # --> False
-A1 == A1 # --> True
-```
-
 <hr> </hr>
 
-### Complex
+## Using the model
 
-A complex may be created from an ordered list of strands. Unlike the other named objects, the name for a `Complex` is optional and may be omitted:
+Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
+However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
 
-```python
-c1 = Complex([A])
-c2 = Complex([A, B, B, C])
-c3 = Complex([A, A])
-```
-
-In general, anytime a `Complex` is expected, a list of strands may be used instead. Optionally, a complex may be given a name by specifying it first:
+First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences `sequences`. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
 
 ```python
-c4 = Complex('A+B+C', [A, B, C])
+energy1 = model.loop_energy(['AA', 'TT']) # stack energy
+energy2 = model.loop_energy(['AA', 'TT'], nick=1) # energy of stack with an intervening strand break
+energy3 = model.loop_energy(['AATT'], nick=0) # energy of unpaired AATT strand
 ```
 
-Complexes are compared based on the lowest rotational order of the contained strands:
+One may also calculate the free energy of a complex of ordered strands in a secondary structure structure:
 
 ```python
-c1a = Complex('A-B', [A, B])
-c1b = Complex('B-A', [B, A])
-
-c1a == c1b # --> True
-c1a == c1a # --> True
+energy = model.structure_energy(['AAAA', 'TTTT'], '((((+))))')
 ```
 
-<hr> </hr>
-
-### Tube
-
-A `Tube` is a collection of interacting strands, each at a user-specified concentration. A `Tube` may be created from a set of strands with specified concentrations. Complexes may be explicitly included via the keyword `include`. All complexes of up to size `n` may be included by specifying `max_size=n` (`max_size` defaults to 1). Complexes may be specifically excluded from the automatically generated set via the `exclude` keyword.
-
-```python
-t1 = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8])
-t2 = Tube('t2', strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12], include=[c2], max_size=3, exclude=[c1])
-```
-
-For convenience, the concentrations may be left out, in which case the strands may be given without concentrations:
-
-```python
-t3 = Tube('t3', strands=[A, B], include=[c2], max_size=3, exclude=[c1])
-```
-
-A tube only compares equal to itself if it is the same Python object
-
-```python
-t1a = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=3, exclude=[c1])
-t1b = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=3, exclude=[c1])
-
-t1a == t1b # --> False
-t1a == t1a # --> True
-```
-
-<hr> </hr>
 
 ## References

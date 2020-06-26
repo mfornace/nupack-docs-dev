@@ -8,9 +8,92 @@ NUPACK provides the capability to analyze equilibrium properties over one of two
 
 Note that a complex ensemble is subsidiary to a test tube ensemble, so complex analysis is inherent in test tube analysis (but not vice versa), and complex design is inherent in test tube design (but not vice versa). As it is typically infeasible to experimentally study a single complex in isolation, we recommend analyzing and designing nucleic acid strands in a test tube ensemble that contains the complex of interest as well as other competing complexes that might form in solution. For example, if one is experimentally studying strands A and B that are intended to predominantly form a secondary structure within the ensemble of complex A$\cdot$ B, one should not presuppose that the strands do indeed form A$\cdot$ B and simply analyze or design the base-pairing properties of that complex. Instead, it is more physically relevant to analyze a test tube ensemble containing strands A and B interacting to form multiple complex species (e.g., A, B, A$\cdot$ A, A$\cdot$ B, B$\cdot$ B) so as to capture both concentration information (how much A$\cdot$ B forms?) and structural information (what are the base-pairing properties of A$\cdot$ B when it does form?).
 
+<hr> 
+
+## Specify a strand
+
+A strand representes a single physical strand of RNA or DNA (with no nicks n the phosphate backbone). A strand may be initialized either from a single sequence or from a list of domains:
+
+```python
+A = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
+B = Strand('B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
+C = Strand('C','AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
+
+a1 = Domain('a1', 'AGTCTAGGATTCGGCGT')
+a2 = Domain('a2', 'GGGTTAA')
+D = Strand('D', [a1, a2]) # mostly useful in a design context
+```
+
+A strand only compares equal to another one if they are the same Python object.
+
+```python
+A1 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
+A2 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
+
+A1 == A2 # --> False
+A1 == A1 # --> True
+```
+
 <hr> </hr>
 
-## Tube and complex analysis
+## Specify a complex ensemble
+
+A complex may be created from an ordered list of strands. Unlike the other named objects, the name for a `Complex` is optional and may be omitted:
+
+```python
+c1 = Complex([A])
+c2 = Complex([A, B, B, C])
+c3 = Complex([A, A])
+```
+
+In general, anytime a `Complex` is expected, a list of strands may be used instead. Optionally, a complex may be given a name by specifying it first:
+
+```python
+c4 = Complex('A+B+C', [A, B, C])
+```
+
+Complexes are compared based on the lowest rotational order of the contained strands:
+
+```python
+c1a = Complex('A-B', [A, B])
+c1b = Complex('B-A', [B, A])
+
+c1a == c1b # --> True
+c1a == c1a # --> True
+```
+
+<hr> </hr>
+
+## Specify a test tube ensemble
+
+A `Tube` is a collection of interacting strands, each at a user-specified concentration. A `Tube` may be created from a set of strands with specified concentrations. Complexes may be explicitly included via the keyword `include`. All complexes of up to size `n` may be included by specifying `max_size=n` (`max_size` defaults to 1). Complexes may be specifically excluded from the automatically generated set via the `exclude` keyword.
+
+```python
+t1 = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8])
+t2 = Tube('t2', strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12], include=[c2], max_size=3, exclude=[c1])
+```
+
+For convenience, the concentrations may be left out, in which case the strands may be given without concentrations:
+
+```python
+t3 = Tube('t3', strands=[A, B], include=[c2], max_size=3, exclude=[c1])
+```
+
+A tube only compares equal to itself if it is the same Python object
+
+```python
+t1a = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=3, exclude=[c1])
+t1b = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=3, exclude=[c1])
+
+t1a == t1b # --> False
+t1a == t1a # --> True
+```
+
+<hr> </hr>
+
+
+
+## Run a test tube analysis job
 
 `tube_analysis` may be used to to solve for the complex and tube ensemble properties of a set of [tubes](basics.md#Tube).
 
@@ -27,6 +110,8 @@ result = tube_analysis(tubes=[t1, t2],
     compute=['pairs', 'mfe', 'sample'], model=model,
     options={'num_sample': 100})
 ```
+
+## Run a complex analysis job
 
 Sometimes it is unnecessary to compute equilibrium concentrations, and you just want complex ensemble information. You can compute these results by using the `complex_analysis` function. `complex_analysis` is almost identical to `tube_analysis` but does not compute any concentration information. It is thus unnecessary to specify strand concentrations in the input tubes:
 
@@ -47,7 +132,10 @@ print(t1_result.complex_concentrations) # result concentrations
 
 <hr> </hr>
 
-### Specifying computations
+
+
+
+## Job options
 
 For `tube_analysis` and `complex_analysis`, the `compute` keyword should be specified to be a list of strings denoting calculation types. The full list of possible complex ensemble calculations is:
 
@@ -69,7 +157,7 @@ Several customizing options may be specified in the `options` field:
 
 <hr> </hr>
 
-### Result display
+## Job results
 
 Some of the main results of NUPACK analysis can be visually displayed for a convenient first glance. This includes partition functions, minimum free energies, equilibrium concentrations, and other scalar quantities. Larger result objects (like pair probability matrices) can be printed by [introspecting into the result](Result_introspection). Take the following example analysis result:
 
@@ -117,7 +205,6 @@ Output:
 
 <hr> </hr>
 
-### Result introspection
 
 The result of `tube_analysis` is an `AnalysisResult` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via a `Tube` :
 
