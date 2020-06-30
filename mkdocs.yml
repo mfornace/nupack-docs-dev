@@ -42,7 +42,7 @@ site_dir: _build/site
 site_name: NUPACK User Guide
 
 theme:
-  name: material
+  name: readthedocs
   language: en
 
 # theme:

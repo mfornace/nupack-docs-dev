@@ -38,7 +38,7 @@ Each of the following functions also takes an optional trailing parameter `model
 
 
 
-### `pfunc`: calculate the partition function 
+## `pfunc`: calculate the partition function 
 
 `pfunc` returns the complex partition function of a single specified complex as a `decimal.Decimal`:
 
@@ -51,7 +51,7 @@ print(partition_function)
 
 
 
-### `pairs`: calculate base-pairing observables
+## `pairs`: calculate base-pairing observables
 
 `pairs` calculates the equilibrium base pair probability matrix as a `numpy.ndarray`. The diagonal of the matrix is the probability that a given base is unpaired.
 
@@ -70,7 +70,7 @@ print(probability_matrix.round(3))
 
 
 
-### `mfe`: calculate the MFE structure proxy
+## `mfe`: calculate the MFE structure proxy
 
 `mfe` returns a list of MFE structures and their associated free energies. If the MFE is unique, the list will be length one:
 
@@ -83,7 +83,7 @@ print(mfe_structures)
 
 <hr> </hr>
 
-### `subopt`: calculate the suboptimal structure ensemble
+## `subopt`: calculate the suboptimal structure ensemble
 
 `subopt` calculates all secondary structures within a specified free energy `gap` of the MFE. The free energy gap is specified in kcal/mol:
 
@@ -100,7 +100,7 @@ print(subopt_structures)
 
 <hr> </hr>
 
-### `prob`: calculate the equilibrium probablity of a structure
+## `prob`: calculate the equilibrium probablity of a structure
 
 `prob` calculates the probability of a given secondary structure appearing in a single specified complex:
 
@@ -114,7 +114,7 @@ print(probability)
 
 <hr>
 
-### `sample`: Boltzmann sample an ensemble of structures
+## `sample`: Boltzmann sample an ensemble of structures
 
 `sample` calculates a specified `number` of random secondary structures drawn according to the equilibrium Boltzmann distribution:
 
@@ -126,7 +126,7 @@ print(sampled_structures)
 
 <hr> 
 
-### `count`: calculate the number of states in the ensemble 
+## `count`: count the states in the ensemble 
 `count` calculates the number of secondary structures that can form for a specified complex:
 
 ```python
@@ -136,11 +136,10 @@ print(ensemble_size)
 ```
 
 <hr>
-### `des`: design the sequence for a complex ensemble intended to adopt a target secondary structure at equilibrium
-`des` designs the sequence for a complex:
+## `des`: design a sequence
 
 ```python
-ensemble_size = des(['CCC', 'GGG'])
-print(ensemble_size)
-# --> 19
+designed_sequence = des(['(((+)))'])
+print(designed_sequence)
+# --> ['CCC', 'GGG']
 ```
