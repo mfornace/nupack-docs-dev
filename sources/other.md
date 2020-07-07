@@ -152,27 +152,6 @@ a1 == a1 # --> True
 
 <hr> </hr>
 
-## Using the model
-
-Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
-However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
-
-First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences `sequences`. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
-
-```python
-energy1 = model.loop_energy(['AA', 'TT']) # stack energy
-energy2 = model.loop_energy(['AA', 'TT'], nick=1) # energy of stack with an intervening strand break
-energy3 = model.loop_energy(['AATT'], nick=0) # energy of unpaired AATT strand
-```
-
-One may also calculate the free energy of a complex of ordered strands in a secondary structure structure:
-
-```python
-energy = model.structure_energy(['AAAA', 'TTTT'], '((((+))))')
-```
-
-
-
 
 
 
