@@ -1,4 +1,4 @@
-# Physical Model
+# Model Specification
 
 <hr> 
 
@@ -141,47 +141,4 @@ Same as `rna06` except that terminal mismatch free energies in exterior loops an
 
 
 
-## Calculate a loop free energy
-
-Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
-However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
-
-First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
-
-```python
-energy1 = model.loop_energy(['AA', 'TT']) # stack energy
-```
-
-!!!example Examples
-    - Calculate the free energy of an unstructure strand: 
-    ```python
-    energy2 = model.loop_energy(['AATT'], nick=0) 
-    ```
-    - Calculate the free energy of a hairpin loop: 
-    ```python
-    energy3 = model.loop_energy(['AA', 'TT'], nick=1) 
-    ```
-    - Calculate the free energy of an exterior loop comprising a stacked base pair with a nick: 
-    ```python
-    energy4 = model.loop_energy(['AA', 'TT'], nick=1) 
-    ```
-     - Calculate the free energy of a multiloop: 
-    ```python
-    energy5 = model.loop_energy(['AA', 'TT'], nick=1) 
-    ```
-
-
-
-## Calculate a structure free energy
-One may also calculate the free energy of a complex of ordered strands in a secondary structure structure:
-
-```python
-energy = model.structure_energy(['AAAA', 'TTTT'], '((((+))))')
-```
-
-
-
-
-
-<hr>
 

@@ -1,6 +1,6 @@
 
 
-# Utilities
+# Utilities Jobs
 
 !!! note
     Seems less error-prone to just insist on specified model, especially for utilities?
@@ -34,7 +34,7 @@ my_energy = energy(c1, structure='.(((........))).........') -->
 <!-- Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`).  -->
 NUPACK includes a number of utility functions meant for simple usage.
 These functions can be very convenient, but they might involve unnecessary calculations compared to the full analysis API.
-Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Model](model.md) for help on creating a model object).
+Each of the following functions also takes an optional trailing parameter `model`, which should be an instance of `nupack.Model` if specified. (See [Physical Model](model.md) for help on creating a model object).
 
 
 
@@ -134,6 +134,55 @@ ensemble_size = count(['CCC', 'GGG'])
 print(ensemble_size)
 # --> 19
 ```
+
+## Calculate a loop free energy
+
+<!-- Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
+However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
+
+First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
+ -->
+`loop_energy` calculates the loop free energy $\Delta G(\textrm{loop})$ for a specified loop sequence, structure, and model: 
+
+```python
+dGloop1 = loop_energy(['AA', 'TT'], structure='((+))',  
+    model=Model(parameters='RNA', ensemble='stacking')) # stack energy
+```
+
+!!!example Examples
+    - Calculate the free energy of an unstructure strand: 
+    ```python
+    dGloop2 = loop_energy(['AATT'], nick=0) 
+    ```
+    - Calculate the free energy of a hairpin loop: 
+    ```python
+    dGloop3 = loop_energy(['AA', 'TT'], nick=1) 
+    ```
+    - Calculate the free energy of an exterior loop comprising a stacked base pair with a nick: 
+    ```python
+    dGloop4 = loop_energy(['AA', 'TT'], nick=1) 
+    ```
+     - Calculate the free energy of a multiloop: 
+    ```python
+    dGloop5 = loop_energy(['AA', 'TT'], nick=1) 
+    ```
+
+
+
+## Calculate a structure free energy
+`structure_energy` calculates the secondary structure free energy $\overline{\Delta G}(\phi,s)$ for the specified sequence, structure, and model: 
+
+```python
+dGstruc1 = structure_energy(['AAAA', 'TTTT'], structure='((((+))))',  
+    model=Model(parameters='DNA', celcius = 25, ensemble='stacking'))
+```
+
+If the physical model includes [coaxial and dangle stacking](index.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](index.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi,s)$.
+
+
+
+
+
 
 <hr>
 ## Design a sequence given a structure

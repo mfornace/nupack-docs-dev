@@ -1,4 +1,4 @@
-# Analysis
+# Analysis Jobs
 
 NUPACK provides the capability to analyze equilibrium properties over one of two ensembles:
 
