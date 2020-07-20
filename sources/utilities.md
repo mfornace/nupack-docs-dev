@@ -44,7 +44,7 @@ Each of the following functions also takes an optional trailing parameter `model
 
 ```python
 partition_function = pfunc(['CCC', 'GGG'],  
-    model=Model(parameters='RNA', ensemble='stacking'))
+    model=Model(material='RNA', ensemble='stacking'))
 print(partition_function)
 # --> 1581.5360063360488947
 ```
@@ -146,7 +146,7 @@ First, one can calculate the free energy of a single loop defined by an ordered 
 
 ```python
 dGloop1 = loop_energy(['AA', 'TT'], structure='((+))',  
-    model=Model(parameters='RNA', ensemble='stacking')) # stack energy
+    model=Model(material='RNA', ensemble='stacking')) # stack energy
 ```
 
 !!!example Examples
@@ -174,7 +174,7 @@ dGloop1 = loop_energy(['AA', 'TT'], structure='((+))',
 
 ```python
 dGstruc1 = structure_energy(['AAAA', 'TTTT'], structure='((((+))))',  
-    model=Model(parameters='DNA', celcius = 25, ensemble='stacking'))
+    model=Model(material='DNA', celcius = 25, ensemble='stacking'))
 ```
 
 If the physical model includes [coaxial and dangle stacking](index.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](index.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi,s)$.
