@@ -44,7 +44,7 @@ Each of the following functions also takes an optional trailing parameter `model
 
 ```python
 partition_function = pfunc(['CCC', 'GGG'],  
-    model=Model(parameters='RNA', ensemble='stacking'))
+    model=Model(material='RNA', ensemble='stacking'))
 print(partition_function)
 # --> 1581.5360063360488947
 ```
@@ -142,21 +142,23 @@ However, a `Model` also contains a few useful methods (below) to analyze individ
 
 First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
  -->
-`loop_energy` calculates the loop free energy $\Delta G(\textrm{loop})$ for a specified loop sequence, structure, and model: 
+`loop_energy` calculates the loop free energy $\Delta G(\textrm{loop})$ for a specified loop and model. The loop is specified by:
+
+1. A list of ordered sequences bounding the loop. Generally the last base of one sequence pairs to the first base of another sequence
+2. A nick index (defaulting to -1). If the nick is -1, the loop is assumed to not contain a strand break. Otherwise, the nick is the zero-based index of the strand following the strand break.
 
 ```python
-dGloop1 = loop_energy(['AA', 'TT'], structure='((+))',  
-    model=Model(parameters='RNA', ensemble='stacking')) # stack energy
+dGloop1 = loop_energy(['AA', 'TT'], model=Model(material='RNA', ensemble='stacking')) # stack energy
 ```
 
 !!!example Examples
-    - Calculate the free energy of an unstructure strand: 
+    - Calculate the free energy of an unstructured strand: 
     ```python
     dGloop2 = loop_energy(['AATT'], nick=0) 
     ```
     - Calculate the free energy of a hairpin loop: 
     ```python
-    dGloop3 = loop_energy(['AA', 'TT'], nick=1) 
+    dGloop3 = loop_energy(['AATT']) 
     ```
     - Calculate the free energy of an exterior loop comprising a stacked base pair with a nick: 
     ```python
@@ -164,7 +166,7 @@ dGloop1 = loop_energy(['AA', 'TT'], structure='((+))',
     ```
      - Calculate the free energy of a multiloop: 
     ```python
-    dGloop5 = loop_energy(['AA', 'TT'], nick=1) 
+    dGloop5 = loop_energy(['AAT', 'ACT', 'AGT']) 
     ```
 
 
@@ -174,7 +176,7 @@ dGloop1 = loop_energy(['AA', 'TT'], structure='((+))',
 
 ```python
 dGstruc1 = structure_energy(['AAAA', 'TTTT'], structure='((((+))))',  
-    model=Model(parameters='DNA', celcius = 25, ensemble='stacking'))
+    model=Model(material='DNA', celcius = 25, ensemble='stacking'))
 ```
 
 If the physical model includes [coaxial and dangle stacking](index.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](index.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi,s)$.
@@ -189,17 +191,17 @@ If the physical model includes [coaxial and dangle stacking](index.md#coaxial-an
 `des` designs a sequence intended to adopt a specified target structure at equilibrium. 
 
 ```python
-designed_sequence = des(['(((+)))'])
+designed_sequence = des('(((+)))', model=Model())
 print(designed_sequence)
 # --> ['CCC', 'GGG']
 ```
 
 <hr>
 ## Calculate the ensemble defect of a structure
-`defect` designs a sequence intended to adopt a specified target structure at equilibrium. 
+`defect` evaluates a sequence intended to adopt a specified target structure at equilibrium. 
 
 ```python
-designed_sequence = des(['(((+)))'])
-print(designed_sequence)
-# --> ['CCC', 'GGG']
+ensemble_defect = defect('(((+)))', ['CCC', 'GGG'], model=Model())
+print(ensemble_defect)
+# --> 0.01
 ```

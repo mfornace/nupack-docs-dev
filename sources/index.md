@@ -142,7 +142,7 @@ The [Examples](examples.md) page links to example Jupyter notebooks that are bun
 			`defect`, `complexes`, `concentrations`, `distributions`, `design`
         - These executables read input files containing comment lines preceded by `%`; blank lines are not permitted.
 	- Terminology and notation:
-        - details in @Dirks07
+        - details in [@Dirks07]
 - **NUPACK 3.1**
     - New features:
 	    - test tube design [@Wolfe15]
@@ -181,6 +181,6 @@ The [Examples](examples.md) page links to example Jupyter notebooks that are bun
 		- Scripting is done in Python
         - Indices start at 0 (previous versions indexed starting at 1)
 	- Terminology and notation:
-	    - details in
+	    - details in [@Fornace20]
 
 
