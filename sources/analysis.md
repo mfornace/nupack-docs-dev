@@ -6,25 +6,27 @@ NUPACK provides the capability to analyze equilibrium properties over one of two
 
 - **Test Tube Analysis:** analyze the equilibrium concentrations and base-pairing properties for a test tube of interacting nucleic acid strands [@Dirks07,@Fornace20].
 
-Note that a complex ensemble is subsidiary to a test tube ensemble, so complex analysis is inherent in test tube analysis (but not vice versa), and complex design is inherent in test tube design (but not vice versa). As it is typically infeasible to experimentally study a single complex in isolation, we recommend analyzing and designing nucleic acid strands in a test tube ensemble that contains the complex of interest as well as other competing complexes that might form in solution. For example, if one is experimentally studying strands A and B that are intended to predominantly form a secondary structure within the ensemble of complex A$\cdot$ B, one should not presuppose that the strands do indeed form A$\cdot$ B and simply analyze or design the base-pairing properties of that complex. Instead, it is more physically relevant to analyze a test tube ensemble containing strands A and B interacting to form multiple complex species (e.g., A, B, A$\cdot$ A, A$\cdot$ B, B$\cdot$ B) so as to capture both concentration information (how much A$\cdot$ B forms?) and structural information (what are the base-pairing properties of A$\cdot$ B when it does form?).
+Note that a complex ensemble is subsidiary to a test tube ensemble, so complex analysis is inherent in test tube analysis (but not vice versa). As it is typically infeasible to experimentally study a single complex in isolation, we recommend analyzing nucleic acid strands in a test tube ensemble that contains the complex of interest as well as other competing complexes that might form in solution. For example, if one is experimentally studying strands A and B that are intended to predominantly form a secondary structure within the ensemble of complex A$\cdot$ B, one should not presuppose that the strands do indeed form A$\cdot$ B and simply analyze the base-pairing properties of that complex. Instead, it is more physically relevant to analyze a test tube ensemble containing strands A and B interacting to form multiple complex species (e.g., A, B, A$\cdot$ A, A$\cdot$ B, B$\cdot$ B) so as to capture both concentration information (how much A$\cdot$ B forms?) and structural information (what are the base-pairing properties of A$\cdot$ B when it does form?).
 
 <hr> 
 
 ## Specify a strand
 
-A strand representes a single physical strand of RNA or DNA (with no nicks n the phosphate backbone). A strand may be initialized either from a single sequence or from a list of domains:
-
+A `Strand` is a single RNA or DNA molecule specified as a strand name and a strand sequence:   
 ```python
 A = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 B = Strand('B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
 C = Strand('C','AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
-
-a1 = Domain('a1', 'AGTCTAGGATTCGGCGT')
-a2 = Domain('a2', 'GGGTTAA')
-D = Strand('D', [a1, a2]) # mostly useful in a design context
 ```
 
-A strand only compares equal to another one if they are the same Python object.
+Optionally, the strand sequence can be specified as a list of sequence domains (mostly useful for design jobs):
+```python
+a1 = Domain('a1', 'AGTCTAGGATTCGGCGT')
+a2 = Domain('a2', 'GGGTTAA')
+D = Strand('D', [a1, a2]) 
+```
+
+Two strands compare as equal only if they are the same Python object:
 
 ```python
 A1 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
@@ -38,29 +40,32 @@ A1 == A1 # --> True
 
 ## Specify a complex ensemble
 
-A complex may be created from an ordered list of strands. Unlike the other named objects, the name for a `Complex` is optional and may be omitted:
-
+A `Complex` is specified as a strand ordering (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)): 
 ```python
 c1 = Complex([A])
 c2 = Complex([A, B, B, C])
 c3 = Complex([A, A])
 ```
 
-In general, anytime a `Complex` is expected, a list of strands may be used instead. Optionally, a complex may be given a name by specifying it first:
-
+Optionally, the name of the complex may be specified as the first argument: 
 ```python
 c4 = Complex('A+B+C', [A, B, C])
 ```
 
-Complexes are compared based on the lowest rotational order of the contained strands:
+Two complexes compare as equal if they represent the same strand ordering:
 
 ```python
-c1a = Complex('A-B', [A, B])
-c1b = Complex('B-A', [B, A])
+c3a = Complex('A-B-C', [A, B, C])
+c3b = Complex('B-C-A', [B, C, A])
+c4  = Complex('A-C-B', [A, C, B])
 
-c1a == c1b # --> True
-c1a == c1a # --> True
+c3a == c3b # --> True
+c3a == c3a # --> True
+c3a == c4 # --> False
 ```
+
+A command that expects a `Complex` argument will accept a strand ordering instead (e.g., either complex `c4` or strand ordering `[A,C,B]`)
+
 
 <hr> </hr>
 
@@ -121,6 +126,13 @@ result = complex_analysis(tubes=[t1], compute=['pairs', 'mfe'])
 result[c1] # --> ComplexResult
 ```
 
+
+
+<hr> </hr>
+
+
+## Run a complex concentration job
+
 After running `complex_analysis`, you may solve for the equilibrium concentrations separately if this fits your workflow better. Computing equilibrium concentrations is generally very fast compared to evaluating the dynamic programs. This is done one tube at a time since no savings can be made by computing them together.
 
 ```python
@@ -129,11 +141,6 @@ t2_result = complex_concentrations(result, t2) # use concentration from t2
 
 print(t1_result.complex_concentrations) # result concentrations
 ```
-
-<hr> </hr>
-
-
-
 
 ## Job options
 

@@ -92,8 +92,8 @@ For citation, please select from the list below as appropriate for your applicat
 
 
 ## Acknowledgments
-We thank all the NUPACK users that have helped out as beta testers over the years, as well as the many NUPACK users that have emailed \texttt{support@nupack.org} to request features or report bugs. 
-NUPACK is supported by the National Science Foundation (NSF-OAC-1835414) and by the Beckman Institute at Caltech (PMTC)
+We thank all the NUPACK users that have helped out as beta testers over the years, as well as the many NUPACK users that have emailed <support@nupack.org> to request features or report bugs. 
+NUPACK is supported by the National Science Foundation (NSF-OAC-1835414) and by the Beckman Institute at Caltech (PMTC).
 NUPACK has previously been supported by the National Science Foundation 
 (NSF-CCF-1317694, NSF-CCF-0832824, NSF-CHE-0533064, NSF-DMS-0506468, NSF-CAREER-0448835), 
 by the Gordon and Betty Moore Foundation (GBMF2809), by the John Simon Guggenheim Memorial Foundation, 
