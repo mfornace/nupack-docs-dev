@@ -68,7 +68,7 @@ Complex ensemble without coaxial and dangle stacking (ensemble $\overline\Gamma(
 - `celsius`  
 Temperature is specified in $^\circ$C using the keyword `celsius` (default: `celsius=37`).
 - `kelvin`  
-Alterantively, the temperature can be specified in K using the keyword `kelvin`. 
+Alternatively, the temperature can be specified in K using the keyword `kelvin`. 
 
 <hr> 
 
@@ -136,7 +136,7 @@ Same as `rna95` except that terminal mismatch free energies in exterior loops an
 Same as `dna04` except that G$\cdot$T was treated as a wobble pair (analogous to a `G`$\cdot$`U` RNA wobble pair) instead of classifying `G` and `T` as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in `dna04`, as terminal mismatch parameters are not public for DNA [@Santalucia04].
 
 - `rna99-nupack3`  
-Same as `rna06` except that terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies and parameters are provided only for 37 $^\circ$C.
+Parameters from [@Mathews99] with terminal mismatch free energies in exterior loops and multiloops replaced by two dangle stacking free energies. Parameters are provided only for 37 $^\circ$C.
 
 
 

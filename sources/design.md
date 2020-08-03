@@ -127,7 +127,7 @@ The `tube_design` function is offered to run a complete multitube design. See th
 # run the job
 result = tube_design(tubes=tubes,
     hard_constraints=hard, soft_constraints=soft,
-    weights=weights, parameters=parameters)
+    weights=weights, options=options)
 ```
 
 
@@ -140,7 +140,7 @@ For convenience, the `complex_design` function is provided to achieve simple com
 ```python
 results = complex_design(complexes=[c1, c2],
     hard_constraints=hard, soft_constraints=soft,
-    weights=weights, parameters=parameters)
+    weights=weights, options=options)
 ```
 
 
@@ -554,7 +554,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 Specify any non-defaults. Change `stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
 
 ```python
-parameters = design.Parameters(
+options = design.Options(
     seed=0,     # random number generation seed
     stop=0.02,  # stop condition
     trials=1, # number of independent design trials
@@ -579,7 +579,7 @@ parameters = design.Parameters(
 )
 ```
 
-In addition to the multistate test tube design algorithm parameters, a few others are included in the `Parameters` object:
+In addition to the multistate test tube design algorithm options, a few others are included in the `Options` object:
 
 * ```seed```: The seed for the random number generator allowing reproducible design runs
 * ```cache_bytes_of_RAM```: The number of bytes of RAM to set as a maximum cache size for thermodynamic block caching
@@ -722,14 +722,6 @@ tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=model, 
 # Compute complex concentrations with a different set of strand concentrations
 conc_results = complex_concentrations(result.analysis, t1_designed, concenrations=[1e-8, 1e-9])
 ```
-
-<hr> </hr>
-
-### Graphics
-
-
-!!!todo
-    decide approach here
 
 <hr> </hr>
 
