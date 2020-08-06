@@ -29,7 +29,7 @@ In Terminal, download the current git repository:
 
 ```bash
 cd ~/where/you/want/the/repo
-git clone https://github.com/mfornace/nupack-documentation -b docs --recurse-submodules
+git clone https://github.com/Piercelab-Caltech/nupack-documentation -b docs --recurse-submodules
 ```
 
 ### Building the documentation locally
