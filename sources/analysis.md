@@ -12,14 +12,14 @@ Note that a complex ensemble is subsidiary to a test tube ensemble, so complex a
 
 ## Specify a strand
 
-A `Strand` is a single RNA or DNA molecule specified as a strand name and a strand sequence:   
+A `Strand` is a single RNA or DNA molecule specified as a strand name and sequence:   
 ```python
 A = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 B = Strand('B','TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
 C = Strand('C','AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
 ```
 
-Optionally, the strand sequence can be specified as a list of sequence domains (mostly useful for design jobs):
+If desired, the strand sequence can be specified as a list of [sequence domains](design.md#sepcify-a-domain) (this approach is primarily useful in the context of design jobs):
 ```python
 a1 = Domain('a1', 'AGTCTAGGATTCGGCGT')
 a2 = Domain('a2', 'GGGTTAA')
@@ -32,15 +32,15 @@ Two strands compare as equal only if they are the same Python object:
 A1 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 A2 = Strand('A','AGTCTAGGATTCGGCGTGGGTTAA')
 
-A1 == A2 # --> False
-A1 == A1 # --> True
+A1 == A2 # False
+A1 == A1 # True
 ```
 
 <hr> </hr>
 
 ## Specify a complex ensemble
 
-A `Complex` is specified as a strand ordering (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)): 
+A `Complex` of one or more interacting strands is specified as a strand ordering (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)): 
 ```python
 c1 = Complex([A])
 c2 = Complex([A, B, B, C])
@@ -59,39 +59,43 @@ c3a = Complex('A-B-C', [A, B, C])
 c3b = Complex('B-C-A', [B, C, A])
 c4  = Complex('A-C-B', [A, C, B])
 
-c3a == c3b # --> True
-c3a == c3a # --> True
-c3a == c4 # --> False
+c3a == c3b # True
+c3a == c3a # True
+c3a == c4 # False
 ```
 
-A command that expects a `Complex` argument will accept a strand ordering instead (e.g., either complex `c4` or strand ordering `[A,C,B]`)
+In general, commands that expect a complex identifier as an argument (e.g., `c4`) will alternatively accept a strand ordering (e.g.,`[A,C,B]`).
 
 
 <hr> </hr>
 
 ## Specify a test tube ensemble
 
-A `Tube` is a collection of interacting strands, each at a user-specified concentration. A `Tube` may be created from a set of strands with specified concentrations. Complexes may be explicitly included via the keyword `include`. All complexes of up to size `n` may be included by specifying `max_size=n` (`max_size` defaults to 1). Complexes may be specifically excluded from the automatically generated set via the `exclude` keyword.
+A `Tube` is specified as a tube name and a set of strands (keyword `strands`) each introduced at a user-specified concentration (keyword `concentrations`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:  
 
 ```python
-t1 = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8])
-t2 = Tube('t2', strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12], include=[c2], max_size=3, exclude=[c1])
+t1 = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8]) # max_size=1 by default
+t2 = Tube('t2', strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12], 
+    max_size=3, include=[c2,[B, B, B, B]], exclude=[c1])
 ```
 
-For convenience, the concentrations may be left out, in which case the strands may be given without concentrations:
+Note that `include` and `exlude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`). 
+
+<!-- If a tube will only be used for calculations that do not :
 
 ```python
 t3 = Tube('t3', strands=[A, B], include=[c2], max_size=3, exclude=[c1])
-```
+```  
+-->
 
-A tube only compares equal to itself if it is the same Python object
+Two tubes compare as equal only if they are the same Python object
 
 ```python
 t1a = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=3, exclude=[c1])
 t1b = Tube('t1', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=3, exclude=[c1])
 
-t1a == t1b # --> False
-t1a == t1a # --> True
+t1a == t1b # False
+t1a == t1a # True
 ```
 
 <hr> </hr>
@@ -100,57 +104,109 @@ t1a == t1a # --> True
 
 ## Run a test tube analysis job
 
-`tube_analysis` may be used to to solve for the complex and tube ensemble properties of a set of [tubes](basics.md#Tube).
-
-The following example computes the partition function, MFE structure, and 100 Boltzmann sampled structures of each complex in the specified tubes, as well as the equilibrium concentrations of complexes in each tube.
+The `tube_analysis` command calculates the partition function, $Q(\phi_j)$, and equilibrium concenration, $x(\phi_j)$, for each complex species $j$ in one or more test tube ensembles. The test tube ensembles to be analyzed are specified using the `tubes` keyword. If desired, a [physical model](model.md#modelspecification) is specified using the `model` keyword (otherwise the default physical model is used):
 
 ```python
-a = Strand('a', 'CTGATCGAT')
+# specify strands
+a = Strand('a', 'CTGATCGAT') 
 b = Strand('b', 'GATCGTAGTC')
 
-t1 = Tube('t1', [a, b], [1e-8, 1e-9], max_size=3)
-t2 = Tube('t2', [a, b], [1e-10, 1e-9], max_size=2)
+# specify tubes
+t1 = Tube('t1', strands=[a, b], concentrations=[1e-8, 1e-9], max_size=3) 
+t2 = Tube('t2', strands=[a, b], concentrations=[1e-10, 1e-9], max_size=2)
 
-result = tube_analysis(tubes=[t1, t2],
-    compute=['pairs', 'mfe', 'sample'], model=model,
+# analyze tubes 
+result1 = tube_analysis(tubes=[t1, t2], model=model1) 
+```
+
+Optionally, additional quantities are calculated for each complex in the tube (see [Job Options](analysis.md#job_options)). For example, additionally calculate equilibrium base-pairing probabilities, the MFE structure(s), and 100 Boltzmann sampled structures for each complex in the tube: 
+
+```python
+result2 = tube_analysis(tubes=[t1, t2], model=model1, compute=['pairs', 'mfe', 'sample'],
     options={'num_sample': 100})
 ```
 
-## Run a complex analysis job
+If desired, the results of a `tube_analysis` job can alternatively be calculated in two steps: 
 
-Sometimes it is unnecessary to compute equilibrium concentrations, and you just want complex ensemble information. You can compute these results by using the `complex_analysis` function. `complex_analysis` is almost identical to `tube_analysis` but does not compute any concentration information. It is thus unnecessary to specify strand concentrations in the input tubes:
+- Step 1: run a `complex_analysis` job (to calculate the partition function for each complex); 
+- Step 2: run a `complex_concentrations` job (to calculate the equilibrium concentration for each complex in the context of a test tube given user-specified strand concentrations). 
+
+Most of the computational cost is in Step 1. The strand concentrations are used only in Step 2. 
+Hence, if you intend to analyze N test tubes containing the same strand species but N different sets of strand concentrations, it is cheaper to call `complex_analysis` once and `complex_concentrations` N times, rather than to call `tube_analysis` N times. 
+
+
+
+## Run a complex analysis job
+Use the `complex_analysis` command to calculate the partition function (and other additional quantities -- see [Job Options](analysis.md#job_options)) for each complex in a set: 
 
 ```python
-t1 = Tube('t1', strands=[A, B], include=[c1, c2, c3])
-result = complex_analysis(tubes=[t1], compute=['pairs', 'mfe'])
-result[c1] # --> ComplexResult
+t3 = Tube('t3', strands=[A, B], include=[c1, c2, c3])
+t4 = Tube('t4', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=2)
+my_plexes = complex_analysis(tubes=[t3, t4], compute=['pairs', 'mfe'])
+result34[c1] # --> ComplexResult
 ```
-
-
+Note that tube `t3` defines a set of complexes (all complexes of up to `max_size=1` strands plus pre-defined complexes `c1`, `c2`, `c3`) but omits optional concentrations for strands `A` and `B` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. On the other hand, tube `t4` defines optional strand concentrations that will be ignored by `complex_analysis`. 
 
 <hr> </hr>
 
 
 ## Run a complex concentration job
-
-After running `complex_analysis`, you may solve for the equilibrium concentrations separately if this fits your workflow better. Computing equilibrium concentrations is generally very fast compared to evaluating the dynamic programs. This is done one tube at a time since no savings can be made by computing them together.
+Use the `complex_concentrations` command to calculate the equilibrium concentration of each complex in a test tube ensemble using the output from a previous call to `complex_analysis`: 
 
 ```python
-t1_result = complex_concentrations(result, t1, concentrations=[1e-8, 1e-9]) # use manually specified concentrations if desired
-t2_result = complex_concentrations(result, t2) # use concentration from t2
+ # specify strand concentrations for t3
+t3_result = complex_concentrations(my_plexes, t3, concentrations=[1e-8, 1e-9]) 
+
+# use strand concentrations previously specified for t4
+t4_result = complex_concentrations(my_plexes, t4) 
 
 print(t1_result.complex_concentrations) # result concentrations
 ```
 
+Note that `complex_concentrations` operates on a single tube ensemble at a time since each tube represesnts a separate coupled equilibrium problem and no savings can be achieved by considering multiple concentration solves at the same time. 
+
+
+
+
 ## Job options
 
-For `tube_analysis` and `complex_analysis`, the `compute` keyword should be specified to be a list of strings denoting calculation types. The full list of possible complex ensemble calculations is:
+For `tube_analysis` and `complex_analysis`, the optional `compute` keyword specifies a list of strings denoting additional calculations to be performed for each complex [@Fornace20]:  
 
-- `'pfunc'`: compute partition function and free energy.
-- `'mfe'`: compute MFE energy and structure(s).
-- `'pairs'`: compute pair probability.
+- `'mfe'`
+
+compute the free energy of the minimum free energy (MFE) stacking state $s_\mathrm{MFE}^\shortparallel(\phi) \in\overline\Gamma^\shortparallel(\phi)$ treating all strands as distinct:
+
+$\overline{\Delta G}(\phi,s^\shortparallel_{\rm MFE}) \equiv \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi)} \overline{\Delta G}(\phi,s^\shortparallel)$
+
+and calculate the MFE proxy structure
+
+$s_\mathrm{MFE'} \equiv \{s\in\overline\Gamma(\phi) | s^\shortparallel_\mathrm{MFE}\!\in\! s, s^\shortparallel_\mathrm{MFE}(\phi) = \arg \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi)} \overline{\Delta G}(\phi,s^\shortparallel)\}$
+
+defined as the secondary structure containing the MFE stacking state within its subensemble.
+If there is more than one MFE stacking state, the algorithm returns all corresponding MFE proxy structures. 
+
+- `'pairs'`
+
+compute the base-pairing probability matrix $\overline P(\phi)$ with entries $\overline P^{i,j}(\phi)\in[0,1]$ corresponding to the probability
+
+$\overline P^{i,j}(\phi) = \sum_{s\in\overline\Gamma(\phi)} \overline p(\phi,s) S^{i,j}(s)$
+
+that base pair $i\cdot j$ forms at equilibrium within ensemble $\overline\Gamma(\phi)$, treating all strands as distinct.
+Here, $S(s)$ is a structure matrix with entries
+$S^{i,j}(s) = 1$ if structure $s$ contains base pair $i\cdot j$ and $S^{i,j}(s)=0$ otherwise.
+Abusing notation, the entry $S^{i,i}(s)$ is 1 if base $i$ is unpaired in structure $s$ and 0 otherwise; the entry $P^{i,i}(\phi) \in [0,1]$ denotes the equilibrium probability that base $i$ is unpaired over ensemble $\overline\Gamma(\phi)$.
+Hence $S(s)$ and $\overline P(\phi)$ are symmetric matrices with row and column sums of 1.
+
 - `'sample'`: compute Boltzmann sampled keywords.
-- `'subopt'`: compute suboptimal structures.
+- `'subopt'`
+
+Compute the set of suboptimal secondary structures:
+
+$\overline\Gamma_{\rm subopt}(\phi,\Delta G_{\rm gap}) = \{s\in\overline\Gamma(\phi) | s^\shortparallel\!\in\! s, \overline{\Delta G}(\phi,s^\shortparallel) \le \overline{\Delta G}(\phi,s^\shortparallel_{\rm MFE}) + \Delta G_{\rm gap}\}$
+
+with stacking states within a specified $\Delta G_\mathrm{gap}\ge 0$ of the MFE stacking state.
+
+
 - `'structure_count'`: compute number of possible secondary structures.
 - `'stack_count'`: compute number of possible stacking states.
 - `'prob'`: compute probability of a secondary structure.
