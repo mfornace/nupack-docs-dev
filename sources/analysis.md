@@ -187,7 +187,7 @@ If there is more than one MFE stacking state, the algorithm returns all correspo
 
 - `'pairs'`
 
-compute the base-pairing probability matrix $\overline P(\phi)$ with entries $\overline P^{i,j}(\phi)\in[0,1]$ corresponding to the probability
+Compute the base-pairing probability matrix $\overline P(\phi)$ with entries $\overline P^{i,j}(\phi)\in[0,1]$ corresponding to the probability
 
 $\overline P^{i,j}(\phi) = \sum_{s\in\overline\Gamma(\phi)} \overline p(\phi,s) S^{i,j}(s)$
 
@@ -197,7 +197,15 @@ $S^{i,j}(s) = 1$ if structure $s$ contains base pair $i\cdot j$ and $S^{i,j}(s)=
 Abusing notation, the entry $S^{i,i}(s)$ is 1 if base $i$ is unpaired in structure $s$ and 0 otherwise; the entry $P^{i,i}(\phi) \in [0,1]$ denotes the equilibrium probability that base $i$ is unpaired over ensemble $\overline\Gamma(\phi)$.
 Hence $S(s)$ and $\overline P(\phi)$ are symmetric matrices with row and column sums of 1.
 
-- `'sample'`: compute Boltzmann sampled keywords.
+- `'sample'`
+
+Compute a set of $J$ secondary structures: 
+
+$\Gamma_\mathrm{sample}(\phi,J) \in \Gamma(\phi)$
+
+Boltzmann sampled from ensemble $\Gamma(\phi)$ treating strands with the same sequence as indistinguishable.
+
+
 - `'subopt'`
 
 Compute the set of suboptimal secondary structures:
