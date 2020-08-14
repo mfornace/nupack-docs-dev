@@ -207,9 +207,12 @@ print(stacks_ext)
 #Calculate the stacking state free energies for a multiloop
 stacks_multi = stacking_energies(loop=['AAT', 'ACT', 'AGT'], structure=['(.(+).(+).)'],  
     model=Model(material='RNA', ensemble='stacking')) 
+print(stacks_multi)
+# --> [(1,2).3, 4.(5,6)], -1.23
+# --> [(1,2).3, 4.(5,6)], -1.23
 ```
 
-A coaxial stack between base pair $a\cdot b$ and $d\cdot e$ is denoted `(a,b).(c,d)`. A 5$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `e.(f,g)`. A 3$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `(f,g).e`.
+A coaxial stack between base pair $a\cdot b$ and $d\cdot e$ is denoted `(a,b).(c,d)`. A 5$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `e.(f,g)`. A 3$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `(f,g).e`. If the physical model specifies `nostacking` or if the loop is not a multiloop or an exterior loop, the algorithm with return no stacking states. 
 
 
 <hr>
