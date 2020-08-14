@@ -84,7 +84,9 @@ complex of $L$ strands:
 \begin{align}
 \overline{\Delta G}(\phi,s) = (L-1)\,\Delta G^\textrm{assoc}\, + \sum_{\mathrm{loop} \in s} \Delta G(\mathrm{loop}). \label{eq:dGbar}
 \end{align}
-The different loop types are modeled as follows:
+
+### Loop free energies 
+The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different loop types as follows:
 
 - A **hairpin loop** is closed by a single base-pair $a\cdot b$. The loop free energy, $\Delta G^\mathrm{hairpin}_{a,b}$, depends on sequence and loop size.
 - An **interior loop** is closed by two base pairs ($a\cdot b$ and $d\cdot e$ with $a<d<e<b$). The loop free energy, $\Delta G^\mathrm{interior}_{a,d,e,b}$ depends on sequence, loop size, and loop asymmetry. **Bulge loops** (where either $d=a+1$ or $e=b-1$) and **stacked pairs** (where both $d=a+1$ and $e=b-1$) are treated as special cases of interior loops.
@@ -119,8 +121,12 @@ For a given multiloop or exterior loop, the energetic contributions of all possi
 where $\omega$ indexes the possible stacking states within the loop and $x$ indexes the individual stacks (coaxial or dangle) within a stacking state.
 The free energy of a multiloop or exterior loop is augmented by the corresponding $\Delta G^\mathrm{stacking}$ bonus.
 Hence, a secondary structure $s$ continues to be defined as a set of base pairs, and the stacking states within a given multiloop or exterior loop are treated as a structural subensemble that contributes in a Boltzmann-weighted fashion to the free energy model for the loop.
-Let $s^\shortparallel\in s$ denote a stacking state of the paired and unpaired bases in $s$. We may equivalently define the free energy of secondary structure $s$ in terms of the
-free energies for all stacking states $s^\shortparallel\in s$:
+Let $s^\shortparallel\in s$ denote a stacking state of the paired and unpaired bases in $s$. We may equivalently define the free energy of secondary structure $s$ in terms of the **stacking state
+free energies** 
+\begin{align}
+\overline{\Delta G}(\phi,s^\shortparallel)
+\end{align}
+for all stacking states $s^\shortparallel\in s$:
 \begin{align}
 \overline{\Delta G}(\phi,s) = -kT \log \sum_{s^\shortparallel\in s}e^{-\overline{\Delta G}(\phi,s^\shortparallel)/kT} \label{eq:stacksum}
 \end{align}
@@ -162,9 +168,20 @@ For complex $j$, the partition function evaluated over ensemble $\Gamma(\phi_j)$
 strands with the same sequence as indistinguishable is denoted
 
 \begin{align}
-Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}
+Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}.
 \end{align}
 
+For complex $j$, the corresponding complex free energy is 
+\begin{align}
+\Delta G(\phi_j) \equiv -kT \log(Q(\phi_j)).
+\end{align}
+
+### Structure free energy
+For complex $j$, the secondary structure free energy treating strands with the same sequence as indistinguishable is denoted
+\begin{align}
+\Delta G(\phi_j,s).
+\end{align}
+If the physical model includes [coaxial and dangle stacking](index.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](index.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi_j,s)$.
 
 
 ### Equilibrium structure probability
@@ -212,11 +229,16 @@ s_\mathrm{MFE'} \equiv \{s\in\overline\Gamma(\phi_j) | s^\shortparallel_\mathrm{
 \end{align}
 
 defined as the secondary structure containing the MFE stacking state within its subensemble.
-If there is more than one MFE stacking state, the algorithm returns all corresponding MFE proxy structures. 
+The free energy of the MFE proxy structure is 
+\begin{align}
+\overline{\Delta G}(\phi,s_\mathrm{MFE'}).
+\end{align}
+There may be more than one MFE stacking state, each corresponding to the same or different MFE proxy structures. 
 
 
-### Suboptimal structures
-For complex $j$, the set of suboptimal structures with stacking states within a specified $\Delta G_\mathrm{gap}\ge 0$ of the MFE stacking state is denoted 
+
+### Suboptimal proxy structures
+For complex $j$, the set of suboptimal proxy secondary structures with stacking states within a specified $\Delta G_\mathrm{gap}\ge 0$ of the MFE stacking state is denoted 
 
 \begin{align}
 \overline\Gamma_{\rm subopt}(\phi_j,\Delta G_{\rm gap}) = \{s\in\overline\Gamma(\phi_j) | s^\shortparallel\!\in\! s, \overline{\Delta G}(\phi_j,s^\shortparallel) \le \overline{\Delta G}(\phi_j,s^\shortparallel_{\rm MFE}) + \Delta G_{\rm gap}\}.
@@ -226,7 +248,7 @@ For complex $j$, the set of suboptimal structures with stacking states within a 
 
 ### Complex ensemble defect
 
-For complex $j$ with target structure $s_j$, the complex ensemble defect 
+For complex $j$ with target structure $s_j$, the dimensional complex ensemble defect 
 \begin{align}
     n(\phi_j,s_j) 	& = |\phi_j| - \sum_{\begin{array}{c} 
                             1 \leq a \leq |\phi_j|,\\
@@ -235,7 +257,7 @@ For complex $j$ with target structure $s_j$, the complex ensemble defect
                             \overline P^{a, b}(\phi_j) S^{a,b}(s_j),
 \end{align}
 quantifies the equilibrium number of incorrectly paired nucleotides over the ensemble $\overline\Gamma(\phi_j)$ relative to $s_j$ [@dirks04,@zadeh11b]. Here, $\overline P(\phi_j)$ is the equilibrium base-pairing probability 
-matrix and $S(s_j)$ is the [target structure matrix](definitions.md#secondary-structure) for $s_j$. The normalized complex ensemble defect is then denoted
+matrix and $S(s_j)$ is the [target structure matrix](definitions.md#secondary-structure) for $s_j$. The **normalized complex ensemble defect** is then denoted
 
 \begin{align}
 {\mathcal N}_j \equiv n(\phi_j,s_j)/|\phi_j| ~~~\in (0,1)
@@ -243,7 +265,7 @@ matrix and $S(s_j)$ is the [target structure matrix](definitions.md#secondary-st
 
 representing the equilibrium fraction of incorrectly paired nucleotides evaluated over the ensemble of complex $j$ relative to target structure $s_j$. 
 
-For a set of complexes $\Psi$, the complex ensemble defect can be generalized to a multi-complex ensemble defect
+For a set of complexes $\Psi$, the normalized complex ensemble defect can be generalized to a multi-complex ensemble defect
 \begin{align}
 {{\mathcal N}} ~\equiv ~\frac{1}{|\Psi|}\sum_{j\in\Psi} {\mathcal N_j} ~~~\in(0,1)
 \end{align}
@@ -251,8 +273,15 @@ quantifying the average equilibrium fraction of incorrectly paired nucleotides o
 As ${\mathcal N}_j$ approaches zero, the complex $j$ is dominated by its target structure, $s_{j}$.
 
 
-
-
+### Complex ensemble size
+For complex $j$, the number of secondary structures in the complex ensemble, treating all strands as distinct, is denoted: 
+\begin{align}
+|\overline\Gamma(\phi_j)|.
+\end{align}
+The corresponding number of stacking states is denoted 
+\begin{align}
+|\overline\Gamma^\shortparallel(\phi_j)|.
+\end{align}
 
 
 
@@ -309,7 +338,7 @@ and a set of undesired **off-target complexes**, $\Psi_h^{\rm off}$. The set of 
 
 Let each on-target complex, $j\in\Psi_h^{\rm on}$, have a target secondary structure, 
 $s_j$, and a target concentration, $y_{h,j}$. Let each off-target complex, $j\in\Psi_h^{\rm off}$, have a vanishing target concentration ($y_{h,j} = 0$) 
-and no target structure ($s_j = \emptyset$). The test tube ensemble defect,
+and no target structure ($s_j = \emptyset$). The dimensional test tube ensemble defect,
 
 \begin{align}
 C(\phi_{\Psi_h}, s_{\Psi_h}, y_{h,\Psi_h}) = \sum_{j\in\Psi^{\rm on}_h} \Bigl[ n(\phi_{j},s_{j})\min (x_{h,j},y_{h,j}) + |\phi_{j}|\max(y_{h,j}-x_{h,j},0)\Bigr] 
@@ -327,7 +356,7 @@ the structural and concentration defects are identically zero, since $y_{h,j}=0$
 This does not mean that the defects associated with off-targets are ignored. 
 By conservation of mass, non-zero off-target concentrations imply
 deficiencies in on-target concentrations, and these concentration defects are quantified by the equation above [@Wolfe15].
-The normalized test tube ensemble defect is denoted
+The **normalized test tube ensemble defect** is then denoted
 
 \begin{align}
 {\mathcal M}_h\equiv C_h/y^{\rm nt}_h \in (0,1)
