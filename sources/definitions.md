@@ -310,20 +310,23 @@ and NUPACK calculates the set of molar complex concentrations $[j]~~ \forall j\i
 For the test tube ensemble, the ensemble pair fraction
 
 \begin{align}
-f_A(i_A\cdot j_B)
+f_A(a_A\cdot b_B)
 \end{align}
 
-denotes the fraction of A strands that form base pair $i_A\cdot j_B$. Correspondingly, 
+denotes the fraction of A strands that form base pair $a_A\cdot b_B$. Correspondingly, 
 
 \begin{align} 
-f_B(i_A\cdot j_B)
+f_B(a_A\cdot b_B)
 \end{align}
 
-denotes the fraction of B strands that form base pair $i_A\cdot j_B$.
-These base-pairing observables depend on the set of equilibrium concentrations $x_\Psi$ and the set of base-pairing probability matrices $\overline P_\Psi$.
+denotes the fraction of B strands that form base pair $a_A\cdot b_B$.
+These base-pairing observables depend on the set of equilibrium concentrations $x_\Psi$ and the set of base-pairing probability matrices $\overline P_\Psi$. The number of distinct bases in the test tube is:
 
+\begin{align}
+N_{\rm distinct}\equiv \sum_{i=1}^{|\Psi^0|} N_i
+\end{align}
 
-
+representing the total number of bases in all $|\Psi^0|$ strand species. Numbering the distinct bases from 1 to $N_{\rm distinct}$, the ensemble pair fractions, $f_A(a_A\cdot b_B)$, are then stored as an (asymmetric) $N_{\rm distinct}\times N_{\rm distinct}$ matrix. Abusing notation, the entry $f_A^{a_A,a_A} \in [0,1]$ denotes the equilibrium fraction of base $a$ on strand $A$ that is unpaired in the test tube ensemble. Hence, the matrix of test tube ensemble pair fractions is asymmetric with row and column sums of 1.
 
 
 

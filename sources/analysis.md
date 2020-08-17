@@ -55,16 +55,16 @@ c4 = Complex('A+B+C', [A, B, C])
 Two complexes compare as equal if they represent the same strand ordering:
 
 ```python
-c3a = Complex('A-B-C', [A, B, C])
-c3b = Complex('B-C-A', [B, C, A])
-c4  = Complex('A-C-B', [A, C, B])
+c5a = Complex('A-B-C', [A, B, C])
+c5b = Complex('B-C-A', [B, C, A])
+c6  = Complex('A-C-B', [A, C, B])
 
-c3a == c3b # True
-c3a == c3a # True
-c3a == c4 # False
+c5a == c5a # True
+c5a == c5b # True
+c5a == c6  # False
 ```
 
-In general, commands that expect a complex identifier as an argument (e.g., `c4`) will alternatively accept a strand ordering (e.g.,`[A,C,B]`).
+In general, commands that expect a complex identifier as an argument (e.g., `c6`) will alternatively accept a strand ordering (e.g.,`[A,C,B]`).
 
 
 <hr> </hr>
@@ -172,59 +172,29 @@ Note that `complex_concentrations` operates on a single tube ensemble at a time 
 
 For `tube_analysis` and `complex_analysis`, the optional `compute` keyword specifies a list of strings denoting additional calculations to be performed for each complex [@Fornace20]:  
 
-- `'mfe'`
+- `'pairs'`: calculate the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities). If `'pairs'` is specified, `tube_analysis` or `complex_concentrations` will further calculate the matrix of [test tube ensemble pair fractions](definitions.md#ensemble-pair-fractions). 
 
-compute the free energy of the minimum free energy (MFE) stacking state $s_\mathrm{MFE}^\shortparallel(\phi) \in\overline\Gamma^\shortparallel(\phi)$ treating all strands as distinct:
+- `'sample'`: calculate a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. 
 
-$\overline{\Delta G}(\phi,s^\shortparallel_{\rm MFE}) \equiv \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi)} \overline{\Delta G}(\phi,s^\shortparallel)$
+- `'mfe'`: calculate the [MFE proxy structure](definitions.md#mfe-proxy-structure), the free energy of the MFE stacking state, and the free energy of the MFE proxy secondary structure. If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the (same) free energy of the MFE stacking state, and with the free energy of the MFE proxy secondary structure. 
 
-and calculate the MFE proxy structure
-
-$s_\mathrm{MFE'} \equiv \{s\in\overline\Gamma(\phi) | s^\shortparallel_\mathrm{MFE}\!\in\! s, s^\shortparallel_\mathrm{MFE}(\phi) = \arg \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi)} \overline{\Delta G}(\phi,s^\shortparallel)\}$
-
-defined as the secondary structure containing the MFE stacking state within its subensemble.
-If there is more than one MFE stacking state, the algorithm returns all corresponding MFE proxy structures. 
-
-- `'pairs'`
-
-Compute the base-pairing probability matrix $\overline P(\phi)$ with entries $\overline P^{i,j}(\phi)\in[0,1]$ corresponding to the probability
-
-$\overline P^{i,j}(\phi) = \sum_{s\in\overline\Gamma(\phi)} \overline p(\phi,s) S^{i,j}(s)$
-
-that base pair $i\cdot j$ forms at equilibrium within ensemble $\overline\Gamma(\phi)$, treating all strands as distinct.
-Here, $S(s)$ is a structure matrix with entries
-$S^{i,j}(s) = 1$ if structure $s$ contains base pair $i\cdot j$ and $S^{i,j}(s)=0$ otherwise.
-Abusing notation, the entry $S^{i,i}(s)$ is 1 if base $i$ is unpaired in structure $s$ and 0 otherwise; the entry $P^{i,i}(\phi) \in [0,1]$ denotes the equilibrium probability that base $i$ is unpaired over ensemble $\overline\Gamma(\phi)$.
-Hence $S(s)$ and $\overline P(\phi)$ are symmetric matrices with row and column sums of 1.
-
-- `'sample'`
-
-Compute a set of $J$ secondary structures: 
-
-$\Gamma_\mathrm{sample}(\phi,J) \in \Gamma(\phi)$
-
-Boltzmann sampled from ensemble $\Gamma(\phi)$ treating strands with the same sequence as indistinguishable.
+- `'subopt'`: calculate the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of its lowest-energy stacking state that falls within the energy gap, and with the free energy of the MFE proxy secondary structure.
 
 
-- `'subopt'`
+- `'size'`: calculate the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a physical model with `stacking`).
 
-Compute the set of suboptimal secondary structures:
+The optional `options` keyword specifies options that modify the calculations performed for each complex: 
 
-$\overline\Gamma_{\rm subopt}(\phi,\Delta G_{\rm gap}) = \{s\in\overline\Gamma(\phi) | s^\shortparallel\!\in\! s, \overline{\Delta G}(\phi,s^\shortparallel) \le \overline{\Delta G}(\phi,s^\shortparallel_{\rm MFE}) + \Delta G_{\rm gap}\}$
+- `'sparsity': f` can be used in conjuction with `'pairs'` to return a sparse matrix containing the fraction `f` of the largest pair probabilities for each base (default `'sparsity': 1` returns the full pair probability matrix).
 
-with stacking states within a specified $\Delta G_\mathrm{gap}\ge 0$ of the MFE stacking state.
+- `'num_sample': n` can be used in conjunction with `'sample'` to specify the number of structures to be sampled (default `'num_sample': 1`).
+
+- `'subopt_gap': g` can be used in conjunction with `'subopt'` to specify the (positive) free energy gap in kcal/mol (default `'subopt_gap': 0`). 
 
 
-- `'structure_count'`: compute number of possible secondary structures.
-- `'stack_count'`: compute number of possible stacking states.
-- `'prob'`: compute probability of a secondary structure.
 
-Several customizing options may be specified in the `options` field:
 
-- `'sparsity': f` may be specified to return a sparse matrix of only the highest `f * n` pair probabilities for a given base, where `n` is the total number of bases in the complex. `f=1` (the default) returns the full pair probability matrix.
-- `'num_sample': n` returns `n` sampled structures. `'n'` defaults to 1.
-- `'energy_gap: e'` computes all structures within `e` kcal/mol of the MFE. `e` defaults to 0.
-- Structures must be specified via `prob_structures` as a list of structures.
+
 
 <hr> </hr>
 

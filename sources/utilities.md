@@ -77,10 +77,10 @@ print(probability)
 
 ## Compute Boltzmann-sampled structures
 
-`sample` calculates a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. The number of structures is specified using the keyword `number`:  
+`sample` calculates a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. The number of structures is specified using the keyword `num_sample`:  
 
 ```python
-sampled_structures = sample(complex=['CCC', 'GGG'], number=3)
+sampled_structures = sample(complex=['CCC', 'GGG'], num_sample=3)
 print(sampled_structures)
 # --> [Structure('.((+)).'), Structure('(((+)))'), Structure('((.+)).')]
 ```
@@ -108,12 +108,12 @@ print(probability_matrix.round(3))
 
 ## Compute MFE proxy structure(s) 
 
-`mfe` calculates the free energy of the MFE stacking state and the corresponding [MFE proxy structure](definitions.md#mfe-proxy-structure). The algorithm returns the MFE proxy secondary structure, the free energy of the MFE stacking state, and the free energy of the MFE proxy secondary structure:
+`mfe` calculates [MFE proxy structure](definitions.md#mfe-proxy-structure). The algorithm returns the MFE proxy secondary structure, the free energy of the MFE stacking state, and the free energy of the MFE proxy secondary structure:
 
 ```python
 mfe_structures = mfe(complex=['CCC', 'GGG'])
 print(mfe_structures)
-# --> [(Structure('(((+)))'), -4.181351661682129)]
+# --> ['(((+)))', -4.181351661682129, ??]
 ```
 If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the (same) free energy of the MFE stacking state, and with the free energy of the MFE proxy secondary structure. 
 
@@ -138,7 +138,7 @@ print(subopt_structures)
 
 
 ## Compute complex ensemble size 
-`size` calculates the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either number of secondary structures or number of stacking states. Specify a physical model with `nostacking` to obtain the number of secondary structures: 
+`size` calculates the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either number of secondary structures or number of stacking states. Specify a [physical model](model.md#model-specification) with `nostacking` to obtain the number of secondary structures: 
 
 ```python
 num_struc = size(complex=['CCC', 'GGG'],  
