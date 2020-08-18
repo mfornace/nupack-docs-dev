@@ -166,7 +166,6 @@ Hard constraints are most easily kept track of as a Python `list`. See below for
 
 ```python
 # define hard constraints
-toeholds = ['CTAGCTAC', 'TACGTAGCAT']
 
 gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
 
@@ -176,7 +175,7 @@ hard = [
     Complementarity(allow_wobble=True), # global flag (?)
     Complementarity([a, b], [c, d, e], allow_wobble=True), # local flag (?)
     Similarity(b, 'S20', range=[0.45, 0.55]), # GC content
-    Library(a, catalog = toeholds),
+    Library([a], catalog = ['CTAC', 'TAAT']),
     Window([a, ~b], source = gfp)
     Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]),
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
@@ -316,7 +315,7 @@ aaSTOP = ['UAA', 'UAG', 'UGA']
 lib1 = Library(a, toeholds)
 
 # domain b is drawn from a concatenation of library sequences representing codons
-lib2 = Library([b], [aaI, aaM, aaC, aaG])
+lib2 = Library([b], aaI + aaM + aaC + aaG)
 ```
 
 <hr> </hr>
@@ -572,7 +571,6 @@ Specify any non-defaults. Change `f_stop` to set the defect tolerance on the tes
 options = design.Options(
     seed=0,     # random number generation seed
     f_stop=0.02,  # stop condition
-    trials=1, # number of independent design trials
     f_passive=0.01,
     H_split=2,
     N_split=12,
@@ -732,10 +730,11 @@ print(result.defects.tube_complexes)
 t1_designed = result.mapping[t1]
 
 # Compute the MFEs of the designed complexes that were in t1
-tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=model, result=result.analysis)
+tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=model)
 
 # Compute complex concentrations with a different set of strand concentrations
-conc_results = complex_concentrations(result.analysis, t1_designed, concenrations=[1e-8, 1e-9])
+conc_results = complex_concentrations(t1_designed, result.analysis,
+    concentrations={result.mapping[A]: 1e-8, result.mapping[B]: 1e-9})
 ```
 
 <hr> </hr>

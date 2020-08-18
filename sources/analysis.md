@@ -278,7 +278,7 @@ You can collect complex ensemble information for all calculated complexes quite 
 
 A `ComplexResult` contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
 
-- `partition_function`: complex partition function (held as a `PartitionFunction`, a subclass of `decimal.Decimal`). Convert to a `float` via `float(pf)`, calculate the logarithm via `float(pf.ln())`, or access the equivalent free energy as `pf.free_energy`.
+- `partition_function`: complex partition function (held as a `PartitionFunction`). Convert to a `float` via `float(pf)`, calculate the logarithm via `float(pf.log())`, or access the equivalent free energy as `pf.free_energy`.
 - `mfe_structures`: list of `StructureEnergy`, a tuple of (`structure`, `energy`, and `stack_energy`). `energy` is the secondary structure free energy, while `stack_energy` is the free energy of the most stable stacking state.
 - `pair_probability`: equilibrium pair probability matrix (as a `numpy.ndarray` unless sparsity is specified).
 - `sampled_structures`: list of Boltzmann sampled structures
