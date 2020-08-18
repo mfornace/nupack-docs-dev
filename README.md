@@ -37,7 +37,7 @@ git clone https://github.com/Piercelab-Caltech/nupack-documentation -b docs --re
 First, open a Terminal (any directory) and install the prerequisite packages: `mkdocs` and `pydoc-markdown`:
 
 ```bash
-pip install mkdocs pydoc-markdown pymdown-extensions mkdocs-material
+pip install -U mkdocs pydoc-markdown pymdown-extensions mkdocs-material
 ```
 
 Next, navigate to the top-level directory of this repository (`mkdocs.yml` should be visible if you run `ls`). Install the bibliography package like this:

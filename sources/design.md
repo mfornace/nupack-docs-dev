@@ -11,33 +11,33 @@ We recommend using multi-tube sequence design, as it captures concentration and 
 For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structure engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
 
-<hr> 
+<hr>
 
 ## Specify a domain
 
 Define domains, strands, on targets, and tubes:
 
 ```python
-a = Domain('Domain a', 'AAAA')
-b = Domain('Domain b', 'A4') # equivalent sequence specification
-c = Domain('Domain c', 'NNNNNNNNNN')
-d = Domain('Domain d', 'N10') # equivalent sequence specification
-e = Domain('Domain e', 'RRSSAAACCA')
-f = Domain('Domain f', 'R2S2A3C2A') # equivalent sequence specification
-g = Domain('Domain g', 'N10')
+a = Domain('AAAA',       name='a')
+b = Domain('A4',         name='b') # equivalent sequence specification
+c = Domain('NNNNNNNNNN', name='c')
+d = Domain('N10',        name='d') # equivalent sequence specification
+e = Domain('RRSSAAACCA', name='e')
+f = Domain('R2S2A3C2A',  name='f') # equivalent sequence specification
+g = Domain('N10',        name='g')
 ```
 <hr>
 
 ## Specify a strand
 ```python
 # Domains should not be specified inline
-A = Strand('Strand A', [a, b, g])
-B = Strand('Strand B', [d, ~e])
-C = Strand('Strand C', [e, a, f])
-D = Strand('Strand D', [d, d, d])
+A = DStrand([a, b, g], name='Strand A')
+B = DStrand([d, ~e],   name='Strand B')
+C = DStrand([e, a, f], name='Strand C')
+D = DStrand([d, d, d], name='Strand D')
 ```
 
-<hr> 
+<hr>
 
 ## Specify a structure
 
@@ -45,26 +45,26 @@ D = Strand('Strand D', [d, d, d])
 
 ## Specify a target complex
 
-A `TargetComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
+A `DComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
 
 ```python
-c1 = TargetComplex('Complex c1', [A], structure='.(((........))).........')
-c2 = TargetComplex('Complex c2', [A, B, B, C], structure='.1(3.8)3.9')
-c3 = TargetComplex('Complex c3', [A, A], structure='U1 D3 U8 U9')
+c1 = DComplex([A], structure='.(((........))).........', name='c1')
+c2 = DComplex([A, B, B, C], structure='.1(3.8)3.9', name='c2')
+c3 = DComplex([A, A], structure='U1 D3 U8 U9', name='c3')
 ```
 
 
 ```python
 # dot-parens-plus notation
-C1 = TargetComplex('C1', [A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............')
+C1 = DComplex([A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............', name='C1')
 
 # DU+ notation
-C2 = TargetComplex('C2', [D, D], 'D30 +')
-C3 = TargetComplex('C3', [B, B, B], 'D10(D10 + D10 +)')
-C4 = TargetComplex('C4', [B, A, B], 'D8(U12 +) D10(+) U10')
+C2 = DComplex([D, D], 'D30 +', name='C2')
+C3 = DComplex([B, B, B], 'D10(D10 + D10 +)', name='C3')
+C4 = DComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
 
 # run-length encoded dot-parens-plus notation
-C5 = TargetComplex('C5', [B, C], '.10(10+)10.10')
+C5 = DComplex([B, C], '.10(10+)10.10', name='C5')
 ```
 
 <hr> </hr>
@@ -72,13 +72,13 @@ C5 = TargetComplex('C5', [B, C], '.10(10+)10.10')
 ## Specify a target tube
 
 
-A `TargetTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
+A `DTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
 
 ```python
 # define target test tubes
 
-t1 = TargetTube('Tube t1', targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1])
-t2 = TargetTube('Tube t2', targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1])
+t1 = DTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t1')
+t2 = DTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t2')
 ```
 
 Like in `Tube`, the remaining arguments specify the other complexes to consider in the test tube ensemble:
@@ -99,48 +99,62 @@ The implied complexes are added to $\Psi^\text{off}$, provided they are not alre
 
 ```python
 # specify tubes by their names and on-target complexes with on-target concentrations
-t1 = TargetTube('t1', {C1: 1e-6}, include=[C4, C5])
+t1 = DTube({C1: 1e-6}, include=[C4, C5], name='t1')
 
 # specify unnamed off-targets each denoted by a strand ordering
-t2 = TargetTube('t2', {C2: 1e-6}, include=[[D, D, D], [D, D, D, D]])
+t2 = DTube({C2: 1e-6}, include=[[D, D, D], [D, D, D, D]], name='t2')
 
 # Mix the two kinds of specifications
-t3 = TargetTube('t3', {C1: 0.000001, C2: 1e-3}, include=[C4, [D, D, D]])
+t3 = DTube({C1: 0.000001, C2: 1e-3}, include=[C4, [D, D, D]], name='t3')
 
 # all complexes of up to 2 strands that are not on-targets in tube `T4'
-t4 = TargetTube('t4', {C1: 2e-4, C3: 3e-5}, max_size=2)
+t4 = DTube({C1: 2e-4, C3: 3e-5}, max_size=2, name='t4')
 
 # specify off-targets as the sum of sets
-t5 = TargetTube('t5', {C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B]])
+t5 = DTube({C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B]], name='t5')
 
 # specify off-targets as the difference of sets
-t6 = TargetTube('t6', {C5: 6e-8}, max_size=3, exclude=[C3, [B, B]])
+t6 = DTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
 ```
 
 <hr> </hr>
 
-## Run a tube design job
+## Create a tube design job
 
-The `tube_design` function is offered to run a complete multitube design. See the below sections for information on inputs and results.
+The `Design` class is offered to create a complete multitube design.
 
 ```python
 # run the job
-result = tube_design(tubes=tubes,
+my_design = Design(tubes=tubes,
     hard_constraints=hard, soft_constraints=soft,
     weights=weights, options=options)
 ```
 
+A `Design` possesses three main methods: `optimize()`, `evaluate()`, and `launch()`.
+
+```python
+# run a single design and return the final result
+result = my_design.optimize()
+# evaluate a design with pre-determined sequences
+result = my_design.evaluate()
+# launch a number of independenet trials of the design in the background
+optimization = my_design.launch(2)
+```
+
+See the below sections for more information on inputs and results.
 
 <hr> </hr>
 
 ## Run a complex design job
 
-For convenience, the `complex_design` function is provided to achieve simple complex design. It simply makes a tube for each complex and executes `tube_design`.
+For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a `Design` object.
 
 ```python
-results = complex_design(complexes=[c1, c2],
+my_design = complex_design(complexes=[c1, c2],
     hard_constraints=hard, soft_constraints=soft,
     weights=weights, options=options)
+
+result = my_design.optimize()
 ```
 
 
@@ -153,6 +167,7 @@ Hard constraints are most easily kept track of as a Python `list`. See below for
 ```python
 # define hard constraints
 toeholds = ['CTAGCTAC', 'TACGTAGCAT']
+
 gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
 
 hard = [
@@ -170,8 +185,8 @@ hard = [
     Diversity(word=10, diversity=4, where=[a, B])
 ]
 
-e = Domain('e','S2')
-f = Domain('f','S2')
+e = Domain('S2', name='e')
+f = Domain('S2', name='f')
 
 #add another constraint to the constrain set
 hard += [Complementarity([e],[f], allow_wobble=True)]
@@ -187,11 +202,11 @@ See the below subsections for more information about each kind of constraint.
 Match constraints are used to constrain concatenations of domains to be identical to each other. They are specified by providing the ```add_match_constraint``` with two lists of domains. The sum of the lengths of the domains in each list must be the same.
 
 ```python
-a = Domain('a', 'N'*10)
-b = Domain('b', 'N'*4)
-c = Domain('c', 'H'*6)
-d = Domain('d', 'N'*6)
-e = Domain('e', 'S'*2)
+a = Domain('N10', name='a')
+b = Domain('N4', name='b')
+c = Domain('H6', name='c')
+d = Domain('N6', name='d')
+e = Domain('S2', name='e')
 
 match1 = Match([c], [b, ~e])
 match2 = Match([a, b], [d, d, e])
@@ -226,12 +241,12 @@ A common use case of the similarity constraint is to constrain a domain or stran
 
 
 ```python
-a = Domain('a', 'N'*10)
-sim1 = Similarity('a', 'S5K5', [0.25, 0.75])
+a = Domain('N10', name='a')
+sim1 = Similarity(a, 'S5K5', [0.25, 0.75])
 
 # "composition constraint" special case: enforce 45-55% GC content
-b = Domain('b', 'N20')
-sim2 = Similarity('b', 'S20', [0.45, 0.55])
+b = Domain('N20', name='b')
+sim2 = Similarity(b, 'S20', [0.45, 0.55])
 ```
 
 <hr> </hr>
@@ -246,10 +261,10 @@ The constraint can also allow the concatenated domains to have a sequence that i
 
 
 ```python
-a = Domain('a', 'N'*10)
-b = Domain('b', 'N'*10)
-c = Domain('c', 'N'*10)
-e = Domain('e', 'N'*10)
+a = Domain('N10', name='a')
+b = Domain('N10', name='b')
+c = Domain('N10', name='c')
+e = Domain('N10', name='e')
 
 gfp = 'AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACGGCCACAAGUUCAGCGUGUCCGGCGAGGGCGAGGGCGAUGCCACCUACGGCAAGCUGACCCUGAAGUUCAUCUGCACCACCGGCAAGCUGCCCGUGCCCUGGCCCACCCUCGUGACCACCCUGACCUACGGCGUGCAGUGCUUCAGCCGCUACCCCGACCACAUGAAGCAGCACGACUUCUUCAAGUCCGCCAUGCCCGAAGGCUACGUCCAGGAGCGCACCAUCUUCUUCAAGGACGACGGCAACUACAAG'
 
@@ -268,8 +283,8 @@ window2 = Window([~c, e], [gfp, rfp])
 A library constraint forces a domain, or concatenated list of domains, to have its sequence come from a fixed set of enumerated sequences of the same length. The constraint is specified in two steps. First, one or more libraries are defined by giving them a name and a list of sequences, all of the same length for a given library. Then, the constraint itself is specified by giving a domain or list of domains and a library or list of libraries. The sum of the lengths of the domains must equal the sum of the library lengths. The library length is the length of any of its sequences.
 
 ```python
-a = Domain('a', 'N6')
-b = Domain('b', 'N12')
+a = Domain('N6', name='a')
+b = Domain('N12', name='b')
 
 # define a library of sequences
 toeholds = ['CAGUGG', 'AGCUCG', 'CAGGGC']
@@ -318,10 +333,10 @@ Because this constraint is frequently applied with many patterns to many element
 
 
 ```python
-a = Domain('a', 'N'*12)
-b = Domain('b', 'N'*12)
-A = Strand('A', [a, ~a])
-B = Strand('B', [b, ~b])
+a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = DStrand([a, ~a], name='A')
+B = DStrand([b, ~b], name='B')
 
 # pattern prevention for a domain
 pat1 = Pattern(['A4', 'U4'], where=[a])
@@ -422,11 +437,11 @@ Multiple sequence symmetry constraints with different window sizes can be specif
 ```python
 a = Domain('a', 'N12')
 b = Domain('b', 'N12')
-A = Strand('A', [a, ~a])
-B = Strand('B', [b, ~b])
+A = DStrand('A', [a, ~a])
+B = DStrand('B', [b, ~b])
 
-C = TargetComplex('C', [A], "(10.4)10")
-D = TargetComplex('D', [A, A], "D12 +")
+C = DComplex('C', [A], "(10.4)10")
+D = DComplex('D', [A, A], "D12 +")
 
 ssm1 = SSM([C, D], 4, weight=0.15)
 
@@ -440,14 +455,14 @@ ssm3 = SSM([C, D], 6, weight=0.45)
 ### Duplex structure energy equalization
 
 Currently, the only structural motif that can be equalized is a perfect duplex. This is specified by giving a list of domain names.
-The soft constraint will then bias search toward sequences that for each domain `a`, the duplex with complementary domain `a*` will approach the median of all the constrained duplexes. A fixed reference energy can also be supplied through the ```energy``` keyword argument, which will try to force the duplex free energies to match that reference energy instead.
+The soft constraint will then bias search toward sequences that for each domain `a`, the duplex with complementary domain `a*` will approach the median of all the constrained duplexes. A fixed reference energy can also be supplied through the ```energy_ref``` keyword argument, which will try to force the duplex free energies to match that reference energy instead.
 
 ```python
 # equalize to median value
 diff1 = EnergyDiff([a, b])
 
 # equalize to reference value, with explicit weight
-diff2 = EnergyDiff([a, b], energy=-17, weight=0.5)
+diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
 ```
 
 <hr> </hr>
@@ -457,7 +472,7 @@ diff2 = EnergyDiff([a, b], energy=-17, weight=0.5)
 The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:
 
 
-You can define custom weights by constructing a `Weights` object from the set of `TargetTube`s that will be designed.
+You can define custom weights by constructing a `Weights` object from the set of `DTube`s that will be designed.
 
 ```python
 weights = Weights(tubes) # All weights are initialized to 1
@@ -516,10 +531,10 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
     Strand('D', ('d', 'a'))
 
     # complexes
-    TargetComplex('S1', ('A', 'B'), 'D20 +')
-    TargetComplex('S2', ('B', 'C'), 'D10 (U10+U10)')
-    TargetComplex('S3', ('C', 'D'), 'D20 +')
-    TargetComplex('S4', ('D', 'A'), 'D5 (U10 D5 + U10)')
+    DComplex('S1', ('A', 'B'), 'D20 +')
+    DComplex('S2', ('B', 'C'), 'D10 (U10+U10)')
+    DComplex('S3', ('C', 'D'), 'D20 +')
+    DComplex('S4', ('D', 'A'), 'D5 (U10 D5 + U10)')
 
     # tubes
     design.add_tube('T1', {'S1': 1.0e-9, 'S2': 1.0e-9})
@@ -551,12 +566,12 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 ## Job options
 
-Specify any non-defaults. Change `stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
+Specify any non-defaults. Change `f_stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
 
 ```python
 options = design.Options(
     seed=0,     # random number generation seed
-    stop=0.02,  # stop condition
+    f_stop=0.02,  # stop condition
     trials=1, # number of independent design trials
     f_passive=0.01,
     H_split=2,
@@ -609,7 +624,7 @@ Both `complex_design` and `tube_design` return a `DesignResult` object which may
 
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
-- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
+- `.analysis`: an `analysis.Result` for thermodynamic results computed on the designed complexes and tubes.
 - `.stats`: a rundown of the statistics and timings for the design that took place.
 
 As an example, consider the following design result:
@@ -617,12 +632,12 @@ As an example, consider the following design result:
 ```python
 a = Domain('a', 'N20')
 
-A = Strand('A', [a])
-B = Strand('B', [~a])
+A = DStrand('A', [a])
+B = DStrand('B', [~a])
 
-C = TargetComplex('C', [A, B], '(20+)20')
+C = DComplex('C', [A, B], '(20+)20')
 
-tube = TargetTube('tube1', {C: 1e-6}, max_size=2)
+tube = DTube('tube1', {C: 1e-6}, max_size=2)
 
 result = tube_design([tube], model=Model())
 ```
@@ -731,13 +746,15 @@ conc_results = complex_concentrations(result.analysis, t1_designed, concenration
 
 ### Saving results to a text file
 
-!!!todo
-    decide approach here
+Any design result can be saved to a text file for later use as follows. However, the result may not be loaded in programmatically; for that purpose, save a binary file instead.
 
+```python
+result.save_text('design-result.txt')
+```
 
 ### Saving and loading results to a binary file
 
-Saving a `Result` from design is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
+Saving a `Result` as a binary file is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
 
 ```python
 result.save('design-result.o')
@@ -754,9 +771,6 @@ result = design.Result.load('design-result.o')
 ### Running from a prior design result
 
 The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `Result` object.
-
-!!!todo
-    standardize class syntax
 
 ```python
 newer_result = my_design.optimize(restart=result)
