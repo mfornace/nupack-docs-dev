@@ -150,25 +150,25 @@ First, one can calculate the free energy of a single loop defined by an ordered 
 
 ```python
 #Calculate the free energy of an unstructured strand
-dGloop2 = loop_energy(loop=['AATT'], structure=['....'],
+dGloop2 = loop_energy(loop=['AATT'], structure='....',
     model=Model(material='RNA', ensemble='stacking'))
 print(dGloop2)
 # --> 0.0
 
 #Calculate the free energy of a hairpin loop
-dGloop3 = loop_energy(loop=['AACCCTT'], structure=['(....)'],
+dGloop3 = loop_energy(loop=['AACCCTT'], structure='(....)',
     model=Model(material='RNA', ensemble='stacking'))
 print(dGloop3)
 # --> 5.15
 
 #Calculate the free energy of an exterior loop
-dGloop4 = loop_energy(loop=['AA', 'TT'], structure=['((+))'],
+dGloop4 = loop_energy(loop=['AA', 'TT'], structure='((+))',
     model=Model(material='RNA', ensemble='stacking'))
 print(dGloop4)
 # --> -0.9
 
 #Calculate the free energy of a multiloop
-dGloop5 = loop_energy(loop=['AAT', 'ACT', 'AGT'], structure=['(.(+).(+).)'],
+dGloop5 = loop_energy(loop=['AAT', 'ACT', 'AGT'], structure='(.(+).(+).)',
     model=Model(material='RNA', ensemble='stacking'))
 print(dGloop5)
 # --> 9.355
@@ -180,14 +180,14 @@ print(dGloop5)
 
 ```python
 #Calculate the stacking state free energies for an exterior loop
-stacks_ext = stacking_energies(loop=['AA', 'TT'], structure=['((+))'],
+stacks_ext = stacking_energies(loop=['AA', 'TT'], structure='((+))',
     model=Model(material='RNA', ensemble='stacking'))
 print(stacks_ext)
 # --> [(1,2).3, 4.(5,6)], -1.23
 # --> [(1,2).3, 4.(5,6)], -1.23
 
 #Calculate the stacking state free energies for a multiloop
-stacks_multi = stacking_energies(loop=['AAT', 'ACT', 'AGT'], structure=['(.(+).(+).)'],
+stacks_multi = stacking_energies(loop=['AAT', 'ACT', 'AGT'], structure='(.(+).(+).)',
     model=Model(material='RNA', ensemble='stacking'))
 print(stacks_multi)
 # --> [(1,2).3, 4.(5,6)], -1.23
@@ -195,5 +195,3 @@ print(stacks_multi)
 ```
 
 A coaxial stack between base pair $a\cdot b$ and $d\cdot e$ is denoted `(a,b).(c,d)`. A 5$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `e.(f,g)`. A 3$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `(f,g).e`. If the physical model specifies `nostacking` or if the loop is not a multiloop or an exterior loop, the algorithm with return no stacking states.
-
-

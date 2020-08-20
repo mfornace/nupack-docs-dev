@@ -14,12 +14,12 @@ Note that a complex ensemble is subsidiary to a test tube ensemble, so complex a
 
 A `Strand` is a single RNA or DNA molecule specified as a sequence:
 ```python
-A = Strand('AGTCTAGGATTCGGCGTGGGTTAA')
-B = Strand('TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG')
-C = Strand('AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG')
+A = Strand('AGTCTAGGATTCGGCGTGGGTTAA', name='A') # names are mandatory for Strand
+B = Strand('TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG', name='B')
+C = Strand('AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG', name='C')
 ```
 
-A `Strand` sequence must contain no wildcard bases; thus it should be specified as only containing the letters `'ACGTU'`.
+A `Strand` sequence must contain no wildcard bases; thus it should be specified as only containing the letters `'ACGTU'`. `Strand`s are compared on the basis of their sequences and names.
 
 <hr> </hr>
 
@@ -27,20 +27,21 @@ A `Strand` sequence must contain no wildcard bases; thus it should be specified 
 
 A `Complex` of one or more interacting strands is specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)):
 ```python
-c1 = Complex([A])
-c2 = Complex([A, B, B, C])
-c3 = Complex([A, A])
+c1 = Complex([A]) # names are optional for Complex
+c2 = Complex([A, B, B, C], name='ABBC')
+c3 = Complex([A, A], name='AA')
 ```
 
-A `Complex` may also be specified conveniently by a single `'+'`-delimited string or list of strings:
+<!-- A `Complex` may also be specified conveniently by a single `'+'`-delimited string or list of strings:
 
 ```python
 c4 = Complex('AAA+TTT+AAA')
 c5 = Complex(['AAA', 'TTT', 'AAA'])
-print(c4 == c5) # --> True
+print(c4 == c5)
 ```
+-->
 
-In general, commands that expect a `Complex` as an argument (e.g., `c5`) will alternatively accept a strand ordering (e.g.,`[A,C,B]`).
+In general, commands that expect a `Complex` as an argument (e.g., `c5`) will alternatively accept a strand ordering (e.g.,`[A,C,B]`). `Complex`s are compared by their component strands, independent to their specific rotations (i.e. `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
 
 <hr> </hr>
 
@@ -49,10 +50,10 @@ In general, commands that expect a `Complex` as an argument (e.g., `c5`) will al
 A `Tube` is specified as a set of strands (keyword `strands`) each introduced at a user-specified concentration (keyword `concentrations`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
 
 ```python
-t1 = Tube(strands=[A, B], concentrations=[1e-6, 1e-8]) # max_size=1 by default
+t1 = Tube(strands=[A, B], concentrations=[1e-6, 1e-8], name='t1') # max_size=1 by default
 
 t2 = Tube(strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12],
-    max_size=3, include=[c2,[B, B, B, B]], exclude=[c1])
+    max_size=3, include=[c2,[B, B, B, B]], exclude=[c1], name='t2')
 ```
 
 Note that `include` and `exlude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
@@ -72,12 +73,12 @@ The `tube_analysis` command calculates the partition function, $Q(\phi_j)$, and 
 
 ```python
 # specify strands
-a = Strand('a', 'CTGATCGAT')
-b = Strand('b', 'GATCGTAGTC')
+a = Strand('CTGATCGAT', name='a')
+b = Strand('GATCGTAGTC', name='b')
 
 # specify tubes
-t1 = Tube('t1', strands=[a, b], concentrations=[1e-8, 1e-9], max_size=3)
-t2 = Tube('t2', strands=[a, b], concentrations=[1e-10, 1e-9], max_size=2)
+t1 = Tube(strands=[a, b], concentrations=[1e-8, 1e-9], max_size=3, name='t1')
+t2 = Tube(strands=[a, b], concentrations=[1e-10, 1e-9], max_size=2, name='t2')
 
 # analyze tubes
 result1 = tube_analysis(tubes=[t1, t2], model=model1)
@@ -104,9 +105,9 @@ Hence, if you intend to analyze N test tubes containing the same strand species 
 Use the `complex_analysis` command to calculate the partition function (and other additional quantities -- see [Job Options](analysis.md#job_options)) for each complex in a set:
 
 ```python
-t3 = Tube('t3', strands=[A, B], include=[c1, c2, c3])
+t3 = Tube(strands=[A, B], include=[c1, c2, c3], name='t3')
 
-t4 = Tube('t4', strands=[A, B], concentrations=[1e-6, 1e-8], max_size=2)
+t4 = Tube(strands=[A, B], concentrations=[1e-6, 1e-8], max_size=2, name='t4')
 
 my_plexes = complex_analysis(tubes=[t3, t4], compute=['pairs', 'mfe'])
 my_plexes[c1] # --> ComplexResult
@@ -149,7 +150,7 @@ For `tube_analysis` and `complex_analysis`, the optional `compute` keyword speci
 - `'subopt'`: calculate the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of its lowest-energy stacking state that falls within the energy gap, and with the free energy of the MFE proxy secondary structure.
 
 
-- `'size'`: calculate the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a physical model with `stacking`).
+- `'ensemble_size'`: calculate the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a physical model with `stacking`).
 
 The optional `options` keyword specifies options that modify the calculations performed for each complex:
 
@@ -168,12 +169,12 @@ The optional `options` keyword specifies options that modify the calculations pe
 Some of the main results of NUPACK analysis can be visually displayed for a convenient first glance. This includes partition functions, minimum free energies, equilibrium concentrations, and other scalar quantities. Larger result objects (like pair probability matrices) can be printed by [introspecting into the result](Result_introspection). Take the following example analysis result:
 
 ```python
-a = Strand('CAGTCGATC')
-b = Strand('ATCGACGTA')
+a = Strand('CAGTCGATC', name='a')
+b = Strand('ATCGACGTA', name='b')
 c = Complex([a, b])
 
-t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c])
-t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c])
+t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
+t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
 
 result = tube_analysis([t1, t2], compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'], options={'num_sample': 2, 'energy_gap': 0.5})
 ```
@@ -200,15 +201,15 @@ Output:
 
 > ```python
 > Complex results:
->                complex partition_function free_energy  min_free_energy
-> 0  CAGTCGATC+ATCGACGTA          9.1286e+7      -11.30       -10.960994
-> 1            CAGTCGATC          1.0148e+0       -0.01         0.000000
-> 2            ATCGACGTA          1.0056e+0       -0.00         0.000000
+>   complex  partition_function  free_energy  min_free_energy
+> 0     a+b           9.1286e+7       -11.30       -10.960994
+> 1       a           1.0148e+0        -0.01         0.000000
+> 2       b           1.0056e+0        -0.00         0.000000
 > Concentration results:
->                complex       tube 0       tube 1
-> 0  CAGTCGATC+ATCGACGTA 6.185218e-10 1.593980e-11
-> 1            CAGTCGATC 9.993815e-07 9.984060e-09
-> 2            ATCGACGTA 3.814782e-10 9.840602e-10
+>   complex            t1            t2
+> 0     a+b  6.185218e-10  1.593980e-11
+> 1       a  9.993815e-07  9.984060e-09
+> 2       b  3.814782e-10  9.840602e-10
 > ```
 
 Finally, you can print the ASCII result to a text file using the `save_text` function:
@@ -228,14 +229,14 @@ The result of `tube_analysis` is an `analysis.Result` with fields `.complexes` a
 ```python
 result[t1] # --> TubeResult
 
-result[t1].complex_concentrations # --> [1.5e-10]
-result[t1].strand_pair_probability # --> [[1.0, 0.0], [0.0, 1.0]]
+result[t1].complex_concentrations  # --> [1.5e-10]
+result[t1].ensemble_pair_fractions # --> [[1.0, 0.0], [0.0, 1.0]]
 ```
 
 A `TubeResult` contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its (`float`) equilibrium concentration in molar.
-- `strand_pair_probability`: a square matrix of equilibrium base pairing probablities averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order).
+- `ensemble_pair_fractions`: a square matrix of equilibrium base pairing probablities averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order).
 
 You may also index a result by a specified complex to get its complex ensemble results, held in a `ComplexResult`. For instance:
 

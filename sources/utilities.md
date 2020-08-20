@@ -34,14 +34,14 @@ my_energy = energy(c1, structure='.(((........))).........') -->
 
 <!-- Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`).  -->
 Utilities commands analyze or design a single complex ensemble. For each command, the first argument is the strand ordering of the complex.  If desired, a [physical model](model.md#model-specification) is specified using the `model` keyword (otherwise the default physical model is used).
-For commands that require a structure (e.g., calculation of the equilibrium structure probability using `prob`), the structure is specified using the keyword `structure`. 
+For commands that require a structure (e.g., calculation of the equilibrium structure probability using `prob`), the structure is specified using the keyword `structure`.
 
-## Compute partition function 
+## Compute partition function
 
-`pfunc` calculates the [partition function](definitions.md#partition-function) of the complex as well as the free energy of the complex: 
+`pfunc` calculates the [partition function](definitions.md#partition-function) of the complex as well as the free energy of the complex:
 
 ```python
-partition_function = pfunc(complex=['CCC', 'GGG'],  
+partition_function = pfunc(complex=['CCC', 'GGG'],
     model=Model(material='RNA', ensemble='stacking'))
 print(partition_function)
 # --> 1581.5360063360488947
@@ -49,10 +49,10 @@ print(partition_function)
 
 
 ## Compute structure free energy
-`energy` calculates the [structure free energy](definitions.md#structure-free-energy) for the specified secondary structure: 
+`structure_energy` calculates the [structure free energy](definitions.md#structure-free-energy) for the specified secondary structure:
 
 ```python
-dGstruc = structure_energy(complex=['AAAA', 'TTTT'], structure='((((+))))',  
+dGstruc = structure_energy(complex=['AAAA', 'TTTT'], structure='((((+))))',
     model=Model(material='DNA', celcius = 25, ensemble='stacking'))
 print(dGstruc)
 # --> ????
@@ -60,12 +60,12 @@ print(dGstruc)
 
 
 
-## Compute equilibrium structure probability 
+## Compute equilibrium structure probability
 
-`prob` calculates the [equilibrium structure probability](definitions.md#equilibrium-structure-probability) of a specified secondary structure contained in the complex ensemble: 
+`structure_probability` calculates the [equilibrium structure probability](definitions.md#equilibrium-structure-probability) of a specified secondary structure contained in the complex ensemble:
 
 ```python
-probability = prob(complex=['CCC', 'GGG'], structure='(((+)))')
+probability = structure_probability(complex=['CCC', 'GGG'], structure='(((+)))')
 print(probability)
 # --> 0.5589045601083861
 ```
@@ -77,7 +77,7 @@ print(probability)
 
 ## Compute Boltzmann-sampled structures
 
-`sample` calculates a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. The number of structures is specified using the keyword `num_sample`:  
+`sample` calculates a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. The number of structures is specified using the keyword `num_sample`:
 
 ```python
 sampled_structures = sample(complex=['CCC', 'GGG'], num_sample=3)
@@ -85,11 +85,11 @@ print(sampled_structures)
 # --> [Structure('.((+)).'), Structure('(((+)))'), Structure('((.+)).')]
 ```
 
-<hr> 
+<hr>
 
 ## Compute equilibrium base-pairing probabilities
 
-`pairs` calculates the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities): 
+`pairs` calculates the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities):
 
 ```python
 probability_matrix = pairs(complex=['CCC', 'GGG'])
@@ -106,7 +106,7 @@ print(probability_matrix.round(3))
 <!--`numpy.ndarray`. -->
 
 
-## Compute MFE proxy structure(s) 
+## Compute MFE proxy structure(s)
 
 `mfe` calculates [MFE proxy structure](definitions.md#mfe-proxy-structure). The algorithm returns the MFE proxy secondary structure, the free energy of the MFE stacking state, and the free energy of the MFE proxy secondary structure:
 
@@ -115,7 +115,7 @@ mfe_structures = mfe(complex=['CCC', 'GGG'])
 print(mfe_structures)
 # --> ['(((+)))', -4.181351661682129, ??]
 ```
-If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the (same) free energy of the MFE stacking state, and with the free energy of the MFE proxy secondary structure. 
+If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the (same) free energy of the MFE stacking state, and with the free energy of the MFE proxy secondary structure.
 
 <hr> </hr>
 
@@ -133,24 +133,24 @@ print(subopt_structures)
 ```
 
 
-<hr> 
+<hr>
 
 
 
-## Compute complex ensemble size 
-`size` calculates the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either number of secondary structures or number of stacking states. Specify a [physical model](model.md#model-specification) with `nostacking` to obtain the number of secondary structures: 
+## Compute complex ensemble size
+`ensemble_size` calculates the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either number of secondary structures or number of stacking states. Specify a [physical model](model.md#model-specification) with `nostacking` to obtain the number of secondary structures:
 
 ```python
-num_struc = size(complex=['CCC', 'GGG'],  
+num_struc = ensemble_size(complex=['CCC', 'GGG'],
     model=Model(material='RNA', ensemble='nostacking'))
 print(num_struc)
 # --> 19
 ```
 
-Specify a physical model with `stacking` to obtain the number of stacking states: 
+Specify a physical model with `stacking` to obtain the number of stacking states:
 
 ```python
-num_stack = size(complex=['CCC', 'GGG'],  
+num_stack = ensemble_size(complex=['CCC', 'GGG'],
     model=Model(material='RNA', ensemble='stacking'))
 print(num_stack)
 # --> 19
@@ -161,28 +161,28 @@ print(num_stack)
 
 <hr>
 ## Design a sequence
-`des` generates a sequence intended to adopt a target secondary structure at equilibrium. The complex is specified using IUPAC [degenerate nucleotide codes](design.md#specify-a-strand) to specify any sequence constraints. The target structure is specified using keyword `structure`. 
+`structure_design` generates a sequence intended to adopt a target secondary structure at equilibrium. The complex is specified using IUPAC [degenerate nucleotide codes](design.md#specify-a-strand) to specify any sequence constraints. The target structure is specified using keyword `structure`.
 
 
 
 ```python
 # design a sequence without sequence constraints
-designed_sequence1 = des(complex=['NNN','NNN'], structure='(((+)))')
+designed_sequence1 = structure_design(complex=['NNN','NNN'], structure='(((+)))')
 print(designed_sequence1)
 # --> ['CCC', 'GGG']
 
 # design a sequence with sequence constraints
-designed_sequence2 = des(complex=['HHH','BBW'], structure='(((+)))')
+designed_sequence2 = structure_design(complex=['HHH','BBW'], structure='(((+)))')
 print(designed_sequence2)
 # --> ['CCC', 'GGG']
 ```
 
 <hr>
-## Compute complex ensemble defect 
-`defect` evaluates the normalized complex ensemble defect with respect to a structure specified using keyword `structure`: 
+## Compute complex ensemble defect
+`structure_defect` evaluates the normalized complex ensemble defect with respect to a structure specified using keyword `structure`:
 
 ```python
-ensemble_defect = defect(complex=['CCC', 'GGG'], structure='(((+)))',  
+ensemble_defect = structure_defect(complex=['CCC', 'GGG'], structure='(((+)))',
     model=Model(material='RNA', ensemble='stacking'))
 print(ensemble_defect)
 # --> 0.01

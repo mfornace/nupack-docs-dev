@@ -31,10 +31,10 @@ g = Domain('N10',        name='g')
 ## Specify a strand
 ```python
 # Domains should not be specified inline
-A = DStrand([a, b, g], name='Strand A')
-B = DStrand([d, ~e],   name='Strand B')
-C = DStrand([e, a, f], name='Strand C')
-D = DStrand([d, d, d], name='Strand D')
+A = TargetStrand([a, b, g], name='Strand A')
+B = TargetStrand([d, ~e],   name='Strand B')
+C = TargetStrand([e, a, f], name='Strand C')
+D = TargetStrand([d, d, d], name='Strand D')
 ```
 
 <hr>
@@ -45,26 +45,26 @@ D = DStrand([d, d, d], name='Strand D')
 
 ## Specify a target complex
 
-A `DComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
+A `TargetComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
 
 ```python
-c1 = DComplex([A], structure='.(((........))).........', name='c1')
-c2 = DComplex([A, B, B, C], structure='.1(3.8)3.9', name='c2')
-c3 = DComplex([A, A], structure='U1 D3 U8 U9', name='c3')
+c1 = TargetComplex([A], structure='.(((........))).........', name='c1')
+c2 = TargetComplex([A, B, B, C], structure='.1(3.8)3.9', name='c2')
+c3 = TargetComplex([A, A], structure='U1 D3 U8 U9', name='c3')
 ```
 
 
 ```python
 # dot-parens-plus notation
-C1 = DComplex([A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............', name='C1')
+C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............', name='C1')
 
 # DU+ notation
-C2 = DComplex([D, D], 'D30 +', name='C2')
-C3 = DComplex([B, B, B], 'D10(D10 + D10 +)', name='C3')
-C4 = DComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
+C2 = TargetComplex([D, D], 'D30 +', name='C2')
+C3 = TargetComplex([B, B, B], 'D10(D10 + D10 +)', name='C3')
+C4 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
 
 # run-length encoded dot-parens-plus notation
-C5 = DComplex([B, C], '.10(10+)10.10', name='C5')
+C5 = TargetComplex([B, C], '.10(10+)10.10', name='C5')
 ```
 
 <hr> </hr>
@@ -72,13 +72,13 @@ C5 = DComplex([B, C], '.10(10+)10.10', name='C5')
 ## Specify a target tube
 
 
-A `DTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
+A `TargetTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
 
 ```python
 # define target test tubes
 
-t1 = DTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t1')
-t2 = DTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t2')
+t1 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t1')
+t2 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t2')
 ```
 
 Like in `Tube`, the remaining arguments specify the other complexes to consider in the test tube ensemble:
@@ -99,22 +99,22 @@ The implied complexes are added to $\Psi^\text{off}$, provided they are not alre
 
 ```python
 # specify tubes by their names and on-target complexes with on-target concentrations
-t1 = DTube({C1: 1e-6}, include=[C4, C5], name='t1')
+t1 = TargetTube({C1: 1e-6}, include=[C4, C5], name='t1')
 
 # specify unnamed off-targets each denoted by a strand ordering
-t2 = DTube({C2: 1e-6}, include=[[D, D, D], [D, D, D, D]], name='t2')
+t2 = TargetTube({C2: 1e-6}, include=[[D, D, D], [D, D, D, D]], name='t2')
 
 # Mix the two kinds of specifications
-t3 = DTube({C1: 0.000001, C2: 1e-3}, include=[C4, [D, D, D]], name='t3')
+t3 = TargetTube({C1: 0.000001, C2: 1e-3}, include=[C4, [D, D, D]], name='t3')
 
 # all complexes of up to 2 strands that are not on-targets in tube `T4'
-t4 = DTube({C1: 2e-4, C3: 3e-5}, max_size=2, name='t4')
+t4 = TargetTube({C1: 2e-4, C3: 3e-5}, max_size=2, name='t4')
 
 # specify off-targets as the sum of sets
-t5 = DTube({C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B]], name='t5')
+t5 = TargetTube({C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B]], name='t5')
 
 # specify off-targets as the difference of sets
-t6 = DTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
+t6 = TargetTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
 ```
 
 <hr> </hr>
@@ -334,8 +334,8 @@ Because this constraint is frequently applied with many patterns to many element
 ```python
 a = Domain('N12', name='a')
 b = Domain('N12', name='b')
-A = DStrand([a, ~a], name='A')
-B = DStrand([b, ~b], name='B')
+A = TargetStrand([a, ~a], name='A')
+B = TargetStrand([b, ~b], name='B')
 
 # pattern prevention for a domain
 pat1 = Pattern(['A4', 'U4'], where=[a])
@@ -436,11 +436,11 @@ Multiple sequence symmetry constraints with different window sizes can be specif
 ```python
 a = Domain('a', 'N12')
 b = Domain('b', 'N12')
-A = DStrand('A', [a, ~a])
-B = DStrand('B', [b, ~b])
+A = TargetStrand('A', [a, ~a])
+B = TargetStrand('B', [b, ~b])
 
-C = DComplex('C', [A], "(10.4)10")
-D = DComplex('D', [A, A], "D12 +")
+C = TargetComplex('C', [A], "(10.4)10")
+D = TargetComplex('D', [A, A], "D12 +")
 
 ssm1 = SSM([C, D], 4, weight=0.15)
 
@@ -471,7 +471,7 @@ diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
 The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:
 
 
-You can define custom weights by constructing a `Weights` object from the set of `DTube`s that will be designed.
+You can define custom weights by constructing a `Weights` object from the set of `TargetTube`s that will be designed.
 
 ```python
 weights = Weights(tubes) # All weights are initialized to 1
@@ -530,10 +530,10 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
     Strand('D', ('d', 'a'))
 
     # complexes
-    DComplex('S1', ('A', 'B'), 'D20 +')
-    DComplex('S2', ('B', 'C'), 'D10 (U10+U10)')
-    DComplex('S3', ('C', 'D'), 'D20 +')
-    DComplex('S4', ('D', 'A'), 'D5 (U10 D5 + U10)')
+    TargetComplex('S1', ('A', 'B'), 'D20 +')
+    TargetComplex('S2', ('B', 'C'), 'D10 (U10+U10)')
+    TargetComplex('S3', ('C', 'D'), 'D20 +')
+    TargetComplex('S4', ('D', 'A'), 'D5 (U10 D5 + U10)')
 
     # tubes
     design.add_tube('T1', {'S1': 1.0e-9, 'S2': 1.0e-9})
@@ -630,12 +630,12 @@ As an example, consider the following design result:
 ```python
 a = Domain('a', 'N20')
 
-A = DStrand('A', [a])
-B = DStrand('B', [~a])
+A = TargetStrand('A', [a])
+B = TargetStrand('B', [~a])
 
-C = DComplex('C', [A, B], '(20+)20')
+C = TargetComplex('C', [A, B], '(20+)20')
 
-tube = DTube('tube1', {C: 1e-6}, max_size=2)
+tube = TargetTube('tube1', {C: 1e-6}, max_size=2)
 
 result = tube_design([tube], model=Model())
 ```
