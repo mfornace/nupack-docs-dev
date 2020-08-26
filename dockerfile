@@ -1,7 +1,7 @@
 FROM alpine:latest
 RUN apk add --update bash python3 py3-pip build-base python3-dev tini
 RUN pip install --upgrade pip
-RUN pip install -q mkdocs pydoc-markdown pymdown-extensions mkdocs-material
+RUN pip install -q mkdocs pydoc-markdown pymdown-extensions mkdocs-material markdown-include
 COPY . /root/
 WORKDIR /root/mdx_bib
 RUN python3 setup.py install
