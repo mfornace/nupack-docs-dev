@@ -15,12 +15,25 @@ h1::after {
 } */
 
 
+:root {
+  --md-primary-fg-color: #eea70f;
+  --md-primary-fg-color--light: #ece2b7;
+  --md-primary-fg-color--dark: #905803;
+}
+
+/*
+.md-sidebar--secondary {
+  display: none;
+} */
+
+
+
 h2 {
   overflow: hidden;
   position: relative;
 }
 
-
+/*
 h2::after {
   content: '';
   width: 100%;
@@ -29,7 +42,7 @@ h2::after {
   position: absolute;
   top: 50%;
   margin-left: 1rem;
-}
+} */
 
 
 
@@ -38,7 +51,7 @@ h3 {
   position: relative;
 }
 
-
+/*
 h3::after {
   content: '';
   width: 100%;
@@ -47,7 +60,7 @@ h3::after {
   position: absolute;
   top: 50%;
   margin-left: 1rem;
-} 
+} */
 
 
 .tabbed-set {
@@ -83,12 +96,12 @@ h3::after {
   color: #333333;
 }
 
-.tabbed-set input:nth-child(n+1):checked + label {
-    color: #FF5252;
+.tabbed-set input:nth-child(n+1):checked+label {
+  color: #FF5252;
 }
 
-.tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
-    display: block;
+.tabbed-set input:nth-child(n+1):checked+label+.tabbed-content {
+  display: block;
 }
 
 hr {

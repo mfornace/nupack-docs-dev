@@ -53,7 +53,7 @@ print(partition_function)
 
 ```python
 dGstruc = structure_energy(complex=['AAAA', 'TTTT'], structure='((((+))))',
-    model=Model(material='DNA', celcius = 25, ensemble='stacking'))
+    model=Model(material='DNA', celsius = 25, ensemble='stacking'))
 print(dGstruc)
 # --> ????
 ```

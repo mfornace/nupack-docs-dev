@@ -1,11 +1,20 @@
 docs_dir: ./sources
+
+pages:
+  - Material: index.md
+  - Getting started: model.md
+
 nav:
-- Overview: index.md
+- Overview:
+  - Overview: combined.md
 #- Design: design.md
 #- Physical: model.md
 #- Conventions: conventions.md
-#- Versions: versions.md
-#- License: license.md
+- License:
+  - License: license.md
+- Installation:
+  - Getting started: started.md
+# - License: license.md
 #- Analysis:
 #  - Complex Analysis: complex-analysis.md
 #  - Test Tube Analysis: tube-analysis.md
@@ -18,12 +27,12 @@ nav:
 #- Acknowledgments: acknowledgments.md
 #- References:
 #  - Installation: installation.md
-- definitions.md
-- model.md
-- analysis.md
-- design.md
-- utilities.md
-- started.md
+# - definitions.md
+# - model.md
+# - analysis.md
+# - design.md
+# - utilities.md
+# - started.md
 # - Sandbox: sandbox.md
 # - Sandbox2: sandbox3.md
 # - Markdown Examples:
@@ -38,14 +47,20 @@ nav:
 #   - Drawing: api/drawing.md
 #- Basics: basics.md
 #- License: license.md
-- Other: other.md
+# - Other: other.md
 site_dir: _build/site
 site_name: NUPACK User Guide
 
 theme:
-  name: readthedocs
+  name: material
   language: en
+  custom_dir: overrides
+  features:
+    - tabs
 
+  # palette:
+  #   primary: orange
+  #   accent: blue
 # theme:
 #   name: material
 #     primary: orange
@@ -75,6 +90,9 @@ markdown_extensions:
   - mdx_bib:
       bibtex_file: nupack.bib
       order: unsorted
+  - markdown_include.include:
+      base_path: sources
+      headingOffset: 1
 
 extra_javascript:
   - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
