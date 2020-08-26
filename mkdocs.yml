@@ -9,11 +9,14 @@ nav:
   - Overview: combined.md
 #- Design: design.md
 #- Physical: model.md
-#- Conventions: conventions.md
+- Definitions:
+  - Definitions: definitions.md
 - License:
   - License: license.md
 - Installation:
   - Getting started: started.md
+- Advanced:
+  - API notes: other.md
 # - License: license.md
 #- Analysis:
 #  - Complex Analysis: complex-analysis.md
@@ -73,6 +76,9 @@ plugins:
   # - pdf-export
 
 markdown_extensions:
+  - markdown_include.include:
+      base_path: sources
+      # headingOffset: 1
   - pymdownx.arithmatex
   - pymdownx.superfences
   - pymdownx.details
@@ -90,9 +96,6 @@ markdown_extensions:
   - mdx_bib:
       bibtex_file: nupack.bib
       order: unsorted
-  - markdown_include.include:
-      base_path: sources
-      headingOffset: 1
 
 extra_javascript:
   - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'

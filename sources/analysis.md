@@ -1,4 +1,4 @@
-# Analysis Jobs
+## Analysis Jobs
 
 NUPACK provides the capability to analyze equilibrium properties over one of two ensembles:
 
@@ -10,7 +10,7 @@ Note that a complex ensemble is subsidiary to a test tube ensemble, so complex a
 
 <hr>
 
-## Specify a strand
+### Specify a strand
 
 A `Strand` is a single RNA or DNA molecule specified as a sequence:
 ```python
@@ -23,7 +23,7 @@ A `Strand` sequence must contain no wildcard bases; thus it should be specified 
 
 <hr> </hr>
 
-## Specify a complex ensemble
+### Specify a complex ensemble
 
 A `Complex` of one or more interacting strands is specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)):
 ```python
@@ -45,7 +45,7 @@ In general, commands that expect a `Complex` as an argument (e.g., `c5`) will al
 
 <hr> </hr>
 
-## Specify a test tube ensemble
+### Specify a test tube ensemble
 
 A `Tube` is specified as a set of strands (keyword `strands`) each introduced at a user-specified concentration (keyword `concentrations`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
 
@@ -67,7 +67,7 @@ t3 = Tube('t3', strands=[A, B], include=[c2], max_size=3, exclude=[c1])
 
 <hr> </hr>
 
-## Run a test tube analysis job
+### Run a test tube analysis job
 
 The `tube_analysis` command calculates the partition function, $Q(\phi_j)$, and equilibrium concenration, $x(\phi_j)$, for each complex species $j$ in one or more test tube ensembles. The test tube ensembles to be analyzed are specified using the `tubes` keyword. If desired, a [physical model](model.md#modelspecification) is specified using the `model` keyword (otherwise the default physical model is used):
 
@@ -101,7 +101,7 @@ Hence, if you intend to analyze N test tubes containing the same strand species 
 
 
 
-## Run a complex analysis job
+### Run a complex analysis job
 Use the `complex_analysis` command to calculate the partition function (and other additional quantities -- see [Job Options](analysis.md#job_options)) for each complex in a set:
 
 ```python
@@ -117,7 +117,7 @@ Note that tube `t3` defines a set of complexes (all complexes of up to `max_size
 
 <hr> </hr>
 
-## Run a complex concentration job
+### Run a complex concentration job
 
 Use the `complex_concentrations` command to calculate the equilibrium concentration of each complex in a test tube ensemble using the output from a previous call to `complex_analysis`:
 
@@ -137,7 +137,7 @@ Note that `complex_concentrations` operates on a single tube ensemble at a time 
 
 
 
-## Job options
+### Job options
 
 For `tube_analysis` and `complex_analysis`, the optional `compute` keyword specifies a list of strings denoting additional calculations to be performed for each complex [@Fornace20]:
 
@@ -164,7 +164,7 @@ The optional `options` keyword specifies options that modify the calculations pe
 
 <hr> </hr>
 
-## Job results
+### Job results
 
 Some of the main results of NUPACK analysis can be visually displayed for a convenient first glance. This includes partition functions, minimum free energies, equilibrium concentrations, and other scalar quantities. Larger result objects (like pair probability matrices) can be printed by [introspecting into the result](Result_introspection). Take the following example analysis result:
 
@@ -179,7 +179,7 @@ t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
 result = tube_analysis([t1, t2], compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'], options={'num_sample': 2, 'energy_gap': 0.5})
 ```
 
-### Visual display
+#### Visual display
 
 You may get a table summary of your result by simply running the following cell in a Jupyter notebook:
 
@@ -220,7 +220,7 @@ result.save_text('my_result.txt')
 
 <hr> </hr>
 
-### Programmatic access
+#### Programmatic access
 
 The result of `tube_analysis` is an `analysis.Result` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via a `Tube` :
 

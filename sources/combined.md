@@ -14,6 +14,6 @@
 
 {!utilities.md!}
 
-{!started.md!}
+<hr>
 
-{!other.md!}
+## Citations

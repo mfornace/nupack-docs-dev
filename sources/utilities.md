@@ -1,6 +1,6 @@
 
 
-# Utilities Jobs
+## Utilities Jobs
 
 <!--!!! note
     Seems less error-prone to just insist on specified model, especially for utilities?
@@ -36,7 +36,7 @@ my_energy = energy(c1, structure='.(((........))).........') -->
 Utilities commands analyze or design a single complex ensemble. For each command, the first argument is the strand ordering of the complex.  If desired, a [physical model](model.md#model-specification) is specified using the `model` keyword (otherwise the default physical model is used).
 For commands that require a structure (e.g., calculation of the equilibrium structure probability using `prob`), the structure is specified using the keyword `structure`.
 
-## Compute partition function
+### Compute partition function
 
 `pfunc` calculates the [partition function](definitions.md#partition-function) of the complex as well as the free energy of the complex:
 
@@ -48,7 +48,7 @@ print(partition_function)
 ```
 
 
-## Compute structure free energy
+### Compute structure free energy
 `structure_energy` calculates the [structure free energy](definitions.md#structure-free-energy) for the specified secondary structure:
 
 ```python
@@ -60,7 +60,7 @@ print(dGstruc)
 
 
 
-## Compute equilibrium structure probability
+### Compute equilibrium structure probability
 
 `structure_probability` calculates the [equilibrium structure probability](definitions.md#equilibrium-structure-probability) of a specified secondary structure contained in the complex ensemble:
 
@@ -75,7 +75,7 @@ print(probability)
 
 
 
-## Compute Boltzmann-sampled structures
+### Compute Boltzmann-sampled structures
 
 `sample` calculates a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. The number of structures is specified using the keyword `num_sample`:
 
@@ -87,7 +87,7 @@ print(sampled_structures)
 
 <hr>
 
-## Compute equilibrium base-pairing probabilities
+### Compute equilibrium base-pairing probabilities
 
 `pairs` calculates the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities):
 
@@ -106,7 +106,7 @@ print(probability_matrix.round(3))
 <!--`numpy.ndarray`. -->
 
 
-## Compute MFE proxy structure(s)
+### Compute MFE proxy structure(s)
 
 `mfe` calculates [MFE proxy structure](definitions.md#mfe-proxy-structure). The algorithm returns the MFE proxy secondary structure, the free energy of the MFE stacking state, and the free energy of the MFE proxy secondary structure:
 
@@ -119,7 +119,7 @@ If there is more than one MFE stacking state, the algorithm returns a list of th
 
 <hr> </hr>
 
-## Compute suboptimal proxy structures
+### Compute suboptimal proxy structures
 
 `subopt` calculates the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The free energy gap is specified with keyword `gap` in kcal/mol. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of its lowest-energy stacking state that falls within the energy gap, and with the free energy of the MFE proxy secondary structure:
 
@@ -137,7 +137,7 @@ print(subopt_structures)
 
 
 
-## Compute complex ensemble size
+### Compute complex ensemble size
 `ensemble_size` calculates the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either number of secondary structures or number of stacking states. Specify a [physical model](model.md#model-specification) with `nostacking` to obtain the number of secondary structures:
 
 ```python
@@ -160,7 +160,8 @@ print(num_stack)
 
 
 <hr>
-## Design a sequence
+
+### Design a sequence
 `structure_design` generates a sequence intended to adopt a target secondary structure at equilibrium. The complex is specified using IUPAC [degenerate nucleotide codes](design.md#specify-a-strand) to specify any sequence constraints. The target structure is specified using keyword `structure`.
 
 
@@ -178,7 +179,8 @@ print(designed_sequence2)
 ```
 
 <hr>
-## Compute complex ensemble defect
+
+### Compute complex ensemble defect
 `structure_defect` evaluates the normalized complex ensemble defect with respect to a structure specified using keyword `structure`:
 
 ```python
