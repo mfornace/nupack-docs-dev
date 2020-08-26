@@ -39,11 +39,13 @@ In mathematical expressions, it is convenient to represent secondary structure $
 | `((((((((((((+))))))))))))..........` |  `(12+)12.10`        | `D12 + U10`  |
 | `((((((((((((+..........))))))))))))` |  `(12+.10)12`        |`D12 (+ U10)` |
 
-**Table:** Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation
+<p style="text-align:center;"><b>Table</b>: Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation.</p>
 
+<p align="center">
 <img src="/figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
+</p>
 
-**Figure:** Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.
+<p style="text-align:center;"><b>Figure</b>: Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.</p>
 
 <hr>
 
@@ -54,7 +56,9 @@ otherwise the structures are distinct [@Dirks07].
 <!-- A **complex** of $L$ interacting strands with strand ordering, $\pi$, has a **structural ensemble** containing all connected polymer graphs with no crossing lines [@Dirks07]. (We dispense with our prior convention [@Dirks07; @Zadeh11a; @Zadeh11b] of calling this entity an **ordered complex**.)
  -->
 
+<p align="center">
 <img src="/figs/complex.png" alt="Example complex" width="360"/>
+</p>
 
 **Figure:** A complex of 3 strands with strand ordering $\pi$ = ABC.
 
@@ -71,7 +75,9 @@ A **test tube ensemble** is a dilute solution containing a set of strand species
 For $L$ strands, there are $(L-1)!$ strand orderings if all strands are different species (e.g., complexes $\pi$ = ABC and $\pi$ = ACB for $L=3$ and strands A, B, C), but fewer than $(L-1)!$ strand orderings if some strands are of the same species (e.g., complex $\pi$ = AAA for $L=3$ with three A strands). By the Representation Theorem [@Dirks07], a secondary structure in the complex ensemble for one strand ordering does not appear in the complex ensemble for any other strand ordering, averting redundancy.
 It is often convenient to define $\Psi$ to contain all complex species of up to $L_\mathrm{max}$ strands, although $\Psi$ can be defined to contain arbitrary complex species formed from the strand species in $\Psi^0$.
 
+<p align="center">
 <img src="/figs/tube.png" alt="Test tube" title="Example test tube" width="190" />
+</p>
 
 **Figure:** A test tube ensemble containing strain species $\Psi^0 = \{$A,B,C$\}$ interacting to form all complex species $\Psi$ of up to $L_{\rm max} = 3$ strands.
 
@@ -97,7 +103,10 @@ plus a sequence-dependent penalty: $\Delta G^\mathrm{terminalbp}_{a, b}$ for eac
 - An **exterior loop** contains a nick between strands and any number of closing base pairs.
 The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{a, b}$ over all closing base pairs $a\cdot b$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
 
+<p align="center">
 <img src="/figs/looptypes.png" alt="Loop Types" width="450"/>
+</p>
+
 **Figure:** Canonical loop types for a complex with strand ordering $\pi$ = ABC.
 
 #### Coaxial and dangle stacking
@@ -106,10 +115,16 @@ closing base pairs and adjacent unpaired bases.
 Within a multiloop or exterior loop, a base pair can
 form one **coaxial stack** with an adjacent base pair, or can form a **dangle stack** with at most two adjacent unpaired bases; unpaired bases can either form no stack, or can form a dangle stack with at most one adjacent base pair.
 
+<p align="center">
 <img src="/figs/multiloopstacking.png" alt="Coaxial and dangle stacking states for a multiloop" width="850"/>
+</p>
+
 **Figure:** Coaxial and dangle stacking states for a multiloop.
 
+<p align="center">
 <img src="/figs/exteriorloopstacking.png" alt="Coaxial and dangle stacking states for two exterior loops" width="500"/>
+</p>
+
 **Figure:** Coaxial and dangle stacking states for two exterior loops.
 
 
