@@ -592,7 +592,7 @@ options = DesignOptions(
 )
 ```
 
-In addition to the multistate test tube design algorithm options, a few others are included in the `Options` object:
+In addition to the multistate test tube design algorithm options, a few others are included in the `DesignOptions` object:
 
 * ```seed```: The seed for the random number generator allowing reproducible design runs
 * ```cache_bytes_of_RAM```: The number of bytes of RAM to set as a maximum cache size for thermodynamic block caching
