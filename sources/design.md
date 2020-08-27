@@ -568,7 +568,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 Specify any non-defaults. Change `f_stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
 
 ```python
-options = design.Options(
+options = DesignOptions(
     seed=0,     # random number generation seed
     f_stop=0.02,  # stop condition
     f_passive=0.01,
@@ -622,7 +622,7 @@ Both `complex_design` and `tube_design` return a `DesignResult` object which may
 
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
-- `.analysis`: an `analysis.Result` for thermodynamic results computed on the designed complexes and tubes.
+- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
 - `.stats`: a rundown of the statistics and timings for the design that took place.
 
 As an example, consider the following design result:
@@ -703,7 +703,7 @@ Output:
 
 #### Introspection
 
-You can also interface with the design `Result` within Python.
+You can also interface with the `DesignResult` within Python.
 
 
 1. For instance, you can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
@@ -753,7 +753,7 @@ result.save_text('design-result.txt')
 
 #### Saving and loading results to a binary file
 
-Saving a `Result` as a binary file is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
+Saving a `DesignResult` as a binary file is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
 
 ```python
 result.save('design-result.o')
@@ -762,14 +762,14 @@ result.save('design-result.o')
 Later, you can load the result back into your Python session with the following class method syntax:
 
 ```python
-result = design.Result.load('design-result.o')
+result = DesignResult.load('design-result.o')
 ```
 
 <hr> </hr>
 
 #### Running from a prior design result
 
-The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `Result` object.
+The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `DesignResult` object.
 
 ```python
 newer_result = my_design.optimize(restart=result)
@@ -783,7 +783,7 @@ When "calling" the design to start the optimization process, two additional argu
 
 `checkpoint_condition` is a binary function that receives the stats and timer object from the running design optimization. The logic in `checkpoint_condition` then uses this information to determine whether a checkpoint should be made, in which case it returns True. In the call below, it is set to an object of an included class, `TimeInterval`. If `checkpoint_condition` is set to an object `TimeInterval(n)`, then a checkpoint will be emitted roughly every `n` seconds.
 
-`checkpoint_handler` is the function which actually does something given that `checkpoint_condition` returns `True`. `checkpoint_handler` takes one argument, a `Result` object, and decides how it will use this information. In the call below, it is set to an object of the included class, `WriteToFileCheckpoint`. This type of `checkpoint_handler` object is instantiated with a filename prefix (`"design-checkpoint"` below) and will convert the design Result object into JSON and serialize it to a file with the given prefix and a time stamp, e.g. design_test-2020-01-27T00:16:52.170292.out.
+`checkpoint_handler` is the function which actually does something given that `checkpoint_condition` returns `True`. `checkpoint_handler` takes one argument, a `DesignResult` object, and decides how it will use this information. In the call below, it is set to an object of the included class, `WriteToFileCheckpoint`. This type of `checkpoint_handler` object is instantiated with a filename prefix (`"design-checkpoint"` below) and will convert the design result object into JSON and serialize it to a file with the given prefix and a time stamp, e.g. design_test-2020-01-27T00:16:52.170292.out.
 
 ```python
 from nupack.design import TimeInterval, WriteToFileCheckpoint

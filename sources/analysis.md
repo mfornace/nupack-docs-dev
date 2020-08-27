@@ -222,7 +222,7 @@ result.save_text('my_result.txt')
 
 #### Programmatic access
 
-The result of `tube_analysis` is an `analysis.Result` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via a `Tube` :
+The result of `tube_analysis` is an `AnalysisResult` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via a `Tube` :
 
 <!-- I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately. -->
 
