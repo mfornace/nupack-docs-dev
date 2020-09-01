@@ -67,6 +67,15 @@ C4 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
 C5 = TargetComplex([B, C], '.10(10+)10.10', name='C5')
 ```
 
+In certain experimental cases, it may be useful to add a bonus to a complex's free energy within a design context. This may help to handle cases where a complex is more or less stable than NUPACK parameters ordinarily predict. For such cases, an additional keyword `bonus` may be included during `TargetComplex` construction. The keyword is specified in kcal/mol; a negative value is stabilizing, and a positive value is destabilizing:
+
+```python
+C6 = TargetComplex([B, C], '.10(10+)10.10', name='C6', bonus=+1.0) # destabilize C6 by 1 kcal/mol
+C6 = TargetComplex([B, C], '.10(10+)10.10', name='C6', bonus=-10.0) # stabilize C7 by 10 kcal/mol
+```
+
+Application of the bonus affects only complex free energies and concentrations; pair probabilities are unaffected.
+
 <hr> </hr>
 
 ### Specify a target tube
