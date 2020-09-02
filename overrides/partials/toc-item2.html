@@ -1,0 +1,66 @@
+{#-
+  This file was automatically generated - do not edit
+-#}
+{% set class = "md-nav__item" %}
+{% if toc_item.active %}
+  {% set class = "md-nav__item md-nav__item--active" %}
+{% endif %}
+{% if toc_item.children %}
+  <li class="{{ class }} md-nav__item--nested">
+    {% if toc_item.active %}
+      <input class="md-nav__toggle md-toggle" data-md-toggle="{{ path }}" type="checkbox" id="{{ path }}" checked>
+    {% else %}
+      <input class="md-nav__toggle md-toggle" data-md-toggle="{{ path }}" type="checkbox" id="{{ path }}">
+    {% endif %}
+    <label class="md-nav__link" for="{{ path }}">
+      {{ toc_item.title }}
+      <span class="md-nav__icon md-icon">
+        {% include ".icons/material/chevron-right.svg" %}
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="{{ toc_item.title }}" data-md-level="{{ level }}">
+      <label class="md-nav__title" for="{{ path }}">
+        <span class="md-nav__icon md-icon">
+          {% include ".icons/material/arrow-left.svg" %}
+        </span>
+        {{ toc_item.title }}
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        {% set base = path %}
+        {% for toc_item in toc_item.children %}
+          {% set path = base + "-" + loop.index | string %}
+          {% set level = level + 1 %}
+          {% include "partials/toc-item.html"  %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </li>
+{% elif toc_item == page %}
+  <li class="{{ class }}">
+    {% set toc = page.toc %}
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    {% if toc | first is defined and "\x3ch1 id=" in page.content %}
+      {% set toc = (toc | first).children %}
+    {% endif %}
+    {% if toc | first is defined %}
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        {{ toc_item.title }}
+        <span class="md-nav__icon md-icon">
+          {% include ".icons/material/table-of-contents.svg" %}
+        </span>
+      </label>
+    {% endif %}
+    <a href="{{ toc_item.url | url }}" title="{{ toc_item.title | striptags }}" class="md-nav__link md-nav__link--active">
+      {{ toc_item.title }}
+    </a>
+    {% if toc | first is defined %}
+      {% include "partials/toc.html" %}
+    {% endif %}
+  </li>
+{% else %}
+  <li class="{{ class }}">
+    <a href="{{ toc_item.url | url }}" title="{{ toc_item.title | striptags }}" class="md-nav__link">
+      {{ toc_item.title }}
+    </a>
+  </li>
+{% endif %}

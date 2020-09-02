@@ -57,7 +57,8 @@ theme:
   language: en
   custom_dir: overrides
   features:
-    - tabs
+  - instant
+  - tabs
 
   # palette:
   #   primary: orange
@@ -91,6 +92,7 @@ markdown_extensions:
       smart_enable: all
   - toc:
       permalink: true
+      # toc_depth: 2
   - mdx_bib:
       bibtex_file: nupack.bib
       order: unsorted
