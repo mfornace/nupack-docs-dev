@@ -1,22 +1,20 @@
 docs_dir: ./sources
 
-pages:
-  - Material: index.md
-  - Getting started: model.md
+# pages:
+#   - Material: index.md
+#   - Getting started: model.md
 
 nav:
-- Overview:
-  - Overview: combined.md
-#- Design: design.md
-#- Physical: model.md
-- License:
-  - License: license.md
-- Installation:
-  - Getting started: started.md
-- Advanced:
-  - API notes: other.md
+- Home: index.md
+- Definitions: definitions.md
+- Analysis: analysis.md
+- Design: design.md
+- Utilities: utilities.md
+- Physical: model.md
+- Installation: started.md
+- Advanced: other.md
 # - License: license.md
-#- Analysis:
+# - Analysis:
 #  - Complex Analysis: complex-analysis.md
 #  - Test Tube Analysis: tube-analysis.md
 #- Design:
@@ -49,6 +47,7 @@ nav:
 #- Basics: basics.md
 #- License: license.md
 # - Other: other.md
+
 site_dir: _build/site
 site_name: NUPACK User Guide
 
@@ -58,7 +57,7 @@ theme:
   custom_dir: overrides
   features:
   - instant
-  - tabs
+  # - tabs
 
   # palette:
   #   primary: orange
@@ -75,8 +74,8 @@ plugins:
   # - pdf-export
 
 markdown_extensions:
-  - markdown_include.include:
-      base_path: sources
+  # - markdown_include.include:
+  #     base_path: sources
       # headingOffset: 1
   - pymdownx.arithmatex
   - pymdownx.superfences

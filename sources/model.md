@@ -1,9 +1,9 @@
-## Model Specification
+# Model Specification
 
 <hr>
 
 
-### Specify a physical model
+## Specify a physical model
 
 NUPACK 4 analysis and design jobs are run based on a physical model created using the `Model` class:
 
@@ -21,10 +21,10 @@ Any unspecified properties take on their default values (which happen to be the 
 
 
 
-### Model options
+## Model options
 The valid options for each property are described below.
 
-#### Material
+### Material
 
 NUPACK 4 algorithms use the following temperature-dependent RNA and DNA free energy parameter sets specified by the keyword `material` (default: `material='rna'`):
 
@@ -49,7 +49,7 @@ DNA/RNA hybrids are not allowed.
 <hr>
 
 
-#### Stacking
+### Stacking
 
 NUPACK 4 algorithms perform calculations on the following complex ensembles specified by the keyword `ensemble` (default: `ensemble='stacking'`):
 
@@ -63,7 +63,7 @@ Complex ensemble without coaxial and dangle stacking (ensemble $\overline\Gamma(
 
 <hr>
 
-#### Temperature
+### Temperature
 
 - `celsius`
 Temperature is specified in $^\circ$C using the keyword `celsius` (default: `celsius=37`).
@@ -72,7 +72,7 @@ Alternatively, the temperature can be specified in K using the keyword `kelvin`.
 
 <hr>
 
-#### Salt
+### Salt
 
 The default salt conditions for RNA and DNA parameter sets are $[\mathrm{Na}^+] = 1 {\rm M}$; these are the only salt conditions for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.
 
@@ -84,7 +84,7 @@ Based on [@Peyret00,@Koehler05] the concentration of (divalent) magnesium ions, 
 
 <hr>
 
-<!-- #### Wobble pairs
+<!-- ### Wobble pairs
 
 G$\cdot$U RNA wobble pairs are enabled by default in the provided RNA parameter sets.
 G$\cdot$T DNA wobble pairs are disabled by default in the provided DNA parameter set.
@@ -113,7 +113,7 @@ In the historical ensembles, a duplex terminated by a wobble pair is forbidden.
     ```
 
 
-#### Historical options
+### Historical options
 
 
 For backwards compatibility with NUPACK 3, the following historical complex ensembles without coaxial stacking and with approximate dangle stacking are supported:
@@ -139,7 +139,7 @@ Same as `dna04` except that G$\cdot$T was treated as a wobble pair (analogous to
 Parameters from [@Mathews99] with terminal mismatch free energies in exterior loops and multiloops replaced by two dangle stacking free energies. Parameters are provided only for 37 $^\circ$C.
 
 
-### Compute loop free energy
+## Compute loop free energy
 
 <!-- Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
 However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
@@ -172,7 +172,7 @@ print(dGloop5)
 # --> 9.355
 ```
 
-### Compute stacking state free energies
+## Compute stacking state free energies
 
 `Model.stack_energies` calculates the [stacking state free energies](definitions.md#loop-free-energies) for the subensemble of stacking states in a multiloop or exterior loop. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. The algorithm returns a list of stacking states and the free energy for each in kcal/mol:
 

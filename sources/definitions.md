@@ -1,8 +1,8 @@
 
 
-## Definitions
+# Definitions
 
-### Sequence
+## Sequence
 
 The **sequence**, $\phi$, of one or more interacting RNA strands is specified as a list of bases $\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{U}\}$ for $a=1,\dots,|\phi|$. For DNA, $\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}$.
 Nucleic acid sequences are listed $5'$ to $3'$.
@@ -13,7 +13,8 @@ For example, if a complex has three strands of length 15, 20, and 13, respective
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
 
 <hr>
-### Secondary structure
+
+## Secondary structure
 
 A **secondary structure**, $s$, of one or more interacting RNA strands is defined by a set of base pairs, each a Watson--Crick pair \[A$\cdot$U or C$\cdot$G\] or a wobble pair \[G$\cdot$U\]). For DNA, the corresponding Watson--Crick pairs are A$\cdot$T or C$\cdot$G and there are no wobble pairs.
 A **polymer graph** representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5$'$ to 3$'$ around the circumference with a *nick* between each strand, and drawing straight lines connecting paired bases.
@@ -49,7 +50,7 @@ In mathematical expressions, it is convenient to represent secondary structure $
 
 <hr>
 
-### Complex ensemble
+## Complex ensemble
 Consider a complex of $L$ distinct strands (e.g., each with a unique identifier in $\{1,\dots,L\}$) corresponding to strand ordering $\pi$. The **complex ensemble** $\overline\Gamma(\phi)$ contains all connected polymer graphs with no crossing lines for sequence $\phi$ and strand ordering $\pi$ (i.e., all unpseudoknotted secondary structures) [@Dirks07]. (We dispense with our prior convention [@Dirks07,@Zadeh11a,@Zadeh11b] of calling this entity an ''ordered complex''.) As a matter of algorithmic necessity, all of the dynamic programs in NUPACK operate on complex ensemble $\overline\Gamma(\phi)$ treating all strands as distinct. However, in the laboratory, strands with the same sequence are typically indistinguishable with respect to experimental observables. For comparison to experimental data, physical quantities calculated over ensemble $\overline\Gamma(\phi)$ are post-processed
 to obtain the corresponding quantities calculated over **complex ensemble** $\Gamma(\phi)$ in which strands with the same sequence are treated as indistinguishable [@Fornace20]. The ensemble $\Gamma(\phi)\subseteq\overline\Gamma(\phi)$ is a maximal subset of distinct secondary structures for strand ordering $\pi$. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases;
 otherwise the structures are distinct [@Dirks07].
@@ -81,7 +82,7 @@ It is often convenient to define $\Psi$ to contain all complex species of up to 
 
 **Figure:** A test tube ensemble containing strain species $\Psi^0 = \{$A,B,C$\}$ interacting to form all complex species $\Psi$ of up to $L_{\rm max} = 3$ strands.
 
-### Free energy model
+## Free energy model
 For each (unpseudoknotted connected) secondary structure $s\in\overline{\Gamma}(\phi)$, the free energy,
 $\overline{\Delta G}(\phi,s)$, is estimated as the sum of the empirically determined free energies of the
 constituent loops [@Santalucia98,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10] plus a strand association penalty [@Bloomfield00], $\Delta
@@ -91,7 +92,7 @@ complex of $L$ strands:
 \overline{\Delta G}(\phi,s) = (L-1)\,\Delta G^\textrm{assoc}\, + \sum_{\mathrm{loop} \in s} \Delta G(\mathrm{loop}). \label{eq:dGbar}
 \end{align}
 
-#### Loop free energies
+### Loop free energies
 The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different loop types as follows:
 
 - A **hairpin loop** is closed by a single base-pair $a\cdot b$. The loop free energy, $\Delta G^\mathrm{hairpin}_{a,b}$, depends on sequence and loop size.
@@ -109,7 +110,7 @@ The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{a, b}
 
 **Figure:** Canonical loop types for a complex with strand ordering $\pi$ = ABC.
 
-#### Coaxial and dangle stacking
+### Coaxial and dangle stacking
 Within a multiloop or an exterior loop, there is a subensemble of coaxial stacking states between adjacent closing base pairs and dangle stacking states between
 closing base pairs and adjacent unpaired bases.
 Within a multiloop or exterior loop, a base pair can
@@ -147,7 +148,7 @@ for all stacking states $s^\shortparallel\in s$:
 \end{align}
 Let $\overline\Gamma^\shortparallel(\phi)$ denote the ensemble of stacking states corresponding to the complex ensemble of secondary structures $\overline\Gamma(\phi)$.
 
-#### Symmetry correction
+### Symmetry correction
 For a secondary structure $s\in\Gamma(\phi)$ with an $R$-fold rotational symmetry there is in $R$-fold reduction in distinguishable conformational space, so the free energy $\overline{\Delta G}(\phi,s)$ must be adjusted [@Dirks07] by a symmetry correction:
 \begin{align}
 \Delta G(\phi,s)
@@ -162,7 +163,7 @@ Interestingly, ensembles $\overline\Gamma(\phi)$ and $\Gamma(\phi)$ both have ut
 akin to complementary thought experiments [@Fornace20].
 
 
-<!-- #### Free Energy Parameters
+<!-- ### Free Energy Parameters
 For RNA, we employ temperature-dependent parameters [@Serra95,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10]
 including coaxial [@Mathews99,@Turner10] and dangle [@Serra95,@Zuker03,@Turner10] parameters
 in 1M Na$^+$. For DNA,
@@ -171,14 +172,14 @@ including coaxial [@Peyret00] and dangle [@Bommarito00,@Zuker03] parameters
 in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@Santalucia98,@Peyret00,@Santalucia04]. See [@Fornace20] for details.
  -->
 
-### Physical quantities
+## Physical quantities
 Consider a [test tube ensemble](definitions.md#test-tube-ensemble) containing an arbitrary set of strand species $\Psi^0$
 interacting to form an arbitrary set of complex species $\Psi$. Let $j\in\Psi$ denote a complex with sequence $\phi_j$ and [complex ensembles](definitions.md#complex-ensemble)
 $\overline\Gamma(\phi_j)$ (treating all strands as distinct) and $\Gamma(\phi_j)$ (treating strands with the same seqeuence as indistinguishable).
 NUPACK calculates [@Dirks07,@Fornace20] a number of physical quantities over these ensembles.
 
 
-#### Partition function
+### Partition function
 For complex $j$, the partition function evaluated over ensemble $\Gamma(\phi_j)$ treating
 strands with the same sequence as indistinguishable is denoted
 
@@ -191,7 +192,7 @@ For complex $j$, the corresponding complex free energy is
 \Delta G(\phi_j) \equiv -kT \log(Q(\phi_j)).
 \end{align}
 
-#### Structure free energy
+### Structure free energy
 For complex $j$, the secondary structure free energy treating strands with the same sequence as indistinguishable is denoted
 \begin{align}
 \Delta G(\phi_j,s).
@@ -199,7 +200,7 @@ For complex $j$, the secondary structure free energy treating strands with the s
 If the physical model includes [coaxial and dangle stacking](index.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](index.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi_j,s)$.
 
 
-#### Equilibrium structure probability
+### Equilibrium structure probability
 For complex $j$, the equilibrium structure probability of any secondary structure $s\in\Gamma(\phi_j)$ treating
 strands with the same sequence as indistinguishable is denoted
 \begin{align}
@@ -207,7 +208,7 @@ p(\phi_j,s)= e^{-\Delta G(\phi_j,s)/kT}/Q(\phi_j).
 \end{align}
 
 
-#### Boltzmann-sampled structures
+### Boltzmann-sampled structures
 For complex $j$, a set of $J$ secondary structures Boltzmann-sampled from ensemble $\Gamma(\phi_j)$ treating strands with the same sequence as indistinguishable is denoted
 
 \begin{align}
@@ -217,7 +218,7 @@ For complex $j$, a set of $J$ secondary structures Boltzmann-sampled from ensemb
 
 
 
-#### Equilibrium base-pairing probabilities
+### Equilibrium base-pairing probabilities
 For complex $j$, the base-pairing probability matrix $\overline P(\phi_j)$ has entries $\overline P^{a,b}(\phi_j)\in[0,1]$ corresponding to the probability
 
 \begin{align}
@@ -228,7 +229,7 @@ that base pair $a\cdot b$ forms at equilibrium within ensemble $\overline\Gamma(
  Here, $S(s)$ is the [structure matrix](definitions.md#secondary-structure) and $\overline p(s)$ the equilibrium probability of structure $s\in\overline\Gamma(\phi_j)$, treating all strands as distinct. Abusing notation, the entry $\overline P^{i,i}(\phi) \in [0,1]$ denotes the equilibrium probability that base $i$ is unpaired over ensemble $\overline\Gamma(\phi)$. Hence $\overline P(\phi)$ is symmetric matrix with row and column sums of 1.
 
 
-#### MFE proxy structure
+### MFE proxy structure
 For complex $j$, the free energy of the minimum free energy (MFE) stacking state
 $s_\mathrm{MFE}^\shortparallel(\phi) \in\overline\Gamma^\shortparallel(\phi)$
 treating all strands as distinct is denoted
@@ -252,7 +253,7 @@ There may be more than one MFE stacking state, each corresponding to the same or
 
 
 
-#### Suboptimal proxy structures
+### Suboptimal proxy structures
 For complex $j$, the set of suboptimal proxy secondary structures with stacking states within a specified $\Delta G_\mathrm{gap}\ge 0$ of the MFE stacking state is denoted
 
 \begin{align}
@@ -261,7 +262,7 @@ For complex $j$, the set of suboptimal proxy secondary structures with stacking 
 
 
 
-#### Complex ensemble defect
+### Complex ensemble defect
 
 For complex $j$ with target structure $s_j$, the dimensional complex ensemble defect
 \begin{align}
@@ -288,7 +289,7 @@ quantifying the average equilibrium fraction of incorrectly paired nucleotides o
 As ${\mathcal N}_j$ approaches zero, the complex $j$ is dominated by its target structure, $s_{j}$.
 
 
-#### Complex ensemble size
+### Complex ensemble size
 For complex $j$, the number of secondary structures in the complex ensemble, treating all strands as distinct, is denoted:
 \begin{align}
 |\overline\Gamma(\phi_j)|.
@@ -300,7 +301,7 @@ The corresponding number of stacking states is denoted
 
 
 
-#### Equilibrium complex concentrations
+### Equilibrium complex concentrations
 For the set of complexes $\Psi$ in the test tube ensemble, the set of equilibrium complex concentrations is denoted
 
 \begin{align}
@@ -321,7 +322,7 @@ $[j] = x_j\rho_\mathrm{H_2O}$ as outputs, where $\rho_\mathrm{H_2O}$ is the mola
 Hence, the user specifies the set of molar strand concentrations $[i]^0~~\forall i\in\Psi^0$
 and NUPACK calculates the set of molar complex concentrations $[j]~~ \forall j\in\Psi$.
 
-#### Test tube ensemble pair fractions
+### Test tube ensemble pair fractions
 For the test tube ensemble, the ensemble pair fraction
 
 \begin{align}
@@ -345,7 +346,7 @@ representing the total number of bases in all $|\Psi^0|$ strand species. Numberi
 
 
 
-#### Test tube ensemble defect
+### Test tube ensemble defect
 Consider test tube $h$ containing a
 set of desired **on-target complexes**, $\Psi_h^{\rm on}$,
 and a set of undesired **off-target complexes**, $\Psi_h^{\rm off}$. The set of complexes in the test tube is then:

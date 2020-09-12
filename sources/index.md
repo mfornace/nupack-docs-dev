@@ -1,6 +1,6 @@
-## Overview
+# Home
 
-### About
+## About
 NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences more broadly. Much of this software can be conveniently run using the NUPACK web application at [nupack.org](http://www.nupack.org) [@Zadeh11a]. This User Guide provides documentation for the NUPACK Source Code.
 
 When finishing a project that has benefited from NUPACK calculations, please remember to [cite](index.md#citation) the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <support@nupack.org>.
@@ -10,7 +10,7 @@ When finishing a project that has benefited from NUPACK calculations, please rem
 <hr>
 
 
-### Problem Categories
+## Problem Categories
 NUPACK algorithms address two fundamental classes of problems:
 
 - **Sequence analysis:** given a set of DNA or RNA strands, analyze the equilibrium base-pairing properties over a specified ensemble.
@@ -35,7 +35,7 @@ NUPACK capabilities are presented in three categories:
 - **Design:** Design the the sequences for one or more test tube ensembles (or one or more complex ensembles). These are the all-purpose sequence design tools.
 - **Utilities:** Analyze or design a single complex ensemble. These are quick tools applicable when your ensemble is a single complex.
 
-### License
+## License
 
 **NUPACK Software License Agreement**
 Copyright &copy; 2020. California Institute of Technology. All rights reserved.
@@ -56,7 +56,7 @@ Use and redistribution in source form and/or binary form, with or without modifi
 <hr>
 
 
-### Citation
+## Citation
 
 For citation, please select from the list below as appropriate for your application:
 
@@ -94,7 +94,7 @@ For citation, please select from the list below as appropriate for your applicat
 
 
 
-### Acknowledgments
+## Acknowledgments
 We thank all the NUPACK users that have helped out as beta testers over the years, as well as the many NUPACK users that have emailed <support@nupack.org> to request features or report bugs.
 NUPACK is supported by the National Science Foundation (NSF-OAC-1835414) and by the Beckman Institute at Caltech (PMTC).
 NUPACK has previously been supported by the National Science Foundation
@@ -133,7 +133,7 @@ The [Examples](examples.md) page links to example Jupyter notebooks that are bun
 5. [Drawing](api/drawing.md) -->
 
 
-### Versions
+## Versions
 
 - **NUPACK 3.0**
     - Features:

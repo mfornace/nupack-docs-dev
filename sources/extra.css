@@ -31,7 +31,7 @@ h1::after {
   border-radius: .1rem;
 }
 
-
+/*
 .md-sidebar--primary {
   display: none;
 }
@@ -69,7 +69,7 @@ h1::after {
     z-index: 3;
 
   }
-}
+} */
 
 /* .md-content {
   max-width: calc(100% - 12.1rem * 1);

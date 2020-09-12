@@ -1,6 +1,6 @@
 
 
-## Design Jobs
+# Design Jobs
 
 To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13]) or large-scale structural engineering including pseudoknots (e.g., RNA origamis [@Geary14]), NUPACK generalizes these analysis and design capabilities to multistate ensembles:
 
@@ -13,7 +13,7 @@ For large-scale structure engineering including the possibility of pseudoknots, 
 
 <hr>
 
-### Specify a domain
+## Specify a domain
 
 Define domains, strands, on targets, and tubes:
 
@@ -28,7 +28,7 @@ g = Domain('N10',        name='g')
 ```
 <hr>
 
-### Specify a strand
+## Specify a strand
 ```python
 # Domains should not be specified inline
 A = TargetStrand([a, b, g], name='Strand A')
@@ -39,11 +39,11 @@ D = TargetStrand([d, d, d], name='Strand D')
 
 <hr>
 
-### Specify a structure
+## Specify a structure
 
 <hr>
 
-### Specify a target complex
+## Specify a target complex
 
 A `TargetComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
 
@@ -78,7 +78,7 @@ Application of the bonus affects only complex free energies and concentrations; 
 
 <hr> </hr>
 
-### Specify a target tube
+## Specify a target tube
 
 
 A `TargetTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
@@ -128,7 +128,7 @@ t6 = TargetTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
 
 <hr> </hr>
 
-### Create a tube design job
+## Create a tube design job
 
 The `Design` class is offered to create a complete multitube design.
 
@@ -154,7 +154,7 @@ See the below sections for more information on inputs and results.
 
 <hr> </hr>
 
-### Run a complex design job
+## Run a complex design job
 
 For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a `Design` object.
 
@@ -169,7 +169,7 @@ result = my_design.optimize()
 
 <hr> </hr>
 
-### Specify hard constraints
+## Specify hard constraints
 
 Hard constraints are most easily kept track of as a Python `list`. See below for an example:
 
@@ -205,7 +205,7 @@ See the below subsections for more information about each kind of constraint.
 
 <hr> </hr>
 
-#### Match
+### Match
 
 Match constraints are used to constrain concatenations of domains to be identical to each other. They are specified by providing the ```add_match_constraint``` with two lists of domains. The sum of the lengths of the domains in each list must be the same.
 
@@ -222,7 +222,7 @@ match2 = Match([a, b], [d, d, e])
 
 <hr> </hr>
 
-#### Complementarity
+### Complementarity
 
 Complementarity constraints are used to constraint the concatenation of one list of domains to be the reverse complement of the concatenation of another list of domains. Therefore, the sum of the lenghts of the domains in each list must be the same.
 
@@ -237,7 +237,7 @@ comp = Complementarity([a, b], [c, d, e])
 
 <hr> </hr>
 
-#### Similarity
+### Similarity
 
 A similarity constraint forces either a domain or strand to match a reference sequence of the same length at a number of positions that falls in a specified range. As such, the constraint is specified using
 
@@ -259,7 +259,7 @@ sim2 = Similarity(b, 'S20', [0.45, 0.55])
 
 <hr> </hr>
 
-#### Window
+### Window
 
 A window constraint is used to constrain a concatenation of domains to have a sequence that is a substring of a given source sequence.
 It is specified in two steps.
@@ -286,7 +286,7 @@ window2 = Window([~c, e], [gfp, rfp])
 
 <hr> </hr>
 
-#### Library
+### Library
 
 A library constraint forces a domain, or concatenated list of domains, to have its sequence come from a fixed set of enumerated sequences of the same length. The constraint is specified in two steps. First, one or more libraries are defined by giving them a name and a list of sequences, all of the same length for a given library. Then, the constraint itself is specified by giving a domain or list of domains and a library or list of libraries. The sum of the lengths of the domains must equal the sum of the library lengths. The library length is the length of any of its sequences.
 
@@ -329,7 +329,7 @@ lib2 = Library([b], aaI + aaM + aaC + aaG)
 
 <hr> </hr>
 
-#### Pattern prevention
+### Pattern prevention
 
 Pattern prevention constraints are used to prevent any subsequences of a given strand or domain from containing some fixed pattern sequence. This pattern sequence can be specified using degenerate base codes.
 
@@ -361,7 +361,7 @@ pat4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
 
 <hr> </hr>
 
-#### Diversity
+### Diversity
 
 New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity.
 For instance, specifying the constraints that no AAAA, CCCC, GGGG, or UUUU should appear in a strand is equivalent to specifying the constraint that every length 4 window of the strand must have at least 2 nucleotide constraints within. When specified as a diversity constraint, both the intention is more clear and the CSP solver is able to more rapidly make sequence mutations.
@@ -389,7 +389,7 @@ div3 = Diversity(10, 4, where=[a, B])
 
 <hr> </hr>
 
-### Specify soft constraints
+## Specify soft constraints
 
 ```python
 # define soft for soft constraints
@@ -407,7 +407,7 @@ soft = [
 
 <hr> </hr>
 
-#### Pattern prevention
+### Pattern prevention
 
 Pattern prevention soft constraints are specified in nearly the same way as pattern prevention hard constraints.
 The primary difference is that a weight can be supplied to control the relative design effort spent on the soft constraint.
@@ -420,7 +420,7 @@ pat = Pattern(patterns=['A4', 'C4', 'G4', 'U4', 'M6',
 
 <hr> </hr>
 
-#### Similarity
+### Similarity
 
 Similarity soft constraints are specified in nearly the same way as similarity hard constraints.
 The primary difference is that a weight can be supplied to control the relative design effort spent on the soft constraint.
@@ -436,7 +436,7 @@ sim = Similarity('b', 'S20', [0.45, 0.55], weight=0.25)
 
 <hr> </hr>
 
-#### Sequence symmetry
+### Sequence symmetry
 
 Sequence symmetry soft constraints are specified with a list of complex names (or single complex name) to consider simultaneously.
 This will penalize windows (i.e. n-grams, critons) that repeat spuriously (not explicitly constrained to be identical) and reverse complement windows that are not in full duplex regions.
@@ -460,7 +460,7 @@ ssm3 = SSM([C, D], 6, weight=0.45)
 
 <hr> </hr>
 
-#### Duplex structure energy equalization
+### Duplex structure energy equalization
 
 Currently, the only structural motif that can be equalized is a perfect duplex. This is specified by giving a list of domain names.
 The soft constraint will then bias search toward sequences that for each domain `a`, the duplex with complementary domain `a*` will approach the median of all the constrained duplexes. A fixed reference energy can also be supplied through the ```energy_ref``` keyword argument, which will try to force the duplex free energies to match that reference energy instead.
@@ -475,7 +475,7 @@ diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
 
 <hr> </hr>
 
-### Specify defect weights
+## Specify defect weights
 
 The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:
 
@@ -572,7 +572,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 <hr> </hr>
 
-### Job options
+## Job options
 
 Specify any non-defaults. Change `f_stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
 
@@ -625,7 +625,7 @@ The information logged for each of these given a non-empty string is as follows:
 
 <hr> </hr>
 
-### Job results
+## Job results
 
 Both `complex_design` and `tube_design` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
 
@@ -651,7 +651,7 @@ result = tube_design([tube], model=Model())
 
 <hr> </hr>
 
-#### Textual display
+### Textual display
 
 The quickest way to look at your results is to use the built-in notebook output function by just running a cell containing the following line:
 
@@ -710,7 +710,7 @@ Output:
 
 <hr> </hr>
 
-#### Introspection
+### Introspection
 
 You can also interface with the `DesignResult` within Python.
 
@@ -748,11 +748,11 @@ conc_results = complex_concentrations(t1_designed, result.analysis,
 
 <hr> </hr>
 
-### Saving, checkpointing, and restarting
+## Saving, checkpointing, and restarting
 
 <hr> </hr>
 
-#### Saving results to a text file
+### Saving results to a text file
 
 Any design result can be saved to a text file for later use as follows. However, the result may not be loaded in programmatically; for that purpose, save a binary file instead.
 
@@ -760,7 +760,7 @@ Any design result can be saved to a text file for later use as follows. However,
 result.save_text('design-result.txt')
 ```
 
-#### Saving and loading results to a binary file
+### Saving and loading results to a binary file
 
 Saving a `DesignResult` as a binary file is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
 
@@ -776,7 +776,7 @@ result = DesignResult.load('design-result.o')
 
 <hr> </hr>
 
-#### Running from a prior design result
+### Running from a prior design result
 
 The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `DesignResult` object.
 
@@ -786,7 +786,7 @@ newer_result = my_design.optimize(restart=result)
 
 <hr> </hr>
 
-#### Saving checkpoint files automatically
+### Saving checkpoint files automatically
 
 When "calling" the design to start the optimization process, two additional arguments must be added for checkpointing to work, `checkpoint_condition` and `checkpoint_handler`.
 

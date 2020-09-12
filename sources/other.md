@@ -2,7 +2,7 @@
 
 
 
-### Specifying a sequence
+## Specifying a sequence
 
 A `Sequence` is specified by valid nucleotide letters, which can contain wildcards.  Run-length encoding may be used to specify repeats of a given nucleotide. For RNA, `'U'` is automatically replaced by `'T'` for printing purposes.
 
@@ -32,7 +32,7 @@ The `~a` syntax is generally recommended for brevity. Thus `~a` corresponds to t
 
 <hr> </hr>
 
-### PairList
+## PairList
 
 Under the hood, secondary structures are stored in NUPACK using the `PairList` object.
 A pair list contains a list of zero-based indices $p$ such that if $p_i = j$, bases $i$ and $j$ are paired, and if $p_i = i$, base $i$ is unpaired.
@@ -70,13 +70,12 @@ s.structure_matrix() # --> array([[0, 0, 0, 0, 1],
 
 <hr> </hr>
 
-### Structure
+## Structure
 
 You might notice that the pair list specification does not include any information on structure nicks.
 This can be inconvenient when printing a `PairList`.
-As a result, NUPACK provides a `Structure` class, which simply contains a `PairList` and list of nicks as the following member:
+As a result, NUPACK provides a `Structure` class, which inherits from `PairList` and adds a list of nick indices:
 
-1. `pairs`: a `PairList` of the base pairs in a given structure such that `pairs[i] == j` if the bases of zero-based index `i` and `j` are paired, and `pairs[i] == i` if the base of index `i` is unpaired.
 
 2. `nicks`: a list of indices where each integer is the (zero-based) index of a base after a strand break
 
@@ -84,10 +83,8 @@ As a result, NUPACK provides a `Structure` class, which simply contains a `PairL
 s = Structure('(((+)))')
 s                      # --> Structure('(((+)))')
 print(s)               # --> (((+)))
-print(s.pairs.array()) # --> [5 4 3 2 1 0]
+print(s.array())       # --> [5 4 3 2 1 0]
 ```
-
-
 
 <hr> </hr>
 
@@ -121,7 +118,7 @@ print(repr(s)) # --> Domain('a', 'NNNNNN')
 
 <hr> </hr>
 
-### Domain
+## Domain
 
 A domain is a fixed-length sequence of nucleotides, primarily useful in a design context. It reflects a shared sequence that may appear multiple times in different strands. A domain may be created from a name and `Sequence` (or sequence string).
 
@@ -160,12 +157,12 @@ a1 == a1 # --> True
 NUPACK 4 also provides a more flexible and lower-level interface for thermodynamic analysis as well. To use this interface, first create an `Specification` object by specifying the secondary structure model to use:
 
 ```python
-analysis = nupack.analysis.Specification(model=model)
+spec = nupack.analysis.Specification(model=model)
 ```
 
 <hr> </hr>
 
-### Queuing calculations
+## Queuing calculations
 
 Frequently, thermodynamic analysis can be sped up by computing quantities in aggregate, rather than one by one. For instance, caching may decrease the cost of analyzing complexes of up to $L$ strands by up to a factor of $L-1$. Therefore, the analysis API encourages queueing of all of the calculations you want to perform before computation actually takes place.
 
@@ -177,12 +174,12 @@ After queueing your desired computations, follow the directions in [Computation]
 
 <hr> </hr>
 
-#### Partition function
+### Partition function
 
 **Example code:**
 
 ```python
-analysis.partition_function(strands, max_size=3)
+spec.partition_function(strands, max_size=3)
 ```
 
 **Description:** Schedule computation of the partition function, $Q(\phi)$, over the ensemble $\Gamma'$. This computation will yield the output fields:
@@ -192,12 +189,12 @@ analysis.partition_function(strands, max_size=3)
 
 <hr> </hr>
 
-#### Pair probability
+### Pair probability
 
 **Example code:**
 
 ```python
-analysis.pair_probability(strands, max_size=2)
+spec.pair_probability(strands, max_size=2)
 ```
 
 **Description:** Schedule computation of *pair probabilities* $P_{i, j} \equiv p(i_n \cdot j_m)$ for the complex corresponding to the specified strand ordering $\pi$. The probability of an base being unpaired is on the matrix diagonal $P(i, i)$. The specified matrix $P$ is symmetric and satisfies $\sum_i P_{i, j} = 1$.
@@ -210,7 +207,7 @@ Analyze the equilibrium base-pairing properties of a complex of interacting nucl
 
 <hr> </hr>
 
-#### Minimum free energy
+### Minimum free energy
 
 **Example code:**
 
@@ -225,12 +222,12 @@ analysis.min_free_energy(strands, max_size=2, structures=True)
 
 <hr> </hr>
 
-#### Structure count
+### Structure count
 
 **Example code:**
 
 ```python
-analysis.structure_count(strands, stacks=False)
+spec.structure_count(strands, stacks=False)
 ```
 
 **Description:** Schedule computation of the number of secondary structures, $|\Gamma|$, in the ensemble of the complex, treating all strands as distinct. This computation will yield the output fields:
@@ -240,12 +237,12 @@ analysis.structure_count(strands, stacks=False)
 
 <hr> </hr>
 
-#### Boltzmann sampling
+### Boltzmann sampling
 
 **Example code:**
 
 ```python
-analysis.boltzmann_sample(strands, number=10)
+spec.boltzmann_sample(strands, number=10)
 ```
 
 **Description:** Schedule computation of `number` random secondary structures sampled from the equilibrium Boltzmann distribution. This computation will yield the output fields:
@@ -256,12 +253,12 @@ analysis.boltzmann_sample(strands, number=10)
 
 <hr> </hr>
 
-#### Suboptimal structures
+### Suboptimal structures
 
 **Example code:**
 
 ```python
-analysis.suboptimal_structure(strands, gap=0.4)
+spec.suboptimal_structure(strands, gap=0.4)
 ```
 
 **Description:** Schedule computation of all secondary structures in $\Gamma$ with free energies within the specified (non-negative) free energy gap of the MFE. This could produce an astronomical number of structures if the specified gap is too large. This computation will yield the output fields:
@@ -270,19 +267,19 @@ analysis.suboptimal_structure(strands, gap=0.4)
 - `mfe_structures`
 - `min_free_energy`
 
-### Computation
+## Computation
 
 After queueing the computations you want to run, run the following command to start computation.
 
 ```python
-analysis_result = analysis.compute(threads=1, cache_bytes=4e9) # same as analysis.compute()
+analysis_result = spec.compute(threads=1, cache_bytes=4e9) # same as analysis.compute()
 ```
 
 You may specify the number of threads via the `threads` keyword and the maximum memory to use via the `cache_bytes` keyword. It is especially important on Linux systems not to set `cache_bytes` higher than your available RAM. The specification is in bytes, so `cache_bytes=4e9` is equivalent to a limit of 4 GB.
 
  `Specification.compute()` returns a `RawResult`. This class is a thin wrapper around a `dict` mapping a tuple of strands (e.g. `('AAAA', 'TTTT)`) to a result of type `ComplexResult`.
 
-### Outputs
+## Outputs
 
 To retrieve a complex result for a desired complex of ordered strands, use the `[]` (`__getitem__`) method of `RawResult`:
 
@@ -312,7 +309,7 @@ A `ComplexResult` is just a `namedtuple` of computed results for the given compl
 
 <hr> </hr>
 
-#### Structure probability
+### Structure probability
 
 The equilibrium probability of complex `strands` being in the secondary structure `structure` is cheap to compute once the partition function is known. For this purpose, the following method of `RawResult` is provided.
 
@@ -320,13 +317,13 @@ The equilibrium probability of complex `strands` being in the secondary structur
 prob = analysis_result.structure_probability(strands, structure) # yields a float between 0 and 1
 ```
 
-### Concentration solving
+## Concentration solving
 
 Test tube analysis enables prediction of equilibrium concentrations and related quantities for an ensemble of strands at user-specified concentrations.
 
 <hr> </hr>
 
-#### Specification
+### Specification
 
 Create an instance of `nupack.ConcentrationSolver` using an iterable of strands and a `nupack.RawResult`. All partition function information from the previously calculated complex results is used by default. You must make sure that analysis was carried out on all complexes that you want to include in the test tube ensemble.
 
@@ -336,7 +333,7 @@ solver = nupack.ConcentrationSolver(strands, analysis_result)
 
 <hr> </hr>
 
-#### Computation
+### Computation
 
 Given a user-specified concentration for each strand species (in moles per liter), calculate the equilibrium concentration of each complex species or base pair in a dilute solution (e.g., a test tube) [@Dirks07]. This calculation is typically quick compared to the dynamic programming algorithms used in [Complex analysis](#complex-analysis).
 
