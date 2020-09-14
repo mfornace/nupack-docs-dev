@@ -15,8 +15,9 @@ NUPACK 4 is a C++ library distributed as a Python package for portability and ea
 For full visualization capabilities, the following packages are recommended:
 
 - matplotlib
-- bokeh
-- notebook
+- jupyterlab
+
+<hr>
 
 ### Installing NUPACK via the Anaconda Python package
 
@@ -43,14 +44,15 @@ The output of this command should show your Python version and other information
 conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack
 ```
 
-This step should usually complete in 1 minute or less; it should always take less than 5 minutes. You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, run the following:
+<!-- This step should usually complete in 1 minute or less; it should always take less than 5 minutes.  -->
+You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, run the following:
 
 ```bash
 conda install pytest
 pytest -v --pyargs nupack
 ```
 
-Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4.0.0` directory (for example, `cd ~/Downloads/nupack-4/examples`).
+Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4` directory (for example, `cd ~/Downloads/nupack-4/examples`).
 For each example notebook therein, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
 See the next section for help on opening the Jupyter notebooks.
 
@@ -69,76 +71,74 @@ jupyter lab
 
 If no browser window appears, you may try navigating to the displayed link in your terminal (this URL should look like <http://127.0.0.1:8889/?token=78f1ffcdcf04cec0e97e74912e36b4eb5b530aa546411ea3>). If this doesn't work, troubleshoot your Jupyter installation. Browse to open the desired notebook using the GUI in your web browser.
 
+<hr>
+
 ### Installing NUPACK from source
+
+Installation via Anaconda is by far the easiest option and is recommended for almost every user. However, NUPACK may also be built from source if it is desired.
 
 #### External dependencies for C++ libraries
 
-- C++17 compliant compiler (works with Clang 3.6+, AppleClang, maybe GCC 5+)
-- [Boost](https://www.boost.org) (1.58+, optionally including Boost Context)
-
-All are available on [Homebrew](https://brew.sh) for Mac. For example, after Homebrew is installed, run `brew install tbb armadillo boost`. They are also commonly available in Linux package managers (e.g. `apt-get`, `pacman`).
+- C++17 compliant compiler (generally requires Clang or AppleClang)
+- CMake
 
 #### Directions
 
 Make sure `python` points to your desired version of Python. On a Unix-like system, clone the repository and install in Terminal via the following commands.
 
-Clone the git repository for NUPACK.
+First install dependencies using the included `vcpkg` submodule:
+
 ```bash
-git clone --recurse-submodules git@github.com:mfornace/nupack.git
+cd nupack # navigate to the source directory
+
+./external/vcpkg/bootstrap-vcpkg.sh
+
+./external/vcpkg/vcpkg install clapack
+
+./external/vcpkg/vcpkg install armadillo tbb nlohmann-json jsoncpp \
+    spdlog boost-context boost-graph boost-align boost-coroutine2 \
+    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-ublas
 ```
+
 Make a build folder and navigate into it.
+
 ```bash
-cd nupack
 mkdir build
 cd build
 ```
+
 Run the CMake configuration. You may add any custom compilation options as flags to the `cmake` command if desired. For instance, you could add `-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_CXX_COMPILER=clang++` to use a specified install directory and C++ compiler.
+
 ```
 cmake ..
 ```
+
 Build the NUPACK Python module.
+
 ```bash
 cmake --build . --target python
 ```
+
 Install the NUPACK Python module and binding module.
 
 ```bash
-pip3 install ../external/rebind
 pip3 install .
 ```
 
-### Bundled packages
-
-Each of the following packages is included as a git subrepository.
-
-#### Included C++ packages
-
-- [Armadillo](https://arma.sourceforge.net/) (a local installation of version 9.500 or later can also be used)
-- [JSON for Modern C++](https://github.com/nlohmann/json>)
-- [Boost.SIMD](https://github.com/nickporubsky/boost-simd-clone>)
-
-#### Included CMake packages
-
-- [cotire.cmake](https://github.com/sakra/cotire>)
-- [CMake common modules](https://github.com/Eyescale/CMake>)
-- [CMake modules (for git revision)](https://github.com/rpavlik/cmake-modules>)
-
-
-
+<hr>
 
 ## Examples
 
-### Analysis examples
-### Design examples
-### Utilities examples
-### Converting from NUPACK 3 examples
+A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `examples/` folder. For reference, non-interactive versions of these notebooks may be found on [nbviewer](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/).
 
-See the following usage examples derived from Jupyter notebooks that are bundled with NUPACK 4. You may also view these notebooks on [nbviewer](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/) or [GitHub](https://github.com/mfornace/nupack-nbviewer/).
+Examples are provided for the following use cases:
 
-1. [Analysis](https://github.com/mfornace/nupack-documentation/blob/docs/notebooks/Analysis.ipynb)
-2. [Design](https://github.com/mfornace/nupack-documentation/blob/docs/notebooks/Design.ipynb)
-3. [Conversion from NUPACK 3](https://github.com/mfornace/nupack-documentation/blob/docs/notebooks/ConversionFromNUPACK3.ipynb)
-
-!!!todo
-    Currently the above links are to github, but we can switch to nbviewer once they're public. You may need to sign into GitHub to see the above links.
+- Analysis
+  - [Complex analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+  - [Tube analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- Design
+  - [Complex design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+  - [Tube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+  - [Multitube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
 

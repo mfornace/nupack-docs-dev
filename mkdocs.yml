@@ -7,10 +7,10 @@ docs_dir: ./sources
 nav:
 - Home: index.md
 - Definitions: definitions.md
+- Physical: model.md
 - Analysis: analysis.md
 - Design: design.md
 - Utilities: utilities.md
-- Physical: model.md
 - Installation: started.md
 - Advanced: other.md
 # - License: license.md
