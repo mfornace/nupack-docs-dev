@@ -37,10 +37,10 @@ conda info
 
 The output of this command should show your Python version and other information. (If this command cannot be run, troubleshoot your Anaconda installation. You may not have your `$PATH` environmental variable set correctly.)
 
- The following instructions will assume you are installing NUPACK 4.0.0; replace any instances of `4.0.0` with your downloaded version number if it differs. After installing your preferred distribution, download the NUPACK package `nupack-4.0.0` into your Downloads folder. If you have a `tar.gz` file, decompress it. Then open Terminal and run the following command:
+ After installing your preferred distribution, download the NUPACK package `nupack-4` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command:
 
 ```bash
-conda install -c conda-forge -c ~/Downloads/nupack-4.0.0 nupack
+conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack
 ```
 
 This step should usually complete in 1 minute or less; it should always take less than 5 minutes. You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, run the following:
@@ -50,8 +50,8 @@ conda install pytest
 pytest -v --pyargs nupack
 ```
 
-Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4.0.0` directory (for example, `cd ~/Downloads/nupack-4.0.0`).
-For each example notebook `Analysis.ipynb`, `Design.ipynb`, and `ConversionFromNUPACK3.ipynb`, open the notebook and click `Cell->Run All` to run the entire notebook.
+Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4.0.0` directory (for example, `cd ~/Downloads/nupack-4/examples`).
+For each example notebook therein, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
 See the next section for help on opening the Jupyter notebooks.
 
 #### Opening a Jupyter notebook from the Anaconda GUI
