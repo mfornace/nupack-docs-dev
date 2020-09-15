@@ -2,8 +2,6 @@
 
 ## Installation
 
-
-
 ### Requirements
 
 NUPACK 4 is a C++ library distributed as a Python package for portability and ease of use. Before installing NUPACK, you must have Python 3 and a few common packages installed on your computer. Note that Python 2 is not currently supported. The specific Python package requirements for NUPACK 4 are:
@@ -73,16 +71,32 @@ If no browser window appears, you may try navigating to the displayed link in yo
 
 <hr>
 
-### Installing NUPACK from source
+## Examples
+
+A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `examples/` folder. For reference, non-interactive versions of these notebooks may be found on [nbviewer](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/).
+
+Examples are provided for the following use cases:
+
+- [Complex analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Tube analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Complex design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Tube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Multitube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+
+
+<hr>
+
+## Installing NUPACK from source
 
 Installation via Anaconda is by far the easiest option and is recommended for almost every user. However, NUPACK may also be built from source if it is desired.
 
-#### External dependencies for C++ libraries
+### External dependencies for C++ libraries
 
 - C++17 compliant compiler (generally requires Clang or AppleClang)
 - CMake
 
-#### Directions
+### Directions
 
 Make sure `python` points to your desired version of Python. On a Unix-like system, clone the repository and install in Terminal via the following commands.
 
@@ -124,21 +138,3 @@ Install the NUPACK Python module and binding module.
 ```bash
 pip3 install .
 ```
-
-<hr>
-
-## Examples
-
-A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `examples/` folder. For reference, non-interactive versions of these notebooks may be found on [nbviewer](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/).
-
-Examples are provided for the following use cases:
-
-- Analysis
-  - [Complex analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-  - [Tube analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- Design
-  - [Complex design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-  - [Tube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-  - [Multitube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-
