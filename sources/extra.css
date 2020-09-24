@@ -16,7 +16,7 @@ h1::after {
 
 
 :root {
-  --md-primary-fg-color: #eea70f;
+  --md-primary-fg-color: #ff9900;
   --md-primary-fg-color--light: #ece2b7;
   --md-primary-fg-color--dark: #905803;
 }
@@ -27,9 +27,13 @@ h1::after {
   padding-left: 2.2rem;
   color: inherit;
   font-size: .8rem;
-  background-color: #db9a0e;
+  background-color: #ff9900;
   border-radius: .1rem;
 }
+/*
+:not([data-md-state="blur"])+nav {
+  display: none;
+} */
 
 /*
 .md-sidebar--primary {

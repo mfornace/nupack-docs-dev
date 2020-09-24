@@ -57,6 +57,7 @@ theme:
   custom_dir: overrides
   features:
   - instant
+  # logo: nupack-hairpin.svg
   # - tabs
 
   # palette:
