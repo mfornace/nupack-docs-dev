@@ -733,7 +733,9 @@ print(result.defects.complexes)
 print(result.defects.tube_complexes)
 ```
 
-3. You can re-analyze your designed complexes and tubes via the `analysis` field:
+The subfields `tubes`, `complexes`, and `tube_complexes` are `pandas.DataFrame`s. These tables contain columns `tube` and `complex` containing the corresponding Python objects. For convenience, these tables also include `tube_name` and `complex_name` corresponding to the `str` names of those objects.
+
+1. You can re-analyze your designed complexes and tubes via the `analysis` field:
 
 ```python
 t1_designed = result.mapping[t1]
