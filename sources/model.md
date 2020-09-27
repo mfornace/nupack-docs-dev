@@ -174,18 +174,32 @@ print(dGloop5)
 
 ## Compute stacking state free energies
 
-`Model.stack_energies` calculates the [stacking state free energies](definitions.md#loop-free-energies) for the subensemble of stacking states in a multiloop or exterior loop. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. The algorithm returns a list of stacking states and the free energy for each in kcal/mol:
+`Model.stack_energies` calculates the [stacking state free energies](definitions.md#loop-free-energies) for the subensemble of stacking states in a single loop. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. The algorithm returns a list of stacking states and the free energy for each in kcal/mol:
+
+For a loop defined as a list of N sequences, a stacking state is specified as a string composed of one letter per sequence. For each sequence, the returned letter is:
+
+- `‘b’` if 1) the sequence is between coaxial stacking base pairs, or 2) both the 5' and 3' unpaired nucleotides are dangling on adjacent base pairs
+- `‘l’` if only the 5'-most unpaired base is dangling on its adjacent base pair
+- `‘r’` if only the 3'-most unpaired base is dangling on its adjacent base pair
+- `‘n’` if no bases in the sequence are engaged in dangle or coaxial stacking
 
 ```python
-#Calculate the stacking state free energies for an exterior loop
-stacks_ext = model.stack_energies(['AA', 'T', 'T'], structure='((+)+)')
-print(stacks_ext)
-# --> {'lln': -0.8, 'lnn': -0.8, 'nln': 0.0, 'nnn': 0.0, 'rln': -2.2, 'rnn': 0.0}
+# Calculate the dangle stacking state free energies for an exterior loop
+model.stack_energies('CA+TC', '.(+).')
+# --> {'nl': -0.1, 'nn': 0.0, 'rl': -0.6, 'rn': -0.3}
 
-#Calculate the stacking state free energies for a multiloop
-stacks_multi = model.stack_energies(['AT', 'AT', 'AT'], structure='((+)(+))')
-print(stacks_multi)
+# Calculate the coaxial stacking state free energies for an exterior loop
+model.stack_energies('AA+T+T', structure='((+)+)')
+# --> {'bnn': -0.9, 'nnn': 0.0}
+
+# Calculate the coxial stacking state free energies for a multiloop
+model.stack_energies('AT+AT+AT', structure='((+)(+))')
 # --> {'bnn': -1.1, 'nbn': -1.1, 'nnb': -1.1, 'nnn': 0.0}
 ```
 
-A coaxial stack between base pair $a\cdot b$ and $d\cdot e$ is denoted `(a,b).(c,d)`. A 5$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `e.(f,g)`. A 3$'$ dangle stack between base $e$ and base-pair $f\cdot g$ is denoted `(f,g).e`. If the physical model specifies `nostacking` or if the loop is not a multiloop or an exterior loop, the algorithm with return no stacking states.
+For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
+
+```python
+model.stack_energies('AAAAT', structure='(...)')
+# --> {'n': 4.1}
+```
