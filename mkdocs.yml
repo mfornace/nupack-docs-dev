@@ -5,14 +5,14 @@ docs_dir: ./sources
 #   - Getting started: model.md
 
 nav:
-- Home: index.md
-- Definitions: definitions.md
-- Physical: model.md
-- Analysis: analysis.md
-- Design: design.md
-- Utilities: utilities.md
-- Installation: started.md
-- Advanced: other.md
+- index.md
+- definitions.md
+- model.md
+- analysis.md
+- design.md
+- utilities.md
+- started.md
+- Other: other.md
 # - License: license.md
 # - Analysis:
 #  - Complex Analysis: complex-analysis.md
@@ -52,11 +52,16 @@ site_dir: _build/site
 site_name: NUPACK User Guide
 
 theme:
-  name: material
+  name: readthedocs
   language: en
-  custom_dir: overrides
-  features:
-  - instant
+
+#theme:
+#  name: material
+#  language: en
+#  custom_dir: overrides
+#  features:
+#  - instant
+
   # logo: nupack-hairpin.svg
   # - tabs
 
