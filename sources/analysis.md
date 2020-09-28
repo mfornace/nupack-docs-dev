@@ -211,7 +211,7 @@ c = Complex([a, b])
 t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
 t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
 
-result3 = tube_analysis([t1, t2],
+result = tube_analysis([t1, t2],
     compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'],
     options={'num_sample': 2, 'energy_gap': 0.5})
 ```
@@ -228,15 +228,15 @@ Output:
 
 > ```python
 > Complex results:
->   complex  partition_function  free_energy  min_free_energy
-> 0     a+b           9.1286e+7       -11.30       -10.960994
-> 1       a           1.0148e+0        -0.01         0.000000
-> 2       b           1.0056e+0        -0.00         0.000000
+>   complex      pfunc free_energy     mfe
+> 0   [a+b]  9.1286e+7     -11.297 -10.961
+> 1     [a]  1.0148e+0      -0.009   0.000
+> 2     [b]  1.0056e+0      -0.003   0.000
 > Concentration results:
->   complex            t1            t2
-> 0     a+b  6.185218e-10  1.593980e-11
-> 1       a  9.993815e-07  9.984060e-09
-> 2       b  3.814782e-10  9.840602e-10
+>   complex        t1        t2
+> 0   [a+b] 6.185e-10 1.594e-11
+> 1     [a] 9.994e-07 9.984e-09
+> 2     [b] 3.815e-10 9.841e-10
 > ```
 
 For convenience, you can print the identical ASCII result to a text file using the `save_text` function:
@@ -270,15 +270,15 @@ A `TubeResult` contains the following fields:
 You may also index a result by a specified complex to get its complex ensemble results, held in a `ComplexResult`. For instance:
 
 ```python
-result[c1]
-# pfunc for complex c1
-result[c1].pfunc
-# mfe for complex c1
-result[c1].mfe
-# mfe structures for complex c1 (in many cases a list of length 1)
-result[c1].mfe_structures
-# ppairs matrix for complex c1
-result[c1].pairs
+result[c]
+# pfunc for complex c
+result[c].pfunc
+# mfe for complex c
+result[c].mfe
+# mfe structures for complex c (in many cases a list of length 1)
+result[c].mfe_structures
+# ppairs matrix for complex c
+result[c].pairs
 ```
 
 Using this, you can easily plot a pair probability matrix visually inside a Jupyter notebook. For example:
@@ -342,7 +342,7 @@ Output:
 
 ```
 The concentration of [b] is 3.81e-10
-The concentration of c is 6.19e-10
+The concentration of [a+b] is 6.19e-10
 The concentration of [a] is 9.99e-07
 ```
 
