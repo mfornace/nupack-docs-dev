@@ -242,7 +242,10 @@ You can display a summary table of results in a Jupyter notebook as follows:
 ```python
 result
 ```
+
 Output:
+
+> <img src="/figs/tube-analysis-output-3.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
 
 ### Textual display
 
@@ -257,14 +260,14 @@ Output:
 > ```
 > Complex results:
 >   Complex      Pfunc dG (kcal/mol) MFE (kcal/mol)
-> 0   [a+b]  9.1286e+7       -11.297        -10.961
-> 1     [a]  1.0148e+0        -0.009          0.000
-> 2     [b]  1.0056e+0        -0.003          0.000
+> 0   [a+b]  4.5255e+3        -5.188         -4.981
+> 1     [a]  1.0000e+0        -0.000          0.000
+> 2     [b]  1.0000e+0        -0.000          0.000
 > Concentration results:
 >   Complex    t1 (M)    t2 (M)
-> 0   [a+b] 6.185e-10 1.594e-11
-> 1     [a] 9.994e-07 9.984e-09
-> 2     [b] 3.815e-10 9.841e-10
+> 0   [a+b] 8.207e-14 8.208e-16
+> 1     [a] 1.000e-06 1.000e-08
+> 2     [b] 9.999e-10 1.000e-09
 > ```
 
 For convenience, you can print the identical ASCII result to a text file using the `save_text` function:
@@ -276,12 +279,19 @@ result.save_text('my_result.txt')
 
 ### Programmatic access
 
-More detailed results can also be displayed by programmatic access into the `AnalysisResult` object. The result of `tube_analysis` is an `AnalysisResult` with two fields:
+More detailed results can also be displayed by programmatic access into an `AnalysisResult` object. This class contains two fields:
 
 - `.complexes`: a Python `dict` mapping each `Complex` to a `ComplexResult`
 - `.tubes`: a Python `dict` mapping each `Tube` to a `TubeResult`
 
+The information contained in these two fields depends on which type of analysis calculation was performed:
+
+- For [`tube_analysis`](#run-a-tube-analysis-job), both the `.tubes` and `.complexes` are non-empty.
+- For [`complex_analysis`](#run-a-complex-analysis-job), the `.tubes` field is empty.
+- For [`complex_concentrations`](#run-a-complex-concentration-job), the `.complexes` field is empty.
+
 For convenience, you can index into a `TubeResult` via a `Tube` or `Complex`. The next two sections will show how this facilitates introspection of complex and tube ensemble results, respectively.
+
 
 ### Results for individual complexes
 
@@ -296,29 +306,25 @@ The returned `ComplexResult` holds all complex ensemble quantities that were cal
 - `pfunc`: complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`)
 - `pairs`: [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` containing a `.to_array()` method for conversion to numpy)
-- `mfe_strucs`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
-- `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`)
-- `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`)
-
-- `subopt_strucs`: same as `mfe_structures`, but for all suboptimal structures below the specified energy gap
-- `sample_strucs`: list of Boltzmann sampled structures (each an instance of `Structure`)
+- `mfe`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
+- `subopt`: same as `mfe`, but for all suboptimal structures below the specified energy gap (sorted by stacking state energy)
+- `sample`: list of Boltzmann sampled structures (each an instance of `Structure`)
 - `ensemble_size`: number of secondary structures (held as `int`)
 - `model`: the `Model` that was used in the analysis calculation
+
+<!-- - `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`) -->
+<!-- - `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`) -->
 
 ---
 
 Depending on which types of analysis calculations were requested, these attributes may be looked up on any `ComplexResult` object. For example:
 
 ```python
-print('The free energy of complex c is %.2f kcal/mol' % c_result.free_energy)
-print('\nThe partition function of complex c is %.2e' % c_result.pfunc)
-print('\nThe MFE of complex c is %.2f kcal/mol' % c_result.mfe)
-
-print('\nMFE structures for complex c:')
-for struc in c_result.mfe_structures:
-    print('--', struc)
-
-print('\nThe pair probabilities of complex c are: \n%s' % c_result.pairs)
+print('The free energy of complex c is %.2f kcal/mol' % result[c].free_energy)
+print('\nThe partition function of complex c is %.2e' % result[c].pfunc)
+print('\nThe MFE of complex c is %.2f kcal/mol' % result[c].mfe[0].energy)
+print('\nThe MFE structure of complex c is %s' % result[c].mfe[0].structure)
+print('\nThe pair probabilities of complex c are: \n%s' % result[c].pairs)
 ```
 
 Output:
@@ -330,16 +336,15 @@ The partition function of complex c is 4.53e+03
 
 The MFE of complex c is -4.98 kcal/mol
 
-MFE structures for complex c:
--- StructureEnergy('(((+)))', energy=-4.98, stack_energy=-4.98)
+The MFE structure of complex c is (((+)))
 
 The pair probabilities of complex c are:
-[[1.002e-01 0.000e+00 0.000e+00 6.888e-04 1.474e-01 7.518e-01]
- [0.000e+00 3.684e-03 0.000e+00 1.474e-01 8.307e-01 1.824e-02]
- [0.000e+00 0.000e+00 1.904e-01 7.910e-01 1.849e-02 8.399e-05]
- [6.888e-04 1.474e-01 7.910e-01 6.088e-02 0.000e+00 0.000e+00]
- [1.474e-01 8.307e-01 1.849e-02 0.000e+00 3.470e-03 0.000e+00]
- [7.518e-01 1.824e-02 8.399e-05 0.000e+00 0.000e+00 2.299e-01]]
+[[0.1002 0.0000 0.0000 0.0007 0.1474 0.7518]
+ [0.0000 0.0037 0.0000 0.1474 0.8307 0.0182]
+ [0.0000 0.0000 0.1904 0.7910 0.0185 0.0001]
+ [0.0007 0.1474 0.7910 0.0609 0.0000 0.0000]
+ [0.1474 0.8307 0.0185 0.0000 0.0035 0.0000]
+ [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]
 ```
 
 Using this, you can easily plot a pair probability matrix visually inside a Jupyter notebook. For example:
@@ -384,8 +389,7 @@ Expected number of unpaired nucleotides in complex [b] = 3.00
 To collect a `dict` of MFEs for each complex:
 
 ```python
-# set of MFEs for all complexes
-my_mfes = {my_complex.name: complex_result.mfe
+my_mfes = {my_complex.name: complex_result.mfe[0].energy
     for my_complex, complex_result in result.complexes.items()}
 
 print(my_mfes)
@@ -394,22 +398,22 @@ print(my_mfes)
 Output:
 
 ```
-{'[a+b]': -10.960993766784668, '[a]': 0.0, '[b]': 0.0}
+{'[a+b]': -4.981351375579834, '[a]': 0.0, '[b]': 0.0}
 ```
 
 To print out the complex concentrations for a given tube:
 
 ```python
 for my_complex, conc in result.tubes[t1].complex_concentrations.items():
-    print('The concentration of %s is %.2e' % (my_complex, conc))
+    print('The concentration of %s is %.2e' % (my_complex.name, conc))
 ```
 
 Output:
 
 ```
-The concentration of [b] is 3.81e-10
-The concentration of [a+b] is 6.19e-10
-The concentration of [a] is 9.99e-07
+The concentration of [a] is 1.00e-06
+The concentration of [a+b] is 8.21e-14
+The concentration of [b] is 1.00e-09
 ```
 
 ---
