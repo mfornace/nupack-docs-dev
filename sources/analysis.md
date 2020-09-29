@@ -369,14 +369,15 @@ The concentration of [a] is 9.99e-07
 
 A `ComplexResult` holds all complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. In full, this class contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
 
-- `pfunc`: complex partition function (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
-- `free_energy`: the complex free energy in kcal/mol (held as a `float`)
-- `pairs`: equilibrium pair probability matrix (held as a `PairMatrix` containing a `.to_array()` method for conversion to numpy)
-- `mfe`: the structure free energy of the [MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`)
-- `mfe_stack`: the free energy of the MFE stacking state (held as `float`)
-- `mfe_structures`: list of MFE structures. Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the secondary structure free energy, while `.stack_energy` is the free energy of the most stable stacking state.
-- `subopt_structures`: same as `mfe_structures`, but for all suboptimal structures below the specified energy gap
-- `sample_structures`: list of Boltzmann sampled structures (each an instance of `Structure`)
+- `pfunc`: complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
+- `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`)
+- `pairs`: [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` containing a `.to_array()` method for conversion to numpy)
+- `mfe_strucs`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
+- `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`)
+- `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`)
+
+- `subopt_strucs`: same as `mfe_structures`, but for all suboptimal structures below the specified energy gap
+- `sample_strucs`: list of Boltzmann sampled structures (each an instance of `Structure`)
 - `ensemble_size`: number of secondary structures (held as `int`)
 - `model`: the `Model` that was used in the analysis calculation
 
