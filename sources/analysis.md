@@ -155,7 +155,7 @@ Note that tube `t1` defines a set of complexes (all complexes of up to `max_size
 complex_results
 ```
 
-Output: 
+Output:
 
 > <img src="/figs/complex-analysis-output.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
 
@@ -167,7 +167,7 @@ Use the `complex_concentrations` command to calculate the [equilibrium concentra
 
 ```python
  # specify strand concentrations for t1
-concentration_results = complex_concentrations(t1, complex_results,  
+concentration_results = complex_concentrations(t1, complex_results,
     concentrations={a: 1e-8, b: 1e-8})
 
 # use strand concentrations previously specified for t2
@@ -184,7 +184,7 @@ Note that `complex_concentrations` operates on a single tube ensemble at a time 
 concentration_results
 ```
 
-Output: 
+Output:
 
 > <img src="/figs/concentration-analysis-output.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
 
@@ -246,14 +246,14 @@ print(result)
 
 Output:
 
-> ```python
+> ```
 > Complex results:
->   complex      pfunc free_energy     mfe
-> 0   [a+b]  9.1286e+7     -11.297 -10.961
-> 1     [a]  1.0148e+0      -0.009   0.000
-> 2     [b]  1.0056e+0      -0.003   0.000
+>   Complex      Pfunc dG (kcal/mol) MFE (kcal/mol)
+> 0   [a+b]  9.1286e+7       -11.297        -10.961
+> 1     [a]  1.0148e+0        -0.009          0.000
+> 2     [b]  1.0056e+0        -0.003          0.000
 > Concentration results:
->   complex        t1        t2
+>   Complex    t1 (M)    t2 (M)
 > 0   [a+b] 6.185e-10 1.594e-11
 > 1     [a] 9.994e-07 9.984e-09
 > 2     [b] 3.815e-10 9.841e-10
@@ -273,29 +273,100 @@ More detailed results can also be displayed by programmatic access into the `Ana
 - `.complexes`: a Python `dict` mapping each `Complex` to a [`ComplexResult`](#individual-complex-results)
 - `.tubes`: a Python `dict` mapping each `Tube` to a [`TubeResult`](#individual-tube-results)
 
- For convenience, you can index into a [`TubeResult`](#individual-tube-results) via a `Tube` :
+For convenience, you can index into a [`TubeResult`](#individual-tube-results) via a `Tube` or `Complex`.
 
-<!-- I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately. -->
+Consider the following analysis calculation's result:
 
 ```python
-result[t1] # --> TubeResult for tube t1
+a = Strand('CCC', name='a')
+b = Strand('GGG', name='b')
+c = Complex([a, b])
 
-result[t1].complex_concentrations  # --> [1.5e-10]
-result[t1].ensemble_pair_fractions # --> [[1.0, 0.0], [0.0, 1.0]]
+t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
+t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
+
+result = tube_analysis([t1, t2],
+    compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'],
+    options={'num_sample': 2, 'energy_gap': 0.5})
+```
+
+Access tube properties by indexing the result by a `Tube` object:
+
+```python
+t1_result = result[t1]
+```
+
+Concentrations are held as a Python `dict` which may be printed as follows:
+
+```python
+for my_complex, conc in t1_result.complex_concentrations.items():
+    print('The concentration of %s is %.3e M' % (my_complex, conc))
+```
+
+Output:
+
+```
+The concentration of CCC is 1.000e-06 M
+The concentration of CCC+GGG is 8.207e-14 M
+The concentration of GGG is 9.999e-10 M
+```
+
+If calculated, the ensemble pair fractions may be printed as follows:
+
+```python
+print(t1_result.ensemble_pair_fractions)
+```
+
+Output:
+
+```
+[[1.000e+00 0.000e+00 0.000e+00 5.653e-11 1.209e-08 6.170e-08]
+ [0.000e+00 1.000e+00 0.000e+00 1.210e-08 6.817e-08 1.497e-09]
+ [0.000e+00 0.000e+00 1.000e+00 6.492e-08 1.518e-09 6.893e-12]
+ [5.653e-08 1.210e-05 6.492e-05 9.999e-01 0.000e+00 0.000e+00]
+ [1.209e-05 6.817e-05 1.518e-06 0.000e+00 9.999e-01 0.000e+00]
+ [6.170e-05 1.497e-06 6.893e-09 0.000e+00 0.000e+00 9.999e-01]]
 ```
 
 You can also index into the result via a `Complex` to get its complex ensemble results, held in a `ComplexResult`. For instance:
 
 ```python
-result[c]
-# pfunc for complex c
-result[c].pfunc
-# mfe for complex c
-result[c].mfe
-# mfe structures for complex c (in many cases a list of length 1)
-result[c].mfe_structures
-# ppairs matrix for complex c
-result[c].pairs
+c_result = result[c]
+```
+
+The held result contains multiple attributes which can be looked up, depending on which types of analysis calculations were requested. For example:
+
+```python
+print('The free energy of complex c is %.2f kcal/mol' % c_result.free_energy)
+print('\nThe partition function of complex c is %.2e' % c_result.pfunc)
+print('\nThe MFE of complex c is %.2f kcal/mol' % c_result.mfe)
+
+print('\nMFE structures for complex c:')
+for struc in c_result.mfe_structures:
+    print('--', struc)
+
+print('\nThe pair probabilities of complex c are: \n%s' % c_result.pairs)
+```
+
+Output:
+
+```
+The free energy of complex c is -5.19 kcal/mol
+
+The partition function of complex c is 4.53e+03
+
+The MFE of complex c is -4.98 kcal/mol
+
+MFE structures for complex c:
+-- StructureEnergy('(((+)))', energy=-4.98, stack_energy=-4.98)
+
+The pair probabilities of complex c are:
+[[1.002e-01 0.000e+00 0.000e+00 6.888e-04 1.474e-01 7.518e-01]
+ [0.000e+00 3.684e-03 0.000e+00 1.474e-01 8.307e-01 1.824e-02]
+ [0.000e+00 0.000e+00 1.904e-01 7.910e-01 1.849e-02 8.399e-05]
+ [6.888e-04 1.474e-01 7.910e-01 6.088e-02 0.000e+00 0.000e+00]
+ [1.474e-01 8.307e-01 1.849e-02 0.000e+00 3.470e-03 0.000e+00]
+ [7.518e-01 1.824e-02 8.399e-05 0.000e+00 0.000e+00 2.299e-01]]
 ```
 
 Using this, you can easily plot a pair probability matrix visually inside a Jupyter notebook. For example:
@@ -304,13 +375,15 @@ Using this, you can easily plot a pair probability matrix visually inside a Jupy
 %matplotlib inline
 import matplotlib.pyplot as plt
 
-plt.imshow(result[c].pairs.to_array())
+plt.imshow(c_result.pairs.to_array())
 plt.xlabel('Base index')
 plt.ylabel('Base index')
 plt.title('Pair probability of complex c')
 plt.colorbar()
 plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 ```
+
+Output:
 
 > <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="450" />
 
@@ -319,17 +392,20 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 You can collect complex ensemble information for all calculated complexes easily as well. Since `result.complexes` is an ordinary python `dict`, iterating through its `.items()` will let you collect each complex result. For example, to iterate through the pair probabilitis for each complex:
 
 ```python
+import numpy as np
+
 for my_complex, complex_result in result.complexes.items():
     P = complex_result.pairs.to_array()
-    print('Expected number of unpaired nucleotides in complex {} = {:.2f}'.format(my_complex.name, np.diagonal(P).sum()))
+    s = 'Expected number of unpaired nucleotides in complex %s = %.2f'
+    print(s % (my_complex.name, np.diagonal(P).sum()))
 ```
 
 Output:
 
 ```
-Expected number of unpaired nucleotides in complex [a+b] = 6.85
-Expected number of unpaired nucleotides in complex [a] = 8.97
-Expected number of unpaired nucleotides in complex [b] = 8.98
+Expected number of unpaired nucleotides in complex [a+b] = 0.59
+Expected number of unpaired nucleotides in complex [a] = 3.00
+Expected number of unpaired nucleotides in complex [b] = 3.00
 ```
 
 To collect a `dict` of MFEs for each complex:
@@ -352,7 +428,7 @@ To print out the complex concentrations for a given tube:
 
 ```python
 for my_complex, conc in result.tubes[t1].complex_concentrations.items():
-    print('The concentration of {} is {:.2e}'.format(my_complex.name, conc))
+    print('The concentration of %s is %.2e' % (my_complex, conc))
 ```
 
 Output:
