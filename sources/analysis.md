@@ -85,35 +85,38 @@ model1 = Model()
 tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 ```
 
-`tube_analysis` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook:
+`tube_analysis` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook, for example:
 
 ```python
 tube_results
 ```
-
+Output:
 > <img src="/figs/tube-analysis-output.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
 For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concenration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
 ---
 
-Optionally, additional quantities are calculated for each complex in the specified tubes (see [Job Options](analysis.md#job-options)). For example, additionally calculate [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities), the [MFE proxy structure(s)](definitions.md#mfe-proxy-structure), and 100 [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) for each complex in the tube:
+Optionally, additional quantities are calculated for each complex in the specified tubes (see [Job Options](analysis.md#job-options)). For example, additionally calculate [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities), the [MFE proxy structure(s)](definitions.md#mfe-proxy-structure), 100 [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures), and the [ensemble size](definitions.md#complex-ensemble-size) for each complex in the tube:
 
 ```python
+model1 = Model()
 tube_results2 = tube_analysis(tubes=[t1, t2], model=model1,
     compute=['pairs', 'mfe', 'sample', 'ensemble_size'],
     options={'num_sample': 100}) # max_size=1 default
 ```
-
-Only `mfe` and `ensemble_size` results show up in the resultant table, as non-scalar quantities like pair probabilities cannot be summarized this way:
+To display a summary table of results in a Jupyter notebook:
 
 ```python
 tube_results2
 ```
-
 Output:
 
 > <img src="/figs/tube-analysis-output-2.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
+
+Note that `pairs` and `sample` results are too large to be included in the summary table. See below for [programmatic access](#programmatic-access) to these results.
+
+---
 
 If desired, the results of a `tube_analysis` job can alternatively be calculated in two steps:
 
@@ -146,11 +149,13 @@ Note that tube `t1` defines a set of complexes (all complexes of up to `max_size
 
 ---
 
-`complex_analysis` returns an `AnalysisResult` object, which you can view as a table by running the following cell in a Jupyter notebook:
+`complex_analysis` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook, for example:
 
 ```python
 complex_results
 ```
+
+Output: 
 
 > <img src="/figs/complex-analysis-output.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
 
@@ -162,7 +167,8 @@ Use the `complex_concentrations` command to calculate the [equilibrium concentra
 
 ```python
  # specify strand concentrations for t1
-concentration_results = complex_concentrations(t1, complex_results, concentrations={a: 1e-8, b: 1e-8})
+concentration_results = complex_concentrations(t1, complex_results,  
+    concentrations={a: 1e-8, b: 1e-8})
 
 # use strand concentrations previously specified for t2
 concentration_results2 = complex_concentrations(t2, complex_results)
@@ -172,11 +178,13 @@ Note that `complex_concentrations` operates on a single tube ensemble at a time 
 
 ---
 
-`complex_concentrations` returns an `AnalysisResult` object, which you can view as a table by running the following cell in a Jupyter notebook:
+`complex_concentrations` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook, for example:
 
 ```python
 concentration_results
 ```
+
+Output: 
 
 > <img src="/figs/concentration-analysis-output.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
 
@@ -186,13 +194,13 @@ concentration_results
 
 For `tube_analysis` and `complex_analysis`, the optional `compute` keyword specifies a list of strings denoting additional calculations to be performed for each complex [@Fornace20]:
 
-- `'pairs'`: calculate the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities). If `'pairs'` is specified, `tube_analysis` or `complex_concentrations` will further calculate the matrix of [test tube ensemble pair fractions](definitions.md#ensemble-pair-fractions). See `sparsity_fraction` and `sparsity_threshold` options below.
+- `'pairs'`: calculate the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities). If `'pairs'` is specified, `tube_analysis` or `complex_concentrations` will further calculate the matrix of [test tube ensemble pair fractions](definitions.md#ensemble-pair-fractions). See the `sparsity_fraction` and `sparsity_threshold` options below.
 
 - `'sample'`: calculate a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. See option `num_sample` below.
 
 - `'mfe'`: calculate the [MFE proxy structure](definitions.md#mfe-proxy-structure), the free energy of the MFE proxy secondary structure and the free energy of the MFE stacking state. If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and with the (same) free energy of the MFE stacking state.
 
-- `'subopt'`: calculate the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of its lowest-energy stacking state that falls within the energy gap, and with the free energy of the MFE proxy secondary structure. See option `subopt_gap` below.
+- `'subopt'`: calculate the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of the MFE proxy secondary structure, and with the free energy of its lowest-energy stacking state that falls within the energy gap. See option `subopt_gap` below.
 
 
 - `'ensemble_size'`: calculate the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a [physical model](model.md#model-specification) with `stacking`).
@@ -213,7 +221,7 @@ The optional `options` keyword specifies options that modify the calculations pe
 
 ## Job results
 
-Scalar results of NUPACK analysis jobs can be conveniently displayed as a table (as shown above), printed as text, or introspected programmatically. Consider the following test tube analysis job:
+Scalar results of NUPACK analysis jobs can be conveniently displayed as a table (as illustrated above), printed as text, or introspected programmatically. Consider the following test tube analysis job:
 
 ```python
 a = Strand('CAGTCGATC', name='a')
@@ -257,7 +265,6 @@ For convenience, you can print the identical ASCII result to a text file using t
 result.save_text('my_result.txt')
 ```
 
----
 
 ### Programmatic access
 
@@ -266,20 +273,18 @@ More detailed results can also be displayed by programmatic access into the `Ana
 - `.complexes`: a Python `dict` mapping each `Complex` to a [`ComplexResult`](#individual-complex-results)
 - `.tubes`: a Python `dict` mapping each `Tube` to a [`TubeResult`](#individual-tube-results)
 
- For convenience, you may index into the result via a `Tube` :
+ For convenience, you can index into a [`TubeResult`](#individual-tube-results) via a `Tube` :
 
 <!-- I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately. -->
 
 ```python
-result[t1] # --> TubeResult
+result[t1] # --> TubeResult for tube t1
 
 result[t1].complex_concentrations  # --> [1.5e-10]
 result[t1].ensemble_pair_fractions # --> [[1.0, 0.0], [0.0, 1.0]]
 ```
 
----
-
-You may also index a result by a specified complex to get its complex ensemble results, held in a `ComplexResult`. For instance:
+You can also index into the result via a `Complex` to get its complex ensemble results, held in a `ComplexResult`. For instance:
 
 ```python
 result[c]
