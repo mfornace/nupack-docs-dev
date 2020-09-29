@@ -47,7 +47,7 @@ In general, commands that expect a `Complex` as an argument (e.g., `c2`) will al
 
 ## Specify a test tube ensemble
 
-A `Tube` is specified as a tube name (keyword `name`) and a set of strands (keyword `strands`), each introduced at a user-specified concentration (keyword `concentrations`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
+A `Tube` is specified as a tube name (keyword `name`) and a set of strands (keyword `strands`), each introduced at a user-specified concentration (keyword `concentrations`; units of `M`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
 
 ```python
 t1 = Tube(strands=[A, B], concentrations=[1e-6, 1e-8], name='t1') # max_size=1 default
@@ -85,13 +85,15 @@ model1 = Model()
 tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 ```
 
-`tube_analysis` returns an `AnalysisResult` object, which you can view as a table by running the following cell in a Jupyter notebook:
+`tube_analysis` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook: 
 
 ```python
 tube_results
 ```
 
 > <img src="/figs/tube-analysis-output.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
+
+For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concenration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M). 
 
 ---
 

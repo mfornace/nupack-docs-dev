@@ -187,6 +187,7 @@ strands with the same sequence as indistinguishable is denoted
 Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}.
 \end{align}
 
+### Complex free energy
 For complex $j$, the corresponding complex free energy is
 \begin{align}
 \Delta G(\phi_j) \equiv -kT \log(Q(\phi_j)).
