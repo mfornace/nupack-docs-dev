@@ -221,7 +221,7 @@ The optional `options` keyword specifies options that modify the calculations pe
 
 ## Job results
 
-Scalar results of NUPACK analysis jobs can be conveniently displayed as a table (as illustrated above), printed as text, or introspected programmatically. Consider the following test tube analysis job:
+Scalar results of NUPACK analysis jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube analysis job:
 
 ```python
 a = Strand('CAGTCGATC', name='a')
@@ -235,6 +235,14 @@ result = tube_analysis([t1, t2],
     compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'],
     options={'num_sample': 2, 'energy_gap': 0.5})
 ```
+
+### Tabular display
+You can display a summary table of results in a Jupyter notebook as follows:
+
+```python
+result
+```
+Output:
 
 ### Textual display
 
