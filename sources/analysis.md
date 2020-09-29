@@ -85,7 +85,7 @@ model1 = Model()
 tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 ```
 
-`tube_analysis` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook: 
+`tube_analysis` returns an `AnalysisResult` object that can be viewed as a table in a Jupyter notebook:
 
 ```python
 tube_results
@@ -93,7 +93,7 @@ tube_results
 
 > <img src="/figs/tube-analysis-output.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
-For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concenration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M). 
+For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concenration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
 ---
 
@@ -101,9 +101,19 @@ Optionally, additional quantities are calculated for each complex in the specifi
 
 ```python
 tube_results2 = tube_analysis(tubes=[t1, t2], model=model1,
-    compute=['pairs', 'mfe', 'sample'],
+    compute=['pairs', 'mfe', 'sample', 'ensemble_size'],
     options={'num_sample': 100}) # max_size=1 default
 ```
+
+Only `mfe` and `ensemble_size` results show up in the resultant table, as non-scalar quantities like pair probabilities cannot be summarized this way:
+
+```python
+tube_results2
+```
+
+Output:
+
+> <img src="/figs/tube-analysis-output-2.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
 
 If desired, the results of a `tube_analysis` job can alternatively be calculated in two steps:
 
@@ -251,7 +261,12 @@ result.save_text('my_result.txt')
 
 ### Programmatic access
 
-More detailed results can also be displayed by programmatic access into the `AnalysisResult` object. The result of `tube_analysis` is an `AnalysisResult` with fields `.complexes` and `.tubes`. For convenience, you may index into the result via a `Tube` :
+More detailed results can also be displayed by programmatic access into the `AnalysisResult` object. The result of `tube_analysis` is an `AnalysisResult` with two fields:
+
+- `.complexes`: a Python `dict` mapping each `Complex` to a [`ComplexResult`](#individual-complex-results)
+- `.tubes`: a Python `dict` mapping each `Tube` to a [`TubeResult`](#individual-tube-results)
+
+ For convenience, you may index into the result via a `Tube` :
 
 <!-- I'm not sure this indexing is a good idea. Maybe better to just use the `complexes` and `tubes` fields separately. -->
 
@@ -261,11 +276,6 @@ result[t1] # --> TubeResult
 result[t1].complex_concentrations  # --> [1.5e-10]
 result[t1].ensemble_pair_fractions # --> [[1.0, 0.0], [0.0, 1.0]]
 ```
-
-A `TubeResult` contains the following fields:
-
-- `complex_concentrations`: a `dict` from `Complex` to its (`float`) equilibrium concentration in molar.
-- `ensemble_pair_fractions`: a square matrix of equilibrium base pairing probablities averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order).
 
 ---
 
@@ -350,7 +360,9 @@ The concentration of [a] is 9.99e-07
 
 ---
 
-In full, `ComplexResult` contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
+### Individual complex results
+
+A `ComplexResult` holds all complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. In full, this class contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
 
 - `pfunc`: complex partition function (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
 - `free_energy`: the complex free energy in kcal/mol (held as a `float`)
@@ -365,3 +377,11 @@ In full, `ComplexResult` contains the following fields, closely mirroring the `c
 
 ---
 
+### Individual tube results
+
+A `TubeResult` holds all tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+
+- `complex_concentrations`: a `dict` from `Complex` to its (`float`) equilibrium concentration in molar.
+- `ensemble_pair_fractions`: a square matrix of equilibrium base pairing probablities averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated.
+
+---
