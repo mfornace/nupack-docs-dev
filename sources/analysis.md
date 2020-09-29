@@ -382,6 +382,6 @@ A `ComplexResult` holds all complex ensemble quantities that were calculated in 
 A `TubeResult` holds all tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its (`float`) equilibrium concentration in molar.
-- `ensemble_pair_fractions`: a square matrix of equilibrium base pairing probablities averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated.
+- `ensemble_pair_fractions`: a square matrix of [equilibrium base pairing probablities](definitions.md#test-tube-ensemble-pair-fractions) averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated.
 
 ---
