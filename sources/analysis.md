@@ -273,24 +273,9 @@ More detailed results can also be displayed by programmatic access into the `Ana
 - `.complexes`: a Python `dict` mapping each `Complex` to a `ComplexResult`
 - `.tubes`: a Python `dict` mapping each `Tube` to a `TubeResult`
 
-Consider the following analysis calculation's result:
-
-```python
-a = Strand('CCC', name='a')
-b = Strand('GGG', name='b')
-c = Complex([a, b])
-
-t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
-t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
-
-result = tube_analysis([t1, t2],
-    compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'],
-    options={'num_sample': 2, 'energy_gap': 0.5})
-```
-
 For convenience, you can index into a `TubeResult` via a `Tube` or `Complex`. The next two sections will show how this facilitates introspection of complex and tube ensemble results, respectively.
 
-### Accessing individual complex results
+### Results for individual complexes
 
 You can index into the result via a `Complex` to get its complex ensemble results, held in a `ComplexResult`. For instance:
 
@@ -423,7 +408,7 @@ The concentration of [a] is 9.99e-07
 
 
 
-### Accessing individual tube results
+### Results for individual tubes
 
 Access tube properties by indexing the result by a `Tube` object:
 
