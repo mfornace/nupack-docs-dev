@@ -270,10 +270,8 @@ result.save_text('my_result.txt')
 
 More detailed results can also be displayed by programmatic access into the `AnalysisResult` object. The result of `tube_analysis` is an `AnalysisResult` with two fields:
 
-- `.complexes`: a Python `dict` mapping each `Complex` to a [`ComplexResult`](#individual-complex-results)
-- `.tubes`: a Python `dict` mapping each `Tube` to a [`TubeResult`](#individual-tube-results)
-
-For convenience, you can index into a [`TubeResult`](#individual-tube-results) via a `Tube` or `Complex`.
+- `.complexes`: a Python `dict` mapping each `Complex` to a `ComplexResult`
+- `.tubes`: a Python `dict` mapping each `Tube` to a `TubeResult`
 
 Consider the following analysis calculation's result:
 
@@ -290,51 +288,33 @@ result = tube_analysis([t1, t2],
     options={'num_sample': 2, 'energy_gap': 0.5})
 ```
 
-Access tube properties by indexing the result by a `Tube` object:
+For convenience, you can index into a `TubeResult` via a `Tube` or `Complex`. The next two sections will show how this facilitates introspection of complex and tube ensemble results, respectively.
 
-```python
-t1_result = result[t1]
-```
+### Accessing individual complex results
 
-Concentrations are held as a Python `dict` which may be printed as follows:
-
-```python
-for my_complex, conc in t1_result.complex_concentrations.items():
-    print('The concentration of %s is %.3e M' % (my_complex, conc))
-```
-
-Output:
-
-```
-The concentration of CCC is 1.000e-06 M
-The concentration of CCC+GGG is 8.207e-14 M
-The concentration of GGG is 9.999e-10 M
-```
-
-If calculated, the ensemble pair fractions may be printed as follows:
-
-```python
-print(t1_result.ensemble_pair_fractions)
-```
-
-Output:
-
-```
-[[1.000e+00 0.000e+00 0.000e+00 5.653e-11 1.209e-08 6.170e-08]
- [0.000e+00 1.000e+00 0.000e+00 1.210e-08 6.817e-08 1.497e-09]
- [0.000e+00 0.000e+00 1.000e+00 6.492e-08 1.518e-09 6.893e-12]
- [5.653e-08 1.210e-05 6.492e-05 9.999e-01 0.000e+00 0.000e+00]
- [1.209e-05 6.817e-05 1.518e-06 0.000e+00 9.999e-01 0.000e+00]
- [6.170e-05 1.497e-06 6.893e-09 0.000e+00 0.000e+00 9.999e-01]]
-```
-
-You can also index into the result via a `Complex` to get its complex ensemble results, held in a `ComplexResult`. For instance:
+You can index into the result via a `Complex` to get its complex ensemble results, held in a `ComplexResult`. For instance:
 
 ```python
 c_result = result[c]
 ```
 
-The held result contains multiple attributes which can be looked up, depending on which types of analysis calculations were requested. For example:
+The returned `ComplexResult` holds all complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. In full, this class contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
+
+- `pfunc`: complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
+- `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`)
+- `pairs`: [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` containing a `.to_array()` method for conversion to numpy)
+- `mfe_strucs`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
+- `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`)
+- `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`)
+
+- `subopt_strucs`: same as `mfe_structures`, but for all suboptimal structures below the specified energy gap
+- `sample_strucs`: list of Boltzmann sampled structures (each an instance of `Structure`)
+- `ensemble_size`: number of secondary structures (held as `int`)
+- `model`: the `Model` that was used in the analysis calculation
+
+---
+
+Depending on which types of analysis calculations were requested, these attributes may be looked up on any `ComplexResult` object. For example:
 
 ```python
 print('The free energy of complex c is %.2f kcal/mol' % c_result.free_energy)
@@ -441,29 +421,50 @@ The concentration of [a] is 9.99e-07
 
 ---
 
-### Individual complex results
 
-A `ComplexResult` holds all complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. In full, this class contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
 
-- `pfunc`: complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
-- `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`)
-- `pairs`: [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` containing a `.to_array()` method for conversion to numpy)
-- `mfe_strucs`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
-- `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`)
-- `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`)
+### Accessing individual tube results
 
-- `subopt_strucs`: same as `mfe_structures`, but for all suboptimal structures below the specified energy gap
-- `sample_strucs`: list of Boltzmann sampled structures (each an instance of `Structure`)
-- `ensemble_size`: number of secondary structures (held as `int`)
-- `model`: the `Model` that was used in the analysis calculation
+Access tube properties by indexing the result by a `Tube` object:
 
----
+```python
+t1_result = result[t1]
+```
 
-### Individual tube results
-
-A `TubeResult` holds all tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+The returned `TubeResult` holds all tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its (`float`) [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar.
 - `ensemble_pair_fractions`: a square matrix of [equilibrium base pairing probablities](definitions.md#test-tube-ensemble-pair-fractions) averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated.
 
----
+Concentrations are held as a Python `dict` which may be printed as follows:
+
+```python
+for my_complex, conc in t1_result.complex_concentrations.items():
+    print('The concentration of %s is %.3e M' % (my_complex, conc))
+```
+
+Output:
+
+```
+The concentration of CCC is 1.000e-06 M
+The concentration of CCC+GGG is 8.207e-14 M
+The concentration of GGG is 9.999e-10 M
+```
+
+If calculated, the ensemble pair fractions may be printed as follows:
+
+```python
+print(t1_result.ensemble_pair_fractions)
+```
+
+Output:
+
+```
+[[1.000e+00 0.000e+00 0.000e+00 5.653e-11 1.209e-08 6.170e-08]
+ [0.000e+00 1.000e+00 0.000e+00 1.210e-08 6.817e-08 1.497e-09]
+ [0.000e+00 0.000e+00 1.000e+00 6.492e-08 1.518e-09 6.893e-12]
+ [5.653e-08 1.210e-05 6.492e-05 9.999e-01 0.000e+00 0.000e+00]
+ [1.209e-05 6.817e-05 1.518e-06 0.000e+00 9.999e-01 0.000e+00]
+ [6.170e-05 1.497e-06 6.893e-09 0.000e+00 0.000e+00 9.999e-01]]
+```
+
