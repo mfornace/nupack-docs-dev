@@ -181,11 +181,10 @@ gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacg
 hard = [
     Match([c], [b, ~e]),
     Match([a, b], [d, d, e]),
-    Complementarity(allow_wobble=True), # global flag (?)
-    Complementarity([a, b], [c, d, e], allow_wobble=True), # local flag (?)
-    Similarity(b, 'S20', range=[0.45, 0.55]), # GC content
+    Complementarity([a, b], [c, d, e], allow_wobble=True),
+    Similarity(b, 'S20', limits=[0.45, 0.55]), # GC content
     Library([a], catalog = ['CTAC', 'TAAT']),
-    Window([a, ~b], source = gfp)
+    Window([a, ~b], source = gfp),
     Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]),
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
     Diversity(word=4, diversity=2),
