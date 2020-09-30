@@ -357,7 +357,7 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 
 Output:
 
-> <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="300" />
+> <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
 ---
 
