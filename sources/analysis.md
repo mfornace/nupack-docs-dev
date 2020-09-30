@@ -161,7 +161,7 @@ Output:
 
 ---
 
-## Run a complex concentration job
+## Run a complex concentrations job
 
 Use the `complex_concentrations` command to calculate the [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) of each complex in a test tube ensemble using the output from a previous call to `complex_analysis`:
 
@@ -317,10 +317,10 @@ For example, we can index the `AnalysisResult` object `my_result` with complex `
 c_result = my_result[c]
 print('Physical quantities for complex c')
 print('Complex free energy: %.2f kcal/mol' % c_result.free_energy)
-print('Complex partition function: %.2e' % c_result.pfunc)
+print('Partition function: %.2e' % c_result.pfunc)
 print('MFE proxy structure: %s' % c_result.mfe[0].structure)
 print('Free energy of MFE proxy structure: %.2f kcal/mol' % c_result.mfe[0].energy)
-print('Pair probabilities: \n%s' % c_result.pairs)
+print('Equilibrium pair probabilities: \n%s' % c_result.pairs)
 ```
 
 Output:
@@ -328,10 +328,10 @@ Output:
 ```
 Physical quantities for complex c
 Complex free energy: -5.19 kcal/mol
-Complex partition function: 4.53e+03
+Partition function: 4.53e+03
 MFE proxy structure: (((+)))
 Free energy of MFE proxy structure: -4.98 kcal/mol
-Pair probabilities:
+Equilibrium pair probabilities:
 [[0.1002 0.0000 0.0000 0.0007 0.1474 0.7518]
  [0.0000 0.0037 0.0000 0.1474 0.8307 0.0182]
  [0.0000 0.0000 0.1904 0.7910 0.0185 0.0001]
@@ -415,10 +415,10 @@ The equilibrium concentration of [b] is 1.00e-09 M
 
 ### Results for individual tubes
 
-You can index into `AnalysisResult` object via a `Tube` to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+You can index into an `AnalysisResult` object via a `Tube` to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
-- `complex_concentrations`: a `dict` from `Complex` to its (`float`) [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar.
-- `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indicies refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
+- `complex_concentrations`: a `dict` from `Complex` to its [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar (held as a `float`).
+- `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indices refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
 
 Concentrations may be printed as follows:
 
