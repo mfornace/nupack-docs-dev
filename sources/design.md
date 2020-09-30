@@ -56,7 +56,7 @@ We recommend using multi-tube sequence design, as it captures concentration and 
 For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structure engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
 
-<hr>
+---
 
 ## Specify a domain
 
@@ -71,6 +71,7 @@ e = Domain('RRSSAAACCA', name='e')
 f = Domain('R2S2A3C2A',  name='f') # equivalent sequence specification
 g = Domain('N10',        name='g')
 ```
+
 ---
 
 ## Specify a strand
