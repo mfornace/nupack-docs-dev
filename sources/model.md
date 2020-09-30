@@ -8,7 +8,8 @@
 NUPACK 4 analysis and design jobs are run based on a physical model created using the `Model` class:
 
 ```python
-model1 = Model(material='rna', ensemble='stacking', celsius=37, sodium=1.0, magnesium=0.0)
+model1 = Model(material='rna', ensemble='stacking', celsius=37,  
+    sodium=1.0, magnesium=0.0)
 ```
 
 
@@ -162,12 +163,12 @@ print(dGloop3)
 # --> 5.15
 
 #Calculate the free energy of an exterior loop
-dGloop4 = model.loop_energy(loop=['AA', 'TT'], structure='((+))')
+dGloop4 = model.loop_energy(loop=['AA+TT'], structure='((+))')
 print(dGloop4)
 # --> -0.9
 
 #Calculate the free energy of a multiloop
-dGloop5 = model.loop_energy(loop=['AAT', 'ACT', 'AGT'], structure='(.(+).(+).)')
+dGloop5 = model.loop_energy(loop=['AAT+ACT+AGT'], structure='(.(+).(+).)')
 print(dGloop5)
 # --> 9.355
 ```

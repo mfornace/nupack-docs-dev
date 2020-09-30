@@ -1,6 +1,51 @@
 
 
 # Design Jobs
+For reaction pathway engineering, target test tubes are used to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components.
+
+
+We formulate sequence design as a multistate optimization problem using target test tubes to represent reactant and product states of cgRNA/trigger hybridization, as well as to model crosstalk between orthogonal cgRNAs (Figure~\ref{fig:design}).
+Each target test tube contains a set of desired on-target complexes, each with a target secondary structure and target concentration, and a set of undesired off-target complexes, each with vanishing target concentration.
+%Each reactants tube (Step 0) and products tube (Step 1) contains a set of desired ``on-target'' complexes (each with a target secondary structure and target concentration) corresponding to the on-pathway hybridization products for a given step, and a set of undesired ``off-target'' complexes (each with a target concentration of 0 nM) corresponding to on-pathway reactants and off-pathway hybridization crosstalk for a given step. 
+%Hence, these elementary step tubes are designed for full conversion of cognate reactants into cognate products and against local hybridization crosstalk between these same reactants. To simultaneously design $N$ orthogonal systems, elementary step tubes are specified for each system (Figure~\ref{fig:design}; left). Furthermore, to design against off-pathway interactions between systems, a single global crosstalk tube is specified (Figure~\ref{fig:design}; right). In the global crosstalk tube, the on-target complexes correspond to all reactive species generated during all elementary steps ($m=0,1$) for all systems ($n = 1,\dots,N$); the off-target complexes correspond to non-cognate interactions between these reactive species. Crucially, the global crosstalk tube ensemble omits the cognate products that the reactive species are intended to form (they appear as neither on-targets nor off-targets). Hence, all reactive species in the global crosstalk tube are forced to either perform no reaction (remaining as desired on-targets) or undergo a crosstalk reaction (forming undesired off-targets), providing the basis for minimization of global crosstalk during sequence optimization. Note that for design of a library of $N$ orthogonal cgRNA/trigger pairs, all $N$ cgRNAs have the same on-target structure, and all $N$ triggers have the same on-target structure; within a library, the only difference between cgRNA/trigger pairs is the designed sequence. 
+Sequence design is performed subject to complementarity constraints inherent to the reaction pathway (Figure~\ref{fig:splinted}a; domain ``d'' complementary to ``d*'', etc.), as well as to biological sequence constraints imposed by the trigger X (for endogenous triggers; see Section~\ref{ssec:endogenous}), the regulatory target Y, the protein effector (dCas9), or the synthetic terminator; see the constraint shading in Figure~\ref{fig:design}. 
+%For endogenous inputs (Section~\ref{ssec:endogenous}), the input X will also impose sequence constraints. 
+The sequence is optimized by reducing the ensemble defect quantifying the 
+average fraction of incorrectly paired nucleotides over the multi-tube ensemble \cite{zadeh11b,wolfe15,wolfe17}. 
+Within the ensemble defect, defect weights are applied to prioritize design effort \cite{wolfe17}. 
+Optimization of the ensemble defect implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative-design paradigm, explicitly designing against off-pathway crosstalk \cite{wolfe17}. 
+
+
+<p align="center">
+<img src="/figs/dicer-reaction-pathway.png" alt="Reaction pathway schematic." title="Reaction pathway schematic." width="700"/>
+</p>
+
+**Figure: Reaction pathway schematic.** Conditional Dicer substrate formation via shape and sequence transduction with small conditional RNAs (scRNAs) [@Hochrein13].
+scRNA A$\cdot$B detects input X (comprising sequence `a-b-c`), leading to production of Dicer substrate B$\cdot$C (targeting independent sequence `w-x-y-z`). 
+Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation. 
+Step 2: B assembles with C via loop/toehold nucleation and 3-way branch migration to form Dicer substrate B$\cdot$C. See Reference [@Wolfe17] for additional reaction pathway case studies.
+
+
+Reaction pathway engineering via multi-tube design.
+Conditional Dicer substrate formation via shape and sequence transduction with small conditional RNAs (scRNAs) \cite{hochrein13}.
+(a)  scRNA A$\cdot$B detects input X (comprising sequence `a-b-c`), leading to production of Dicer substrate B$\cdot$C (targeting independent sequence `w-x-y-z`). 
+Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation. 
+Step 2: B assembles with C via loop/toehold nucleation and 3-way branch migration to form Dicer substrate B$\cdot$C. 
+(b) Target test tube specification.
+Left: Elementary step tubes. Reactants tube (Step 0):  target X and scRNAs A$\cdot$B and C. Step 1 tube: X$\cdot$A and B. 
+Step 2 tube: Dicer substrate B$\cdot$C. Each target test tube contains the depicted on-target
+complexes corresponding to the on-pathway products for a given step 
+(each with the depicted target secondary structure and a target concentration of 10 nM)
+as well as off-target complexes (not depicted) corresponding to on-pathway reactants and off-pathway 
+crosstalk for a given step. To design $N$ orthogonal systems, there are three elementary step tubes for each system $n=1,\dots,N$.
+Right: Global crosstalk tube. Contains the depicted on-target complexes corresponding to reactive species 
+generated during Steps 0, 1, 2 as well as off-target complexes (not depicted) 
+corresponding to off-pathway interactions between these reactive species. To design $N$ orthogonal systems, the global
+crosstalk tube contains a set of on-targets and off-targets for each system $n=1,\dots,N$.
+
+
+
+
 
 To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13]) or large-scale structural engineering including pseudoknots (e.g., RNA origamis [@Geary14]), NUPACK generalizes these analysis and design capabilities to multistate ensembles:
 
@@ -128,7 +173,7 @@ t6 = TargetTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
 
 <hr> </hr>
 
-## Create a tube design job
+## Run a test tube design job
 
 The `Design` class is offered to create a complete multitube design.
 
