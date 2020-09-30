@@ -231,16 +231,16 @@ c = Complex([a, b])
 t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
 t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
 
-result = tube_analysis([t1, t2],
+my_result = tube_analysis([t1, t2],
     compute=['pfunc', 'pairs', 'mfe', 'sample', 'subopt'],
     options={'num_sample': 2, 'energy_gap': 0.5})
 ```
 
 ### Tabular display
-You can display a summary table of results in a Jupyter notebook as follows:
+You can display a summary table of results in a Jupyter notebook, for example:
 
 ```python
-result
+my_result
 ```
 
 Output:
@@ -252,7 +252,7 @@ Output:
 You can view an ASCII representation of the same data by using the `print` function:
 
 ```python
-print(result)
+print(my_result)
 ```
 
 Output:
@@ -273,7 +273,7 @@ Output:
 For convenience, you can print the identical ASCII result to a text file using the `save_text` function:
 
 ```python
-result.save_text('my_result.txt')
+my_result.save_text('my_result.txt')
 ```
 
 
@@ -286,45 +286,41 @@ More detailed results can also be displayed by programmatic access into an `Anal
 
 The information contained in these two fields depends on which type of analysis calculation was performed:
 
-- For [`tube_analysis`](#run-a-tube-analysis-job), both the `.tubes` and `.complexes` are non-empty.
-- For [`complex_analysis`](#run-a-complex-analysis-job), the `.tubes` field is empty.
-- For [`complex_concentrations`](#run-a-complex-concentration-job), the `.complexes` field is empty.
+- For [`tube_analysis`](#run-a-tube-analysis-job), the `.tubes` and `.complexes` fields are both non-empty.
+- For [`complex_analysis`](#run-a-complex-analysis-job), only the `.complexes` field is non-empty.
+- For [`complex_concentrations`](#run-a-complex-concentration-job), only the `.tubes` field is non-empty.
 
-For convenience, you can index into a `TubeResult` via a `Tube` or `Complex`. The next two sections will show how this facilitates introspection of complex and tube ensemble results, respectively.
+For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` as described in the following two sections.
 
 
 ### Results for individual complexes
 
-You can index into the result via a `Complex` to get its complex ensemble results, held in a `ComplexResult`. For instance:
+You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResult` object containing all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`): 
 
-```python
-c_result = result[c]
-```
-
-The returned `ComplexResult` holds all complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. In full, this class contains the following fields, closely mirroring the `compute` keywords used. If a quantity was not computed, it is set to `None`.
-
-- `pfunc`: complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`). Convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`
-- `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`)
-- `pairs`: [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` containing a `.to_array()` method for conversion to numpy)
-- `mfe`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each structure contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
-- `subopt`: same as `mfe`, but for all suboptimal structures below the specified energy gap (sorted by stacking state energy)
-- `sample`: list of Boltzmann sampled structures (each an instance of `Structure`)
-- `ensemble_size`: number of secondary structures (held as `int`)
-- `model`: the `Model` that was used in the analysis calculation
+- `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
+- `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
+- `pairs`: the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` object containing a `.to_array()` method for conversion to numpy as illustrated below).
+- `sample`: a list of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures), each an instance of a `Structure` object. 
+- `mfe`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
+- `subopt`: a list of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energ` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of its lowest-energy stacking state that falls within the energy gap.
+- `ensemble_size`: the [complex ensemble size](definitions.md#complex-ensemble-size) (held as `int`) representing either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a [physical model](model.md#model-specification) with `stacking`).
+- `model`: the `Model` that was used for the analysis calculation.
 
 <!-- - `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`) -->
 <!-- - `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`) -->
 
 ---
 
-Depending on which types of analysis calculations were requested, these attributes may be looked up on any `ComplexResult` object. For example:
+For example, we can index the `AnalysisResult` object `my_result` with complex `c` to obtain a `ComplexResult` object `my_c` that enables printing of specific physical quantities for that complex: 
 
 ```python
-print('The free energy of complex c is %.2f kcal/mol' % result[c].free_energy)
-print('\nThe partition function of complex c is %.2e' % result[c].pfunc)
-print('\nThe MFE of complex c is %.2f kcal/mol' % result[c].mfe[0].energy)
-print('\nThe MFE structure of complex c is %s' % result[c].mfe[0].structure)
-print('\nThe pair probabilities of complex c are: \n%s' % result[c].pairs)
+c_result = my_result[c]
+print('Physical quantities for complex c')
+print('Complex free energy: %.2f kcal/mol' % c_result.free_energy)
+print('Complex partition function: %.2e' % c_result.pfunc)
+print('MFE proxy structure: %s' % c_result.mfe[0].structure)
+print('Free energy of MFE proxy structure: %.2f kcal/mol' % c_result.mfe[0].energy)
+print('Pair probabilities: \n%s' % c_result.pairs)
 ```
 
 Output:
@@ -347,7 +343,7 @@ The pair probabilities of complex c are:
  [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]
 ```
 
-Using this, you can easily plot a pair probability matrix visually inside a Jupyter notebook. For example:
+The equilibrium pair probability matrix can be easily displayed visually inside a Jupyter notebook, for example: 
 
 ```python
 %matplotlib inline
@@ -369,14 +365,14 @@ Output:
 
 ---
 
-You can collect complex ensemble information for all calculated complexes easily as well. Since `result.complexes` is an ordinary python `dict`, iterating through its `.items()` will let you collect each complex result. For example, to iterate through the pair probabilitis for each complex:
+It is straightforward to collect information across complexes in an `AnalysisResult` object. Since `my_result.complexes` is an ordinary python `dict`, iterating through its `.items()` enables collection of each complex result. For example, to operate on the equilibrium pair probability matrix for each complex in `my_result`:
 
 ```python
 import numpy as np
 
-for my_complex, complex_result in result.complexes.items():
+for my_complex, complex_result in my_result.complexes.items():
     P = complex_result.pairs.to_array()
-    s = 'Expected number of unpaired nucleotides in complex %s = %.2f'
+    s = 'Expected number of unpaired nucleotides at equilibrium in complex %s = %.2f'
     print(s % (my_complex.name, np.diagonal(P).sum()))
 ```
 
@@ -392,9 +388,8 @@ To collect a `dict` of MFEs for each complex:
 
 ```python
 my_mfes = {my_complex.name: complex_result.mfe[0].energy
-    for my_complex, complex_result in result.complexes.items()}
-
-print(my_mfes)
+    for my_complex, complex_result in my_result.complexes.items()}
+    print(my_mfes)
 ```
 
 Output:
@@ -424,33 +419,28 @@ The concentration of [b] is 1.00e-09
 
 ### Results for individual tubes
 
-Access tube properties by indexing the result by a `Tube` object:
-
-```python
-t1_result = result[t1]
-```
-
-The returned `TubeResult` holds all tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+You can index into `AnalysisResult` object via a `Tube` to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its (`float`) [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar.
-- `ensemble_pair_fractions`: a square matrix of [equilibrium base pairing probablities](definitions.md#test-tube-ensemble-pair-fractions) averaged across complexes. The row and column index refers to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated.
+- `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indicies refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
 
-Concentrations are held as a Python `dict` which may be printed as follows:
+Concentrations may be printed as follows:
 
 ```python
+t1_result = my_result[t1]
 for my_complex, conc in t1_result.complex_concentrations.items():
-    print('The concentration of %s is %.2e' % (my_complex.name, conc))
+    print('The equilibrium concentration of %s is %.3e M' % (my_complex.name, conc))
 ```
 
 Output:
 
 ```
-The concentration of [a] is 1.00e-06
-The concentration of [a+b] is 8.21e-14
-The concentration of [b] is 1.00e-09
+The equilibrium concentration of [a] is 1.00e-06 M
+The equilibrium concentration of [a+b] is 8.21e-14 M
+The equilibrium concentration of [b] is 1.00e-09 M
 ```
 
-If calculated, the ensemble pair fractions may be printed as follows:
+Test tube ensemble pair fractions may be printed as follows:
 
 ```python
 print(t1_result.ensemble_pair_fractions)
