@@ -145,7 +145,7 @@ model1 = Model()
 complex_results = complex_analysis(tubes=[t1, t2], model=model1, compute=['pfunc'])
 ```
 
-Note that tube `t1` defines a set of complexes (all complexes of up to `max_size=3` strands) but omits optional concentrations for strands `a` and `b` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. On the other hand, tube `t4` defines optional strand concentrations that will be ignored by `complex_analysis`.
+Note that tube `t1` defines a set of complexes (all complexes of up to `max_size=3` strands) but omits optional concentrations for strands `a` and `b` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. On the other hand, tube `t2` defines optional strand concentrations that will be ignored by `complex_analysis`.
 
 ---
 
@@ -295,14 +295,14 @@ For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube
 
 ### Results for individual complexes
 
-You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResult` object containing all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`): 
+You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResult` object containing all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
 
 - `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
 - `pairs`: the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` object containing a `.to_array()` method for conversion to numpy as illustrated below).
-- `sample`: a list of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures), each an instance of a `Structure` object. 
+- `sample`: a list of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures), each an instance of a `Structure` object.
 - `mfe`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
-- `subopt`: a list of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energ` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of its lowest-energy stacking state that falls within the energy gap.
+- `subopt`: a list of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of its lowest-energy stacking state that falls within the energy gap.
 - `ensemble_size`: the [complex ensemble size](definitions.md#complex-ensemble-size) (held as `int`) representing either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a [physical model](model.md#model-specification) with `stacking`).
 - `model`: the `Model` that was used for the analysis calculation.
 
@@ -311,7 +311,7 @@ You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResu
 
 ---
 
-For example, we can index the `AnalysisResult` object `my_result` with complex `c` to obtain a `ComplexResult` object `my_c` that enables printing of specific physical quantities for that complex: 
+For example, we can index the `AnalysisResult` object `my_result` with complex `c` to obtain a `ComplexResult` object `c_result` that enables printing of specific physical quantities for that complex:
 
 ```python
 c_result = my_result[c]
@@ -326,15 +326,12 @@ print('Pair probabilities: \n%s' % c_result.pairs)
 Output:
 
 ```
-The free energy of complex c is -5.19 kcal/mol
-
-The partition function of complex c is 4.53e+03
-
-The MFE of complex c is -4.98 kcal/mol
-
-The MFE structure of complex c is (((+)))
-
-The pair probabilities of complex c are:
+Physical quantities for complex c
+Complex free energy: -5.19 kcal/mol
+Complex partition function: 4.53e+03
+MFE proxy structure: (((+)))
+Free energy of MFE proxy structure: -4.98 kcal/mol
+Pair probabilities:
 [[0.1002 0.0000 0.0000 0.0007 0.1474 0.7518]
  [0.0000 0.0037 0.0000 0.1474 0.8307 0.0182]
  [0.0000 0.0000 0.1904 0.7910 0.0185 0.0001]
@@ -343,17 +340,16 @@ The pair probabilities of complex c are:
  [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]
 ```
 
-The equilibrium pair probability matrix can be easily displayed visually inside a Jupyter notebook, for example: 
+The equilibrium pair probability matrix can be easily displayed visually inside a Jupyter notebook, for example:
 
 ```python
 %matplotlib inline
 import matplotlib.pyplot as plt
 
-plt.matshow(result[c].pairs.to_array())
+plt.imshow(my_result[c].pairs.to_array())
 plt.xlabel('Base index')
 plt.ylabel('Base index')
 plt.title('Pair probabilities for complex c')
-plt.gca().xaxis.set_ticks_position('bottom')
 plt.colorbar()
 plt.clim(0, 1)
 plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
@@ -379,9 +375,9 @@ for my_complex, complex_result in my_result.complexes.items():
 Output:
 
 ```
-Expected number of unpaired nucleotides in complex [a+b] = 0.59
-Expected number of unpaired nucleotides in complex [a] = 3.00
-Expected number of unpaired nucleotides in complex [b] = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex [a+b] = 0.59
+Expected number of unpaired nucleotides at equilibrium in complex [a] = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex [b] = 3.00
 ```
 
 To collect a `dict` of MFEs for each complex:
@@ -401,16 +397,16 @@ Output:
 To print out the complex concentrations for a given tube:
 
 ```python
-for my_complex, conc in result.tubes[t1].complex_concentrations.items():
-    print('The concentration of %s is %.2e' % (my_complex.name, conc))
+for my_complex, conc in my_result.tubes[t1].complex_concentrations.items():
+    print('The equilibrium concentration of %s is %.2e M' % (my_complex.name, conc))
 ```
 
 Output:
 
 ```
-The concentration of [a] is 1.00e-06
-The concentration of [a+b] is 8.21e-14
-The concentration of [b] is 1.00e-09
+The equilibrium concentration of [a] is 1.00e-06 M
+The equilibrium concentration of [a+b] is 8.21e-14 M
+The equilibrium concentration of [b] is 1.00e-09 M
 ```
 
 ---
