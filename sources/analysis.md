@@ -224,8 +224,8 @@ The optional `options` keyword specifies options that modify the calculations pe
 Scalar results of NUPACK analysis jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube analysis job:
 
 ```python
-a = Strand('CAGTCGATC', name='a')
-b = Strand('ATCGACGTA', name='b')
+a = Strand('CCC', name='a')
+b = Strand('GGG', name='b')
 c = Complex([a, b])
 
 t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
@@ -353,17 +353,19 @@ Using this, you can easily plot a pair probability matrix visually inside a Jupy
 %matplotlib inline
 import matplotlib.pyplot as plt
 
-plt.imshow(c_result.pairs.to_array())
+plt.matshow(result[c].pairs.to_array())
 plt.xlabel('Base index')
 plt.ylabel('Base index')
-plt.title('Pair probability of complex c')
+plt.title('Pair probabilities for complex c')
+plt.gca().xaxis.set_ticks_position('bottom')
 plt.colorbar()
+plt.clim(0, 1)
 plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 ```
 
 Output:
 
-> <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="450" />
+> <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="300" />
 
 ---
 
@@ -437,15 +439,15 @@ Concentrations are held as a Python `dict` which may be printed as follows:
 
 ```python
 for my_complex, conc in t1_result.complex_concentrations.items():
-    print('The concentration of %s is %.3e M' % (my_complex, conc))
+    print('The concentration of %s is %.2e' % (my_complex.name, conc))
 ```
 
 Output:
 
 ```
-The concentration of CCC is 1.000e-06 M
-The concentration of CCC+GGG is 8.207e-14 M
-The concentration of GGG is 9.999e-10 M
+The concentration of [a] is 1.00e-06
+The concentration of [a+b] is 8.21e-14
+The concentration of [b] is 1.00e-09
 ```
 
 If calculated, the ensemble pair fractions may be printed as follows:
@@ -457,11 +459,11 @@ print(t1_result.ensemble_pair_fractions)
 Output:
 
 ```
-[[1.000e+00 0.000e+00 0.000e+00 5.653e-11 1.209e-08 6.170e-08]
- [0.000e+00 1.000e+00 0.000e+00 1.210e-08 6.817e-08 1.497e-09]
- [0.000e+00 0.000e+00 1.000e+00 6.492e-08 1.518e-09 6.893e-12]
- [5.653e-08 1.210e-05 6.492e-05 9.999e-01 0.000e+00 0.000e+00]
- [1.209e-05 6.817e-05 1.518e-06 0.000e+00 9.999e-01 0.000e+00]
- [6.170e-05 1.497e-06 6.893e-09 0.000e+00 0.000e+00 9.999e-01]]
+[[1.0000 0.0000 0.0000 0.0000 0.0000 0.0000]
+ [0.0000 1.0000 0.0000 0.0000 0.0000 0.0000]
+ [0.0000 0.0000 1.0000 0.0000 0.0000 0.0000]
+ [0.0000 0.0000 0.0001 0.9999 0.0000 0.0000]
+ [0.0000 0.0001 0.0000 0.0000 0.9999 0.0000]
+ [0.0001 0.0000 0.0000 0.0000 0.0000 0.9999]]
 ```
 
