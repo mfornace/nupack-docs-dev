@@ -6,14 +6,14 @@ For reaction pathway engineering, target test tubes are used to represent reacta
 
 We formulate sequence design as a multistate optimization problem using target test tubes to represent reactant and product states of cgRNA/trigger hybridization, as well as to model crosstalk between orthogonal cgRNAs (Figure~\ref{fig:design}).
 Each target test tube contains a set of desired on-target complexes, each with a target secondary structure and target concentration, and a set of undesired off-target complexes, each with vanishing target concentration.
-%Each reactants tube (Step 0) and products tube (Step 1) contains a set of desired ``on-target'' complexes (each with a target secondary structure and target concentration) corresponding to the on-pathway hybridization products for a given step, and a set of undesired ``off-target'' complexes (each with a target concentration of 0 nM) corresponding to on-pathway reactants and off-pathway hybridization crosstalk for a given step. 
-%Hence, these elementary step tubes are designed for full conversion of cognate reactants into cognate products and against local hybridization crosstalk between these same reactants. To simultaneously design $N$ orthogonal systems, elementary step tubes are specified for each system (Figure~\ref{fig:design}; left). Furthermore, to design against off-pathway interactions between systems, a single global crosstalk tube is specified (Figure~\ref{fig:design}; right). In the global crosstalk tube, the on-target complexes correspond to all reactive species generated during all elementary steps ($m=0,1$) for all systems ($n = 1,\dots,N$); the off-target complexes correspond to non-cognate interactions between these reactive species. Crucially, the global crosstalk tube ensemble omits the cognate products that the reactive species are intended to form (they appear as neither on-targets nor off-targets). Hence, all reactive species in the global crosstalk tube are forced to either perform no reaction (remaining as desired on-targets) or undergo a crosstalk reaction (forming undesired off-targets), providing the basis for minimization of global crosstalk during sequence optimization. Note that for design of a library of $N$ orthogonal cgRNA/trigger pairs, all $N$ cgRNAs have the same on-target structure, and all $N$ triggers have the same on-target structure; within a library, the only difference between cgRNA/trigger pairs is the designed sequence. 
-Sequence design is performed subject to complementarity constraints inherent to the reaction pathway (Figure~\ref{fig:splinted}a; domain ``d'' complementary to ``d*'', etc.), as well as to biological sequence constraints imposed by the trigger X (for endogenous triggers; see Section~\ref{ssec:endogenous}), the regulatory target Y, the protein effector (dCas9), or the synthetic terminator; see the constraint shading in Figure~\ref{fig:design}. 
-%For endogenous inputs (Section~\ref{ssec:endogenous}), the input X will also impose sequence constraints. 
-The sequence is optimized by reducing the ensemble defect quantifying the 
-average fraction of incorrectly paired nucleotides over the multi-tube ensemble \cite{zadeh11b,wolfe15,wolfe17}. 
-Within the ensemble defect, defect weights are applied to prioritize design effort \cite{wolfe17}. 
-Optimization of the ensemble defect implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative-design paradigm, explicitly designing against off-pathway crosstalk \cite{wolfe17}. 
+%Each reactants tube (Step 0) and products tube (Step 1) contains a set of desired ``on-target'' complexes (each with a target secondary structure and target concentration) corresponding to the on-pathway hybridization products for a given step, and a set of undesired ``off-target'' complexes (each with a target concentration of 0 nM) corresponding to on-pathway reactants and off-pathway hybridization crosstalk for a given step.
+%Hence, these elementary step tubes are designed for full conversion of cognate reactants into cognate products and against local hybridization crosstalk between these same reactants. To simultaneously design $N$ orthogonal systems, elementary step tubes are specified for each system (Figure~\ref{fig:design}; left). Furthermore, to design against off-pathway interactions between systems, a single global crosstalk tube is specified (Figure~\ref{fig:design}; right). In the global crosstalk tube, the on-target complexes correspond to all reactive species generated during all elementary steps ($m=0,1$) for all systems ($n = 1,\dots,N$); the off-target complexes correspond to non-cognate interactions between these reactive species. Crucially, the global crosstalk tube ensemble omits the cognate products that the reactive species are intended to form (they appear as neither on-targets nor off-targets). Hence, all reactive species in the global crosstalk tube are forced to either perform no reaction (remaining as desired on-targets) or undergo a crosstalk reaction (forming undesired off-targets), providing the basis for minimization of global crosstalk during sequence optimization. Note that for design of a library of $N$ orthogonal cgRNA/trigger pairs, all $N$ cgRNAs have the same on-target structure, and all $N$ triggers have the same on-target structure; within a library, the only difference between cgRNA/trigger pairs is the designed sequence.
+Sequence design is performed subject to complementarity constraints inherent to the reaction pathway (Figure~\ref{fig:splinted}a; domain ``d'' complementary to ``d*'', etc.), as well as to biological sequence constraints imposed by the trigger X (for endogenous triggers; see Section~\ref{ssec:endogenous}), the regulatory target Y, the protein effector (dCas9), or the synthetic terminator; see the constraint shading in Figure~\ref{fig:design}.
+%For endogenous inputs (Section~\ref{ssec:endogenous}), the input X will also impose sequence constraints.
+The sequence is optimized by reducing the ensemble defect quantifying the
+average fraction of incorrectly paired nucleotides over the multi-tube ensemble \cite{zadeh11b,wolfe15,wolfe17}.
+Within the ensemble defect, defect weights are applied to prioritize design effort \cite{wolfe17}.
+Optimization of the ensemble defect implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative-design paradigm, explicitly designing against off-pathway crosstalk \cite{wolfe17}.
 
 
 <p align="center">
@@ -21,25 +21,25 @@ Optimization of the ensemble defect implements both a positive design paradigm, 
 </p>
 
 **Figure: Reaction pathway schematic.** Conditional Dicer substrate formation via shape and sequence transduction with small conditional RNAs (scRNAs) [@Hochrein13].
-scRNA A$\cdot$B detects input X (comprising sequence `a-b-c`), leading to production of Dicer substrate B$\cdot$C (targeting independent sequence `w-x-y-z`). 
-Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation. 
+scRNA A$\cdot$B detects input X (comprising sequence `a-b-c`), leading to production of Dicer substrate B$\cdot$C (targeting independent sequence `w-x-y-z`).
+Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation.
 Step 2: B assembles with C via loop/toehold nucleation and 3-way branch migration to form Dicer substrate B$\cdot$C. See Reference [@Wolfe17] for additional reaction pathway case studies.
 
 
 Reaction pathway engineering via multi-tube design.
 Conditional Dicer substrate formation via shape and sequence transduction with small conditional RNAs (scRNAs) \cite{hochrein13}.
-(a)  scRNA A$\cdot$B detects input X (comprising sequence `a-b-c`), leading to production of Dicer substrate B$\cdot$C (targeting independent sequence `w-x-y-z`). 
-Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation. 
-Step 2: B assembles with C via loop/toehold nucleation and 3-way branch migration to form Dicer substrate B$\cdot$C. 
+(a)  scRNA A$\cdot$B detects input X (comprising sequence `a-b-c`), leading to production of Dicer substrate B$\cdot$C (targeting independent sequence `w-x-y-z`).
+Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation.
+Step 2: B assembles with C via loop/toehold nucleation and 3-way branch migration to form Dicer substrate B$\cdot$C.
 (b) Target test tube specification.
-Left: Elementary step tubes. Reactants tube (Step 0):  target X and scRNAs A$\cdot$B and C. Step 1 tube: X$\cdot$A and B. 
+Left: Elementary step tubes. Reactants tube (Step 0):  target X and scRNAs A$\cdot$B and C. Step 1 tube: X$\cdot$A and B.
 Step 2 tube: Dicer substrate B$\cdot$C. Each target test tube contains the depicted on-target
-complexes corresponding to the on-pathway products for a given step 
+complexes corresponding to the on-pathway products for a given step
 (each with the depicted target secondary structure and a target concentration of 10 nM)
-as well as off-target complexes (not depicted) corresponding to on-pathway reactants and off-pathway 
+as well as off-target complexes (not depicted) corresponding to on-pathway reactants and off-pathway
 crosstalk for a given step. To design $N$ orthogonal systems, there are three elementary step tubes for each system $n=1,\dots,N$.
-Right: Global crosstalk tube. Contains the depicted on-target complexes corresponding to reactive species 
-generated during Steps 0, 1, 2 as well as off-target complexes (not depicted) 
+Right: Global crosstalk tube. Contains the depicted on-target complexes corresponding to reactive species
+generated during Steps 0, 1, 2 as well as off-target complexes (not depicted)
 corresponding to off-pathway interactions between these reactive species. To design $N$ orthogonal systems, the global
 crosstalk tube contains a set of on-targets and off-targets for each system $n=1,\dots,N$.
 
@@ -71,7 +71,7 @@ e = Domain('RRSSAAACCA', name='e')
 f = Domain('R2S2A3C2A',  name='f') # equivalent sequence specification
 g = Domain('N10',        name='g')
 ```
-<hr>
+---
 
 ## Specify a strand
 ```python
@@ -82,20 +82,16 @@ C = TargetStrand([e, a, f], name='Strand C')
 D = TargetStrand([d, d, d], name='Strand D')
 ```
 
-<hr>
-
-## Specify a structure
-
-<hr>
+---
 
 ## Specify a target complex
 
 A `TargetComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
 
 ```python
-c1 = TargetComplex([A], structure='.(((........))).........', name='c1')
-c2 = TargetComplex([A, B, B, C], structure='.1(3.8)3.9', name='c2')
-c3 = TargetComplex([A, A], structure='U1 D3 U8 U9', name='c3')
+c1 = TargetComplex([A], structure='........(........)', name='c1')
+c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2')
+c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 ```
 
 
@@ -109,19 +105,19 @@ C3 = TargetComplex([B, B, B], 'D10(D10 + D10 +)', name='C3')
 C4 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
 
 # run-length encoded dot-parens-plus notation
-C5 = TargetComplex([B, C], '.10(10+)10.10', name='C5')
+C5 = TargetComplex([B, C], '.10(10+)10.14', name='C5')
 ```
 
 In certain experimental cases, it may be useful to add a bonus to a complex's free energy within a design context. This may help to handle cases where a complex is more or less stable than NUPACK parameters ordinarily predict. For such cases, an additional keyword `bonus` may be included during `TargetComplex` construction. The keyword is specified in kcal/mol; a negative value is stabilizing, and a positive value is destabilizing:
 
 ```python
-C6 = TargetComplex([B, C], '.10(10+)10.10', name='C6', bonus=+1.0) # destabilize C6 by 1 kcal/mol
-C6 = TargetComplex([B, C], '.10(10+)10.10', name='C6', bonus=-10.0) # stabilize C7 by 10 kcal/mol
+C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0) # destabilize C6 by 1 kcal/mol
+C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0) # stabilize C7 by 10 kcal/mol
 ```
 
 Application of the bonus affects only complex free energies and concentrations; pair probabilities are unaffected.
 
-<hr> </hr>
+---
 
 ## Specify a target tube
 
@@ -153,10 +149,10 @@ The implied complexes are added to $\Psi^\text{off}$, provided they are not alre
 
 ```python
 # specify tubes by their names and on-target complexes with on-target concentrations
-t1 = TargetTube({C1: 1e-6}, include=[C4, C5], name='t1')
+t1 = TargetTube({C1: 1e-6}, include=[C1], name='t1')
 
 # specify unnamed off-targets each denoted by a strand ordering
-t2 = TargetTube({C2: 1e-6}, include=[[D, D, D], [D, D, D, D]], name='t2')
+t2 = TargetTube({C2: 1e-6}, include=[C2, [D, D, D], [D, D, D, D]], name='t2')
 
 # Mix the two kinds of specifications
 t3 = TargetTube({C1: 0.000001, C2: 1e-3}, include=[C4, [D, D, D]], name='t3')
@@ -171,17 +167,18 @@ t5 = TargetTube({C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B]], na
 t6 = TargetTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
 ```
 
-<hr> </hr>
+---
 
 ## Run a test tube design job
 
 The `Design` class is offered to create a complete multitube design.
 
 ```python
-# run the job
-my_design = Design(tubes=tubes,
-    hard_constraints=hard, soft_constraints=soft,
-    weights=weights, options=options)
+my_model = Model()
+my_tubes = [t1]
+my_design = Design(tubes=my_tubes,
+    hard_constraints=[], soft_constraints=[],
+    weights=None, options=options, model=my_model)
 ```
 
 A `Design` possesses three main methods: `optimize()`, `evaluate()`, and `launch()`.
@@ -192,12 +189,15 @@ result = my_design.optimize()
 # evaluate a design with pre-determined sequences
 result = my_design.evaluate()
 # launch a number of independenet trials of the design in the background
-optimization = my_design.launch(2)
+optimization = my_design.launch(2, directory='design-checkpoints')
 ```
+
+!!!warning
+    evaluate() doesn't work here, the input domains are not designed yet
 
 See the below sections for more information on inputs and results.
 
-<hr> </hr>
+---
 
 ## Run a complex design job
 
@@ -205,14 +205,13 @@ For convenience, the `complex_design` function is provided to give a simple comp
 
 ```python
 my_design = complex_design(complexes=[c1, c2],
-    hard_constraints=hard, soft_constraints=soft,
-    weights=weights, options=options)
+    hard_constraints=[], soft_constraints=[],
+    weights=None, options=options, model=my_model)
 
 result = my_design.optimize()
 ```
 
-
-<hr> </hr>
+---
 
 ## Specify hard constraints
 
@@ -224,10 +223,10 @@ Hard constraints are most easily kept track of as a Python `list`. See below for
 gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
 
 hard = [
-    Match([c], [b, ~e]),
-    Match([a, b], [d, d, e]),
-    Complementarity([a, b], [c, d, e], allow_wobble=True),
-    Similarity(b, 'S20', limits=[0.45, 0.55]), # GC content
+    Match([a], [b]),
+    Match([a, b, f, f], [d, a, d, a]),
+    Complementarity([a, b, f, a, a, b], [c, d, e], allow_wobble=True),
+    Similarity(c, 'S10', limits=[0.45, 0.55]), # GC content
     Library([a], catalog = ['CTAC', 'TAAT']),
     Window([a, ~b], source = gfp),
     Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]),
@@ -247,7 +246,7 @@ hard.append(Complementarity([e],[f], allow_wobble=True)) # same thing
 
 See the below subsections for more information about each kind of constraint.
 
-<hr> </hr>
+---
 
 ### Match
 
@@ -264,7 +263,7 @@ match1 = Match([c], [b, ~e])
 match2 = Match([a, b], [d, d, e])
 ```
 
-<hr> </hr>
+---
 
 ### Complementarity
 
@@ -279,7 +278,7 @@ In addition to explicit domain list based specification of complementarity const
 comp = Complementarity([a, b], [c, d, e])
 ```
 
-<hr> </hr>
+---
 
 ### Similarity
 
@@ -294,14 +293,14 @@ A common use case of the similarity constraint is to constrain a domain or stran
 
 ```python
 a = Domain('N10', name='a')
-sim1 = Similarity(a, 'S5K5', [0.25, 0.75])
+sim1 = Similarity(a, 'S5K5', limits=[0.25, 0.75])
 
 # "composition constraint" special case: enforce 45-55% GC content
 b = Domain('N20', name='b')
-sim2 = Similarity(b, 'S20', [0.45, 0.55])
+sim2 = Similarity(b, 'S20', limits=[0.45, 0.55])
 ```
 
-<hr> </hr>
+---
 
 ### Window
 
@@ -328,7 +327,7 @@ window1 = Window([a, ~b], [gfp])
 window2 = Window([~c, e], [gfp, rfp])
 ```
 
-<hr> </hr>
+---
 
 ### Library
 
@@ -365,13 +364,13 @@ aaR = ['CGU', 'CGC', 'CGA', 'CGG', 'AGA', 'AGG']
 aaSTOP = ['UAA', 'UAG', 'UGA']
 
 # domain a is drawn from the `toeholds' library
-lib1 = Library(a, toeholds)
+lib1 = Library([a], toeholds)
 
 # domain b is drawn from a concatenation of library sequences representing codons
 lib2 = Library([b], aaI + aaM + aaC + aaG)
 ```
 
-<hr> </hr>
+---
 
 ### Pattern prevention
 
@@ -403,7 +402,7 @@ pat3 = Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b])
 pat4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
 ```
 
-<hr> </hr>
+---
 
 ### Diversity
 
@@ -431,7 +430,7 @@ div3 = Diversity(10, 4, where=[a, B])
 ```
 
 
-<hr> </hr>
+---
 
 ## Specify soft constraints
 
@@ -441,7 +440,7 @@ soft = [
     Pattern(['A4', 'U4'], where=a),
     Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
-    Similarity(b, 'S20', range=[0.45, 0.55], weight=0.25),
+    Similarity(b, 'S12', limits=[0.45, 0.55], weight=0.25),
     SSM([C, D], word=4, weight=0.15),
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
@@ -449,7 +448,7 @@ soft = [
 ```
 
 
-<hr> </hr>
+---
 
 ### Pattern prevention
 
@@ -462,7 +461,7 @@ pat = Pattern(patterns=['A4', 'C4', 'G4', 'U4', 'M6',
     'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
 ```
 
-<hr> </hr>
+---
 
 ### Similarity
 
@@ -470,15 +469,14 @@ Similarity soft constraints are specified in nearly the same way as similarity h
 The primary difference is that a weight can be supplied to control the relative design effort spent on the soft constraint.
 
 ```python
-
-a = Domain('a','N10')
-b = Domain('b','N20')
+a = Domain('N10', name='a')
+b = Domain('N20', name='b')
 
 # explicitly specify weight
-sim = Similarity('b', 'S20', [0.45, 0.55], weight=0.25)
+sim = Similarity(b, 'S20', limits=[0.45, 0.55], weight=0.25)
 ```
 
-<hr> </hr>
+---
 
 ### Sequence symmetry
 
@@ -487,22 +485,22 @@ This will penalize windows (i.e. n-grams, critons) that repeat spuriously (not e
 Multiple sequence symmetry constraints with different window sizes can be specified for the same sets of complexes, as shown below.
 
 ```python
-a = Domain('a', 'N12')
-b = Domain('b', 'N12')
-A = TargetStrand('A', [a, ~a])
-B = TargetStrand('B', [b, ~b])
+a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = TargetStrand([a, ~a], name='A')
+B = TargetStrand([b, ~b], name='B')
 
-C = TargetComplex('C', [A], "(10.4)10")
-D = TargetComplex('D', [A, A], "D12 +")
+C = TargetComplex([A], "(10.4)10", name='C')
+D = TargetComplex([A, A], "D24 +", name='D')
 
-ssm1 = SSM([C, D], 4, weight=0.15)
+ssm1 = SSM([C, D], word=4, weight=0.15)
 
 # the same complexes with larger windows weighted higher
-ssm2 = SSM([C, D], 5, weight=0.25)
-ssm3 = SSM([C, D], 6, weight=0.45)
+ssm2 = SSM([C, D], word=5, weight=0.25)
+ssm3 = SSM([C, D], word=6, weight=0.45)
 ```
 
-<hr> </hr>
+---
 
 ### Duplex structure energy equalization
 
@@ -517,7 +515,7 @@ diff1 = EnergyDiff([a, b])
 diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
 ```
 
-<hr> </hr>
+---
 
 ## Specify defect weights
 
@@ -527,7 +525,7 @@ The user may wish to alter the relative weighting of defect contributions within
 You can define custom weights by constructing a `Weights` object from the set of `TargetTube`s that will be designed.
 
 ```python
-weights = Weights(tubes) # All weights are initialized to 1
+weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
 Weights may be freely accessed manipulated by slicing on a subset of 4 axes (in this order):
@@ -541,13 +539,16 @@ For instance:
 
 ```python
 weights[:, :, :, a] *= 2
-weights[:, :, s3] = 4
+weights[:, :, A] = 4
 weights[t2] = 2
 weights[t1, c1] = 5,
 weights[:, :, A, b] = 0.75
 weights[t2, c3, D, a] = 0.5
 weights[t2, :, :, d] = 3
 ```
+
+!!!warning
+    fix the weights, some tubes etc dont belong
 
 Weights may be printed or displayed by similar slicing:
 
@@ -614,7 +615,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
     design.add_global_objective(weight=2)
     ``` -->
 
-<hr> </hr>
+---
 
 ## Job options
 
@@ -667,7 +668,7 @@ The information logged for each of these given a non-empty string is as follows:
 * ```thermo_log```: Primarily for debugging/development purposes. After every thermodynamic evaluation, the type of calculation (pair probability, bonused pair probability, partition function), number of nucleotides evaluated, and duration of the calculation are logged.
 
 
-<hr> </hr>
+---
 
 ## Job results
 
@@ -681,19 +682,20 @@ Both `complex_design` and `tube_design` return a `DesignResult` object which may
 As an example, consider the following design result:
 
 ```python
-a = Domain('a', 'N20')
+a = Domain('N20', name='a')
 
-A = TargetStrand('A', [a])
-B = TargetStrand('B', [~a])
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
 
-C = TargetComplex('C', [A, B], '(20+)20')
+C = TargetComplex([A, B], '(20+)20', name='C')
 
-tube = TargetTube('tube1', {C: 1e-6}, max_size=2)
+tube = TargetTube({C: 1e-6}, max_size=2, name='tube1')
 
-result = tube_design([tube], model=Model())
+my_design = Design([tube], model=Model())
+result = my_design.optimize()
 ```
 
-<hr> </hr>
+---
 
 ### Textual display
 
@@ -717,42 +719,32 @@ Output:
 
 > ```c++
 > Results:
+> Results:
 >   name                 value
-> 0    a  GCATATCCACAGGAAGTTCC
-> 1   a*  GGAACTTCCTGTGGATATGC
-> 2    A  GCATATCCACAGGAAGTTCC
-> 3    B  GGAACTTCCTGTGGATATGC
-> Ensemble defect: 0.0076
+> 0    a  GGGCGTCTAGCATAAAGCAC
+> 1   a*  GTGCTTTATGCTAGACGCCC
+> 2    A  GGGCGTCTAGCATAAAGCAC
+> 3    B  GTGCTTTATGCTAGACGCCC
+> Ensemble defect: 0.0097
 > Objectives:
->      defect  weighted
-> 0  0.007637  0.007637
+>     defect  weighted
+> 0  0.00971   0.00971
 > Tubes:
->     tube        defect  normalized
-> 0  tube1  3.054681e-07    0.007637
+>   tube_name   defect  normalized
+> 0     tube1 3.88e-07     0.00971
 > Complexes:
->   complex    defect  normalized
-> 0   [A+A]  0.000000    0.000000
-> 1   [B+B]  0.000000    0.000000
-> 2     [B]  0.000000    0.000000
-> 3       C  0.305447    0.007636
-> 4     [A]  0.000000    0.000000
+>   complex_name    defect  normalized
+> 0            C  0.388416     0.00971
+> 1            A  0.000000     0.00000
+> 2            B  0.000000     0.00000
 > Complexes in tubes:
->     tube complex        defect  normalized  concentration    structural  \
-> 0  tube1       C  3.054681e-07    0.007637   2.080519e-11  3.054473e-07
-> 1  tube1     [A]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
-> 2  tube1   [A+A]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
-> 3  tube1     [B]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
-> 4  tube1   [B+B]  0.000000e+00    0.000000   0.000000e+00  0.000000e+00
->
->    actual_concentration  target_concentration
-> 0          9.999995e-07              0.000001
-> 1          5.220293e-13              0.000000
-> 2          1.145957e-23              0.000000
-> 3          5.222663e-13              0.000000
-> 4          1.479873e-22              0.000000
+>   tube_name complex_name   defect  normalized concentration structural actual_concentration target_concentration
+> 0     tube1            C 3.88e-07     0.00971      6.77e-14   3.88e-07                1e-06                1e-06
+> 1     tube1            A        0     0.00000             0          0             1.72e-15                    0
+> 2     tube1            B        0     0.00000             0          0             1.72e-15                    0
 > ```
 
-<hr> </hr>
+---
 
 ### Introspection
 
@@ -762,8 +754,8 @@ You can also interface with the `DesignResult` within Python.
 1. For instance, you can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
 
 ```python
-print(result.mapping[t1])
-print(result.mapping[c1])
+print(result.mapping[tube])
+print(result.mapping[C])
 print(result.mapping[A])
 print(result.mapping[a])
 ```
@@ -782,21 +774,21 @@ The subfields `tubes`, `complexes`, and `tube_complexes` are `pandas.DataFrame`s
 3. You can re-analyze your designed complexes and tubes via the `analysis` field:
 
 ```python
-t1_designed = result.mapping[t1]
+t1_designed = result.mapping[tube]
 
 # Compute the MFEs of the designed complexes that were in t1
-tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=model)
+tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
 
 # Compute complex concentrations with a different set of strand concentrations
 conc_results = complex_concentrations(t1_designed, result.analysis,
     concentrations={result.mapping[A]: 1e-8, result.mapping[B]: 1e-9})
 ```
 
-<hr> </hr>
+---
 
 ## Saving, checkpointing, and restarting
 
-<hr> </hr>
+---
 
 ### Saving results to a text file
 
@@ -820,7 +812,7 @@ Later, you can load the result back into your Python session with the following 
 result = DesignResult.load('design-result.o')
 ```
 
-<hr> </hr>
+---
 
 ### Running from a prior design result
 
@@ -830,7 +822,7 @@ The following lines of code will run a design using the final output as a checkp
 newer_result = my_design.optimize(restart=result)
 ```
 
-<hr> </hr>
+---
 
 ### Saving checkpoint files automatically
 
@@ -846,5 +838,5 @@ from nupack.design import TimeInterval, WriteToFileCheckpoint
 result = my_design.optimize(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
 ```
 
-<hr> </hr>
+---
 
