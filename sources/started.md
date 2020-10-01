@@ -9,13 +9,14 @@ NUPACK 4 is a C++ library distributed as a Python package for portability and ea
 - Python 3.6+
 - numpy
 - scipy
+- pandas
 
-For full visualization capabilities, the following packages are recommended:
+For interactive usage, the following packages are recommended:
 
 - matplotlib
 - jupyterlab
 
-<hr>
+---
 
 ### Installing NUPACK via the Anaconda Python package
 
@@ -69,23 +70,23 @@ jupyter lab
 
 If no browser window appears, you may try navigating to the displayed link in your terminal (this URL should look like <http://127.0.0.1:8889/?token=78f1ffcdcf04cec0e97e74912e36b4eb5b530aa546411ea3>). If this doesn't work, troubleshoot your Jupyter installation. Browse to open the desired notebook using the GUI in your web browser.
 
-<hr>
+---
 
 ## Examples
 
-A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `examples/` folder. For reference, non-interactive versions of these notebooks may be found on [nbviewer](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/).
+A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `examples/` folder. For reference, non-interactive versions of these notebooks may be found on [nbviewer](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/).
 
 Examples are provided for the following use cases:
 
-- [Complex analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- [Tube analysis](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- [Complex design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- [Tube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- [Multitube design](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
-- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/)
+- [Complex analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
+- [Tube analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
+- [Complex design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
+- [Tube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
+- [Multitube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
+- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
 
 
-<hr>
+---
 
 ## Installing NUPACK from source
 
@@ -130,7 +131,7 @@ cmake ..
 Build the NUPACK Python module.
 
 ```bash
-cmake --build . --target python
+cmake --build . --target nupack-python
 ```
 
 Install the NUPACK Python module and binding module.
