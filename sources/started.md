@@ -6,7 +6,7 @@
 
 NUPACK 4 is a C++ library distributed as a Python package for portability and ease of use. Before installing NUPACK, you must have Python 3 and a few common packages installed on your computer. Note that Python 2 is not currently supported. The specific Python package requirements for NUPACK 4 are:
 
-- Python 3.6+
+- Python 3.6-3.8
 - numpy
 - scipy
 - pandas

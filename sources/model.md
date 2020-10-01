@@ -193,12 +193,12 @@ model.stack_energies('CA+TC', '.(+).')
 # Calculate the coaxial stacking state free energies for an exterior loop
 model.stack_energies('AA+T+T', structure='((+)+)')
 # --> {'bnn': -0.9, 'nnn': 0.0}
-# --> {'[[+]+]': -0.9, '((+)+)': 0.0}
+# --> {'[[+)+)': -0.9, '[[+)+)': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
 model.stack_energies('AT+AT+AT', structure='((+)(+))')
 # --> {'bnn': -1.1, 'nbn': -1.1, 'nnb': -1.1, 'nnn': 0.0}
-# --> {'[[+](+)]': -1.1, '([+][+])': -1.1, '[(+)[+]]': -1.1, '((+)(+))': 0.0}
+# --> {'[[+)(+))': -1.1, '((+][+))': -1.1, '((+)(+]]': -1.1, '((+)(+))': 0.0}
 ```
 
 For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
