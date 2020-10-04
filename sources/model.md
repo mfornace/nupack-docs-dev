@@ -8,7 +8,7 @@
 NUPACK 4 analysis and design jobs are run based on a physical model created using the `Model` class:
 
 ```python
-model1 = Model(material='rna', ensemble='stacking', celsius=37,  
+model1 = Model(material='rna', ensemble='stacking', celsius=37,
     sodium=1.0, magnesium=0.0)
 ```
 
@@ -188,14 +188,17 @@ For a loop defined as a list of N sequences, a stacking state is specified as a 
 # Calculate the dangle stacking state free energies for an exterior loop
 model.stack_energies('CA+TC', '.(+).')
 # --> {'nl': -0.1, 'nn': 0.0, 'rl': -0.6, 'rn': -0.3}
+# --> {'.(+)<': -0.1, '.(+).': 0.0, '>(+)<': -0.6, '>(+).': -0.3}
 
 # Calculate the coaxial stacking state free energies for an exterior loop
 model.stack_energies('AA+T+T', structure='((+)+)')
 # --> {'bnn': -0.9, 'nnn': 0.0}
+# --> {'[[+)+)': -0.9, '[[+)+)': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
 model.stack_energies('AT+AT+AT', structure='((+)(+))')
 # --> {'bnn': -1.1, 'nbn': -1.1, 'nnb': -1.1, 'nnn': 0.0}
+# --> {'[[+)(+))': -1.1, '((+][+))': -1.1, '((+)(+]]': -1.1, '((+)(+))': 0.0}
 ```
 
 For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
@@ -203,4 +206,5 @@ For loops that are not multiloops or exterior loops, this function returns a sin
 ```python
 model.stack_energies('AAAAT', structure='(...)')
 # --> {'n': 4.1}
+# --> {'(...)': 4.1}
 ```

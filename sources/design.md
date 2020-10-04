@@ -22,6 +22,10 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 
 
 
+<<<<<<< HEAD
+=======
+---
+>>>>>>> a0fc3ad021a57bd513aa9eb00432e99461cbfeed
 
 ## Specify a sequence domain
 
