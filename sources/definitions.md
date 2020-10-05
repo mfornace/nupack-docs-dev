@@ -410,7 +410,7 @@ off-target complexes, each with vanishing target concentration. Design quality i
 nucleotides evaluated over the design ensemble 
 [@Wolfe17]. Optimization of the sequences so as to reduce $\mathcal{M}$ below a user-specified stop condition implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. Sequence design is performed subject to both [hard constraints](definitions.md#hard-constraints) (including composition constraints and biological constraints) and [soft constraints](definitions.md#soft-constraints) (including sequence symmetry minimization and toehold free energy equalization).
 
-### Reaction pathwway specification
+### Reaction pathways 
 Consider a set of nucleic acid molecules intended to execute a prescribed hybridization cascade [@Wolfe17]. 
 For example, the reaction pathway below 
 describes scRNAs that upon binding to input X, 
@@ -527,6 +527,12 @@ The design objective function is the [multi-tube ensemble defect](definitions.md
 
 representing the average equilibrium fraction of incorrectly paired nucleotides over the multitube ensemble, $\Omega$. 
 
+### Defect weights
+To prioritize or de-prioritize design quality for a portion of the design ensemble, the defect-weighted objective function, $\mathcal{M}_\mathcal{W}$, incorporates user-specified defect weights for any sequence domain, complex, or test tube. 
+With the default value of unity for all weights, $\mathcal{M}_\mathcal{W}$ is simply the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect), $\mathcal{M}$. 
+With custom defect weights in the range $[0,\infty)$, the physical meaning of
+the objective function is distorted in the service of adjusting design priorities.
+
 ### IUPAC degenerate nucleotide codes
 Sequence constraints can be specified using IUPAC degenerate nucleotide codes, which for RNA are as follows: 
 
@@ -615,11 +621,6 @@ Consider a set of toeholds and toehold complements that are intended to form dup
 
 Let $\mathcal S$ denote the user-specified set of soft constraints for a design problem. 
 
-### Defect weights
-To prioritize or de-prioritize design quality for a portion of the design ensemble, defect weights can be specified for a sequence domain, complex, or test tube. 
-With the default value of unity for all weights, the objective function $\mathcal{M}_\mathcal{W}$ is simply the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect), $\mathcal{M}$. 
-With custom defect weights in the range $[0,\infty)$, the physical meaning of
-the objective function is distorted in the service of adjusting design priorities.
 
 ### Constrained multi-tube design problem
 

@@ -1,31 +1,34 @@
 
 
 # Design Jobs
-To enable reaction pathway engineering of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13,@Hanewich-Hollatz19]) or large-scale structural engineering including pseudoknots (e.g., RNA origamis [@Geary14]), NUPACK sequence design operates on multistate ensembles:
+To enable **reaction pathway engineering** of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13,@Hanewich-Hollatz19]) or large-scale **structural engineering including pseudoknots** (e.g., RNA origamis [@Geary14]), NUPACK sequence design operates on multistate ensembles:
 
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
 
-We recommend using multi-tube sequence design, as it captures concentration and crosstalk effects that are critical in most design scenarios. Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as special cases [@Wolfe17]. 
+We recommend using the [multi-tube design ensemble](definitions.md#multi-tube-design), as it captures concentration and crosstalk effects that are critical in most experimental settings (see the example below regarding the advantages of test tube design over complex design). Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as subsidiary special cases [@Wolfe17]. 
+
+!!! Example
+    <p align="center">
+    <img src="/figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
+    </p>
+    **Figure: The advantages of test tube design over complex design.** **Top: Complex design.** Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube. 
+    **Bottom: Test tube design.** Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no 
+    new information and no unpleasant surprises since the design and analysis ensembles are identical. 
 
 For reaction pathway engineering, sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structural engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
 
 
-In a multi-tube design ensemble, each target test tube contains a set of desired "on-target" complexes, each with a target
+In a [multi-tube design ensemble](definitions.md#multi-tube-design-ensemble), each target test tube contains a set of desired "on-target" complexes, each with a target
 secondary structure and target concentration, and a set of undesired "off-target" complexes, each with vanishing target concentration. Optimization of the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect)
-implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. Sequence design is performed subject to [hard sequence constraints](design.md#specify-hard-constraints) (e.g., constraints imposed by the reaction pathway or biological sequences) as well as to [soft constraints](design.md#specify-soft-constraints) that augment the objective function (e.g., to design toeholds of similar strengths). [Defect weights](design.md#specify-defect-weights) can be specified to prioritize or de-priotize design effort for different subsets of the design ensemble. 
+implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. [Defect weights](definitions.md#defect-weights) can be specified to prioritize or de-priotize design quality for different portions of the design ensemble. Sequence design is performed subject to user-specified [hard constraints](definitions.md#hard-constraints) (e.g., sequence constraints imposed by the reaction pathway or biological sequences) and [soft constraints](definitions.md#soft-constraints) (e.g., design a set of toeholds to have comparable binding strength). 
 
 
 
   
 
 
-
-<<<<<<< HEAD
-=======
----
->>>>>>> a0fc3ad021a57bd513aa9eb00432e99461cbfeed
 
 ## Specify a sequence domain
 
