@@ -134,38 +134,70 @@ my_model = Model()
 my_tubes = [t1]
 my_design = Design(tubes=my_tubes,
     hard_constraints=[], soft_constraints=[],
-    weights=None, options=options, model=my_model)
+    weights=None, options=None, model=my_model)
 ```
 
-A `Design` possesses three main methods: `optimize()`, `evaluate()`, and `launch()`.
+A `Design` possesses three main methods:
 
-```python
-# run a single design and return the final result
-result = my_design.optimize()
-# launch a number of independenet trials of the design in the background
-optimization = my_design.launch(2, directory='design-checkpoints')
-```
+- [`optimize()`](#run-a-single-design): run a single design and return its result object
+- [`launch()`](#run-multiple-design-trials-in-parallel): run multiple designs in parallel in the background of your Python session
+- [`evaluate()`](#evaluate-a-design): evaluate a complete design that contains no wildcard nucleotides
 
-See the below sections for more information on inputs and results.
+Short examples of `optimize()` and `launch()` are given below for the design above. A separate example is provided for `evaluate()`, since that functionality requires fixed sequences without wildcard bases.
 
 ---
 
-## Run a complex design job
+## Run a single design
 
-For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a `Design` object.
+Once a `Design` has been created, `optimize` provides a simple way to run the design algorithm once, returning the final result:
 
 ```python
-my_design = complex_design(complexes=[c1, c2],
-    hard_constraints=[], soft_constraints=[],
-    weights=None, options=options, model=my_model)
-
-result = my_design.optimize()
+my_result = my_design.optimize()
+my_result
 ```
 
----
+Output:
 
+> <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="700" />
 
-## Evaluate a test tube design
+The keyword `restart` may be included to run a design from a previously saved intermediate result (see [Running from a prior design result](#running-from-a-prior-design-result)).
+
+## Run multiple design trials in parallel
+
+Since the design algorithm is a random process, many times it is useful to run multiple trials to generate different candidate solutions for the experimental objective. These trials can be run completely independently and in parallel. `launch()` provides a convenient way to launch multiple trials, each on their own CPU thread:
+
+```python
+my_optimization = my_design.launch(2) # run 2 trials of the design
+```
+
+Whereas `optimize()` returns a finished result, `launch()` returns an optimization object holding slots for *future* results. The design trials will continue in the background. To wait for each trial to finish, use the `wait_for_results()` method:
+
+```python
+my_results = my_optimization.wait_for_results() # returns a list of completed DesignResult
+print(my_results[0]) # result of first trial
+```
+
+You may look at the last saved results for an optimization using the `current_results()` method:
+
+```python
+my_unfinal_results = my_optimization.current_results()
+```
+
+To stop all of the designs, use the `stop()` method:
+
+```python
+my_optimization.stop(force=True) # stop even if no checkpoints have been saved
+```
+
+Conveniently, `launch()` may also be used with a file directory to store intermediate results:
+
+```python
+my_optimization = my_design.launch(2, directory='design-checkpoints', interval=600)
+```
+
+With this functionality, even if you stop your designs or close your session, you can still fetch the best results accomplished. A result will be saved every `interval` seconds (default 600, i.e. 10 minutes).
+
+## Evaluate a design
 
 The `.evaluate()` method on a `Design` is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
 
@@ -181,13 +213,33 @@ dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
 tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
 
 tube_des = Design([tube], model=Model(material='dna'))
-results = tube_des.evaluate()
+evaluated_result = tube_des.evaluate()
+
+evaluated_result
 ```
+
+Output:
+
+> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
 
 The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
 ---
 
+
+## Run a complex design job
+
+For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a `Design` object.
+
+```python
+my_design = complex_design(complexes=[c1, c2],
+    hard_constraints=[], soft_constraints=[],
+    weights=None, options=options, model=my_model)
+
+result = my_design.optimize()
+```
+
+---
 
 ## Specify hard constraints
 
