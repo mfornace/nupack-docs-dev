@@ -97,9 +97,10 @@ C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0)
 C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0) 
 ```
 
-Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble. 
+!!! note
+    Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble. 
 
-!!! Note
+!!! warning
     The bonus will change the MFE free energy. 
 ---
 
@@ -107,37 +108,17 @@ Note that a bonus applied to the complex free energy is equivalent to the same b
 A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
 ```python
-# define target test tubes
-t1 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, 
-    max_size=3, include=[c3], exclude=[c1], name='Tube t1')
-t2 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, 
-    max_size=3, include=[c3], exclude=[c1], name='Tube t2')
+# specify target tube
+t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8}, 
+    max_size=3, include=[C3, [B, B, B, B]], exclude=[C4], name='t1')
 ```
 
-Note that `include` and `exclude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
-Also, note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
+!!! note
+    Note that `include` and `exclude` accept both target complex identifiers (e.g., `C3`) and strand orderings (e.g., `[B, B, B, B]`). 
 
-```python
-# specify tubes by their names and on-target complexes with on-target concentrations
-t1 = TargetTube({C1: 1e-6}, include=[C1], name='t1')
+    Note that for an off-target specified using a target complex identifier (e.g., `C3`), the target structure is ignored since by definition, there is no target structure for an off-target complex. 
 
-# specify unnamed off-targets each denoted by a strand ordering
-t2 = TargetTube({C2: 1e-6}, include=[C2, [D, D, D], [D, D, D, D]], name='t2')
-
-# Mix the two kinds of specifications
-t3 = TargetTube({C1: 0.000001, C2: 1e-3}, include=[C4, [D, D, D]], name='t3')
-
-# all complexes of up to 2 strands that are not on-targets in tube `T4'
-t4 = TargetTube({C1: 2e-4, C3: 3e-5}, max_size=2, name='t4')
-
-# specify off-targets as the sum of sets
-t5 = TargetTube({C4: 4e-6, C5: 5e-7}, max_size=2, include=[C3, [B, B, B, B]], name='t5')
-
-# specify off-targets as the difference of sets
-t6 = TargetTube({C5: 6e-8}, max_size=3, exclude=[C3, [B, B]], name='t6')
-```
-
----
+    Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`. 
 
 ## Run a test tube design job
 
