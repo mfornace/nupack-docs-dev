@@ -60,7 +60,7 @@ The reverse complement of domain `a` is denoted `~a`.
 ---
 
 ## Specify a target complex
-A `TargetComplex` is an on-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)), an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus notation, or DU+ notation), and an on-target complex name (keyword `name`):
+A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified wtih an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus notation, or DU+ notation): 
 
 <!-- ```python
 # dot-parens-plus notation
@@ -86,6 +86,9 @@ C4 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
 # run-length encoded dot-parens-plus notation
 C5 = TargetComplex([B, C], '.10(10+)10.14', name='C5')
 ```
+
+!!! note
+    The target structure will be used in all target test tubes in which a complex appears as an on-target complex and will be ignored in those target test tubes where a complex appears as an off-target complex. 
 
 In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing): 
 
