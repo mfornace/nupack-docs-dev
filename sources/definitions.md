@@ -556,39 +556,30 @@ Code | Nucleotides
 Sequence design can be performed subject to **hard constraints** that prohibit sequences violating the constraints. 
 The following types of hard sequence constraints can be imposed [@Wolfe17]:
 
-- **Assignment Constraint**
-Nucleotide $a$ is constrained to have a specified sequence
+- **Assignment Constraint:** Nucleotide $a$ is constrained to have a specified sequence
 (e.g., `A`, `C`, `G`, `U` or any of the IUPAC degenerate nucleotide codes.
 
-- **Match Constraint**
-Two nucleotides $a$ and $b$ are constrained to be identical 
+- **Match Constraint:** Two nucleotides $a$ and $b$ are constrained to be identical 
 (e.g., if a strand species appears in more than one on-target complex, corresponding nucleotides are constrained to have
 the same sequence in all complexes). 
 
-- **Watson--Crick Constraint**
-Two nucleotides $a$ and $b$ are constrained to be Watson-Crick 
+- **Watson--Crick Constraint:** Two nucleotides $a$ and $b$ are constrained to be Watson-Crick 
 complements (by default, Watson--Crick constraints are implied for all base pairs present in on-target structures). 
 
-- **Complementarity Constraint**
-Two  nucleotides $a$ and $b$ are constrained to be Watson--Crick or wobble complements. 
+- **Complementarity Constraint:** Two  nucleotides $a$ and $b$ are constrained to be Watson--Crick or wobble complements. 
 
-- **Composition Constraint**
-Consecutive nucleotides $a,\dots,b$ are constrained to have a sequence composition in a specified range (e.g., a desired `GC` content can be achieved by constraining the fraction of 'S' nucleotides to fall in the range $[f^{\rm min}, f^{\rm max}]$).
+- **Composition Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to have a sequence composition in a specified range (e.g., a desired `GC` content can be achieved by constraining the fraction of 'S' nucleotides to fall in the range $[f^{\rm min}, f^{\rm max}]$).
 
-- **Similarity Constraint**
-Consecutive nucleotides $a,\dots,b$ are constrained to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., 
+- **Similarity Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., 
 the fraction of nucleotides matching an mRNA sequence can be constrained to fall in the range $[f^{\rm min}, f^{\rm max}]$). 
 
-- **Pattern Prevention Constraint**
-Consecutive nucleotides $a,\dots,b$ are constrained not to contain a specified subsequence of length $n\le b-a+1$ (e.g., prevention of `GGGG`, 
+- **Pattern Prevention Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained not to contain a specified subsequence of length $n\le b-a+1$ (e.g., prevention of `GGGG`, 
 which is prone to forming `G`-quadruplexes that are not accounted for in nearest-neighbor free energy models). 
 
-- **Library Constraint**
-Consecutive nucleotides $a,\dots,b$ are constrained to be selected from a specified library of $m$ sequences of length $n=b-a+1$ (e.g., 
+- **Library Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be selected from a specified library of $m$ sequences of length $n=b-a+1$ (e.g., 
 a library of toehold sequences or a library of codons). 
 
-- **Window Constraint**
-Consecutive nucleotides $a,\dots,b$ are constrained to be a subsequence of a specified source sequence of length $n\ge b-a+1$ 
+- **Window Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be a subsequence of a specified source sequence of length $n\ge b-a+1$ 
 (e.g., the source sequence is an mRNA), or more generally, a subsequence of one of multiple specified source sequences. 
 
 Let $\mathcal R$ denote the user-specified set of hard constraints for a design problem. 
@@ -602,22 +593,18 @@ Here, $f_k(\phi_\Psi)\in[0,1]$ is the penalty function for soft constraint $k$ a
  Soft constraints can reduce design cost relative to the corresponding hard constraint by making it easier for the optimization process to identify candidate sequence mutations. Soft constraints can also increase flexibility by enabling specification of new design goals (e.g., designing a set of toeholds to have comparable binding strength) for which there is no hard constraint analog. 
 The following types of soft constraints can be imposed:
 
-- **Similarity**
-Penalize consecutive nucleotides $a,\dots,b$ if they fail to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., 
+- **Similarity:** Penalize consecutive nucleotides $a,\dots,b$ if they fail to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., 
 to drive the fraction of nucleotides matching an mRNA sequence to fall in the range $[f^{\rm min}, f^{\rm max}]$). 
 
-- **Pattern prevention**
-Penalize consecutive nucleotides $a,\dots,b$ if they contain a specified subsequence of length $n\le b-a+1$ (e.g., to discourage use of `GGGG`, 
+- **Pattern prevention:** Penalize consecutive nucleotides $a,\dots,b$ if they contain a specified subsequence of length $n\le b-a+1$ (e.g., to discourage use of `GGGG`, 
 which is prone to forming `G`-quadruplexes that are not accounted for in nearest-neighbor free energy models). 
 
-- **Sequence symmetry minimization**
-Penalize consecutive nucleotides $a,\dots,b$ of a specified *word length*, $L_w$, if [@Seeman82]: 1) a word appears in more than one location in the design 
+- **Sequence symmetry minimization:** Penalize consecutive nucleotides $a,\dots,b$ of a specified *word length*, $L_w$, if [@Seeman82]: 1) a word appears in more than one location in the design 
 (unless sequence domains are explicitly constrained to be identical), 2) a word and its reverse complement both appear in the design but they are specified in a target structure not to form a duplex, 
 3) a word that appears in the design is self-complementary. Sequence symmetry minimization is a negative design heuristic [@Dirks04] that destabilizes formation of off-target structures by ensuring they cannot form without mismatches in any subsequence of the word length. 
 
 
-- **Toehold free energy equalization**
-Consider a set of toeholds and toehold complements that are intended to form duplexes with [structure free energies](definitions.md#structure-free-energy) that match each other or a specified reference free energy. This soft constraint will penalize toeholds and their complements to the extent they deviate from the desired duplex structure free energy. 
+- **Toehold free energy equalization:** Consider a set of toeholds and toehold complements that are intended to form duplexes with [structure free energies](definitions.md#structure-free-energy) that match each other or a specified reference free energy. This soft constraint will penalize toeholds and their complements to the extent they deviate from the desired duplex structure free energy. 
 
 Let $\mathcal S$ denote the user-specified set of soft constraints for a design problem. 
 
