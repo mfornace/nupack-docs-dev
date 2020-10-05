@@ -135,27 +135,12 @@ my_design = tube_design(tubes=my_tubes,
     defect_weights=None, options=None, model=my_model)
 ```
 
-<<<<<<< HEAD
-A `tube_design` object supports two methods for performing sequence design: 
+A `tube_design` object supports two methods for performing sequence design:
 
-- [`run()`](design.md#run-a-single-design-trial-in-the-foreground): run a single design trial in the foreground. 
-- [`launch()`](design.md#launch-multiple-design-trials-in-parallel-in-the-background): start a specified number of design trials that run in the background; optionally save design progress to checkpoint files. 
+- [`run()`](design.md#run-a-single-design-trial-in-the-foreground): run a single design trial in the foreground.
+- [`launch()`](design.md#launch-multiple-design-trials-in-parallel-in-the-background): start a specified number of design trials that run in the background; optionally save design progress to checkpoint files.
 
-See below for short examples using `run()` and `launch()` for the above `tube_design`. 
-=======
-The return design object possesses three main methods:
-
-- [`run()`](#run-a-single-design): run a single design and return its result object
-- [`launch()`](#run-multiple-design-trials-in-parallel): run multiple designs in parallel in the background of your Python session
-- [`evaluate()`](#evaluate-a-design): evaluate a complete design that contains no wildcard nucleotides
-
-!!! note
-    fold this text in
-
-    A `tube_design` object supports two methods for performing sequence design: `launch()` starts a specified number of design trials that run in the background and offers the option to save design progress in checkpoint files; `run()` starts a single design trial that runs in the foreground.
-
-Short examples of `run()` and `launch()` are given below for the design above. A separate example is provided for `evaluate()`, since that functionality requires fixed sequences without wildcard bases.
->>>>>>> d3ac53b9c7c3a7d61feea4e44a8e418e9e937a72
+See below for short examples using `run()` and `launch()` for the above `tube_design`.
 
 
 !!! note
@@ -163,13 +148,9 @@ Short examples of `run()` and `launch()` are given below for the design above. A
 
 ---
 
-<<<<<<< HEAD
 
 
 ### Run a single design trial in the foreground
-=======
-### Run a single design
->>>>>>> d3ac53b9c7c3a7d61feea4e44a8e418e9e937a72
 
 Once a design has been created via `complex_design` or `tube_design`, `run()` provides a simple way to run the design algorithm once, returning the final result:
 
@@ -214,16 +195,32 @@ To stop all of the designs, use the `stop()` method:
 my_optimization.stop(force=True) # stop even if no checkpoints have been saved
 ```
 
-Conveniently, `launch()` may also be used with a file directory to store intermediate results:
+Conveniently, `launch()` may also be used to load and store intermediate results. With this functionality, even if you stop your designs or close your session, you can still fetch the best results accomplished. A result will be saved every `interval` seconds (default 600, i.e. 10 minutes). To specify an output directory in which checkpoints will be saved, use the `checkpoint` keyword:
 
 ```python
-my_optimization = my_design.launch(2, directory='design-checkpoints', interval=600)
+my_optimization = my_design.launch(2, checkpoint='new-checkpoints', interval=600)
 ```
 
-With this functionality, even if you stop your designs or close your session, you can still fetch the best results accomplished. A result will be saved every `interval` seconds (default 600, i.e. 10 minutes).
+To restart designs from previous results, use the `restart` keyword. This may be provided as either a list of `DesignResult` objects generated from previous designs, or as a string referring to a directory.
 
+To use result objects from previous design trials that were undertaken, supply a list of results:
 
+```python
+# obtain my_unfinal_results from above
+my_optimization = my_design.launch(2, checkpoint='new-checkpoints', restart=my_unfinal_results)
+```
 
+To use results from an existing checkpoint directory, supply the directory name instead:
+
+```python
+my_optimization = my_design.launch(2, checkpoint='new-checkpoints', restart='old-checkpoints')
+```
+
+If no results exist in the supplied `restart` directory, the design will be started afresh without any error messages. This means that you can easily create a rerunnable design by supplying the same directory to `checkpoint` and `restart`:
+
+```python
+my_optimization = my_design.launch(2, checkpoint='checkpoints', restart='checkpoints')
+```
 
 ### Evaluate a design
 
