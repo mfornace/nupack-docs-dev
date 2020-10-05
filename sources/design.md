@@ -135,9 +135,9 @@ my_design = tube_design(tubes=my_tubes,
     defect_weights=None, options=None, model=my_model)
 ```
 
-A `Design` possesses three main methods:
+The return design object possesses three main methods:
 
-- [`optimize()`](#run-a-single-design): run a single design and return its result object
+- [`run()`](#run-a-single-design): run a single design and return its result object
 - [`launch()`](#run-multiple-design-trials-in-parallel): run multiple designs in parallel in the background of your Python session
 - [`evaluate()`](#evaluate-a-design): evaluate a complete design that contains no wildcard nucleotides
 
@@ -146,7 +146,7 @@ A `Design` possesses three main methods:
 
     A `tube_design` object supports two methods for performing sequence design: `launch()` starts a specified number of design trials that run in the background and offers the option to save design progress in checkpoint files; `run()` starts a single design trial that runs in the foreground.
 
-Short examples of `optimize()` and `launch()` are given below for the design above. A separate example is provided for `evaluate()`, since that functionality requires fixed sequences without wildcard bases.
+Short examples of `run()` and `launch()` are given below for the design above. A separate example is provided for `evaluate()`, since that functionality requires fixed sequences without wildcard bases.
 
 
 !!! note
@@ -154,14 +154,12 @@ Short examples of `optimize()` and `launch()` are given below for the design abo
 
 ---
 
-
-
 ### Run a single design
 
-Once a `Design` has been created, `optimize` provides a simple way to run the design algorithm once, returning the final result:
+Once a design has been created via `complex_design` or `tube_design`, `run()` provides a simple way to run the design algorithm once, returning the final result:
 
 ```python
-my_result = my_design.optimize()
+my_result = my_design.run()
 my_result
 ```
 
@@ -182,7 +180,7 @@ Since the design algorithm is a random process, many times it is useful to run m
 my_optimization = my_design.launch(2) # run 2 trials of the design
 ```
 
-Whereas `optimize()` returns a finished result, `launch()` returns an optimization object holding slots for *future* results. The design trials will continue in the background. To wait for each trial to finish, use the `wait_for_results()` method:
+Whereas `run()` returns a finished result, `launch()` returns an optimization object holding slots for *future* results. The design trials will continue in the background. To wait for each trial to finish, use the `wait_for_results()` method:
 
 ```python
 my_results = my_optimization.wait_for_results() # returns a list of completed DesignResult
@@ -214,7 +212,7 @@ With this functionality, even if you stop your designs or close your session, yo
 
 ### Evaluate a design
 
-The `.evaluate()` method on a `Design` is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
+The `.evaluate()` method is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
 
 ```python
 dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
@@ -227,7 +225,7 @@ dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
 
 tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
 
-tube_des = Design([tube], model=Model(material='dna'))
+tube_des = tube_design([tube], model=Model(material='dna'))
 evaluated_result = tube_des.evaluate()
 
 evaluated_result
@@ -237,7 +235,7 @@ Output:
 
 > <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
 
-The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
+The resultant `DesignResult` object is the same as from running `.run()`, but no design will take place, but `.evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
 ---
 
@@ -265,7 +263,7 @@ my_model = Model()
 my_complexes = [C1, C2]
 my_design = complex_design(complexes=[C1, C2],
     hard_constraints=[], soft_constraints=[],
-    weights=None, options=options, model=my_model)
+    defect_weights=None, options=options, model=my_model)
 ```
 
 A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above).
@@ -277,14 +275,14 @@ A `complex_design` object supports the `launch()` and `run()` methods as a `tube
 
 ## Run a complex design job
 
-For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a `Design` object.
+For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a the analogous output of `tube_design`.
 
 ```python
 my_design = complex_design(complexes=[c1, c2],
     hard_constraints=[], soft_constraints=[],
-    weights=None, options=options, model=my_model)
+    defect_weights=None, options=options, model=my_model)
 
-result = my_design.optimize()
+result = my_design.run()
 ```
 
 ---
@@ -721,29 +719,6 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
     ``` -->
 
 
-
-
-## Evaluate a test tube design
-
-The `.evaluate()` method on a `Design` is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
-
-```python
-dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
-dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
-
-sl1 = TargetStrand([dl1], name='sl1')
-sl2 = TargetStrand([dl2], name='sl2')
-
-dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
-
-tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
-
-tube_des = Design([tube], model=Model(material='dna'))
-results = tube_des.evaluate()
-```
-
-The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
-
 ---
 
 ## Job options
@@ -801,7 +776,7 @@ The information logged for each of these given a non-empty string is as follows:
 
 ## Job results
 
-Both `Design.optimize()` and `Design.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
+Both `.run()` and `.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
 
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
@@ -820,8 +795,8 @@ C = TargetComplex([A, B], '(20+)20', name='C')
 
 tube = TargetTube({C: 1e-6}, max_size=2, name='tube1')
 
-my_design = Design([tube], model=Model())
-result = my_design.optimize()
+my_design = tube_design([tube], model=Model())
+result = my_design.run()
 ```
 
 ---
@@ -948,7 +923,7 @@ result = DesignResult.load('design-result.o')
 The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `DesignResult` object.
 
 ```python
-newer_result = my_design.optimize(restart=result)
+newer_result = my_design.run(restart=result)
 ```
 
 ---
@@ -964,7 +939,7 @@ When "calling" the design to start the optimization process, two additional argu
 ```python
 from nupack.design import TimeInterval, WriteToFileCheckpoint
 
-result = my_design.optimize(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
+result = my_design.run(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
 ```
 
 ---
