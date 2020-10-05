@@ -6,15 +6,15 @@ To enable **reaction pathway engineering** of dynamic hybridization cascades (e.
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
 
-We recommend using the [multi-tube design ensemble](definitions.md#multi-tube-design), as it captures concentration and crosstalk effects that are critical in most experimental settings (see the example below regarding the advantages of test tube design over complex design). Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as subsidiary special cases [@Wolfe17]. 
+We recommend using the [multi-tube design ensemble](definitions.md#multi-tube-design), as it captures concentration and crosstalk effects that are critical in most experimental settings (see the example below regarding the advantages of test tube design over complex design). Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as subsidiary special cases [@Wolfe17].
 
 !!! Example
     <p align="center">
     <img src="/figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
     </p>
-    **Figure: The advantages of test tube design over complex design.** **Top: Complex design.** Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube. 
-    **Bottom: Test tube design.** Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no 
-    new information and no unpleasant surprises since the design and analysis ensembles are identical. 
+    **Figure: The advantages of test tube design over complex design.** **Top: Complex design.** Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube.
+    **Bottom: Test tube design.** Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no
+    new information and no unpleasant surprises since the design and analysis ensembles are identical.
 
 For reaction pathway engineering, sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structural engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
@@ -22,16 +22,16 @@ For large-scale structural engineering including the possibility of pseudoknots,
 
 In a [multi-tube design ensemble](definitions.md#multi-tube-design-ensemble), each target test tube contains a set of desired "on-target" complexes, each with a target
 secondary structure and target concentration, and a set of undesired "off-target" complexes, each with vanishing target concentration. Optimization of the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect)
-implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. [Defect weights](definitions.md#defect-weights) can be specified to prioritize or de-priotize design quality for different portions of the design ensemble. Sequence design is performed subject to user-specified [hard constraints](definitions.md#hard-constraints) (e.g., sequence constraints imposed by the reaction pathway or biological sequences) and [soft constraints](definitions.md#soft-constraints) (e.g., design a set of toeholds to have comparable binding strength). 
+implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. [Defect weights](definitions.md#defect-weights) can be specified to prioritize or de-priotize design quality for different portions of the design ensemble. Sequence design is performed subject to user-specified [hard constraints](definitions.md#hard-constraints) (e.g., sequence constraints imposed by the reaction pathway or biological sequences) and [soft constraints](definitions.md#soft-constraints) (e.g., design a set of toeholds to have comparable binding strength).
 
 
 
-  
+
 
 
 
 ## Specify a domain
-A `domain` is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5$'$ to 3$'$ using [IUPAC degenerate nucleotide codes](definitions.md#IUPAC-degenerate-nucleotide-codes)) and a domain name (keyword `name`). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats: 
+A `domain` is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5$'$ to 3$'$ using [IUPAC degenerate nucleotide codes](definitions.md#IUPAC-degenerate-nucleotide-codes)) and a domain name (keyword `name`). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats:
 
 ```python
 a = Domain('AAAA',       name='a')
@@ -46,30 +46,30 @@ g = Domain('N10',        name='g')
 ---
 
 ## Specify a target strand
-A `TargetStrand` is a single RNA or DNA molecule specified as a sequence (specified 5$'$ to 3$'$ in terms of defined domains) and a target strand name (keyword `name`): 
+A `TargetStrand` is a single RNA or DNA molecule specified as a sequence (specified 5$'$ to 3$'$ in terms of defined domains) and a target strand name (keyword `name`):
 ```python
 A = TargetStrand([a, b, g], name='Strand A')
 B = TargetStrand([d, ~e],   name='Strand B')  # ~e denotes the reverse complement of e
 C = TargetStrand([e, a, f], name='Strand C')
 D = TargetStrand([d, d, d], name='Strand D')
 ```
-The reverse complement of domain `a` is denoted `~a`. 
+The reverse complement of domain `a` is denoted `~a`.
 
 !!! Note
-    Note that starting with NUPACK 4 and the all-new NUPACK Python module, we no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax. 
+    Note that starting with NUPACK 4 and the all-new NUPACK Python module, we no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
 ---
 
 ## Specify a target complex
-A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified with an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus, or DU+ notation): 
+A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified with an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus, or DU+ notation):
 
 <!-- ```python
 # dot-parens-plus notation
-c1 = TargetComplex([A], structure='........(........)', name='c1')  
+c1 = TargetComplex([A], structure='........(........)', name='c1')
 
 # run-length-encoded dot-parens-plus notation
-c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2') 
+c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2')
 # DU+ notation
-c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')  
+c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 ``` -->
 
 
@@ -90,23 +90,23 @@ C5 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C5')
 ```
 
 !!! note
-    The target structure will be used in all target test tubes in which a complex appears as an on-target complex and will be ignored in those target test tubes where a complex appears as an off-target complex. 
+    The target structure will be used in all target test tubes in which a complex appears as an on-target complex and will be ignored in those target test tubes where a complex appears as an off-target complex.
 
-In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing): 
+In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):
 
 ```python
 # destabilize C6 by 1 kcal/mol
-C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0) 
+C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0)
 
 # stabilize C7 by 10 kcal/mol
-C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0) 
+C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 ```
 
 !!! note
-    Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble. 
+    Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble.
 
 !!! warning
-    Note to Mark: the bonus will change the MFE free energy. 
+    Note to Mark: the bonus will change the MFE free energy.
 ---
 
 ## Specify a target tube
@@ -114,16 +114,16 @@ A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-targ
 
 ```python
 # specify target tube
-t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8}, 
+t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
     max_size=3, include=[C3, [B, B, B, B]], exclude=[C4], name='t1')
 ```
 
 !!! note
-    Note that `include` and `exclude` accept both target complex identifiers (e.g., `C3`) and strand orderings (e.g., `[B, B, B, B]`). 
+    Note that `include` and `exclude` accept both target complex identifiers (e.g., `C3`) and strand orderings (e.g., `[B, B, B, B]`).
 
-    Note that for an off-target specified using a target complex identifier (e.g., `C3`), the target structure is ignored since by definition, there is no target structure for an off-target complex. 
+    Note that for an off-target specified using a target complex identifier (e.g., `C3`), the target structure is ignored since by definition, there is no target structure for an off-target complex.
 
-    Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`. 
+    Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
 
 ## Run a test tube design job
 
@@ -142,14 +142,9 @@ A `Design` possesses three main methods: `optimize()`, `evaluate()`, and `launch
 ```python
 # run a single design and return the final result
 result = my_design.optimize()
-# evaluate a design with pre-determined sequences
-result = my_design.evaluate()
 # launch a number of independenet trials of the design in the background
 optimization = my_design.launch(2, directory='design-checkpoints')
 ```
-
-!!!warning
-    evaluate() doesn't work here, the input domains are not designed yet
 
 See the below sections for more information on inputs and results.
 
@@ -168,6 +163,31 @@ result = my_design.optimize()
 ```
 
 ---
+
+
+## Evaluate a test tube design
+
+The `.evaluate()` method on a `Design` is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
+
+```python
+dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
+dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
+
+sl1 = TargetStrand([dl1], name='sl1')
+sl2 = TargetStrand([dl2], name='sl2')
+
+dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
+
+tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
+
+tube_des = Design([tube], model=Model(material='dna'))
+results = tube_des.evaluate()
+```
+
+The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
+
+---
+
 
 ## Specify hard constraints
 
@@ -481,6 +501,20 @@ The user may wish to alter the relative weighting of defect contributions within
 You can define custom weights by constructing a `Weights` object from the set of `TargetTube`s that will be designed.
 
 ```python
+a1 = Domain('N5', name='a1')
+a2 = Domain('N5', name='a2')
+b = Domain('N10', name='b')
+
+A = TargetStrand([a1, a2], name='A')
+B = TargetStrand([b], name='B')
+
+hetero = TargetComplex([A, B], structure='(10+)10', name='hetero')
+homo = TargetComplex([A, A], structure='(10+)10', name='homo')
+
+t1 = TargetTube({hetero: 1e-8}, name='t1')
+t2 = TargetTube({homo: 1e-9, hetero: 1e-10}, name='t2')
+
+my_tubes = [t1, t2]
 weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
@@ -494,32 +528,53 @@ Weights may be freely accessed manipulated by slicing on a subset of 4 axes (in 
 For instance:
 
 ```python
-weights[:, :, :, a] *= 2
+weights[:, :, :, a1] *= 2
 weights[:, :, A] = 4
 weights[t2] = 2
-weights[t1, c1] = 5,
-weights[:, :, A, b] = 0.75
-weights[t2, c3, D, a] = 0.5
-weights[t2, :, :, d] = 3
+weights[t1, hetero] = 5
+weights[:, :, A, a2] = 0.75
+weights[t2, homo, :, a1] = 0.5
+weights[t2, :, :, b] = 3
 ```
 
-!!!warning
-    fix the weights, some tubes etc dont belong
-
-Weights may be printed or displayed by similar slicing:
+Weights may be displayed in tabular format in a notebook by running the following cell:
 
 ```python
 weights
 ```
 
+Output:
+
 > <img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
 
+Or they may be printed in ASCII format using the `print` function:
+
+```python
+print(weights)
+```
+
+Output:
+
+> ```
+>                             weight
+> tube complex strand domain
+> t1   hetero  A      a1        5.00
+>                     a2        0.75
+>              B      b         5.00
+> t2   homo    A      a1        0.50
+>                     a2        0.75
+>      hetero  A      a1        2.00
+>                     a2        0.75
+>              B      b         3.00
+> ```
+
+<!--
 ```python
 print(weights[t1])
 print(weights[t1, c2])
 print(weights[t1, c2, A])
 print(weights[t1, c2, :, d])
-```
+``` -->
 
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.frame`.
 
@@ -628,7 +683,7 @@ The information logged for each of these given a non-empty string is as follows:
 
 ## Job results
 
-Both `complex_design` and `tube_design` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
+Both `Design.optimize()` and `Design.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
 
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
