@@ -60,7 +60,7 @@ The reverse complement of domain `a` is denoted `~a`.
 ---
 
 ## Specify a target complex
-A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified wtih an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus notation, or DU+ notation): 
+A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified with an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus, or DU+ notation): 
 
 <!-- ```python
 # dot-parens-plus notation
@@ -78,13 +78,15 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))\   # continue on new line
     ((((((((((+))))))))))..............', name='C1')
 
-# DU+ notation
-C2 = TargetComplex([D, D], 'D30 +', name='C2')
-C3 = TargetComplex([B, B, B], 'D10(D10 + D10 +)', name='C3')
-C4 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
-
 # run-length encoded dot-parens-plus notation
-C5 = TargetComplex([B, C], '.10(10+)10.14', name='C5')
+C2 = TargetComplex([B, C], '.10(10+)10.14', name='C2')
+
+# DU+ notation
+C3 = TargetComplex([D, D], 'D30 +', name='C3')
+C4 = TargetComplex([B, B, B], 'D10(D10 + D10 +)', name='C4')
+C5 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C5')
+
+
 ```
 
 !!! note
@@ -104,7 +106,7 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
     Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble. 
 
 !!! warning
-    The bonus will change the MFE free energy. 
+    Note to Mark: the bonus will change the MFE free energy. 
 ---
 
 ## Specify a target tube
