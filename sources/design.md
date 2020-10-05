@@ -171,7 +171,7 @@ my_design = complex_design(complexes=[C1, C2],
 A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above). 
 
 !!! note
-    Note that a multi-complex design ensemble is equivalent to a multi-tube design ensemble with each on-target complex placed in a separate test tube. As a result, there are no off-target complexes in the design ensemble. For this reason, we strongly recommend use of tube design over complex design. 
+    Note that a `complex_design` job is equivalent to a `tube_design` job with each on-target complex placed in a separate test tube containing no off-target complexes. For this reason, we strongly recommend use of test tube design formulations over complex design formulations so that off-target complexes are present in the design ensemble and the design algorithm can actively design against their formation.  
 
 ---
 
@@ -630,7 +630,6 @@ results = tube_des.evaluate()
 
 The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
----
 ---
 
 ## Job options
