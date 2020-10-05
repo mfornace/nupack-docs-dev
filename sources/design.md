@@ -30,8 +30,8 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 
 
 
-## Specify a sequence domain
-
+## Specify a domain
+A `domain` is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5$'$ to 3$'$ using [IUPAC degenerate nucleotide codes](definitions.md#IUPAC-degenerate-nucleotide-codes)) and a domain name (keyword `name`). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats: 
 
 ```python
 a = Domain('AAAA',       name='a')
@@ -45,31 +45,38 @@ g = Domain('N10',        name='g')
 
 ---
 
-## Specify a strand
+## Specify a target strand
+A `TargetStrand` is a single RNA or DNA molecule specified as a sequence (specified 5$'$ to 3$'$ in terms of defined domains) and a target strand name (keyword `name`): 
 ```python
-# Domains should not be specified inline
 A = TargetStrand([a, b, g], name='Strand A')
-B = TargetStrand([d, ~e],   name='Strand B')
+B = TargetStrand([d, ~e],   name='Strand B')  # ~e denotes the reverse complement of e
 C = TargetStrand([e, a, f], name='Strand C')
 D = TargetStrand([d, d, d], name='Strand D')
 ```
+The reverse complement of domain `a` is denoted `~a`. 
 
+!!! Note
+    Note that starting with NUPACK 4 and the all-new NUPACK Python module, we no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax. 
 ---
 
 ## Specify a target complex
+A `TargetComplex` is an on-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)), an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus notation, or DU+ notation), and an on-target complex name (keyword `name`):
 
-A `TargetComplex` is like a `Complex` but contains an on-target structure. It must be manually named.
+<!-- ```python
+# dot-parens-plus notation
+c1 = TargetComplex([A], structure='........(........)', name='c1')  
 
-```python
-c1 = TargetComplex([A], structure='........(........)', name='c1')
-c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2')
-c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
-```
+# run-length-encoded dot-parens-plus notation
+c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2') 
+# DU+ notation
+c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')  
+``` -->
 
 
 ```python
 # dot-parens-plus notation
-C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............', name='C1')
+C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))\   # continue on new line
+    ((((((((((+))))))))))..............', name='C1')
 
 # DU+ notation
 C2 = TargetComplex([D, D], 'D30 +', name='C2')
@@ -80,44 +87,35 @@ C4 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C4')
 C5 = TargetComplex([B, C], '.10(10+)10.14', name='C5')
 ```
 
-In certain experimental cases, it may be useful to add a bonus to a complex's free energy within a design context. This may help to handle cases where a complex is more or less stable than NUPACK parameters ordinarily predict. For such cases, an additional keyword `bonus` may be included during `TargetComplex` construction. The keyword is specified in kcal/mol; a negative value is stabilizing, and a positive value is destabilizing:
+In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing): 
 
 ```python
-C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0) # destabilize C6 by 1 kcal/mol
-C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0) # stabilize C7 by 10 kcal/mol
+# destabilize C6 by 1 kcal/mol
+C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0) 
+
+# stabilize C7 by 10 kcal/mol
+C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0) 
 ```
 
-Application of the bonus affects only complex free energies and concentrations; pair probabilities are unaffected.
+Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble. 
 
+!!! Note
+    The bonus will change the MFE free energy. 
 ---
 
 ## Specify a target tube
-
-
-A `TargetTube` is like a `Tube` but is specified by its on-target complex concentrations ($\Psi^\text{on}$):
+A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
 ```python
 # define target test tubes
-
-t1 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t1')
-t2 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, include=[c3], max_size=3, exclude=[c1], name='Tube t2')
+t1 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, 
+    max_size=3, include=[c3], exclude=[c1], name='Tube t1')
+t2 = TargetTube(targets={c1: 1e-8, c2: 1e-8}, 
+    max_size=3, include=[c3], exclude=[c1], name='Tube t2')
 ```
 
-Like in `Tube`, the remaining arguments specify the other complexes to consider in the test tube ensemble:
-
-- the `include` (default `None`): include an arbitrary list of other off-target complexes to consider
-- the `max_size` (default 1): add all complexes of up to `max_size` strands from the strands present in the targets.
-- the `exclude` (default `None`): explicitly remove these complexes from being considered from those auto-generated by `max_size`
-
-Note that the target complexes are prevented from being added to the offtargets $\Psi^\text{off}$ when processing ```max_size``` and ```include```.
-
-<!-- A test tube ensemble is defined in two steps. First, the ```add_tube``` method is used to add a new tube to the design with a given name and a dictionary mapping the names of on-target complexes ($\Psi^\text{on}$) in the tube to their concentrations. Concentrations are always in units of Molar (M). Second, the method ```add_off_targets``` specifies the set of off-target complexes ($\Psi^\text{off}$) in the tube through three keywords, which can be combined arbitrarily:
-
-* ```max_size```, integer in $[0,\infty]$, default=0: Adds all complexes of up to ```max_size``` composed of the strands of complexes in $\Psi^\text{on}$ to $\Psi^\text{off}$ such that $\Psi^\text{off} \cap \Psi^\text{on} = \varnothing$.
-* ```include```, list of strings or iterables of strings, default=```None```: Each item in ```explicit``` is either a name of a complex, name of single strand, or iterable of names of strands.
-The implied complexes are added to $\Psi^\text{off}$, provided they are not already in .
-* ```exclude```, list of strings or iterables of strings, default=```None```: Each item in ```exclude``` is either a name of a complex, name of single strand, or iterable of names of strands. -->
-
+Note that `include` and `exclude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
+Also, note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
 
 ```python
 # specify tubes by their names and on-target complexes with on-target concentrations
