@@ -27,7 +27,7 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 
 
 
-
+---
 
 
 ## Specify a domain
@@ -57,8 +57,8 @@ The reverse complement of domain `a` is denoted `~a`.
 
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, we no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
----
 
+---
 ## Specify a target complex
 A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified with an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus, or DU+ notation):
 
@@ -75,8 +75,7 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 
 ```python
 # dot-parens-plus notation
-C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))\   # continue on new line
-    ((((((((((+))))))))))..............', name='C1')
+C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............', name='C1')
 
 # run-length encoded dot-parens-plus notation
 C2 = TargetComplex([B, C], '.10(10+)10.14', name='C2')
@@ -105,10 +104,7 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 !!! note
     Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble.
 
-!!! warning
-    Note to Mark: the bonus will change the MFE free energy.
 ---
-
 ## Specify a target tube
 A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
@@ -125,69 +121,59 @@ t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
 
     Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
 
+
 ## Run a test tube design job
 
-The `Design` class is offered to create a complete multitube design.
+The `tube_design` class performs [constrained multi-tube design](definitions.md#constrained-multitube-design-problem) for a specified set of target test tubes (keyword `tubes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
+
 
 ```python
 my_model = Model()
 my_tubes = [t1]
-my_design = Design(tubes=my_tubes,
+my_design = tube_design(tubes=my_tubes,
     hard_constraints=[], soft_constraints=[],
-    weights=None, options=options, model=my_model)
+    defect_weights=None, options=options, model=my_model)
 ```
 
-A `Design` possesses three main methods: `optimize()`, `evaluate()`, and `launch()`.
+A `tube_design` object supports two methods for performing sequence design: `launch()` starts a specified number of design trials that run in the background and offers the option to save design progress in checkpoint files; `run()` starts a single design trial that runs in the foreground.
 
 ```python
-# run a single design and return the final result
-result = my_design.optimize()
-# launch a number of independenet trials of the design in the background
-optimization = my_design.launch(2, directory='design-checkpoints')
+# launch 3 independent design trials in the background
+my_des = my_design.launch(3)
+
+# save design progress in checkpoint files
+my_des_checkpoints = my_design.launch(3, directory='design-checkpoints')
+
+# run a single design trial and return the final result
+my_quick_des = my_design.run()
+
 ```
 
-See the below sections for more information on inputs and results.
+!!! note
+    `launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the user to run one or more long design trials in the background, with or without checkpointing. `run()` is a blocking command that is convenient when the user wants to run a single quick design trial while waiting for the results. 
+
 
 ---
 
 ## Run a complex design job
 
-For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a `Design` object.
+For convenience, the `complex_design` class enables specification of a constrained multi-complex design for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
+
 
 ```python
-my_design = complex_design(complexes=[c1, c2],
+my_model = Model()
+my_complexes = [C1, C2]
+my_design = complex_design(complexes=[C1, C2],
     hard_constraints=[], soft_constraints=[],
     weights=None, options=options, model=my_model)
-
-result = my_design.optimize()
 ```
 
----
+A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above). 
 
-
-## Evaluate a test tube design
-
-The `.evaluate()` method on a `Design` is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
-
-```python
-dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
-dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
-
-sl1 = TargetStrand([dl1], name='sl1')
-sl2 = TargetStrand([dl2], name='sl2')
-
-dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
-
-tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
-
-tube_des = Design([tube], model=Model(material='dna'))
-results = tube_des.evaluate()
-```
-
-The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
+!!! note
+    Note that a multi-complex design ensemble is equivalent to a multi-tube design ensemble with each on-target complex placed in a separate test tube. As a result, there are no off-target complexes in the design ensemble. For this reason, we strongly recommend use of tube design over complex design. 
 
 ---
-
 
 ## Specify hard constraints
 
@@ -545,7 +531,7 @@ weights
 
 Output:
 
-> <img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
+<img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
 
 Or they may be printed in ASCII format using the `print` function:
 
@@ -555,26 +541,20 @@ print(weights)
 
 Output:
 
-> ```
->                             weight
-> tube complex strand domain
-> t1   hetero  A      a1        5.00
->                     a2        0.75
->              B      b         5.00
-> t2   homo    A      a1        0.50
->                     a2        0.75
->      hetero  A      a1        2.00
->                     a2        0.75
->              B      b         3.00
-> ```
+```
+                            weight
+tube complex strand domain
+t1   hetero  A      a1        5.00
+                    a2        0.75
+             B      b         5.00
+t2   homo    A      a1        0.50
+                    a2        0.75
+     hetero  A      a1        2.00
+                    a2        0.75
+             B      b         3.00
+```
 
-<!--
-```python
-print(weights[t1])
-print(weights[t1, c2])
-print(weights[t1, c2, A])
-print(weights[t1, c2, :, d])
-``` -->
+
 
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.frame`.
 
@@ -626,6 +606,31 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
     design.add_global_objective(weight=2)
     ``` -->
 
+
+
+
+## Evaluate a test tube design
+
+The `.evaluate()` method on a `Design` is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
+
+```python
+dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
+dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
+
+sl1 = TargetStrand([dl1], name='sl1')
+sl2 = TargetStrand([dl2], name='sl2')
+
+dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
+
+tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
+
+tube_des = Design([tube], model=Model(material='dna'))
+results = tube_des.evaluate()
+```
+
+The resultant `DesignResult` object is the same as from running `.optimize()`, but no design will take place. `evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
+
+---
 ---
 
 ## Job options
