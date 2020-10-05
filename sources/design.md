@@ -135,28 +135,22 @@ my_design = tube_design(tubes=my_tubes,
     defect_weights=None, options=None, model=my_model)
 ```
 
-A `Design` possesses three main methods:
+A `tube_design` object supports two methods for performing sequence design: 
 
-- [`optimize()`](#run-a-single-design): run a single design and return its result object
-- [`launch()`](#run-multiple-design-trials-in-parallel): run multiple designs in parallel in the background of your Python session
-- [`evaluate()`](#evaluate-a-design): evaluate a complete design that contains no wildcard nucleotides
+- [`run()`](design.md#run-a-single-design-trial-in-the-foreground): run a single design trial in the foreground. 
+- [`launch()`](design.md#launch-multiple-design-trials-in-parallel-in-the-background): start a specified number of design trials that run in the background; optionally save design progress to checkpoint files. 
 
-!!! note
-    fold this text in
-
-    A `tube_design` object supports two methods for performing sequence design: `launch()` starts a specified number of design trials that run in the background and offers the option to save design progress in checkpoint files; `run()` starts a single design trial that runs in the foreground.
-
-Short examples of `optimize()` and `launch()` are given below for the design above. A separate example is provided for `evaluate()`, since that functionality requires fixed sequences without wildcard bases.
+See below for short examples using `run()` and `launch()` for the above `tube_design`. 
 
 
 !!! note
-    `launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the user to run one or more long design trials in the background, with or without checkpointing. `run()` is a blocking command that is convenient when the user wants to run a single quick design trial while waiting for the results.
+    `launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing. `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.
 
 ---
 
 
 
-### Run a single design
+### Run a single design trial in the foreground
 
 Once a `Design` has been created, `optimize` provides a simple way to run the design algorithm once, returning the final result:
 
@@ -174,7 +168,7 @@ The keyword `restart` may be included to run a design from a previously saved in
 
 
 
-### Run multiple design trials in parallel
+### Launch multiple design trials in parallel in the background
 
 Since the design algorithm is a random process, many times it is useful to run multiple trials to generate different candidate solutions for the experimental objective. These trials can be run completely independently and in parallel. `launch()` provides a convenient way to launch multiple trials, each on their own CPU thread:
 
