@@ -109,9 +109,8 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
 ```python
-# specify target tube
 t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
-    max_size=3, include=[C3, [B, B, B, B]], exclude=[C4], name='t1')
+    max_size=3, include=[[B, B, B, B]], exclude=[C4], name='t1')
 ```
 
 !!! note
@@ -255,8 +254,11 @@ Output:
 
 The resultant `DesignResult` object is the same as from running `.run()`, but no design will take place, but `.evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ca72a1c5f9b242a3e70b0605404658c6b92d0142
 ---
 
 ## Run a complex design job
@@ -269,27 +271,15 @@ my_model = Model()
 my_complexes = [C1, C2]
 my_design = complex_design(complexes=[C1, C2],
     hard_constraints=[], soft_constraints=[],
-    defect_weights=None, options=options, model=my_model)
+    defect_weights=None, options=None, model=my_model)
+
+result = my_design.run()
 ```
 
 A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above).
 
 !!! note
     Note that a `complex_design` job is equivalent to a `tube_design` job with each on-target complex placed in a separate test tube containing no off-target complexes. For this reason, we strongly recommend use of test tube design formulations over complex design formulations so that off-target complexes are present in the design ensemble and the design algorithm can actively design against their formation.
-
----
-
-## Run a complex design job
-
-For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a the analogous output of `tube_design`.
-
-```python
-my_design = complex_design(complexes=[c1, c2],
-    hard_constraints=[], soft_constraints=[],
-    defect_weights=None, options=options, model=my_model)
-
-result = my_design.run()
-```
 
 ---
 
@@ -678,7 +668,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 <!--
 !!!example
-    ```python
+    ``` python
 
     # domains
     Domain('a', 'N'*10)

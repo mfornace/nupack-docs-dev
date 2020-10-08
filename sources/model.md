@@ -99,16 +99,16 @@ In the historical ensembles, a duplex terminated by a wobble pair is forbidden.
 
 
 !!!example "Examples"
-    - Define a model for DNA calculations at 23 $^\circ$C in $[{\rm Na}^{+}]= 0.0$ M and $[{\rm Mg}^{++}]= 0.01$ M:
+    - Define a model for DNA calculations at 23 $^\circ$C in $[{\rm Na}^{+}]= 0.5$ M and $[{\rm Mg}^{++}]= 0.01$ M:
 
     ```python
-    model2 = Model(material='dna', celsius=23, sodium=0.0, magnesium=0.01)
+    model2 = Model(material='dna', celsius=23, sodium=0.5, magnesium=0.01)
     ```
     Note that `ensemble` is unspecified so it defaults to `ensemble='stacking'`.
 
     - Define a model using custom parameters at 45 $^\circ$C without coaxial and dangle stacking:
 
-    ```python
+    ``` python
     model3 = Model(material='path/to/my/custom-parameters.json',
         ensemble='nostacking', celsius=45)
     ```
@@ -149,7 +149,7 @@ First, one can calculate the free energy of a single loop defined by an ordered 
  -->
 The `Model.loop_energy` method calculates the [loop free energy](definitions.md#loop-free-energies) in kcal/mol. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`:
 
-```python
+``` python
 model = Model(material='RNA', ensemble='stacking')
 
 #Calculate the free energy of an unstructured strand
@@ -184,7 +184,7 @@ For a loop defined as a list of N sequences, a stacking state is specified as a 
 - `‘r’` if only the 3'-most unpaired base is dangling on its adjacent base pair
 - `‘n’` if no bases in the sequence are engaged in dangle or coaxial stacking
 
-```python
+``` python
 # Calculate the dangle stacking state free energies for an exterior loop
 model.stack_energies('CA+TC', '.(+).')
 # --> {'nl': -0.1, 'nn': 0.0, 'rl': -0.6, 'rn': -0.3}
@@ -203,7 +203,7 @@ model.stack_energies('AT+AT+AT', structure='((+)(+))')
 
 For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
 
-```python
+``` python
 model.stack_energies('AAAAT', structure='(...)')
 # --> {'n': 4.1}
 # --> {'(...)': 4.1}

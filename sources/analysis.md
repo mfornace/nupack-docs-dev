@@ -34,15 +34,6 @@ c2 = Complex([A, B, B, C], name='ABBC')
 c3 = Complex([A, A], name='AA')
 ```
 
-<!-- A `Complex` may also be specified conveniently by a single `'+'`-delimited string or list of strings:
-
-```python
-c4 = Complex('AAA+TTT+AAA')
-c5 = Complex(['AAA', 'TTT', 'AAA'])
-print(c4 == c5)
-```
--->
-
 In general, commands that expect a `Complex` as an argument (e.g., `c2`) will alternatively accept a strand ordering (e.g.,`[A, B, B, C]`). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
 
 ---
@@ -59,13 +50,6 @@ t2 = Tube(strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12],
 ```
 
 Note that `include` and `exclude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
-
-<!-- If a tube will only be used for calculations that do not :
-
-```python
-t3 = Tube('t3', strands=[A, B], include=[c2], max_size=3, exclude=[c1])
-```
--->
 
 ---
 
@@ -388,7 +372,7 @@ To collect a `dict` of MFEs for each complex:
 ```python
 my_mfes = {my_complex.name: complex_result.mfe[0].energy
     for my_complex, complex_result in my_result.complexes.items()}
-    print(my_mfes)
+print(my_mfes)
 ```
 
 Output:
