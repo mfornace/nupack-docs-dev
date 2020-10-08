@@ -102,7 +102,7 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 ```
 
 !!! note
-    Note that a bonus applied to the complex free energy is equivalent to the same bonus applied to every secondary structrue in the complex ensemble. The bonus will alter the free energy of the complex in solution, but will not alter the equilibrium pair probabilities within the complex ensemble.
+    Note that a bonus applied to the [complex free energy](defintions.md#complex-free-energy) is equivalent to applying the bonus to every [structure free energy](definitions.md#structure-free-energy) in the complex ensemble. As a result, the bonus alters the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentrations) within the [test tube ensemble](definitions.md#test-tube-ensemble), but does not alter the [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) within the [complex ensemble](definitions.md#complex-ensemble).
 
 ---
 ## Specify a target tube
@@ -137,14 +137,13 @@ my_design = tube_design(tubes=my_tubes,
 
 A `tube_design` object supports two methods for performing sequence design:
 
-- [`run()`](design.md#run-a-single-design-trial-in-the-foreground): run a single design trial in the foreground.
-- [`launch()`](design.md#launch-multiple-design-trials-in-parallel-in-the-background): start a specified number of design trials that run in the background; optionally save design progress to checkpoint files.
+- `run()`: [run a single design trial in the foreground](design.md#run-a-single-design-trial-in-the-foreground).
+- `launch()`: [launch multiple design trials in the background](design.md#launch-multiple-design-trials-in-the-background); optionally save design progress to checkpoint files.
 
-See below for short examples using `run()` and `launch()` for the above `tube_design`.
-
+See below for examples using `run()` and `launch()` for the above `tube_design`.
 
 !!! note
-    `launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing. `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.
+    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing. 
 
 ---
 
@@ -152,10 +151,15 @@ See below for short examples using `run()` and `launch()` for the above `tube_de
 
 ### Run a single design trial in the foreground
 
-Once a design has been created via `complex_design` or `tube_design`, `run()` provides a simple way to run the design algorithm once, returning the final result:
+Once a test tube design has been specified using `tube_design`, use `run()` to run a single design trial in the foreground and return a design result: 
 
 ```python
 my_result = my_design.run()
+```
+
+`my_design.run()` returns a `DesignResult` object that can be viewed as a table in a Jupyter notebook, for example: 
+
+```python
 my_result
 ```
 
@@ -163,12 +167,14 @@ Output:
 
 > <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="700" />
 
+Design sequences are displayed for each domain and strand. 
+
 The keyword `restart` may be included to run a design from a previously saved intermediate result (see [Running from a prior design result](#running-from-a-prior-design-result)).
 
 
 
 
-### Launch multiple design trials in parallel in the background
+### Launch multiple design trials in the background
 
 Since the design algorithm is a random process, many times it is useful to run multiple trials to generate different candidate solutions for the experimental objective. These trials can be run completely independently and in parallel. `launch()` provides a convenient way to launch multiple trials, each on their own CPU thread:
 
@@ -249,19 +255,7 @@ Output:
 
 The resultant `DesignResult` object is the same as from running `.run()`, but no design will take place, but `.evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
----
 
-<!--
-```python
-# launch 3 independent design trials in the background
-my_des = my_design.launch(3)
-
-# save design progress in checkpoint files
-my_des_checkpoints = my_design.launch(3, directory='design-checkpoints')
-
-# run a single design trial and return the final result
-my_quick_des = my_design.run()
-``` -->
 
 ---
 
