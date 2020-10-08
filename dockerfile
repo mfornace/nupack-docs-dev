@@ -5,7 +5,7 @@ RUN pip install --upgrade pip
 RUN pip install -q mkdocs==1.1.2 \
     mkdocs-material-extensions==1.0 \
     mkdocs-material==5.5.7 \
-    pydoc-markdown pymdown-extensions \
+    pymdown-extensions==8.0 \
     markdown-include==0.6.0 \
     markdown-katex==201908.9b0 \
     pydoc-markdown==3.3.0
