@@ -158,17 +158,17 @@ print(num_stack)
 ---
 
 ## Design a sequence
-`structure_design` generates a sequence intended to adopt a target secondary structure at equilibrium. The complex is specified using IUPAC [degenerate nucleotide codes](design.md#specify-a-strand) to specify any sequence constraints. The target structure is specified using keyword `structure`.
+`des` performs complex design to generate a sequence intended to adopt a target secondary structure at equilibrium within the ensemble of the complex. The complex is specified using IUPAC [degenerate nucleotide codes](definitions.md#IUPAC-degenerate-nucleotide-codes) to incorporate any sequence constraints. The target structure is specified using keyword `structure`:
 
 
 ```python
 # design a sequence without sequence constraints
-designed_sequence1 = structure_design('(((+)))', ['NNN','NNN'], model=my_model)
+designed_sequence1 = des(['NNN','NNN'], structure='(((+)))', model=my_model)
 print(designed_sequence1)
 # --> ['GGC', 'GCC']
 
 # design a sequence with sequence constraints
-designed_sequence2 = structure_design('(((+)))', ['HHH','BBW'], model=my_model)
+designed_sequence2 = des(['HHH','BBW'], structure='(((+)))', model=my_model)
 print(designed_sequence2)
 # --> ['ACC', 'GGT']
 ```
@@ -176,10 +176,10 @@ print(designed_sequence2)
 ---
 
 ## Compute complex ensemble defect
-`structure_defect` evaluates the normalized complex ensemble defect with respect to a structure specified using keyword `structure`:
+`defect` evaluates the normalized [complex ensemble defect](definitions.md#complex-ensemble-defect) with respect to the structure specified using keyword `structure`:
 
 ```python
-ensemble_defect = structure_defect('(((+)))', ['CCC', 'GGG'], model=my_model)
+ensemble_defect = defect(['CCC', 'GGG'], structure='(((+)))', model=my_model)
 print(ensemble_defect)
 # --> 0.20883411169052118
 ```
