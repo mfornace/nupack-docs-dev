@@ -102,7 +102,7 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 ```
 
 !!! note
-    Note that a bonus applied to the [complex free energy](defintions.md#complex-free-energy) is equivalent to applying the bonus to every [structure free energy](definitions.md#structure-free-energy) in the complex ensemble. As a result, the bonus alters the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentrations) within the [test tube ensemble](definitions.md#test-tube-ensemble), but does not alter the [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) within the [complex ensemble](definitions.md#complex-ensemble).
+    Note that a bonus applied to the [complex free energy](definitions.md#complex-free-energy) is equivalent to applying the bonus to every [structure free energy](definitions.md#structure-free-energy) in the complex ensemble. As a result, the bonus alters the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentrations) within the [test tube ensemble](definitions.md#test-tube-ensemble), but does not alter the [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) within the [complex ensemble](definitions.md#complex-ensemble).
 
 ---
 ## Specify a target tube
