@@ -109,9 +109,8 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
 ```python
-# specify target tube
 t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
-    max_size=3, include=[C3, [B, B, B, B]], exclude=[C4], name='t1')
+    max_size=3, include=[[B, B, B, B]], exclude=[C4], name='t1')
 ```
 
 !!! note
@@ -251,20 +250,6 @@ The resultant `DesignResult` object is the same as from running `.run()`, but no
 
 ---
 
-<!--
-```python
-# launch 3 independent design trials in the background
-my_des = my_design.launch(3)
-
-# save design progress in checkpoint files
-my_des_checkpoints = my_design.launch(3, directory='design-checkpoints')
-
-# run a single design trial and return the final result
-my_quick_des = my_design.run()
-``` -->
-
----
-
 ## Run a complex design job
 
 For convenience, the `complex_design` class enables specification of a constrained multi-complex design for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
@@ -275,27 +260,15 @@ my_model = Model()
 my_complexes = [C1, C2]
 my_design = complex_design(complexes=[C1, C2],
     hard_constraints=[], soft_constraints=[],
-    defect_weights=None, options=options, model=my_model)
+    defect_weights=None, options=None, model=my_model)
+
+result = my_design.run()
 ```
 
 A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above).
 
 !!! note
     Note that a `complex_design` job is equivalent to a `tube_design` job with each on-target complex placed in a separate test tube containing no off-target complexes. For this reason, we strongly recommend use of test tube design formulations over complex design formulations so that off-target complexes are present in the design ensemble and the design algorithm can actively design against their formation.
-
----
-
-## Run a complex design job
-
-For convenience, the `complex_design` function is provided to give a simple complex design. It simply makes a tube for each complex and returns a the analogous output of `tube_design`.
-
-```python
-my_design = complex_design(complexes=[c1, c2],
-    hard_constraints=[], soft_constraints=[],
-    defect_weights=None, options=options, model=my_model)
-
-result = my_design.run()
-```
 
 ---
 
@@ -684,7 +657,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 <!--
 !!!example
-    ```python
+    ``` python
 
     # domains
     Domain('a', 'N'*10)
