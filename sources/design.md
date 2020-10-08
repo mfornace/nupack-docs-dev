@@ -142,7 +142,7 @@ A `tube_design` object supports two methods for performing sequence design:
 See below for examples using `run()` and `launch()` for the above `tube_design`.
 
 !!! note
-    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing. 
+    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing.
 
 ---
 
@@ -150,13 +150,13 @@ See below for examples using `run()` and `launch()` for the above `tube_design`.
 
 ### Run a single design trial in the foreground
 
-Once a test tube design has been specified using `tube_design`, use `run()` to run a single design trial in the foreground and return a design result: 
+Once a test tube design has been specified using `tube_design`, use `run()` to run a single design trial in the foreground and return a design result:
 
 ```python
 my_result = my_design.run()
 ```
 
-`my_design.run()` returns a `DesignResult` object that can be viewed as a table in a Jupyter notebook, for example: 
+`my_design.run()` returns a `DesignResult` object that can be viewed as a table in a Jupyter notebook, for example:
 
 ```python
 my_result
@@ -166,7 +166,7 @@ Output:
 
 > <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="700" />
 
-Design sequences are displayed for each domain and strand. 
+Design sequences are displayed for each domain and strand.
 
 The keyword `restart` may be included to run a design from a previously saved intermediate result (see [Running from a prior design result](#running-from-a-prior-design-result)).
 
@@ -254,11 +254,8 @@ Output:
 
 The resultant `DesignResult` object is the same as from running `.run()`, but no design will take place, but `.evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> ca72a1c5f9b242a3e70b0605404658c6b92d0142
 ---
 
 ## Run a complex design job
@@ -818,30 +815,39 @@ print(result)
 Output:
 
 > ```c++
-> Results:
-> Results:
->   name                 value
-> 0    a  GGGCGTCTAGCATAAAGCAC
-> 1   a*  GTGCTTTATGCTAGACGCCC
-> 2    A  GGGCGTCTAGCATAAAGCAC
-> 3    B  GTGCTTTATGCTAGACGCCC
-> Ensemble defect: 0.0097
-> Objectives:
->     defect  weighted
-> 0  0.00971   0.00971
-> Tubes:
->   tube_name   defect  normalized
-> 0     tube1 3.88e-07     0.00971
-> Complexes:
->   complex_name    defect  normalized
-> 0            C  0.388416     0.00971
-> 1            A  0.000000     0.00000
-> 2            B  0.000000     0.00000
-> Complexes in tubes:
->   tube_name complex_name   defect  normalized concentration structural actual_concentration target_concentration
-> 0     tube1            C 3.88e-07     0.00971      6.77e-14   3.88e-07                1e-06                1e-06
-> 1     tube1            A        0     0.00000             0          0             1.72e-15                    0
-> 2     tube1            B        0     0.00000             0          0             1.72e-15                    0
+> Domain results:
+> Domain              Sequence
+>      a  GCATTGAGAAAACGCAAGAG
+>
+> Strand results:
+> Strand              Sequence
+>      A  GCATTGAGAAAACGCAAGAG
+>      B  CTCTTGCGTTTTCTCAATGC
+>
+> Objective function:
+>            Objective type  Value
+>  Weighted ensemble defect 0.0112
+>
+> Ensemble defect: 0.0112
+>
+> Complex Complex defect (nt) Normalized complex defect
+>       C               0.448                    0.0112
+>
+> On-target complex defects:
+>   Tube Tube defect (M) Normalized tube defect
+>  tube1        4.48e-07                 0.0112
+>
+> Tube defects:
+>   Tube On-target complex Structural defect (M) Concentration defect (M) Total defect (M)
+>  tube1                 C              4.48e-07                 1.71e-12         4.48e-07
+>
+> On-target complex concentrations:
+>   Tube Complex Concentration (M) Target concentration (M)
+>  tube1       C          1.00e-06                 1.00e-06
+>
+> Significant off-target complex concentrations (>= 1% max complex concentration in tube):
+>   Tube Complex Concentration (M)
+>  tube1       -                 -
 > ```
 
 ---
