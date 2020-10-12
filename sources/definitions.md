@@ -410,6 +410,19 @@ off-target complexes, each with vanishing target concentration. Design quality i
 nucleotides evaluated over the design ensemble 
 [@Wolfe17]. Optimization of the sequences so as to reduce $\mathcal{M}$ below a user-specified stop condition implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. Sequence design is performed subject to both [hard constraints](definitions.md#hard-constraints) (including composition constraints and biological constraints) and [soft constraints](definitions.md#soft-constraints) (including sequence symmetry minimization and toehold free energy equalization).
 
+### Complex design vs test tube design
+We recommend using the multi-tube design ensemble instead of the multi-complex ensemble because test tube design provides significant advantages over complex design [@Wolfe15,@Wolfe17].
+
+!!! Example
+    <p align="center">
+    <img src="/figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
+    </p>
+    **Figure: The advantages of test tube design over complex design.** **Top: Complex design.** Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube.
+    **Bottom: Test tube design.** Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no
+    new information and no unpleasant surprises since the design and analysis ensembles are identical.
+
+Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as subsidiary special cases [@Wolfe17].
+
 ### Reaction pathways 
 Consider a set of nucleic acid molecules intended to execute a prescribed hybridization cascade [@Wolfe17]. 
 For example, the reaction pathway below 
@@ -514,9 +527,16 @@ neither on-targets nor off-targets).
 Hence, all reactive species in the global crosstalk tube are forced to either perform no reaction (remaining as desired on-targets) 
 or undergo a crosstalk reaction (forming undesired off-targets), providing the basis for minimization of global crosstalk during sequence optimization. 
 To design 8 orthogonal systems for this reaction pathway, the 
-total number of target test tubes is then $|\Omega| = 8*3 + 1 = 25$.
+total number of target test tubes is then $|\Omega| = 8*3 + 1 = 25$. See [@Wolfe17] Supplementary Information Section S2.2 for a general description of how to specify target test tubes for a given reaction pathway, as well as a number of illustrative case studies. 
 
-See [@Wolfe17] Supplementary Information Section S2.2 for a general description of how to specify target test tubes for a given reaction pathway, as well as a number of illustrative case studies. 
+!!! Note
+    Note that each target test tube isolates a different subset of the system components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble. For example, the Step 1 tube simultaneously optimizes for high-yield production of unstructured intermediate B and against appreciable formation of off-target dimer B$\cdot$B, promoting rapid nucleation of the unstructured toehold in B with the loop of hairpin C during the next step of the reaction pathway. 
+
+!!! Note
+    Note that for a tube containing a given set of system components, the cognate products of their interactions can be excluded from the ensemble (appearing as neither on-targets nor off-targets), enabling optimization for high-yield well-structured reactants and against crosstalk. For example, the Reactants tube excludes the cognate product of Step 1 from the ensemble in order to optimize formation of initial reactants X, A$\cdot$B, and C and discourage competing crosstalk interactions  (e.g., X$\cdot$X, A$\cdot$A, X$\cdot$C). 
+
+
+
 
 ### Design objective function
 The design objective function is the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect) [@Wolfe17], 

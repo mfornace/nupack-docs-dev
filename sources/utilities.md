@@ -60,7 +60,8 @@ print(partition_function)
 `structure_energy` calculates the [structure free energy](definitions.md#structure-free-energy) for the specified secondary structure:
 
 ```python
-dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))', model=my_model)
+dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))', 
+    model=my_model)
 print(dGstruc)
 # --> -0.18135141907945873
 ```
@@ -72,7 +73,8 @@ print(dGstruc)
 `structure_probability` calculates the [equilibrium structure probability](definitions.md#equilibrium-structure-probability) of a specified secondary structure contained in the complex ensemble:
 
 ```python
-probability = structure_probability(strands=['CCC', 'GGG'], structure='(((+)))', model=my_model)
+probability = structure_probability(strands=['CCC', 'GGG'], structure='(((+)))', 
+    model=my_model)
 print(probability)
 # --> 0.7152766753194949
 ```
@@ -119,13 +121,14 @@ mfe_structures = mfe(strands=['CCC', 'GGG'], model=my_model)
 print(mfe_structures)
 # --> [StructureEnergy(Structure('(((+)))'), energy=-4.981351375579834, stack_energy=-4.981351375579834)]
 ```
-If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the (same) free energy of the MFE stacking state, and with the free energy of the MFE proxy secondary structure.
+
+If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state.
 
 ---
 
 ## Compute suboptimal proxy structures
 
-`subopt` calculates the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The free energy gap is specified with keyword `gap` in kcal/mol. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of its lowest-energy stacking state that falls within the energy gap, and with the free energy of the MFE proxy secondary structure:
+`subopt` calculates the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The (non-negative) free energy gap is specified with keyword `energy_gap` in kcal/mol. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of the suboptimal proxy secondary structure and with the free energy of its lowest-energy stacking state that falls within the energy gap:
 
 ```python
 subopt_structures = subopt(strands=['CCC', 'GGG'], energy_gap=1.5, model=my_model)
