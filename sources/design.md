@@ -6,15 +6,9 @@ To enable **reaction pathway engineering** of dynamic hybridization cascades (e.
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
 
-We recommend using the [multi-tube design ensemble](definitions.md#multi-tube-design), as it captures concentration and crosstalk effects that are critical in most experimental settings (see the example below regarding the advantages of test tube design over complex design). Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as subsidiary special cases [@Wolfe17].
+We [recommend](definitions.md#complex-design-vs-test-tube-design) using the [multi-tube design ensemble](definitions.md#multi-tube-design) as it captures concentration and crosstalk effects that are critical in most experimental settings. 
 
-!!! Example
-    <p align="center">
-    <img src="/figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
-    </p>
-    **Figure: The advantages of test tube design over complex design.** **Top: Complex design.** Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube.
-    **Bottom: Test tube design.** Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no
-    new information and no unpleasant surprises since the design and analysis ensembles are identical.
+
 
 For reaction pathway engineering, sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve *kinetic design* of a test tube ensemble by performing *equilibrium optimization* of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structural engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.
@@ -46,7 +40,7 @@ g = Domain('N10',        name='g')
 ---
 
 ## Specify a target strand
-A `TargetStrand` is a single RNA or DNA molecule specified as a sequence (specified 5$'$ to 3$'$ in terms of defined domains) and a target strand name (keyword `name`):
+A `TargetStrand` is a single RNA or DNA molecule specified as a sequence (specified 5$'$ to 3$'$ in terms of previously defined domains) and a target strand name (keyword `name`):
 ```python
 A = TargetStrand([a, b, g], name='Strand A')
 B = TargetStrand([d, ~e],   name='Strand B')  # ~e denotes the reverse complement of e
@@ -56,7 +50,7 @@ D = TargetStrand([d, d, d], name='Strand D')
 The reverse complement of domain `a` is denoted `~a`.
 
 !!! Note
-    Note that starting with NUPACK 4 and the all-new NUPACK Python module, we no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
+    Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
 
 ---
 ## Specify a target complex
@@ -120,6 +114,10 @@ t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
 
     Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
 
+!!! note
+    Note that used together, `max_size` and `exclude` provide a powerful combination for specifying [target test tubes](definitions.md#target-test-tubes). With `max_size` it is possible to specify a large set of off-target complexes formed from a set of system components. With `exclude` it is further possible to remove from this large set all of the cognate products that should form between these system components (so they appear as neither on-targets nor off-targets in the tube ensemble). For example, with this approach, the reactive species in a global crosstalk tube can be forced to either perform no reaction (remaining as desired on-targets) or to undergo a crosstalk reaction (forming undesired off-targets), enabling minimization of global crosstalk during sequence optimization. 
+    
+    An ensemble that excludes cognate reaction products can never be studied in the lab but provides a powerful framework for computational sequence optimization. 
 
 ## Run a test tube design job
 
@@ -137,9 +135,9 @@ my_design = tube_design(tubes=my_tubes,
 A `tube_design` object supports two methods for performing sequence design:
 
 - `run()`: [run a single design trial in the foreground](design.md#run-a-single-design-trial-in-the-foreground).
-- `launch()`: [launch multiple design trials in the background](design.md#launch-multiple-design-trials-in-the-background); optionally save design progress to checkpoint files.
+- `launch()`: [launch multiple design trials in the background](design.md#launch-multiple-design-trials-in-the-background) and optionally save design progress to checkpoint files.
 
-See below for examples using `run()` and `launch()` for the above `tube_design`.
+Either method can be used to restart from a previous design result (keyword `restart`). See below for examples using `run()` and `launch()` for the above `tube_design` job.
 
 !!! note
     `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing.
@@ -150,7 +148,7 @@ See below for examples using `run()` and `launch()` for the above `tube_design`.
 
 ### Run a single design trial in the foreground
 
-Once a test tube design has been specified using `tube_design`, use `run()` to run a single design trial in the foreground and return a design result:
+Once a test tube design has been specified using `tube_design`, use `run()` to run a single design trial in the foreground and return the result:
 
 ```python
 my_result = my_design.run()
@@ -166,11 +164,24 @@ Output:
 
 > <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="700" />
 
-Design sequences are displayed for each domain and strand.
+Output displays: 
 
-The keyword `restart` may be included to run a design from a previously saved intermediate result (see [Running from a prior design result](#running-from-a-prior-design-result)).
+- Designed sequences for each domain and strand. 
+- Objective function components (weighted ensemble defect and weighted soft constraints (if applicable)). 
+- Ensemble defect (unweighted). 
+- Complex defect for each on-target in the ensemble (unweighted). 
+- Tube defect for each tube in the ensemble (unweighted). 
+- Structural defect, concentration defect, and total defect for each on-target complex in each tube (unweighted). 
+- Concentation and target concentration for each on-target complex in each tube. 
+- Significant off-target complex concentrations in each tube (those off-targets with concentration $\ge$ 1% the maximum complex concentration in the tube). 
 
 
+The keyword `restart` may be included to run a design by providing a `DesignResult` object from a previous design job: 
+
+
+```python
+newer_result = my_design.run(restart=my_result)
+```
 
 
 ### Launch multiple design trials in the background
@@ -920,17 +931,9 @@ result = DesignResult.load('design-result.o')
 
 ---
 
-### Running from a prior design result
 
-The following lines of code will run a design using the final output as a checkpoint file. The argument restart must be a python design `DesignResult` object.
 
-```python
-newer_result = my_design.run(restart=result)
-```
-
----
-
-### Saving checkpoint files automatically
+<!-- ### Saving checkpoint files automatically
 
 When "calling" the design to start the optimization process, two additional arguments must be added for checkpointing to work, `checkpoint_condition` and `checkpoint_handler`.
 
@@ -944,5 +947,5 @@ from nupack.design import TimeInterval, WriteToFileCheckpoint
 result = my_design.run(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
 ```
 
----
+--- -->
 
