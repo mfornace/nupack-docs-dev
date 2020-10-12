@@ -134,37 +134,37 @@ my_design = tube_design(tubes=my_tubes,
 
 A `tube_design` object supports two methods for performing sequence design:
 
-- `run()`: [run a single design trial in the foreground](design.md#run-a-single-design-trial-in-the-foreground).
-- `launch()`: [launch multiple design trials in the background](design.md#launch-multiple-design-trials-in-the-background) and optionally save design progress to checkpoint files.
+- `run()`: [run multiple independent design trials in the foreground](design.md#run-a-single-design-trial-in-the-foreground).
+- `launch()`: [launch multiple independent design trials in the background](design.md#launch-multiple-design-trials-in-the-background) and save design progress to checkpoint files.
 
 Either method can be used to restart from a previous design result (keyword `restart`). See below for examples using `run()` and `launch()` for the above `tube_design` job.
 
 !!! note
-    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run one or more long design trials in the background, with or without checkpointing.
+    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run long design trials in the background without checkpointing.
 
 ---
 
 
 
-### Run a single design trial in the foreground
+### Run design trials in the foreground
 
-Once a test tube design has been specified using `tube_design`, use `run()` to run a single design trial in the foreground and return the result:
+Once a test tube design has been specified using `tube_design`, use `run()` to run a specified number of independent design trials (keyword `trials`) in parallel in the foreground and return a list of `DesignResult` objects:
 
 ```python
-my_result = my_design.run()
+my_results = my_design.run(trials=2) # run 2 independent design trials
 ```
 
-`my_design.run()` returns a `DesignResult` object that can be viewed as a table in a Jupyter notebook, for example:
+A `DesignResult` object can be viewed as a table in a Jupyter notebook, for example:
 
 ```python
-my_result
+my_results[0]  # display results table for first design trial 
 ```
 
 Output:
 
 > <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="700" />
 
-Output displays: 
+Output table displays: 
 
 - Designed sequences for each domain and strand. 
 - Objective function components (weighted ensemble defect and weighted soft constraints (if applicable)). 
@@ -176,66 +176,76 @@ Output displays:
 - Significant off-target complex concentrations in each tube (those off-targets with concentration $\ge$ 1% the maximum complex concentration in the tube). 
 
 
-The keyword `restart` may be included to run a design by providing a `DesignResult` object from a previous design job: 
+The keyword `restart` may be included to run a design by providing a list of `DesignResult` objects from a previous design job: 
 
 
 ```python
-newer_result = my_design.run(restart=my_result)
+new_results = my_design.run(restart=my_results)
 ```
 
 
-### Launch multiple design trials in the background
+### Launch design trials in the background
 
-Since the design algorithm is a random process, many times it is useful to run multiple trials to generate different candidate solutions for the experimental objective. These trials can be run completely independently and in parallel. `launch()` provides a convenient way to launch multiple trials, each on their own CPU thread:
+Once a test tube design has been specified using `tube_design`, use `launch()` to start a specified number of independent design trials (keyword `trials`) in parallel in the background. Intermediate results will be saved to a directory specified with keyword `checkpoint` at a regular interval specified with keyword `interval` (default 600): 
 
 ```python
-my_optimization = my_design.launch(2) # run 2 trials of the design
+# start 2 independent design trials
+my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', interval=600) 
 ```
 
-Whereas `run()` returns a finished result, `launch()` returns an optimization object holding slots for *future* results. The design trials will continue in the background. To wait for each trial to finish, use the `wait_for_results()` method:
+Whereas `run()` returns a list of `DesignResult` objects representing completed designs, `launch()` returns an object holding slots for *future* `DesignResult` objects. The design trials will continue in the background. 
+
+To examine current results based on the latest checkpoint file for each trial, use the `current_results()` method: 
 
 ```python
-my_results = my_optimization.wait_for_results() # returns a list of completed DesignResult
-print(my_results[0]) # result of first trial
+my_current_results = my_jobs.current_results()
 ```
 
-You may look at the last saved results for an optimization using the `current_results()` method:
+which returns a list with an entry for each trial that is either a `DesignResult` object (if a checkpoint file or final result is available) or `None` (otherwise). As illustrated above, a `DesignResult` object can be viewed as a table in a Jupyter notebook. For example if a checkpoint is available for the first trial, a table is generated by typing:
 
 ```python
-my_unfinal_results = my_optimization.current_results()
+my_current_results[0]  # display results table for first design trial 
 ```
 
-To stop all of the designs, use the `stop()` method:
+If only final results are of interest, use the `final_results()` method: 
 
 ```python
-my_optimization.stop(force=True) # stop even if no checkpoints have been saved
+my_final_results = my_jobs.current_results()
 ```
 
-Conveniently, `launch()` may also be used to load and store intermediate results. With this functionality, even if you stop your designs or close your session, you can still fetch the best results accomplished. A result will be saved every `interval` seconds (default 600, i.e. 10 minutes). To specify an output directory in which checkpoints will be saved, use the `checkpoint` keyword:
+which returns a list with an entry for each trial that is either a `DesignResult` object (if a final result is available) or `None` (otherwise). 
+
+
+To lock up the interface and wait for all trials to finish, use the `wait()` method to return a list of `DesignResult` objects:
 
 ```python
-my_optimization = my_design.launch(2, checkpoint='new-checkpoints', interval=600)
+my_final_results = my_jobs.wait() 
 ```
 
-To restart designs from previous results, use the `restart` keyword. This may be provided as either a list of `DesignResult` objects generated from previous designs, or as a string referring to a directory.
-
-To use result objects from previous design trials that were undertaken, supply a list of results:
+To stop all trials, use the `stop()` method:
 
 ```python
-# obtain my_unfinal_results from above
-my_optimization = my_design.launch(2, checkpoint='new-checkpoints', restart=my_unfinal_results)
+my_jobs.stop() 
 ```
 
-To use results from an existing checkpoint directory, supply the directory name instead:
+To restart designs from previous results, use the `restart` keyword, providing either a list of `DesignResult` objects from a previous design, or a directory name containing checkpoint files: 
+
 
 ```python
-my_optimization = my_design.launch(2, checkpoint='new-checkpoints', restart='old-checkpoints')
+# restart from a list of DesignResult objects
+my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints', 
+    restart=my_current_results)
+
+# restart from a checkpoint directory
+my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints', 
+    restart='my_checkpoints')
 ```
 
-If no results exist in the supplied `restart` directory, the design will be started afresh without any error messages. This means that you can easily create a rerunnable design by supplying the same directory to `checkpoint` and `restart`:
+If no results exist in the supplied `restart` directory, the design will be started afresh without any error messages. Hence, you can create a rerunnable design by supplying the same directory to `checkpoint` and `restart`:
 
 ```python
-my_optimization = my_design.launch(2, checkpoint='checkpoints', restart='checkpoints')
+my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', 
+    restart='my_checkpoints')
 ```
 
 ### Evaluate a design
