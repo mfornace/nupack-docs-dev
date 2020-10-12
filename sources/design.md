@@ -164,7 +164,7 @@ my_result
 
 Output:
 
-> <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="700" />
+> <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="650" />
 
 Design sequences are displayed for each domain and strand.
 
@@ -250,7 +250,7 @@ evaluated_result
 
 Output:
 
-> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
+> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="600" />
 
 The resultant `DesignResult` object is the same as from running `.run()`, but no design will take place, but `.evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
 
@@ -271,7 +271,12 @@ my_design = complex_design(complexes=[C1, C2],
     defect_weights=None, options=None, model=my_model)
 
 result = my_design.run()
+result
 ```
+
+Output:
+
+> <img src="/figs/complex-design-output.png" alt="Complex design output" title="Example complex design output" width="350" />
 
 A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above).
 
