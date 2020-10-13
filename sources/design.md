@@ -6,7 +6,7 @@ To enable **reaction pathway engineering** of dynamic hybridization cascades (e.
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
 
-We [recommend](definitions.md#complex-design-vs-test-tube-design) using the [multi-tube design ensemble](definitions.md#multi-tube-design) as it captures concentration and crosstalk effects that are critical in most experimental settings. 
+We [recommend](definitions.md#complex-design-vs-test-tube-design) using the [multi-tube design ensemble](definitions.md#multi-tube-design) as it captures concentration and crosstalk effects that are critical in most experimental settings.
 
 
 
@@ -115,9 +115,9 @@ t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
     Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
 
 !!! note
-    Note that used together, `max_size` and `exclude` provide a powerful combination for specifying [target test tubes](definitions.md#target-test-tubes). With `max_size` it is possible to specify a large set of off-target complexes formed from a set of system components. With `exclude` it is further possible to remove from this large set all of the cognate products that should form between these system components (so they appear as neither on-targets nor off-targets in the tube ensemble). For example, with this approach, the reactive species in a global crosstalk tube can be forced to either perform no reaction (remaining as desired on-targets) or to undergo a crosstalk reaction (forming undesired off-targets), enabling minimization of global crosstalk during sequence optimization. 
-    
-    An ensemble that excludes cognate reaction products can never be studied in the lab but provides a powerful framework for computational sequence optimization. 
+    Note that used together, `max_size` and `exclude` provide a powerful combination for specifying [target test tubes](definitions.md#target-test-tubes). With `max_size` it is possible to specify a large set of off-target complexes formed from a set of system components. With `exclude` it is further possible to remove from this large set all of the cognate products that should form between these system components (so they appear as neither on-targets nor off-targets in the tube ensemble). For example, with this approach, the reactive species in a global crosstalk tube can be forced to either perform no reaction (remaining as desired on-targets) or to undergo a crosstalk reaction (forming undesired off-targets), enabling minimization of global crosstalk during sequence optimization.
+
+    An ensemble that excludes cognate reaction products can never be studied in the lab but provides a powerful framework for computational sequence optimization.
 
 ## Run a test tube design job
 
@@ -140,7 +140,7 @@ A `tube_design` object supports two methods for performing sequence design:
 Either method can be used to restart from a previous design result (keyword `restart`). See below for examples using `run()` and `launch()` for the above `tube_design` job.
 
 !!! note
-    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling the you run long design trials in the background without checkpointing.
+    `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling you to run long design trials in the background with built-in checkpointing.
 
 ---
 
@@ -157,45 +157,45 @@ my_results = my_design.run(trials=2) # run 2 independent design trials
 A `DesignResult` object can be viewed as a table in a Jupyter notebook, for example:
 
 ```python
-my_results[0]  # display results table for first design trial 
+my_results[0]  # display results table for first design trial
 ```
 
 Output:
 
 > <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="650" />
 
-Output table displays: 
+Output table displays:
 
-- Designed sequences for each domain and strand. 
-- Objective function components (weighted ensemble defect and weighted soft constraints (if applicable)). 
-- Ensemble defect (unweighted). 
-- Complex defect for each on-target in the ensemble (unweighted). 
-- Tube defect for each tube in the ensemble (unweighted). 
-- Structural defect, concentration defect, and total defect for each on-target complex in each tube (unweighted). 
-- Concentation and target concentration for each on-target complex in each tube. 
-- Significant off-target complex concentrations in each tube (those off-targets with concentration $\ge$ 1% the maximum complex concentration in the tube). 
+- Designed sequences for each domain and strand.
+- Objective function components (weighted ensemble defect and weighted soft constraints (if applicable)).
+- Ensemble defect (unweighted).
+- Complex defect for each on-target in the ensemble (unweighted).
+- Tube defect for each tube in the ensemble (unweighted).
+- Structural defect, concentration defect, and total defect for each on-target complex in each tube (unweighted).
+- Concentation and target concentration for each on-target complex in each tube.
+- Significant off-target complex concentrations in each tube (those off-targets with concentration $\ge$ 1% the maximum complex concentration in the tube).
 
 
-The keyword `restart` may be included to run a design by providing a list of `DesignResult` objects from a previous design job: 
+The keyword `restart` may be included to run a design by providing a list of `DesignResult` objects from a previous design job:
 
 
 ```python
-new_results = my_design.run(trials=2 restart=my_results)
+new_results = my_design.run(trials=2, restart=my_results)
 ```
-An error will be returned if `trials` and `restart` specify different numbers of design trials and `DesignResult` objects. 
+An error will be thrown if `trials` and `restart` specify different numbers of design trials and `DesignResult` objects.
 
 ### Launch design trials in the background
 
-Once a test tube design has been specified using `tube_design`, use `launch()` to start a specified number of independent design trials (keyword `trials`) in parallel in the background. Intermediate results will be saved to a directory specified with keyword `checkpoint` at a regular interval specified with keyword `interval` (default 600): 
+Once a test tube design has been specified using `tube_design`, use `launch()` to start a specified number of independent design trials (keyword `trials`) in parallel in the background. Intermediate results will be saved to a directory specified with keyword `checkpoint` at a regular interval specified with keyword `interval` (in seconds, default 600):
 
 ```python
 # start 2 independent design trials
-my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', interval=600) 
+my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', interval=600)
 ```
 
-Whereas `run()` returns a list of `DesignResult` objects representing completed design trials, `launch()` returns a list of trial monitors. The design trials will continue in the background. 
+Whereas `run()` returns a list of `DesignResult` objects representing completed design trials, `launch()` returns a list of trial monitors. The design trials will continue in the background.
 
-To examine current results based on the latest checkpoint file for each trial, use the `current_results()` method: 
+To examine current results based on the latest checkpoint file for each trial, use the `current_results()` method:
 
 ```python
 my_current_results = my_jobs.current_results()
@@ -204,52 +204,52 @@ my_current_results = my_jobs.current_results()
 which returns a list with an entry for each trial that is either a `DesignResult` object (if a checkpoint file or final result is available) or `None` (otherwise). As illustrated above, a `DesignResult` object can be viewed as a table in a Jupyter notebook. For example if a checkpoint is available for the first trial, a table is generated by typing:
 
 ```python
-my_current_results[0]  # display results table for first design trial 
+my_current_results[0]  # display results table for first design trial
 ```
 
-If only final results are of interest, use the `final_results()` method: 
+If only final results are of interest, use the `final_results()` method:
 
 ```python
 my_final_results = my_jobs.current_results()
 ```
 
-which returns a list with an entry for each trial that is either a `DesignResult` object (if a final result is available) or `None` (otherwise). 
+which returns a list with an entry for each trial that is either a `DesignResult` object (if a final result is available) or `None` (otherwise).
 
 
 To lock up the interface and wait for all trials to finish, use the `wait()` method to return a list of `DesignResult` objects:
 
 ```python
-my_final_results = my_jobs.wait() 
+my_final_results = my_jobs.wait()
 ```
 
 To stop all trials, use the `stop()` method:
 
 ```python
-my_jobs.stop() 
+my_jobs.stop()
 ```
 
-To restart designs from previous results, use the `restart` keyword, providing either a list of `DesignResult` objects from a previous design, or a directory name containing checkpoint files: 
+To restart designs from previous results, use the `restart` keyword, providing either a list of `DesignResult` objects from a previous design, or a directory name containing checkpoint files:
 
 
 ```python
 # restart from a list of DesignResult objects
-my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints', 
+my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints',
     restart=my_current_results)
 
 # restart from a checkpoint directory
-my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints', 
+my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints',
     restart='my_checkpoints')
 ```
 An error will be returned if `trials` and `restart` specify different numbers of design trials and `DesignResult` objects. However, if no results exist in the supplied `restart` directory, the design will be started afresh without any error messages. Hence, you can create a rerunnable design by supplying the same directory to `checkpoint` and `restart`:
 
 ```python
-my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', 
+my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
     restart='my_checkpoints')
 ```
 
 ### Evaluate a design
 
-The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#iupac-degenerate-nucleotide-codes)), for example: 
+The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#iupac-degenerate-nucleotide-codes)), for example:
 
 ```python
 dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
@@ -266,13 +266,13 @@ tube_des = tube_design([tube], model=Model(material='dna'))
 my_evaluated_result = tube_des.evaluate()
 ```
 
-An error will be returned if any domain contains nucleotides other than `ACGTU`. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook: 
+An error will be returned if any domain contains nucleotides other than `ACGTU`. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
 
 ```python
 my_evaluated_result
 ```
 
-Output: 
+Output:
 
 > <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="600" />
 
@@ -632,7 +632,7 @@ my_tubes = [t1, t2]
 weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
-The weights are initialized to 1, but can be customized to taken any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indicies (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
+The weights are initialized to 1, but can be customized to taken any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
 
 ```python
 weights[:, :, :, a1] *= 2
@@ -654,7 +654,7 @@ Output:
 
 <img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
 
-Alternatively, you can view an ASCII representation of the same data by using the `print` function: 
+Alternatively, you can view an ASCII representation of the same data by using the `print` function:
 
 ```python
 print(weights)
@@ -663,8 +663,8 @@ print(weights)
 Output:
 
 ```
-                            weight
-tube complex strand domain
+                            Weight
+Tube Complex Strand Domain
 t1   hetero  A      a1        5.00
                     a2        0.75
              B      b         5.00
@@ -677,7 +677,7 @@ t2   homo    A      a1        0.50
 
 
 
-For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.frame`.
+For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.table`.
 
 <!--
 !!!example
