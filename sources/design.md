@@ -607,11 +607,7 @@ diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
 
 ## Specify defect weights
 
-The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain) or for any combination of levels. Each weight takes a value in the interval $[0,\infty)$. By default, all weights are 1. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. 
-
-With the default value of unity for all weights, $\mathcal{M}$ reduces to the [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect), representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. 
-
-You can define a `Weights` object from the set of `TargetTube` objects that will be designed:
+[Defect weights](definitions.md#defect-weights) can be specified to reprioritize design effort at any subset of levels (tube, complex, strand, domain) within design ensemble. A `Weights` object is created for the set of `TargetTube` objects to be designed:
 
 ```python
 a1 = Domain('N5', name='a1')
@@ -631,7 +627,7 @@ my_tubes = [t1, t2]
 weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
-The weights are all initialized to 1 and can be manipulated by slicing on any subset of 4 axes (listed in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For instance:
+The weights are initialized to 1, but can be customized to taken any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indicies (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
 
 ```python
 weights[:, :, :, a1] *= 2

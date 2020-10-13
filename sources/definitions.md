@@ -548,10 +548,10 @@ The design objective function is the [multi-tube ensemble defect](definitions.md
 representing the average equilibrium fraction of incorrectly paired nucleotides over the multitube ensemble, $\Omega$. 
 
 ### Defect weights
-To prioritize or de-prioritize design quality for a portion of the design ensemble, the defect-weighted objective function, $\mathcal{M}_\mathcal{W}$, incorporates user-specified defect weights for any sequence domain, complex, or test tube. 
+To prioritize or de-prioritize design quality for a portion of the design ensemble, the defect-weighted objective function, $\mathcal{M}_\mathcal{W}$, incorporates user-specified defect weights for any tube, complex, strand, or domain. 
 With the default value of unity for all weights, $\mathcal{M}_\mathcal{W}$ is simply the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect), $\mathcal{M}$. 
 With custom defect weights in the range $[0,\infty)$, the physical meaning of
-the objective function is distorted in the service of adjusting design priorities.
+the objective function is distorted in the service of adjusting design priorities. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity.
 
 ### IUPAC degenerate nucleotide codes
 Sequence constraints can be specified using IUPAC degenerate nucleotide codes, which for RNA are as follows: 
