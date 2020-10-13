@@ -180,9 +180,9 @@ The keyword `restart` may be included to run a design by providing a list of `De
 
 
 ```python
-new_results = my_design.run(restart=my_results)
+new_results = my_design.run(trials=2 restart=my_results)
 ```
-
+An error will be returned if `trials` and `restart` specify different numbers of design trials and `DesignResult` objects. 
 
 ### Launch design trials in the background
 
@@ -193,7 +193,7 @@ Once a test tube design has been specified using `tube_design`, use `launch()` t
 my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', interval=600) 
 ```
 
-Whereas `run()` returns a list of `DesignResult` objects representing completed designs, `launch()` returns an object holding slots for *future* `DesignResult` objects. The design trials will continue in the background. 
+Whereas `run()` returns a list of `DesignResult` objects representing completed design trials, `launch()` returns a list of trial monitors. The design trials will continue in the background. 
 
 To examine current results based on the latest checkpoint file for each trial, use the `current_results()` method: 
 
@@ -240,8 +240,7 @@ my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints',
 my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints', 
     restart='my_checkpoints')
 ```
-
-If no results exist in the supplied `restart` directory, the design will be started afresh without any error messages. Hence, you can create a rerunnable design by supplying the same directory to `checkpoint` and `restart`:
+An error will be returned if `trials` and `restart` specify different numbers of design trials and `DesignResult` objects. However, if no results exist in the supplied `restart` directory, the design will be started afresh without any error messages. Hence, you can create a rerunnable design by supplying the same directory to `checkpoint` and `restart`:
 
 ```python
 my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', 
@@ -250,7 +249,7 @@ my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
 
 ### Evaluate a design
 
-The `.evaluate()` method is provided for cases where the user-defined sequences are fixed (with no variables to optimize).
+The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#iupac-degenerate-nucleotide-codes)), for example: 
 
 ```python
 dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
@@ -264,17 +263,18 @@ dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
 tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
 
 tube_des = tube_design([tube], model=Model(material='dna'))
-evaluated_result = tube_des.evaluate()
-
-evaluated_result
+my_evaluated_result = tube_des.evaluate()
 ```
 
-Output:
+An error will be returned if any domain contains nucleotides other than `ACGTU`. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook: 
+
+```python
+my_evaluated_result
+```
+
+Output: 
 
 > <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
-
-The resultant `DesignResult` object is the same as from running `.run()`, but no design will take place, but `.evaluate()` will throw an error if any of the component sequences contain wildcard nucleotides.
-
 
 
 ---
