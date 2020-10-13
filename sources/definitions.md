@@ -553,7 +553,7 @@ With the default value of unity for all weights, $\mathcal{M}_\mathcal{W}$ is si
 With custom defect weights in the range $[0,\infty)$, the physical meaning of
 the objective function is distorted in the service of adjusting design priorities. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity.
 
-### IUPAC degenerate nucleotide codes
+### Degenerate nucleotide codes
 Sequence constraints can be specified using IUPAC degenerate nucleotide codes, which for RNA are as follows: 
 
 Code | Nucleotides

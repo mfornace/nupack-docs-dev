@@ -25,7 +25,7 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 
 
 ## Specify a domain
-A `domain` is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5$'$ to 3$'$ using [IUPAC degenerate nucleotide codes](definitions.md#IUPAC-degenerate-nucleotide-codes)) and a domain name (keyword `name`). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats:
+A `domain` is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5$'$ to 3$'$ using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)) and a domain name (keyword `name`). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats:
 
 ```python
 a = Domain('AAAA',       name='a')
@@ -47,7 +47,8 @@ B = TargetStrand([d, ~e],   name='Strand B')  # ~e denotes the reverse complemen
 C = TargetStrand([e, a, f], name='Strand C')
 D = TargetStrand([d, d, d], name='Strand D')
 ```
-The reverse complement of domain `a` is denoted `~a`.
+
+The reverse complement of domain `a` is denoted `~a`. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G$\cdot$U wobble pairs for RNA if wobble mutations are permitted (see [Job Options](design.md#job-options)).
 
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
@@ -249,7 +250,7 @@ my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
 
 ### Evaluate a design
 
-The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#iupac-degenerate-nucleotide-codes)), for example:
+The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)), for example:
 
 ```python
 dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
@@ -308,14 +309,22 @@ A `complex_design` object supports the `launch()`, `run()`, and `evaluate()` met
 
 ## Specify hard constraints
 
-Hard constraints are most easily kept track of as a Python `list`. See below for an example:
+Hard constraints are specified between domains. The hard constraints for a design job are specified as a list, for example: 
 
 ```python
-# define hard constraints
+# specify domains
+a = 
+b = 
+c = 
+d = 
+e = Domain('S2', name='e')
+f = Domain('S2', name='f')
 
+# source sequence for window constraint
 gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
 
-hard = [
+# define list of hard constraints
+my_hard_constraints = [
     Match([a], [b]),
     Match([a, b, f, f], [d, a, d, a]),
     Complementarity([a, b, f, a, a, b], [c, d, e], allow_wobble=True),
@@ -329,15 +338,12 @@ hard = [
     Diversity(word=10, diversity=4, where=[a, B])
 ]
 
-e = Domain('S2', name='e')
-f = Domain('S2', name='f')
-
-#add another constraint to the constrain set
-hard += [Complementarity([e],[f], allow_wobble=True)]
-hard.append(Complementarity([e],[f], allow_wobble=True)) # same thing
+#two ways to add another constraint to the constraint set
+my_hard_constraints += [Complementarity([e],[f], allow_wobble=True)]
+my_hard_constraints.append(Complementarity([e],[f], allow_wobble=True)) 
 ```
 
-See the below subsections for more information about each kind of constraint.
+See below for information about how to specify each type of hard constraint. Note that the specification of a domain (examples above) represents implicit specification of a sequence constraint using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes).
 
 ---
 
@@ -360,15 +366,18 @@ match2 = Match([a, b], [d, d, e])
 
 ### Complementarity
 
-Complementarity constraints are used to constraint the concatenation of one list of domains to be the reverse complement of the concatenation of another list of domains. Therefore, the sum of the lenghts of the domains in each list must be the same.
-
-Currently only Watson-Crick complementarity constraints are allowed.
-
-In addition to explicit domain list based specification of complementarity constraints, nucleotides that are base paired in the target structure of an on-target complex will have a complementarity constraint applied automatically once user specification is finished and the design algorithm begins.
-
+Complementarity constraints are used to constrain the concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains. 
 
 ```python
 comp = Complementarity([a, b], [c, d, e])
+```
+
+In addition to complementarity constraints specified explicitly using `Complementarity`, nucleotides that are base paired in the target structure of an on-target complex are constrained to be complementary. 
+
+By default, complementary sequences are required to have Watson-Crick base-pairing (A$\cdot$U or C$\cdot$G for RNA, A$\cdot$T or C$\cdot$G for DNA). To permit wobble mutations (G$\cdot$U for RNA) globally throughout a design, use the `wobble_mutations` [job option](design.md#job-options). Alternatively, wobble mutations can be allowed for individual complemenatiry constraints (keyword `wobble_mutations`, default: `False`): 
+
+```python
+comp = Complementarity([a, b], [c, d, e], wobble_mutations=True)
 ```
 
 ---
@@ -632,7 +641,7 @@ my_tubes = [t1, t2]
 weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
-The weights are initialized to 1, but can be customized to taken any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
+The weights are initialized to 1, but can be customized to take any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
 
 ```python
 weights[:, :, :, a1] *= 2
