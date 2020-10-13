@@ -281,7 +281,7 @@ Output:
 
 ## Run a complex design job
 
-For convenience, the `complex_design` class enables specification of a constrained multi-complex design for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
+The `complex_design` class enables specification of a [constrained multi-complex design](definitions.md#constrained-multi-complex-design) for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
 
 
 ```python
@@ -291,18 +291,18 @@ my_design = complex_design(complexes=[C1, C2],
     hard_constraints=[], soft_constraints=[],
     defect_weights=None, options=None, model=my_model)
 
-result = my_design.run()
-result
+result = my_design.run(trials=2) # run 2 independent design trials in the foreground
+result[0]
 ```
 
 Output:
 
 > <img src="/figs/complex-design-output.png" alt="Complex design output" title="Example complex design output" width="350" />
 
-A `complex_design` object supports the `launch()` and `run()` methods as a `tube_design` object (see above).
+A `complex_design` object supports the `launch()`, `run()`, and `evaluate()` methods just as for a `tube_design` object (see above).
 
 !!! note
-    Note that a `complex_design` job is equivalent to a `tube_design` job with each on-target complex placed in a separate test tube containing no off-target complexes. For this reason, we strongly recommend use of test tube design formulations over complex design formulations so that off-target complexes are present in the design ensemble and the design algorithm can actively design against their formation.
+    Note that a `complex_design` job is equivalent to a `tube_design` job with each on-target complex placed in a separate test tube containing no off-target complexes. For this reason, we strongly [recommend](definitions.md#complex-design-vs-test-tube-design) use of test tube design formulations over complex design formulations so that off-target complexes are present in the design ensemble and the design algorithm can actively design against their formation.
 
 ---
 
@@ -612,10 +612,7 @@ diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
 
 ## Specify defect weights
 
-The user may wish to alter the relative weighting of defect contributions within the design objective function, $\mathcal{M}$, to prioritize or deprioritize design quality for a portion of the design ensemble. Custom defect weights can be defined for any level within the design ensemble (tube, complex, strand, domain), or for any combination of levels (specified coarser to finer with a period separating each level). Each weight takes a value in the interval $[0,\infty)$. By default, all weights are unity. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity. Weights specified at multiple levels within the ensemble are multiplicative (see Supplementary Information of the [multistate design paper](https://pubs.acs.org/doi/10.1021/jacs.6b12693) for details). With the default value of unity for all weights, $\mathcal{M}$ reduces to the multistate test tube ensemble defect, representing the average equilibrium fraction of incorrectly paired nucleotides over the design ensemble. With custom weights, the physical meaning of the objective function is distorted in the service of adjusting design priorities. The following script illustrates assignment of defect weights at different levels within the design ensemble:
-
-
-You can define custom weights by constructing a `Weights` object from the set of `TargetTube`s that will be designed.
+[Defect weights](definitions.md#defect-weights) can be specified to reprioritize design effort at any subset of levels (tube, complex, strand, domain) within design ensemble. A `Weights` object is created for the set of `TargetTube` objects to be designed:
 
 ```python
 a1 = Domain('N5', name='a1')
@@ -625,36 +622,29 @@ b = Domain('N10', name='b')
 A = TargetStrand([a1, a2], name='A')
 B = TargetStrand([b], name='B')
 
-hetero = TargetComplex([A, B], structure='(10+)10', name='hetero')
-homo = TargetComplex([A, A], structure='(10+)10', name='homo')
+AB = TargetComplex([A, B], structure='(10+)10', name='AB')
+AA = TargetComplex([A, A], structure='(10+)10', name='AA')
 
-t1 = TargetTube({hetero: 1e-8}, name='t1')
-t2 = TargetTube({homo: 1e-9, hetero: 1e-10}, name='t2')
+t1 = TargetTube({AB: 1e-8}, name='t1')
+t2 = TargetTube({AA: 1e-9, AB: 1e-10}, name='t2')
 
 my_tubes = [t1, t2]
 weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
-Weights may be freely accessed manipulated by slicing on a subset of 4 axes (in this order):
-
-1. Tube
-2. Complex
-3. Strand
-4. Domain
-
-For instance:
+The weights are initialized to 1, but can be customized to taken any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indicies (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
 
 ```python
 weights[:, :, :, a1] *= 2
 weights[:, :, A] = 4
 weights[t2] = 2
-weights[t1, hetero] = 5
+weights[t1, AB] = 5
 weights[:, :, A, a2] = 0.75
-weights[t2, homo, :, a1] = 0.5
+weights[t2, AA, :, a1] = 0.5
 weights[t2, :, :, b] = 3
 ```
 
-Weights may be displayed in tabular format in a notebook by running the following cell:
+A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 
 ```python
 weights
@@ -664,7 +654,7 @@ Output:
 
 <img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
 
-Or they may be printed in ASCII format using the `print` function:
+Alternatively, you can view an ASCII representation of the same data by using the `print` function: 
 
 ```python
 print(weights)
