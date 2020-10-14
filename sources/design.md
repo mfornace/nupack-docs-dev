@@ -349,7 +349,7 @@ See below for information about how to specify each type of hard constraint. Not
 
 ### Match
 
-Match constraints are used to constrain concatenations of domains to be identical to each other. They are specified by providing the ```add_match_constraint``` with two lists of domains. The sum of the lengths of the domains in each list must be the same.
+Match constraints are used to constrain equal-length concatenations of one or more domains to be identical as follows: 
 
 ```python
 a = Domain('N10', name='a')
@@ -358,7 +358,7 @@ c = Domain('H6', name='c')
 d = Domain('N6', name='d')
 e = Domain('S2', name='e')
 
-match1 = Match([c], [b, ~e])
+match1 = Match([c], [b, ~e])  # ~e is the reverse complement of e
 match2 = Match([a, b], [d, d, e])
 ```
 
@@ -366,52 +366,67 @@ match2 = Match([a, b], [d, d, e])
 
 ### Complementarity
 
-Complementarity constraints are used to constrain the concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains. 
+Complementarity constraints are used to constrain the concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains: 
 
 ```python
-comp = Complementarity([a, b], [c, d, e])
+comp1 = Complementarity([a, b], [c, d, e])
 ```
 
-In addition to complementarity constraints specified explicitly using `Complementarity`, nucleotides that are base paired in the target structure of an on-target complex are constrained to be complementary. 
+!!! Note
+    Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned to satisfy a complementarity constraint. 
 
-By default, complementary sequences are required to have Watson-Crick base-pairing (A$\cdot$U or C$\cdot$G for RNA, A$\cdot$T or C$\cdot$G for DNA). To permit wobble mutations (G$\cdot$U for RNA) globally throughout a design, use the `wobble_mutations` [job option](design.md#job-options). Alternatively, wobble mutations can be allowed for individual complemenatiry constraints (keyword `wobble_mutations`, default: `False`): 
+By default, complementary sequences are required to have Watson-Crick base-pairing (A$\cdot$U or C$\cdot$G for RNA, A$\cdot$T or C$\cdot$G for DNA). To permit wobble mutations for RNA (G$\cdot$U) globally throughout a design, use the `wobble_mutations` [job option](design.md#job-options). Alternatively, wobble mutations can be allowed for individual complementarity constraints (keyword `wobble_mutations`, default: `False`): 
 
 ```python
-comp = Complementarity([a, b], [c, d, e], wobble_mutations=True)
+comp2 = Complementarity([a, b], [c, d, e], wobble_mutations=True)
+```
+
+It is also possible to force base pairs to be wobble pairs:
+
+```python
+f = Domain('S2', name='f')
+g = Domain('S2', name='g')
+comp3 = Complementarity([f],[g], wobble_mutations=True)
 ```
 
 ---
 
 ### Similarity
 
-A similarity constraint forces either a domain or strand to match a reference sequence of the same length at a number of positions that falls in a specified range. As such, the constraint is specified using
+A similarity constraint forces a concatentation of domains or a single strand to match a reference sequence of the same length to within a specified fractional range. at a number of positions that falls in a specified range. A `Similarity` constraint is specified as: 
 
-* the name of the domain or strand
-* a reference sequence of the same length as the domain or strand
-* a fractional range, $[l, u]$, where $0 \leq l < u \leq 1$
+- a list of domains or a strand 
+- a reference sequence of the same length as the concatenated domains or the strand
+- a fractional range, $[l, u]$, where $0 \leq l < u \leq 1$
 
-A common use case of the similarity constraint is to constrain a domain or strand to have GC content in a certain range. In this case, the reference sequence is just the degenerate base code ```S``` repeated for the length of the domain / strand.
 
 
 ```python
 a = Domain('N10', name='a')
-sim1 = Similarity(a, 'S5K5', limits=[0.25, 0.75])
-
-# "composition constraint" special case: enforce 45-55% GC content
 b = Domain('N20', name='b')
-sim2 = Similarity(b, 'S20', limits=[0.45, 0.55])
+C = TargetStrand([a b a], name='Strand C')
+
+# similarity constraint for a concatenation of domains
+sim1 = Similarity([a ~a b], 'S5K5', limits=[0.25, 0.75]) 
+
+# similarity constraint for a strand
+sim2 = Similarity(C, 'S5K5', limits=[0.25, 0.75]) # for a strand
+
+# use similarity constraint to enforce 45-55% GC content
+sim3 = Similarity([a b], 'S30', limits=[0.45, 0.55])
 ```
+
+
+!!! Note
+    A similarity constraint can be used to constrain sequence composition (e.g., 45-55% GC content as in the example above). 
+
 
 ---
 
 ### Window
 
-A window constraint is used to constrain a concatenation of domains to have a sequence that is a substring of a given source sequence.
-It is specified in two steps.
-First, the source is defined by a name and a sequence.
-Then, the constraint itself is specified by giving the list of domains to concatenate and the name of the source sequence.
-The constraint can also allow the concatenated domains to have a sequence that is any window from several source sequences by giving a list of their names, instead of just one.
-
+A window constraint is used to constrain a concatenation of domains to have a sequence that is a subsequence of a given source sequence.
+More generally, a window can be drawn from any of multiple source sequences. A `Window` constraint is specified in two steps. First, define one or more source sequences as strings. Second, specify a list of domains for concatenation and a list of sources from which the window should be selected.
 
 ```python
 a = Domain('N10', name='a')
@@ -423,9 +438,10 @@ gfp = 'AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACG
 
 rfp = 'CCUGCAGGACGGCGAGUUCAUCUACAAGGUGAAGCUGCGCGGCACCAACUUCCCCUCCGACGGCCCCGUAAUGCAGAAGAAGACCAUGGGCUGGGAGGCCUCCUCCGAGCGGAUGUACCCCGAGGACGGCGCCCUGAAGGGCGAGAUCAAGCAGAGGCUGAAGCUGAAGGACGGCGGCCACUACGACGCUGAGGUCAAGACCACCUACAAGGCCAAGAAGCCCGUGCAGCUGCCCGGCGCCUACAACGUCAACAUCAAGUUGGACAUCACCUCCCACAACGAGGACUACACCAUCGUGGAACAGUACGAACGCGCCGAGGGCCGCCACUCCACCGGCGGCAUGGACGAGCUGUACAAGUAA'
 
-# constrain window to be drawn from source
+# constrain window to be drawn from a source
 window1 = Window([a, ~b], [gfp])
-# OR constrain window to be drawn from more than once source
+
+# constrain window to be drawn from more either of two sources
 window2 = Window([~c, e], [gfp, rfp])
 ```
 
@@ -433,11 +449,12 @@ window2 = Window([~c, e], [gfp, rfp])
 
 ### Library
 
-A library constraint forces a domain, or concatenated list of domains, to have its sequence come from a fixed set of enumerated sequences of the same length. The constraint is specified in two steps. First, one or more libraries are defined by giving them a name and a list of sequences, all of the same length for a given library. Then, the constraint itself is specified by giving a domain or list of domains and a library or list of libraries. The sum of the lengths of the domains must equal the sum of the library lengths. The library length is the length of any of its sequences.
+A library constraint forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. The `Library` constraint is specified in two steps. First, define one or more libraries of alternative sequences of uniform length. Second, specify a list of domains for concatentation and a list of libraries for concatenation. The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements):
 
 ```python
 a = Domain('N6', name='a')
-b = Domain('N12', name='b')
+b = Domain('N10', name='b')
+c = Domain('N2', name='c')
 
 # define a library of sequences
 toeholds = ['CAGUGG', 'AGCUCG', 'CAGGGC']
@@ -466,10 +483,10 @@ aaR = ['CGU', 'CGC', 'CGA', 'CGG', 'AGA', 'AGG']
 aaSTOP = ['UAA', 'UAG', 'UGA']
 
 # domain a is drawn from the `toeholds' library
-lib1 = Library([a], toeholds)
+lib1 = Library([a], [toeholds])
 
-# domain b is drawn from a concatenation of library sequences representing codons
-lib2 = Library([b], aaI + aaM + aaC + aaG)
+# domain concatenation [b, c] is drawn from a concatenation of library sequences representing codons
+lib2 = Library([b, c], [aaI, aaM, aaC, aaG])
 ```
 
 ---
