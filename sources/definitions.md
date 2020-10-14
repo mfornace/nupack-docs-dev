@@ -577,30 +577,26 @@ Sequence design can be performed subject to **hard constraints** that prohibit s
 The following types of hard sequence constraints can be imposed [@Wolfe17]:
 
 - **Assignment Constraint:** Nucleotide $a$ is constrained to have a specified sequence
-(e.g., `A`, `C`, `G`, `U` or any of the IUPAC degenerate nucleotide codes.
+(e.g., `A`, `C`, `G`, `U` or any of the [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes). To specify an assignment constraint, [specify a domain](design.md#specify-a-domain). 
 
 - **Match Constraint:** Two nucleotides $a$ and $b$ are constrained to be identical 
 (e.g., if a strand species appears in more than one on-target complex, corresponding nucleotides are constrained to have
 the same sequence in all complexes). 
 
-- **Watson--Crick Constraint:** Two nucleotides $a$ and $b$ are constrained to be Watson-Crick 
-complements (by default, Watson--Crick constraints are implied for all base pairs present in on-target structures). 
+- **Complementarity Constraint:** Two  nucleotides $a$ and $b$ are constrained to be Watson--Crick complements, or optionally for RNA, to be Watson-Crick or wobble complements. 
 
-- **Complementarity Constraint:** Two  nucleotides $a$ and $b$ are constrained to be Watson--Crick or wobble complements. 
-
-- **Composition Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to have a sequence composition in a specified range (e.g., a desired `GC` content can be achieved by constraining the fraction of 'S' nucleotides to fall in the range $[f^{\rm min}, f^{\rm max}]$).
-
-- **Similarity Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., 
-the fraction of nucleotides matching an mRNA sequence can be constrained to fall in the range $[f^{\rm min}, f^{\rm max}]$). 
-
-- **Pattern Prevention Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained not to contain a specified subsequence of length $n\le b-a+1$ (e.g., prevention of `GGGG`, 
-which is prone to forming `G`-quadruplexes that are not accounted for in nearest-neighbor free energy models). 
+- **Similarity Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., a desired `GC` content can be achieved by constraining the fraction of 'S' nucleotides to fall in the range $[f^{\rm min}, f^{\rm max}]$). 
 
 - **Library Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be selected from a specified library of $m$ sequences of length $n=b-a+1$ (e.g., 
 a library of toehold sequences or a library of codons). 
 
 - **Window Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to be a subsequence of a specified source sequence of length $n\ge b-a+1$ 
 (e.g., the source sequence is an mRNA), or more generally, a subsequence of one of multiple specified source sequences. 
+
+- **Pattern Prevention Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained *not* to contain a specified subsequence of length $n\le b-a+1$ (e.g., prevention of `GGGG`, 
+which is prone to forming `G`-quadruplexes that are not accounted for in nearest-neighbor free energy models). 
+
+- **Diversity Constraint:** Consecutive nucleotides $a,\dots,b$ are constrained to have a specified degree of sequence diversity (e.g., every subsequence of length 4 should have at least 2 nucleotide types). 
 
 Let $\mathcal R$ denote the user-specified set of hard constraints for a design problem. 
 

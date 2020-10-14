@@ -309,7 +309,7 @@ A `complex_design` object supports the `launch()`, `run()`, and `evaluate()` met
 
 ## Specify hard constraints
 
-Hard constraints are specified between domains. The hard constraints for a design job are specified as a list, for example: 
+[Hard constraints](definitions.md#hard-constraints) for a design job are specified as a list, for example: 
 
 ```python
 # specify domains
@@ -349,7 +349,7 @@ See below for information about how to specify each type of hard constraint. Not
 
 ### Match
 
-Match constraints are used to constrain equal-length concatenations of one or more domains to be identical as follows: 
+A [match constraint](definitions.md#hard-constraints) forces equal-length concatenations of one or more domains to be identical as follows: 
 
 ```python
 a = Domain('N10', name='a')
@@ -366,7 +366,7 @@ match2 = Match([a, b], [d, d, e])
 
 ### Complementarity
 
-Complementarity constraints are used to constrain the concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains: 
+A [complementarity constraint](definitions.md#hard-constraints) forces a concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains: 
 
 ```python
 comp1 = Complementarity([a, b], [c, d, e])
@@ -393,7 +393,7 @@ comp3 = Complementarity([f],[g], wobble_mutations=True)
 
 ### Similarity
 
-A similarity constraint forces a concatentation of domains or a single strand to match a reference sequence of the same length to within a specified fractional range. at a number of positions that falls in a specified range. A `Similarity` constraint is specified as: 
+A [similarity constraint](definitions.md#hard-constraints) forces a concatentation of domains or a single strand to match a reference sequence of the same length to within a specified fractional range. at a number of positions that falls in a specified range. A `Similarity` constraint is specified as: 
 
 - a list of domains or a strand 
 - a reference sequence of the same length as the concatenated domains or the strand
@@ -425,8 +425,10 @@ sim3 = Similarity([a b], 'S30', limits=[0.45, 0.55])
 
 ### Window
 
-A window constraint is used to constrain a concatenation of domains to have a sequence that is a subsequence of a given source sequence.
-More generally, a window can be drawn from any of multiple source sequences. A `Window` constraint is specified in two steps. First, define one or more source sequences as strings. Second, specify a list of domains for concatenation and a list of sources from which the window should be selected.
+A [window constraint](definitions.md#hard-constraints) forces a concatenation of domains to have a sequence that is a subsequence of a source sequence. More generally, a window can be drawn from any of multiple source sequences. A `Window` constraint is specified in two steps: 
+
+- First, define one or more source sequences as strings. 
+- Second, specify a list of domains for concatenation and a list of sources from which the window should be selected.
 
 ```python
 a = Domain('N10', name='a')
@@ -449,7 +451,12 @@ window2 = Window([~c, e], [gfp, rfp])
 
 ### Library
 
-A library constraint forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. The `Library` constraint is specified in two steps. First, define one or more libraries of alternative sequences of uniform length. Second, specify a list of domains for concatentation and a list of libraries for concatenation. The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements):
+A [library constraint](definitions.md#hard-constraints) forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A `Library` constraint is specified in two steps: 
+
+- First, define one or more libraries of alternative sequences of uniform length. 
+- Second, specify a list of domains for concatentation and a list of libraries for concatenation. 
+
+The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements). 
 
 ```python
 a = Domain('N6', name='a')
@@ -482,25 +489,22 @@ aaK = ['AAA', 'AAG']
 aaR = ['CGU', 'CGC', 'CGA', 'CGG', 'AGA', 'AGG']
 aaSTOP = ['UAA', 'UAG', 'UGA']
 
-# domain a is drawn from the `toeholds' library
+# domain a is drawn from a toehold library
 lib1 = Library([a], [toeholds])
 
-# domain concatenation [b, c] is drawn from a concatenation of library sequences representing codons
+# concatenation [b, c] is drawn from a concatenation of codon libraries
 lib2 = Library([b, c], [aaI, aaM, aaC, aaG])
 ```
 
 ---
 
-### Pattern prevention
+### Pattern Prevention
 
-Pattern prevention constraints are used to prevent any subsequences of a given strand or domain from containing some fixed pattern sequence. This pattern sequence can be specified using degenerate base codes.
+A [pattern prevention constraint](definitions.md#hard-constraints) prevents a list of patterns from appearing globally or in a list of domains and/or strands. A `Pattern` constraint is specified as: 
 
-Because this constraint is frequently applied with many patterns to many elements of the design, and possibly all strands with in a design, the method ```add_pattern_constraints``` allows specifying multiple pattern constraints simultaneously. The first (required) argument is a single pattern or list of patterns to be prevented. The second (keyword) argument, ```names```, has three valid specifications:
-
-* ```None``` or unspecified: the patterns are prevented in all strands in the design
-* a single domain or strand name: the patterns are prevented in only this domain or strand.
-* a list of domain or strand names: the patterns are prevented in every named domain or strand.
-
+- a list of patterns to be prevented
+- optionally a list of domains and/or strands (keyword `where`) where the patterns should be prevented 
+- if the scope is unspecified (absence of keyword `where`), the constraint is global
 
 ```python
 a = Domain('N12', name='a')
@@ -508,46 +512,39 @@ b = Domain('N12', name='b')
 A = TargetStrand([a, ~a], name='A')
 B = TargetStrand([b, ~b], name='B')
 
-# pattern prevention for a domain
-pat1 = Pattern(['A4', 'U4'], where=[a])
+# pattern prevention for a domain a and domain b
+pattern1 = Pattern(['A4', 'U4'], where=[a, b])
 
-# pattern prevention for a strand
-pat2 = Pattern(['A4', 'U4'], where=[B])
+# pattern prevention for strand B
+pattern2 = Pattern(['A4', 'U4'], where=[B])
 
-# preventing the same patterns for strand `A' and domain `b'
-pat3 = Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b])
+# preventing the same patterns for strand A and domain b
+pattern3 = Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b])
 
 # global pattern prevention
-pat4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
+pattern4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
 ```
 
 ---
 
 ### Diversity
 
-New to NUPACK 4.0, diversity constraints represent a more efficient alternative to using pattern prevention constraints to ensure sequence diversity.
-For instance, specifying the constraints that no AAAA, CCCC, GGGG, or UUUU should appear in a strand is equivalent to specifying the constraint that every length 4 window of the strand must have at least 2 nucleotide constraints within. When specified as a diversity constraint, both the intention is more clear and the CSP solver is able to more rapidly make sequence mutations.
+A [diversity constraint](definitions.md#hard-constraints) forces every window of a specified length to contain a specified degree of sequence diversity. A `Diversity` constraint is specified as:
 
-Diversity constraints are specified by two numbers:
-
-* The first is the window length to consider for the strand(s)/domain(s).
-* The second is the minimum number of nucleotide types that must appear in every window of the above length
-
-Following are the two method calls necessary to reproduce the global pattern prevention above.
-
-```python
-div1 = Diversity(4, 2)
-div2 = Diversity(6, 3)
-```
-
-In the above examples, these diversity constraints are applied to all strands in the design.
-Just like with pattern prevention constraints, diversity constraints can also be applied with one function call to a user-specified subset of domains or strands by adding a list of them with the keyword `where`.
+* the window length in nucleotides 
+* the minimum number of nucleotide types that must appear in every window 
+* optionally a list of domains and/or strands (keyword `where`) where the diversity should be imposed
+* if the scope is unspecified (absence of keyword `where`), the constraint is global
 
 
 ```python
-div3 = Diversity(10, 4, where=[a, B])
+div1 = Diversity(4, 2) # global constraint
+div2 = Diversity(6, 3) # global constraint
+div3 = Diversity(10, 4, where=[a, B]) # local constraint
 ```
 
+!!! Note
+    A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY. A constraint satisfaction problem is solved to identify a valid candidate mutation, and the solutino process is more efficient for diversity than for pattern prevention.  As a result, we recommend diversity constraints over pattern prevention constraints when applicable. The global constraints `div1` and `div2` reproduce the global pattern prevention constraint `pattern4`. 
 
 ---
 
