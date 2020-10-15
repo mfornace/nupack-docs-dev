@@ -211,7 +211,7 @@ my_current_results[0]  # display results table for first design trial
 If only final results are of interest, use the `final_results()` method:
 
 ```python
-my_final_results = my_jobs.current_results()
+my_final_results = my_jobs.final_results()
 ```
 
 which returns a list with an entry for each trial that is either a `DesignResult` object (if a final result is available) or `None` (otherwise).
@@ -309,16 +309,18 @@ A `complex_design` object supports the `launch()`, `run()`, and `evaluate()` met
 
 ## Specify hard constraints
 
-[Hard constraints](definitions.md#hard-constraints) for a design job are specified as a list, for example: 
+[Hard constraints](definitions.md#hard-constraints) for a design job are specified as a list, for example:
 
 ```python
 # specify domains
-a = 
-b = 
-c = 
-d = 
-e = Domain('S2', name='e')
-f = Domain('S2', name='f')
+a = Domain('N4', name='a')
+b = Domain('N4', name='b')
+c = Domain('N5', name='c')
+d = Domain('N5', name='d')
+e = Domain('N5', name='e')
+f = Domain('N5', name='f')
+
+A = TargetStrand([a, b, c], name='A')
 
 # source sequence for window constraint
 gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
@@ -327,20 +329,20 @@ gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacg
 my_hard_constraints = [
     Match([a], [b]),
     Match([a, b, f, f], [d, a, d, a]),
-    Complementarity([a, b, f, a, a, b], [c, d, e], allow_wobble=True),
-    Similarity(c, 'S10', limits=[0.45, 0.55]), # GC content
-    Library([a], catalog = ['CTAC', 'TAAT']),
-    Window([a, ~b], source = gfp),
-    Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]),
+    Complementarity([a, b, f, a, a, b], [c, d, e, c, c], wobble_mutations=True),
+    Similarity([c], 'S5', limits=[0.2, 0.8]), # GC content
+    Library([a], catalog=[['CTAC', 'TAAT']]),
+    Window([a, ~b], source=gfp),
+    Pattern(['A5', 'C5', 'G5', 'U5'], where=A),
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
     Diversity(word=4, diversity=2),
     Diversity(word=6, diversity=3),
-    Diversity(word=10, diversity=4, where=[a, B])
+    Diversity(word=10, diversity=4, where=[a, b])
 ]
 
 #two ways to add another constraint to the constraint set
-my_hard_constraints += [Complementarity([e],[f], allow_wobble=True)]
-my_hard_constraints.append(Complementarity([e],[f], allow_wobble=True)) 
+my_hard_constraints += [Complementarity([e], [f], wobble_mutations=True)]
+my_hard_constraints.append(Complementarity([e], [f], wobble_mutations=True))
 ```
 
 See below for information about how to specify each type of hard constraint. Note that the specification of a domain (examples above) represents implicit specification of a sequence constraint using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes).
@@ -349,7 +351,7 @@ See below for information about how to specify each type of hard constraint. Not
 
 ### Match
 
-A [match constraint](definitions.md#hard-constraints) forces equal-length concatenations of one or more domains to be identical as follows: 
+A [match constraint](definitions.md#hard-constraints) forces equal-length concatenations of one or more domains to be identical as follows:
 
 ```python
 a = Domain('N10', name='a')
@@ -366,16 +368,16 @@ match2 = Match([a, b], [d, d, e])
 
 ### Complementarity
 
-A [complementarity constraint](definitions.md#hard-constraints) forces a concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains: 
+A [complementarity constraint](definitions.md#hard-constraints) forces a concatenation of one list of domains to be the reverse complement of an equal-length  concatenation of another list of domains:
 
 ```python
 comp1 = Complementarity([a, b], [c, d, e])
 ```
 
 !!! Note
-    Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned to satisfy a complementarity constraint. 
+    Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned to satisfy a complementarity constraint.
 
-By default, complementary sequences are required to have Watson-Crick base-pairing (A$\cdot$U or C$\cdot$G for RNA, A$\cdot$T or C$\cdot$G for DNA). To permit wobble mutations for RNA (G$\cdot$U) globally throughout a design, use the `wobble_mutations` [job option](design.md#job-options). Alternatively, wobble mutations can be allowed for individual complementarity constraints (keyword `wobble_mutations`, default: `False`): 
+By default, complementary sequences are required to have Watson-Crick base-pairing (A$\cdot$U or C$\cdot$G for RNA, A$\cdot$T or C$\cdot$G for DNA). To permit wobble mutations for RNA (G$\cdot$U) globally throughout a design, use the `wobble_mutations` [job option](design.md#job-options). Alternatively, wobble mutations can be allowed for individual complementarity constraints (keyword `wobble_mutations`, default: `False`):
 
 ```python
 comp2 = Complementarity([a, b], [c, d, e], wobble_mutations=True)
@@ -386,16 +388,16 @@ It is also possible to force base pairs to be wobble pairs:
 ```python
 f = Domain('S2', name='f')
 g = Domain('S2', name='g')
-comp3 = Complementarity([f],[g], wobble_mutations=True)
+comp3 = Complementarity([f], [g], wobble_mutations=True)
 ```
 
 ---
 
 ### Similarity
 
-A [similarity constraint](definitions.md#hard-constraints) forces a concatentation of domains or a single strand to match a reference sequence of the same length to within a specified fractional range. at a number of positions that falls in a specified range. A `Similarity` constraint is specified as: 
+A [similarity constraint](definitions.md#hard-constraints) forces a concatentation of domains or a single strand to match a reference sequence of the same length to within a specified fractional range. at a number of positions that falls in a specified range. A `Similarity` constraint is specified as:
 
-- a list of domains or a strand 
+- a list of domains or a strand
 - a reference sequence of the same length as the concatenated domains or the strand
 - a fractional range, $[l, u]$, where $0 \leq l < u \leq 1$
 
@@ -404,30 +406,30 @@ A [similarity constraint](definitions.md#hard-constraints) forces a concatentati
 ```python
 a = Domain('N10', name='a')
 b = Domain('N20', name='b')
-C = TargetStrand([a b a], name='Strand C')
+C = TargetStrand([a, b, a], name='Strand C')
 
 # similarity constraint for a concatenation of domains
-sim1 = Similarity([a ~a b], 'S5K5', limits=[0.25, 0.75]) 
+sim1 = Similarity([a, ~a, b], 'S5K35', limits=[0.25, 0.75])
 
 # similarity constraint for a strand
-sim2 = Similarity(C, 'S5K5', limits=[0.25, 0.75]) # for a strand
+sim2 = Similarity(C.domains, 'S30K10', limits=[0.25, 0.75]) # for a strand
 
 # use similarity constraint to enforce 45-55% GC content
-sim3 = Similarity([a b], 'S30', limits=[0.45, 0.55])
+sim3 = Similarity([a, b], 'S30', limits=[0.45, 0.55])
 ```
 
 
 !!! Note
-    A similarity constraint can be used to constrain sequence composition (e.g., 45-55% GC content as in the example above). 
+    A similarity constraint can be used to constrain sequence composition (e.g., 45-55% GC content as in the example above).
 
 
 ---
 
 ### Window
 
-A [window constraint](definitions.md#hard-constraints) forces a concatenation of domains to have a sequence that is a subsequence of a source sequence. More generally, a window can be drawn from any of multiple source sequences. A `Window` constraint is specified in two steps: 
+A [window constraint](definitions.md#hard-constraints) forces a concatenation of domains to have a sequence that is a subsequence of a source sequence. More generally, a window can be drawn from any of multiple source sequences. A `Window` constraint is specified in two steps:
 
-- First, define one or more source sequences as strings. 
+- First, define one or more source sequences as strings.
 - Second, specify a list of domains for concatenation and a list of sources from which the window should be selected.
 
 ```python
@@ -451,12 +453,12 @@ window2 = Window([~c, e], [gfp, rfp])
 
 ### Library
 
-A [library constraint](definitions.md#hard-constraints) forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A `Library` constraint is specified in two steps: 
+A [library constraint](definitions.md#hard-constraints) forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A `Library` constraint is specified in two steps:
 
-- First, define one or more libraries of alternative sequences of uniform length. 
-- Second, specify a list of domains for concatentation and a list of libraries for concatenation. 
+- First, define one or more libraries of alternative sequences of uniform length.
+- Second, specify a list of domains for concatentation and a list of libraries for concatenation.
 
-The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements). 
+The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements).
 
 ```python
 a = Domain('N6', name='a')
@@ -500,10 +502,10 @@ lib2 = Library([b, c], [aaI, aaM, aaC, aaG])
 
 ### Pattern Prevention
 
-A [pattern prevention constraint](definitions.md#hard-constraints) prevents a list of patterns from appearing globally or in a list of domains and/or strands. A `Pattern` constraint is specified as: 
+A [pattern prevention constraint](definitions.md#hard-constraints) prevents a list of patterns from appearing globally or in a list of domains and/or strands. A `Pattern` constraint is specified as:
 
 - a list of patterns to be prevented
-- optionally a list of domains and/or strands (keyword `where`) where the patterns should be prevented 
+- optionally a list of domains and/or strands (keyword `where`) where the patterns should be prevented
 - if the scope is unspecified (absence of keyword `where`), the constraint is global
 
 ```python
@@ -511,15 +513,17 @@ a = Domain('N12', name='a')
 b = Domain('N12', name='b')
 A = TargetStrand([a, ~a], name='A')
 B = TargetStrand([b, ~b], name='B')
+C = TargetComplex([A, B, A], name='C')
+D = TargetComplex([A, A], name='D')
 
 # pattern prevention for a domain a and domain b
 pattern1 = Pattern(['A4', 'U4'], where=[a, b])
 
 # pattern prevention for strand B
-pattern2 = Pattern(['A4', 'U4'], where=[B])
+pattern2 = Pattern(['A4', 'U4'], where=B)
 
 # preventing the same patterns for strand A and domain b
-pattern3 = Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b])
+pattern3 = Pattern(['A5', 'C5', 'G5', 'U5'], where=[b])
 
 # global pattern prevention
 pattern4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
@@ -531,8 +535,8 @@ pattern4 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
 
 A [diversity constraint](definitions.md#hard-constraints) forces every window of a specified length to contain a specified degree of sequence diversity. A `Diversity` constraint is specified as:
 
-* the window length in nucleotides 
-* the minimum number of nucleotide types that must appear in every window 
+* the window length in nucleotides
+* the minimum number of nucleotide types that must appear in every window
 * optionally a list of domains and/or strands (keyword `where`) where the diversity should be imposed
 * if the scope is unspecified (absence of keyword `where`), the constraint is global
 
@@ -540,11 +544,11 @@ A [diversity constraint](definitions.md#hard-constraints) forces every window of
 ```python
 div1 = Diversity(4, 2) # global constraint
 div2 = Diversity(6, 3) # global constraint
-div3 = Diversity(10, 4, where=[a, B]) # local constraint
+div3 = Diversity(10, 4, where=[a, b]) # local constraint
 ```
 
 !!! Note
-    A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY. A constraint satisfaction problem is solved to identify a valid candidate mutation, and the solutino process is more efficient for diversity than for pattern prevention.  As a result, we recommend diversity constraints over pattern prevention constraints when applicable. The global constraints `div1` and `div2` reproduce the global pattern prevention constraint `pattern4`. 
+    A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY. A constraint satisfaction problem is solved to identify a valid candidate mutation, and the solutino process is more efficient for diversity than for pattern prevention.  As a result, we recommend diversity constraints over pattern prevention constraints when applicable. The global constraints `div1` and `div2` reproduce the global pattern prevention constraint `pattern4`.
 
 ---
 
@@ -554,9 +558,9 @@ div3 = Diversity(10, 4, where=[a, B]) # local constraint
 # define soft for soft constraints
 soft = [
     Pattern(['A4', 'U4'], where=a),
-    Pattern(['A5', 'C5', 'G5', 'U5'], where=[A, b]), # default weight 1
+    Pattern(['A5', 'C5', 'G5', 'U5'], where=A), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
-    Similarity(b, 'S12', limits=[0.45, 0.55], weight=0.25),
+    Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
     SSM([C, D], word=4, weight=0.15),
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
@@ -589,7 +593,7 @@ a = Domain('N10', name='a')
 b = Domain('N20', name='b')
 
 # explicitly specify weight
-sim = Similarity(b, 'S20', limits=[0.45, 0.55], weight=0.25)
+sim = Similarity([b], 'S20', limits=[0.45, 0.55], weight=0.25)
 ```
 
 ---
@@ -686,16 +690,15 @@ print(weights)
 Output:
 
 ```
-                            Weight
-Tube Complex Strand Domain
-t1   hetero  A      a1        5.00
-                    a2        0.75
-             B      b         5.00
-t2   homo    A      a1        0.50
-                    a2        0.75
-     hetero  A      a1        2.00
-                    a2        0.75
-             B      b         3.00
+Tube Complex Strand Domain  Weight
+  t1      AB      A     a1    5.00
+  t1      AB      A     a2    0.75
+  t1      AB      B      b    5.00
+  t2      AA      A     a1    0.50
+  t2      AA      A     a2    0.75
+  t2      AB      A     a1    2.00
+  t2      AB      A     a2    0.75
+  t2      AB      B      b    3.00
 ```
 
 
@@ -828,7 +831,7 @@ C = TargetComplex([A, B], '(20+)20', name='C')
 tube = TargetTube({C: 1e-6}, max_size=2, name='tube1')
 
 my_design = tube_design([tube], model=Model())
-result = my_design.run()
+result = my_design.run(trials=1)[0]
 ```
 
 ---
@@ -972,7 +975,7 @@ When "calling" the design to start the optimization process, two additional argu
 ```python
 from nupack.design import TimeInterval, WriteToFileCheckpoint
 
-result = my_design.run(checkpoint_condition=TimeInterval(1), checkpoint_handler=WriteToFileCheckpoint("design-checkpoint"))
+result = my_design.run(trials=1, checkpoint_condition=[TimeInterval(1)], checkpoint_handler=[WriteToFileCheckpoint("design-checkpoint")])
 ```
 
 --- -->
