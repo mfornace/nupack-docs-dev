@@ -332,7 +332,7 @@ my_hard_constraints = [
     Complementarity([a, b, f, a, a, b], [c, d, e, c, c], wobble_mutations=True),
     Similarity([c], 'S5', limits=[0.2, 0.8]), # GC content
     Library([a], catalog=[['CTAC', 'TAAT']]),
-    Window([a, ~b], source=gfp),
+    Window([a, ~b], sources=[gfp]),
     Pattern(['A5', 'C5', 'G5', 'U5'], where=A),
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
     Diversity(word=4, diversity=2),
@@ -443,10 +443,10 @@ gfp = 'AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACG
 rfp = 'CCUGCAGGACGGCGAGUUCAUCUACAAGGUGAAGCUGCGCGGCACCAACUUCCCCUCCGACGGCCCCGUAAUGCAGAAGAAGACCAUGGGCUGGGAGGCCUCCUCCGAGCGGAUGUACCCCGAGGACGGCGCCCUGAAGGGCGAGAUCAAGCAGAGGCUGAAGCUGAAGGACGGCGGCCACUACGACGCUGAGGUCAAGACCACCUACAAGGCCAAGAAGCCCGUGCAGCUGCCCGGCGCCUACAACGUCAACAUCAAGUUGGACAUCACCUCCCACAACGAGGACUACACCAUCGUGGAACAGUACGAACGCGCCGAGGGCCGCCACUCCACCGGCGGCAUGGACGAGCUGUACAAGUAA'
 
 # constrain window to be drawn from a source
-window1 = Window([a, ~b], [gfp])
+window1 = Window([a, ~b], sources=[gfp])
 
 # constrain window to be drawn from more either of two sources
-window2 = Window([~c, e], [gfp, rfp])
+window2 = Window([~c, e], sources=[gfp, rfp])
 ```
 
 ---

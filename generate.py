@@ -8,7 +8,7 @@ out.mkdir(exist_ok=True)
 
 
 template = lambda: {
-    "cells": [],
+    "cells": [],conda
     "metadata": {},
     "nbformat": 4,
     "nbformat_minor": 4
