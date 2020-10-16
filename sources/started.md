@@ -16,8 +16,7 @@ For interactive usage, the following packages are recommended:
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is currently *not* supported, though we hope to address this in the near future.
-<!-- A possible approach for Windows users is to use NUPACK inside [Docker](#installing-nupack-via-docker). -->
+NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is currently *not* supported, though we hope to address this in the future. Windows users may instead to run NUPACK inside [Docker](#installing-nupack-via-docker).
 
 ---
 
@@ -89,20 +88,15 @@ Examples are provided for the following use cases:
 - [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
 
 ---
-<!--
+
 ## Installing NUPACK via Docker
 
-The downloaded NUPACK 4 source code includes a Dockerfile in `package/python.dockerfile` which will install Miniconda and NUPACK 4 via Arch Linux.
+The downloaded NUPACK 4 source code includes a built Docker image as `nupack-4-docker.zip`.
 
-```bash
-docker build . -f docker/python.dockerfile -t nupack
-```
+!!! Warning
+    Put this information in.
 
-```bash
-
-```
-
---- -->
+---
 
 ## Installing NUPACK from source
 

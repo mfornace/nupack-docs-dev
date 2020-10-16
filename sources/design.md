@@ -1,7 +1,7 @@
 
 
 # Design Jobs
-To enable **reaction pathway engineering** of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13,@Hanewich-Hollatz19]) or large-scale **structural engineering including pseudoknots** (e.g., RNA origamis [@Geary14]), NUPACK sequence design operates on multistate ensembles:
+To enable **reaction pathway engineering** of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [@Hochrein13,@HanewichHollatz19]) or large-scale **structural engineering including pseudoknots** (e.g., RNA origamis [@Geary14]), NUPACK sequence design operates on multistate ensembles:
 
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
@@ -163,7 +163,7 @@ my_results[0]  # display results table for first design trial
 
 Output:
 
-> <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="650" />
+> <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="620" />
 
 Output table displays:
 
@@ -275,7 +275,7 @@ my_evaluated_result
 
 Output:
 
-> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="600" />
+> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
 
 
 ---
@@ -814,7 +814,7 @@ result
 
 This displays the result object as something like the following:
 
-> <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="750" />
+> <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="600" />
 
 You may also use the `print` function, for output in a raw ASCII form:
 
