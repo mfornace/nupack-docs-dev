@@ -333,11 +333,11 @@ my_hard_constraints = [
     Similarity([c], 'S5', limits=[0.2, 0.8]), # GC content
     Library([a], catalog=[['CTAC', 'TAAT']]),
     Window([a, ~b], sources=[gfp]),
-    Pattern(['A5', 'C5', 'G5', 'U5'], where=A),
+    Pattern(['A5', 'C5', 'G5', 'U5'], scope=A),
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
     Diversity(word=4, diversity=2),
     Diversity(word=6, diversity=3),
-    Diversity(word=10, diversity=4, where=[a, b])
+    Diversity(word=10, diversity=4, scope=[a, b])
 ]
 
 #two ways to add another constraint to the constraint set
@@ -366,7 +366,7 @@ match2 = Match([a, b], [d, d, e])
 ```
 
 !!! Note
-    Constraints that expect a list of `Domain` objects for concatenation will alternatively accept a `TargetStrand`. 
+    Constraints that expect a list of `Domain` objects for concatenation will alternatively accept a `TargetStrand`.
 
 ```python
 A = TargetStrand([a, b], name='Strand A')
@@ -414,7 +414,7 @@ comp3 = Complementarity([f], [g], wobble_mutations=True)
 A [similarity constraint](definitions.md#hard-constraints) forces a concatentation of domains to match a reference sequence of the same length to within a specified fractional range. A `Similarity` constraint is specified as:
 
 - a list of domains to be concatenated; alternatively a target strand may be specified
-- a reference sequence of the same length as the concatenated domains 
+- a reference sequence of the same length as the concatenated domains
 - a fractional range, $[l, u]$, where $0 \leq l < u \leq 1$
 
 
@@ -488,7 +488,7 @@ b = Domain('N10', name='b')
 c = Domain('N2', name='c')
 d = Domain('N3', name='d')
 e = Domain('N3', name='e')
-A = TargetStrand([d e], name='Strand A')
+A = TargetStrand([d, e], name='Strand A')
 
 # define a library of sequences
 toeholds = ['CAGUGG', 'AGCUCG', 'CAGGGC']
@@ -568,25 +568,26 @@ A [diversity constraint](definitions.md#hard-constraints) forces every window of
 a = Domain('N12', name='a')
 b = Domain('N12', name='b')
 A = TargetStrand([a, ~a], name='A')
+C = TargetComplex([A, A], name='A+A')
 
 # global constraints
-div1 = Diversity(4, 2) 
-div2 = Diversity(6, 3) 
+div1 = Diversity(4, 2)
+div2 = Diversity(6, 3)
 
 # local constraint on concatenation [a, b]
-div3 = Diversity(10, 4, scope=[a, b]) 
+div3 = Diversity(10, 4, scope=[a, b])
 
 # local constraint on target strand A
-div4 = Diversity(10, 4, scope=A) 
+div4 = Diversity(10, 4, scope=A)
 ```
 
 
 
 !!! Note
-    A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY. 
-    
-    We recommend diversity constraints over pattern prevention constraints because they make it more efficient to solve the constraint satisfaction problem that identifies a new validate candidate mutation at every step during sequence optimization. 
-    
+    A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY.
+
+    We recommend diversity constraints over pattern prevention constraints because they make it more efficient to solve the constraint satisfaction problem that identifies a new validate candidate mutation at every step during sequence optimization.
+
     The global constraints `div1` and `div2` reproduce the global pattern prevention constraint `pattern3`.
 
 ---
@@ -596,11 +597,11 @@ div4 = Diversity(10, 4, scope=A)
 ```python
 # define soft for soft constraints
 soft = [
-    Pattern(['A4', 'U4'], where=a),
-    Pattern(['A5', 'C5', 'G5', 'U5'], where=A), # default weight 1
+    Pattern(['A4', 'U4'], scope=a),
+    Pattern(['A5', 'C5', 'G5', 'U5'], scope=A), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
-    SSM([C, D], word=4, weight=0.15),
+    SSM([C], word=4, weight=0.15),
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
@@ -740,58 +741,7 @@ Tube Complex Strand Domain  Weight
   t2      AB      B      b    3.00
 ```
 
-
-
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.table`.
-
-<!--
-!!!example
-    ``` python
-
-    # domains
-    Domain('a', 'N'*10)
-    Domain('b', 'N'*10)
-    Domain('c', 'N'*10)
-    Domain('d', 'N'*10)
-
-    # strands
-    Strand('A', ('a', 'b'))
-    Strand('B', ('b', 'c'))
-    Strand('C', ('c', 'd'))
-    Strand('D', ('d', 'a'))
-
-    # complexes
-    TargetComplex('S1', ('A', 'B'), 'D20 +')
-    TargetComplex('S2', ('B', 'C'), 'D10 (U10+U10)')
-    TargetComplex('S3', ('C', 'D'), 'D20 +')
-    TargetComplex('S4', ('D', 'A'), 'D5 (U10 D5 + U10)')
-
-    # tubes
-    design.add_tube('T1', {'S1': 1.0e-9, 'S2': 1.0e-9})
-    design.add_tube('T2', {'S3': 1.0e-9, 'S4': 1.0e-9})
-
-    design.add_off_targets('T1', max_size=2)
-    design.add_off_targets('T2', max_size=2)
-
-    # weights specified for a single granularity level
-    design.add_weight(2, domain='a')
-    design.add_weight(4, complex='S3')
-    design.add_weight(0.5, tube='T2')
-
-    # weights for combinations of adjacent granularity levels
-    design.add_weight(5, tube='T1', complex='S1')
-    design.add_weight(0.75, strand='A', domain='b')
-    design.add_weight(0.5, tube='T2', complex='S4', strand='D', domain='a')
-
-    # weights for nonadjacent granularity levels
-    design.add_weight(3, tube='T2', domain='d')
-    design.add_weight(3, tube='T2', strand='C')
-    design.add_weight(0.1, complex='S4', domain='b')
-
-    # objectives are weighted when they are created
-    design.add_global_objective(weight=2)
-    ``` -->
-
 
 ---
 
@@ -816,11 +766,6 @@ options = DesignOptions(
     f_refocus=0.03,
     cache_bytes_of_RAM=0,
     min_ppair=1e-05,
-    slowdown=0,
-    log=None,
-    decomposition_log=None,
-    thermo_log=None,
-    time_analysis=1
 )
 ```
 
@@ -829,22 +774,6 @@ In addition to the multistate test tube design algorithm options, a few others a
 * ```seed```: The seed for the random number generator allowing reproducible design runs
 * ```cache_bytes_of_RAM```: The number of bytes of RAM to set as a maximum cache size for thermodynamic block caching
 * ```min_ppair```: The minimum pair probability used as a threshhold for converting dense pair probability matrices into sparse representation for efficiency
-* ```slowdown```: For development purposes. Runs all thermodynamics calls ```slowdown``` times instead of once.
-* ```time_analysis```: A boolean that determines whether the full ensemble is reevaluated at the end to get an accurate timing of the cost of analysis. Can be set to ```False``` to speed up design output.
-
-The remaining log options are all strings and can have four different states:
-
-* ```""```: The empty string (default). If empty, no logging of this type occurs.
-* ```"stdout"```: The log is written to the standard output stream.
-* ```"stderr"```: The log is written to the standard error stream.
-* any other string: The string is treated as a relative path specification where intermediate folders must exist and the log is written to the file at that path.
-
-The information logged for each of these given a non-empty string is as follows:
-
-* ```log```: After every major algorithm component finishes, time since design start, sequence, defect (estimate), algorithm position, decomposition tree position, and active/passive ensemble breakdown are logged.
-* ```decomposition_log```: After each time a complex (on- or off-target) is decomposed (or redecomposed), a JSON representation of the decomposition tree is logged.
-* ```thermo_log```: Primarily for debugging/development purposes. After every thermodynamic evaluation, the type of calculation (pair probability, bonused pair probability, partition function), number of nucleotides evaluated, and duration of the calculation are logged.
-
 
 ---
 
@@ -895,7 +824,7 @@ print(result)
 
 Output:
 
-> ```c++
+> ```
 > Domain results:
 > Domain              Sequence
 >      a  GCATTGAGAAAACGCAAGAG
@@ -1000,22 +929,3 @@ result = DesignResult.load('design-result.o')
 ```
 
 ---
-
-
-
-<!-- ### Saving checkpoint files automatically
-
-When "calling" the design to start the optimization process, two additional arguments must be added for checkpointing to work, `checkpoint_condition` and `checkpoint_handler`.
-
-`checkpoint_condition` is a binary function that receives the stats and timer object from the running design optimization. The logic in `checkpoint_condition` then uses this information to determine whether a checkpoint should be made, in which case it returns True. In the call below, it is set to an object of an included class, `TimeInterval`. If `checkpoint_condition` is set to an object `TimeInterval(n)`, then a checkpoint will be emitted roughly every `n` seconds.
-
-`checkpoint_handler` is the function which actually does something given that `checkpoint_condition` returns `True`. `checkpoint_handler` takes one argument, a `DesignResult` object, and decides how it will use this information. In the call below, it is set to an object of the included class, `WriteToFileCheckpoint`. This type of `checkpoint_handler` object is instantiated with a filename prefix (`"design-checkpoint"` below) and will convert the design result object into JSON and serialize it to a file with the given prefix and a time stamp, e.g. design_test-2020-01-27T00:16:52.170292.out.
-
-```python
-from nupack.design import TimeInterval, WriteToFileCheckpoint
-
-result = my_design.run(trials=1, checkpoint_condition=[TimeInterval(1)], checkpoint_handler=[WriteToFileCheckpoint("design-checkpoint")])
-```
-
---- -->
-
