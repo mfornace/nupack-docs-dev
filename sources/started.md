@@ -16,6 +16,9 @@ For interactive usage, the following packages are recommended:
 - matplotlib
 - jupyterlab
 
+NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is currently *not* supported, though we hope to address this in the near future.
+<!-- A possible approach for Windows users is to use NUPACK inside [Docker](#installing-nupack-via-docker). -->
+
 ---
 
 ### Installing NUPACK via the Anaconda Python package
@@ -85,8 +88,21 @@ Examples are provided for the following use cases:
 - [Multitube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
 - [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
 
-
 ---
+<!--
+## Installing NUPACK via Docker
+
+The downloaded NUPACK 4 source code includes a Dockerfile in `package/python.dockerfile` which will install Miniconda and NUPACK 4 via Arch Linux.
+
+```bash
+docker build . -f docker/python.dockerfile -t nupack
+```
+
+```bash
+
+```
+
+--- -->
 
 ## Installing NUPACK from source
 
@@ -108,11 +124,9 @@ cd nupack # navigate to the source directory
 
 ./external/vcpkg/bootstrap-vcpkg.sh
 
-./external/vcpkg/vcpkg install clapack
-
-./external/vcpkg/vcpkg install armadillo tbb nlohmann-json jsoncpp \
-    spdlog boost-context boost-graph boost-align boost-coroutine2 \
-    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-ublas
+./external/vcpkg/vcpkg install armadillo tbb gecode \
+    nlohmann-json jsoncpp tclap spdlog boost-context boost-graph boost-align boost-ublas \
+    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-coroutine2
 ```
 
 Make a build folder and navigate into it.
