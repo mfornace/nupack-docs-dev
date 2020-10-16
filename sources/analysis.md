@@ -34,7 +34,8 @@ c2 = Complex([A, B, B, C], name='ABBC')
 c3 = Complex([A, A], name='AA')
 ```
 
-In general, commands that expect a `Complex` as an argument (e.g., `c2`) will alternatively accept a strand ordering (e.g.,`[A, B, B, C]`). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
+!!! Note
+    Commands that expect a `Complex` as an argument (e.g., `c2`) will alternatively accept a strand ordering (e.g.,`[A, B, B, C]`). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
 
 ---
 
@@ -49,7 +50,8 @@ t2 = Tube(strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12],
     max_size=3, include=[c2,[B, B, B, B]], exclude=[c1], name='t2')
 ```
 
-Note that `include` and `exclude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
+!!! Note
+    Note that `include` and `exclude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
 
 ---
 
