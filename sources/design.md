@@ -345,13 +345,19 @@ my_hard_constraints += [Complementarity([e], [f], wobble_mutations=True)]
 my_hard_constraints.append(Complementarity([e], [f], wobble_mutations=True))
 ```
 
-See below for information about how to specify each type of hard constraint. Note that the specification of a domain (examples above) represents implicit specification of a sequence constraint using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes).
+See below for information about how to specify each type of hard constraint. 
+
+!!! Note
+    Note that the specification of a domain using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) (as in the example above) is an implicit hard sequence constraint.
 
 ---
 
 ### Match
 
-A [match constraint](definitions.md#hard-constraints) forces equal-length concatenations of one or more domains to be identical as follows:
+A [match constraint](definitions.md#hard-constraints) forces equal-length concatenations of one or more domains to be identical. A `Match` hard constraint is specified as follows:
+
+- a first list of domains for concatenation; alternatively, a target strand may be specified 
+- a second list of domains for concatenation; alternatively, a target strand may be specified
 
 ```python
 a = Domain('N10', name='a')
@@ -363,23 +369,22 @@ A = TargetStrand([a, b], name='Strand A')
 
 match1 = Match([c], [b, ~e])  # ~e is the reverse complement of e
 match2 = Match([a, b], [d, d, e])
-```
-
-!!! Note
-    Constraints that expect a list of `Domain` objects for concatenation will alternatively accept a `TargetStrand`.
-
-```python
-A = TargetStrand([a, b], name='Strand A')
 
 # specifying target strand A is equivalent to specifying list of domains [a, b]
 match3 = Match(A, [d, d, e])
 ```
 
+!!! Note
+    Constraints that expect a list of domains for concatenation will alternatively accept a target strand.
+
 ---
 
 ### Complementarity
 
-A [complementarity constraint](definitions.md#hard-constraints) forces a concatenation of one list of domains to be the reverse complement of an equal-length concatenation of another list of domains:
+A [complementarity constraint](definitions.md#hard-constraints) forces a concatenation of one list of domains to be the reverse complement of an equal-length concatenation of another list of domains. A `Complementarity` hard constraint is specified as:
+
+- a first list of domains for concatenation; alternatively, a target strand may be specified 
+- a second list of domains for concatenation; alternatively, a target strand may be specified
 
 ```python
 
@@ -391,7 +396,7 @@ comp2 = Complementarity(A, [c, d, e])
 
 
 !!! Note
-    Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned to satisfy a complementarity constraint.
+    Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned a complementarity constraint.
 
 By default, complementary sequences are required to have Watson-Crick base-pairing (A$\cdot$U or C$\cdot$G for RNA, A$\cdot$T or C$\cdot$G for DNA). To permit wobble mutations for RNA (G$\cdot$U) globally throughout a design, use the `wobble_mutations` [job option](design.md#job-options). Alternatively, wobble mutations can be allowed for individual complementarity constraints (keyword `wobble_mutations`, default: `False`):
 
@@ -411,7 +416,7 @@ comp3 = Complementarity([f], [g], wobble_mutations=True)
 
 ### Similarity
 
-A [similarity constraint](definitions.md#hard-constraints) forces a concatentation of domains to match a reference sequence of the same length to within a specified fractional range. A `Similarity` constraint is specified as:
+A [similarity constraint](definitions.md#hard-constraints) forces a concatentation of domains to match a reference sequence of the same length to within a specified fractional range. A `Similarity` hard constraint is specified as:
 
 - a list of domains to be concatenated; alternatively a target strand may be specified
 - a reference sequence of the same length as the concatenated domains
@@ -443,7 +448,7 @@ sim3 = Similarity([a, b], 'S30', limits=[0.45, 0.55])
 
 ### Window
 
-A [window constraint](definitions.md#hard-constraints) forces a concatenation of domains to have a sequence that is a subsequence of a source sequence. More generally, a window can be drawn from any of multiple source sequences. A `Window` constraint is specified as:
+A [window constraint](definitions.md#hard-constraints) forces a concatenation of domains to have a sequence that is a subsequence of a source sequence. More generally, a window can be drawn from any of multiple source sequences. A `Window` hard constraint is specified as:
 
 - Define one or more source sequences as strings.
 - Specify a list of domains for concatenation; alternatively, specify a target strand
@@ -474,7 +479,7 @@ window3 = Window([~c, e], sources=[gfp, rfp])
 
 ### Library
 
-A [library constraint](definitions.md#hard-constraints) forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A `Library` constraint is specified as:
+A [library constraint](definitions.md#hard-constraints) forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A `Library` hard constraint is specified as:
 
 - Define one or more libraries of alternative sequences of uniform length.
 - Specify a list of domains for concatentation; alternatively, specify a target strand
@@ -530,7 +535,7 @@ lib2 = Library([b, c], [aaI, aaM, aaC, aaG])
 
 ### Pattern Prevention
 
-A [pattern prevention constraint](definitions.md#hard-constraints) prevents a list of patterns from appearing globally or in a concatenated list of domains. A `Pattern` constraint is specified as:
+A [pattern prevention constraint](definitions.md#hard-constraints) prevents a list of patterns from appearing globally or in a concatenated list of domains. A `Pattern` hard constraint is specified as:
 
 - a list of patterns to be prevented
 - optionally a list of domains for concatenation (keyword `scope`) where the patterns should be prevented; alternatively, a target strand may be specified
@@ -556,10 +561,10 @@ pattern3 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])
 
 ### Diversity
 
-A [diversity constraint](definitions.md#hard-constraints) forces every window of a specified length to contain a specified degree of sequence diversity, either globally or for a concatenated list of domains. A `Diversity` constraint is specified as:
+A [diversity constraint](definitions.md#hard-constraints) forces every word of a specified length to contain a specified degree of sequence diversity, either globally or for a concatenated list of domains. A `Diversity` hard constraint is specified as:
 
-- the window length in nucleotides
-- the minimum number of nucleotide types that must appear in every window
+- the word length in nucleotides (keyword `word`)
+- the minimum number of nucleotide types that must appear in every window (keyword `types`)
 - optionally a list of domains for concatenation (keyword `scope`) where the diversity should be imposed; alternatively, a target strand may be specified
 - if the scope is unspecified (absence of keyword `scope`), the constraint is global
 
@@ -571,17 +576,15 @@ A = TargetStrand([a, ~a], name='A')
 C = TargetComplex([A, A], name='A+A')
 
 # global constraints
-div1 = Diversity(4, 2)
-div2 = Diversity(6, 3)
+div1 = Diversity(word=4, types=2)
+div2 = Diversity(word=6, types=3)
 
 # local constraint on concatenation [a, b]
-div3 = Diversity(10, 4, scope=[a, b])
+div3 = Diversity(word=10, types=4, scope=[a, b])
 
 # local constraint on target strand A
-div4 = Diversity(10, 4, scope=A)
+div4 = Diversity(word=10, types=4, scope=A)
 ```
-
-
 
 !!! Note
     A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY.
@@ -593,10 +596,11 @@ div4 = Diversity(10, 4, scope=A)
 ---
 
 ## Specify soft constraints
+[Soft constraints](definitions.md#soft-constraints) for a design job are specified as a list, for example:
 
 ```python
 # define soft for soft constraints
-soft = [
+my_soft_constraints = [
     Pattern(['A4', 'U4'], scope=a),
     Pattern(['A5', 'C5', 'G5', 'U5'], scope=A), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
@@ -610,39 +614,76 @@ soft = [
 
 ---
 
-### Pattern prevention
-
-Pattern prevention soft constraints are specified in nearly the same way as pattern prevention hard constraints.
-The primary difference is that a weight can be supplied to control the relative design effort spent on the soft constraint.
-
-
-```python
-pat = Pattern(patterns=['A4', 'C4', 'G4', 'U4', 'M6',
-    'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
-```
-
----
-
 ### Similarity
 
 Similarity soft constraints are specified in nearly the same way as similarity hard constraints.
 The primary difference is that a weight can be supplied to control the relative design effort spent on the soft constraint.
 
+A [similarity constraint](definitions.md#soft-constraints) penalizes a concatentation of domains if it does not match a reference sequence of the same length to within a specified fractional range. A `Similarity` soft constraint is specified as:
+
+- a list of domains to be concatenated; alternatively a target strand may be specified
+- a reference sequence of the same length as the concatenated domains
+- a fractional range, $[l, u]$, where $0 \leq l < u \leq 1$
+- an optional weight $\in[0,\infty)$  (default: 1) that can be used to prioritize or de-prioritize design effort
+
+
 ```python
 a = Domain('N10', name='a')
 b = Domain('N20', name='b')
+C = TargetStrand([a, b, a], name='Strand C')
 
-# explicitly specify weight
-sim = Similarity([b], 'S20', limits=[0.45, 0.55], weight=0.25)
+# similarity constraint for a concatenation of domains
+sim1 = Similarity([a, ~a, b], 'S5K35', limits=[0.25, 0.75])
+
+# similarity constraint for a target strand
+sim2 = Similarity(C, 'S30K10', limits=[0.25, 0.75], weight=2.0) # for a strand
+
+# use similarity constraint to enforce 45-55% GC content
+sim3 = Similarity([a, b], 'S30', limits=[0.45, 0.55], weight=0.25)
 ```
 
 ---
 
+### Pattern prevention
+
+A [pattern prevention constraint](definitions.md#soft-constraints) penalizes a list of patterns from appearing globally or in a concatenated list of domains. A `Pattern` soft constraint is specified as:
+
+- a list of patterns to be prevented
+- optionally a list of domains for concatenation (keyword `scope`) where the patterns should be prevented; alternatively, a target strand may be specified
+- if the scope is unspecified (absence of keyword `scope`), the constraint is global
+- an optional weight $\in[0,\infty)$  (default: 1) that can be used to prioritize or de-prioritize design effort
+
+```python
+a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = TargetStrand([a, ~a], name='A')
+B = TargetStrand([b, ~b], name='B')
+
+# pattern prevention for concatenation [a, b]
+pattern1 = Pattern(['A4', 'U4'], scope=[a, b], weight=2.0)
+
+# pattern prevention for target strand B
+pattern2 = Pattern(['A4', 'U4'], scope=B)
+
+# global pattern prevention
+pattern3 = Pattern(['A4', 'C4', 'G4', 'U4', 
+    'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
+
+```
+
+---
+
+
+
 ### Sequence symmetry
 
-Sequence symmetry soft constraints are specified with a list of complex names (or single complex name) to consider simultaneously.
-This will penalize windows (i.e. n-grams, critons) that repeat spuriously (not explicitly constrained to be identical) and reverse complement windows that are not in full duplex regions.
-Multiple sequence symmetry constraints with different window sizes can be specified for the same sets of complexes, as shown below.
+A [sequence symmetry constraint](definitions.md#soft.constraints) penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An `SSM` soft constraint is specified as: 
+
+- the word length in nucleotides (keyword `word`)
+- optionally a list of on-target complexes (keyword `scope`) where the constraint should apply
+- if the scope is unspecified (absence of keyword `scope`), the constraint is global
+- an optional weight $\in[0,\infty)$  (default: 1) that can be used to prioritize or de-prioritize design effort
+
 
 ```python
 a = Domain('N12', name='a')
@@ -653,12 +694,18 @@ B = TargetStrand([b, ~b], name='B')
 C = TargetComplex([A], "(10.4)10", name='C')
 D = TargetComplex([A, A], "D24 +", name='D')
 
-ssm1 = SSM([C, D], word=4, weight=0.15)
+# multiple SSM constraints with different word lengths applied to the same complexes
+ssm1 = SSM(word=4, scope=[C, D], weight=0.15)
+ssm2 = SSM(word=5, scope=[C, D], weight=0.25)
+ssm3 = SSM(word=6, scope=[C, D], weight=0.45)
 
-# the same complexes with larger windows weighted higher
-ssm2 = SSM([C, D], word=5, weight=0.25)
-ssm3 = SSM([C, D], word=6, weight=0.45)
+#global SSM constraint applies to all on-target complexes in the design
+ssm4 = SSM(word=6, weigth=0.5) 
 ```
+
+!!! Note
+    Multiple SSM constraints with different window sizes can be specified for a given complex (see example above).
+
 
 ---
 
