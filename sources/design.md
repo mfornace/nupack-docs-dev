@@ -760,13 +760,29 @@ weights = Weights(my_tubes) # All weights are initialized to 1
 The weights are initialized to 1, but can be customized to take any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
 
 ```python
+# weight on domain a1
 weights[:, :, :, a1] *= 2
+
+# weight on target strand A
 weights[:, :, A] = 4
+
+# weight on tube t2
 weights[t2] = 2
+
+# weight on target complex AB in tube t1
 weights[t1, AB] = 5
+
+# weight on domain a2 in target strand A in all target complexes in all tubes
 weights[:, :, A, a2] = 0.75
+
+# weight on domain a1 in all target strands in target complex AA in tube t2
 weights[t2, AA, :, a1] = 0.5
+
+# weight on domain b in all target strands and target complexes in tube t2
 weights[t2, :, :, b] = 3
+
+# global weight on the entire multi-tube ensemble defect
+weights[:,:,:,:] *=2
 ```
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
