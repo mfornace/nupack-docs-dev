@@ -784,6 +784,8 @@ weights[t2, :, :, b] = 3
 # global weight on the entire multi-tube ensemble defect
 weights[:,:,:,:] *=2
 ```
+!!! Note
+    Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints. 
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 

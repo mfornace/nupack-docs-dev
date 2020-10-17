@@ -542,7 +542,7 @@ total number of target test tubes is then $|\Omega| = 8*3 + 1 = 25$. See [@Wolfe
 The design objective function is the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect) [@Wolfe17], 
 
 \begin{align}
-\mathcal{M},
+\mathcal{M}\in[0,1],
 \end{align}
 
 representing the average equilibrium fraction of incorrectly paired nucleotides over the multitube ensemble, $\Omega$. 
@@ -633,7 +633,7 @@ the constrained multi-tube design problem is:
 \min_{\phi_\Psi}\left[\mathcal{M} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] ~~~~\mathrm{subject~to} ~~~~\mathcal{R},
 \end{align}
 where $\mathcal{M}_\mathcal{W}$ is the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect) including user-specified [defect weights](definitions.md#defect-weights) $\mathcal{W}$.
-The sequence design algorithm seeks to iteratively reduce the the augmented objective function in the square brackets below a user-specified stop condition while satisfying the hard constraints in $\mathcal{R}$.
+The sequence design algorithm seeks to iteratively reduce the the **augmented objective function** in the square brackets below a user-specified stop condition while satisfying the hard constraints in $\mathcal{R}$.
 
 
 !!! warning
