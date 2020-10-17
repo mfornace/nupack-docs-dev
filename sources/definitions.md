@@ -620,7 +620,7 @@ which is prone to forming `G`-quadruplexes that are not accounted for in nearest
 3) a word that appears in the design is self-complementary. Sequence symmetry minimization is a negative design heuristic [@Dirks04] that destabilizes formation of off-target structures by ensuring they cannot form without mismatches in any subsequence of the word length. 
 
 
-- **Toehold free energy equalization:** Consider a set of toeholds and toehold complements that are intended to form duplexes with [structure free energies](definitions.md#structure-free-energy) that match each other or a specified reference free energy. This soft constraint will penalize toeholds and their complements to the extent they deviate from the desired duplex structure free energy. 
+- **Energy match:** Consider a set of duplexes (e.g., toeholds and toehold complements) that are intended to have [structure free energies](definitions.md#structure-free-energy) that match each other or a specified reference free energy. This soft constraint will penalize duplexes to the extent they deviate from the desired structure free energy. 
 
 Let $\mathcal S$ denote the user-specified set of soft constraints for a design problem. 
 

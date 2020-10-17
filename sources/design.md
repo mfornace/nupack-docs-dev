@@ -605,7 +605,7 @@ my_soft_constraints = [
     Pattern(['A5', 'C5', 'G5', 'U5'], scope=A), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
-    SSM([C], word=4, weight=0.15),
+    SSM(word=4, scope=[C], weight=0.15),
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
@@ -700,7 +700,7 @@ ssm2 = SSM(word=5, scope=[C, D], weight=0.25)
 ssm3 = SSM(word=6, scope=[C, D], weight=0.45)
 
 #global SSM constraint applies to all on-target complexes in the design
-ssm4 = SSM(word=6, weigth=0.5) 
+ssm4 = SSM(word=6, weight=0.5) 
 ```
 
 !!! Note
@@ -709,18 +709,29 @@ ssm4 = SSM(word=6, weigth=0.5)
 
 ---
 
-### Duplex structure energy equalization
+### Energy match
 
-Currently, the only structural motif that can be equalized is a perfect duplex. This is specified by giving a list of domain names.
-The soft constraint will then bias search toward sequences that for each domain `a`, the duplex with complementary domain `a*` will approach the median of all the constrained duplexes. A fixed reference energy can also be supplied through the ```energy_ref``` keyword argument, which will try to force the duplex free energies to match that reference energy instead.
+An [energy match constraint](definitions.md#soft-constraints) penalizes a set of duplexes if their [structure free energies](definitions.md#structure-free-energy) deviate from the median value, or alternatively deviate from a specified reference free energy. An `EnergyMatch` soft constraint is specified as: 
+
+- a list of domains, each to be evaluated as a duplex with its reverse complement 
+- an optional reference free energy in kcal/mol (keyword `energy_ref`)
+- an optional weight $\in[0,\infty)$  (default: 1) that can be used to prioritize or de-prioritize design effort
 
 ```python
-# equalize to median value
-diff1 = EnergyDiff([a, b])
+a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+c = Domain('N12', name='c')
+d = Domain('N12', name='d')
 
-# equalize to reference value, with explicit weight
-diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
+# match each duplex free energy to the median value
+diff1 = EnergyMatch([a, b, c, d])
+
+# match each duplex free energy to the specified reference free energy
+diff2 = EnergyMatch([a, b, c, d], energy_ref=-17, weight=0.5)
 ```
+
+!!! Note
+    An energy match constraint can be used to design a set of toeholds of comparable strength. 
 
 ---
 
