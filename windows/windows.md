@@ -1,10 +1,10 @@
 # Installing NUPACK on Windows using WSL 2
 1. Download Ubuntu from the Microsoft Store
-	![Store](/figs/ubuntudl.PNG)
+	![Store](/windows/figs/ubuntudl.PNG)
 2. Open the Ubuntu app and set a username and password
-![Setup](/figs/ubuntusetup2.PNG)
+![Setup](/windows/figs/ubuntusetup2.PNG)
 	* (Optional) Open the properties window and enable copy paste
-	![Setup](/figs/properties.PNG)
+	![Setup](/windows/figs/properties.PNG)
 3. Install NUPACK normally as if using Linux. Specifically run these commands in order:
 
 ``` 
