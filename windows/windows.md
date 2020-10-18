@@ -5,7 +5,7 @@
 ![Setup](/windows/figs/ubuntusetup2.PNG)
 	* (Optional) Open the properties window and enable copy paste
 	![Setup](/windows/figs/properties.PNG)
-3. Install NUPACK normally as if using Linux. Specifically run these commands in order:
+3. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
 
 ``` 
 mkdir nupack-latest
@@ -15,12 +15,13 @@ sudo apt install unzip
 unzip nupack-latest.zip
 cd ..
 
-wget -nv https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-        /bin/bash Miniconda3-latest-Linux-x86_64.sh -b && \
-        miniconda3/bin/conda update -n base -c defaults conda && \
-        rm Miniconda3-latest-Linux-x86_64.sh
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+/bin/bash Miniconda3-latest-Linux-x86_64.sh -b
+miniconda3/bin/conda update -n base -c defaults conda
+rm Miniconda3-latest-Linux-x86_64.sh
 
 export PATH=$HOME/miniconda3/bin:$PATH
+echo 'export PATH=$HOME/miniconda3/bin:$PATH' >> ~/.bashrc
 
 conda install -c conda-forge numpy scipy pip matplotlib bokeh pandas jupyterlab
 conda install -c conda-forge -c ./nupack-latest/package nupack
