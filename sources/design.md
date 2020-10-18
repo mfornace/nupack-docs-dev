@@ -335,9 +335,9 @@ my_hard_constraints = [
     Window([a, ~b], sources=[gfp]),
     Pattern(['A5', 'C5', 'G5', 'U5'], scope=A),
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
-    Diversity(word=4, diversity=2),
-    Diversity(word=6, diversity=3),
-    Diversity(word=10, diversity=4, scope=[a, b])
+    Diversity(word=4, types=2),
+    Diversity(word=6, types=3),
+    Diversity(word=10, types=4, scope=[a, b])
 ]
 
 #two ways to add another constraint to the constraint set
@@ -345,7 +345,7 @@ my_hard_constraints += [Complementarity([e], [f], wobble_mutations=True)]
 my_hard_constraints.append(Complementarity([e], [f], wobble_mutations=True))
 ```
 
-See below for information about how to specify each type of hard constraint. 
+See below for information about how to specify each type of hard constraint.
 
 !!! Note
     Note that the specification of a domain using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) (as in the example above) is an implicit hard sequence constraint.
@@ -356,7 +356,7 @@ See below for information about how to specify each type of hard constraint.
 
 A [match constraint](definitions.md#hard-constraints) forces equal-length concatenations of one or more domains to be identical. A `Match` hard constraint is specified as follows:
 
-- a first list of domains for concatenation; alternatively, a target strand may be specified 
+- a first list of domains for concatenation; alternatively, a target strand may be specified
 - a second list of domains for concatenation; alternatively, a target strand may be specified
 
 ```python
@@ -383,7 +383,7 @@ match3 = Match(A, [d, d, e])
 
 A [complementarity constraint](definitions.md#hard-constraints) forces a concatenation of one list of domains to be the reverse complement of an equal-length concatenation of another list of domains. A `Complementarity` hard constraint is specified as:
 
-- a first list of domains for concatenation; alternatively, a target strand may be specified 
+- a first list of domains for concatenation; alternatively, a target strand may be specified
 - a second list of domains for concatenation; alternatively, a target strand may be specified
 
 ```python
@@ -605,7 +605,7 @@ my_soft_constraints = [
     Pattern(['A5', 'C5', 'G5', 'U5'], scope=A), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
-    SSM([C], word=4, weight=0.15),
+    SSM(scope=[C], word=4, weight=0.15),
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
@@ -666,7 +666,7 @@ pattern1 = Pattern(['A4', 'U4'], scope=[a, b], weight=2.0)
 pattern2 = Pattern(['A4', 'U4'], scope=B)
 
 # global pattern prevention
-pattern3 = Pattern(['A4', 'C4', 'G4', 'U4', 
+pattern3 = Pattern(['A4', 'C4', 'G4', 'U4',
     'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
 
 ```
@@ -677,7 +677,7 @@ pattern3 = Pattern(['A4', 'C4', 'G4', 'U4',
 
 ### Sequence symmetry
 
-A [sequence symmetry constraint](definitions.md#soft.constraints) penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An `SSM` soft constraint is specified as: 
+A [sequence symmetry constraint](definitions.md#soft.constraints) penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An `SSM` soft constraint is specified as:
 
 - the word length in nucleotides (keyword `word`)
 - optionally a list of on-target complexes (keyword `scope`) where the constraint should apply
@@ -700,7 +700,7 @@ ssm2 = SSM(word=5, scope=[C, D], weight=0.25)
 ssm3 = SSM(word=6, scope=[C, D], weight=0.45)
 
 #global SSM constraint applies to all on-target complexes in the design
-ssm4 = SSM(word=6, weigth=0.5) 
+ssm4 = SSM(word=6, weight=0.5)
 ```
 
 !!! Note
