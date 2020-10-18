@@ -633,7 +633,13 @@ the constrained multi-tube design problem is:
 \min_{\phi_\Psi}\left[\mathcal{M} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] ~~~~\mathrm{subject~to} ~~~~\mathcal{R},
 \end{align}
 where $\mathcal{M}_\mathcal{W}$ is the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect) including user-specified [defect weights](definitions.md#defect-weights) $\mathcal{W}$.
-The sequence design algorithm seeks to iteratively reduce the the **augmented objective function** in the square brackets below a user-specified stop condition while satisfying the hard constraints in $\mathcal{R}$.
+The sequence design algorithm seeks to iteratively reduce the **augmented objective function** (weighted ensemble defect plus weighted soft constraints) below the **stop condition** 
+
+\begin{align}
+\left[\mathcal{M} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] \le f_\textrm{stop}
+\end{align}
+for user-specified $f_\textrm{stop} \in (0,1)$
+while satisfying the hard constraints in $\mathcal{R}$.
 
 
 !!! warning

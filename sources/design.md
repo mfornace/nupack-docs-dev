@@ -823,33 +823,45 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 ## Job options
 
-Specify any non-defaults. Change `f_stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
+Specify any non-default job options (defaults shown below): 
 
 ```python
+# algorithm parameters (see Supp Info of [@Wolfe17] for details)
 options = DesignOptions(
-    seed=0,     # random number generation seed
-    f_stop=0.02,  # stop condition
-    f_passive=0.01,
-    H_split=2,
+    f_stop=0.02,      # stop condition for sequence optimization
+    seed=0,           # random seed if 0, use specified seed if non-zero
+    H_split=2,        # default: 2 for RNA, 3 for DNA and custom
     N_split=12,
-    f_split=0.99,
-    f_stringent=0.99,
-    dG_clamp=-20,
-    M_bad=300, # number of bad
+    f_split=0.99,     # in interal (0,1)
+    f_stringent=0.99, # in interval (0,1)
+    dG_clamp=-20,     # kcal/mol
+    M_bad=300,
     M_reseed=50,
     M_reopt=3,
-    f_redecomp=0.03,
-    f_refocus=0.03,
-    cache_bytes_of_RAM=0,
-    min_ppair=1e-05,
+    f_passive=0.01,   # in interval (0,1)
+    f_redecomp=0.03,  # in interval (0,1)
+    f_refocus=0.03,   # in interval (0,1)
+    max_cache=4,      # maximum cache size (GB) used for test tube ensemble (see [@Fornace20])
+    f_sparse=1e-05    # threshold pair probs for efficient sparse representation in decomposition tree
 )
 ```
 
-In addition to the multistate test tube design algorithm options, a few others are included in the `DesignOptions` object:
+!!! Note
+    Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition. 
 
-* ```seed```: The seed for the random number generator allowing reproducible design runs
-* ```cache_bytes_of_RAM```: The number of bytes of RAM to set as a maximum cache size for thermodynamic block caching
-* ```min_ppair```: The minimum pair probability used as a threshhold for converting dense pair probability matrices into sparse representation for efficiency
+```python
+options = DesignOptions(
+    f_stop=0.05
+)
+```
+
+!!! Note
+    A design job with a non-zero `seed` will give the same result each time it is run. 
+
+!!! Note
+    Reduce `max_cache` if you have less than 4GB of memory available per design trial.
+
+
 
 ---
 
