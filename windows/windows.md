@@ -1,10 +1,12 @@
 # Installing NUPACK on Windows using WSL 2
+0. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
+![Feature](/windows/figs/winfeatures.PNG)
 1. Download Ubuntu from the Microsoft Store
-	![Store](/windows/figs/ubuntudl.PNG)
+![Store](/windows/figs/ubuntudl.PNG)
 2. Open the Ubuntu app and set a username and password
 ![Setup](/windows/figs/ubuntusetup2.PNG)
 	* (Optional) Open the properties window and enable copy paste
-	![Setup](/windows/figs/properties.PNG)
+	![Properties](/windows/figs/properties.PNG)
 3. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
 
 ``` 
