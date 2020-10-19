@@ -605,7 +605,7 @@ my_soft_constraints = [
     Pattern(['A5', 'C5', 'G5', 'U5'], scope=A), # default weight 1
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
-    SSM(scope=[C], word=4, weight=0.15),
+    SSM(word=4, scope=[C], weight=0.15),
     EnergyDiff([a, b]), # min energy diff to median
     EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
@@ -700,7 +700,7 @@ ssm2 = SSM(word=5, scope=[C, D], weight=0.25)
 ssm3 = SSM(word=6, scope=[C, D], weight=0.45)
 
 #global SSM constraint applies to all on-target complexes in the design
-ssm4 = SSM(word=6, weight=0.5)
+ssm4 = SSM(word=6, weight=0.5) 
 ```
 
 !!! Note
@@ -709,18 +709,29 @@ ssm4 = SSM(word=6, weight=0.5)
 
 ---
 
-### Duplex structure energy equalization
+### Energy match
 
-Currently, the only structural motif that can be equalized is a perfect duplex. This is specified by giving a list of domain names.
-The soft constraint will then bias search toward sequences that for each domain `a`, the duplex with complementary domain `a*` will approach the median of all the constrained duplexes. A fixed reference energy can also be supplied through the ```energy_ref``` keyword argument, which will try to force the duplex free energies to match that reference energy instead.
+An [energy match constraint](definitions.md#soft-constraints) penalizes a set of duplexes if their [structure free energies](definitions.md#structure-free-energy) deviate from the median value, or alternatively deviate from a specified reference free energy. An `EnergyMatch` soft constraint is specified as: 
+
+- a list of domains, each to be evaluated as a duplex with its reverse complement 
+- an optional reference free energy in kcal/mol (keyword `energy_ref`)
+- an optional weight $\in[0,\infty)$  (default: 1) that can be used to prioritize or de-prioritize design effort
 
 ```python
-# equalize to median value
-diff1 = EnergyDiff([a, b])
+a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+c = Domain('N12', name='c')
+d = Domain('N12', name='d')
 
-# equalize to reference value, with explicit weight
-diff2 = EnergyDiff([a, b], energy_ref=-17, weight=0.5)
+# match each duplex free energy to the median value
+diff1 = EnergyMatch([a, b, c, d])
+
+# match each duplex free energy to the specified reference free energy
+diff2 = EnergyMatch([a, b, c, d], energy_ref=-17, weight=0.5)
 ```
+
+!!! Note
+    An energy match constraint can be used to design a set of toeholds of comparable strength. 
 
 ---
 
@@ -749,14 +760,32 @@ weights = Weights(my_tubes) # All weights are initialized to 1
 The weights are initialized to 1, but can be customized to take any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
 
 ```python
+# weight on domain a1
 weights[:, :, :, a1] *= 2
+
+# weight on target strand A
 weights[:, :, A] = 4
+
+# weight on tube t2
 weights[t2] = 2
+
+# weight on target complex AB in tube t1
 weights[t1, AB] = 5
+
+# weight on domain a2 in target strand A in all target complexes in all tubes
 weights[:, :, A, a2] = 0.75
+
+# weight on domain a1 in all target strands in target complex AA in tube t2
 weights[t2, AA, :, a1] = 0.5
+
+# weight on domain b in all target strands and target complexes in tube t2
 weights[t2, :, :, b] = 3
+
+# global weight on the entire multi-tube ensemble defect
+weights[:,:,:,:] *=2
 ```
+!!! Note
+    Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints. 
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 
@@ -794,33 +823,45 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 ## Job options
 
-Specify any non-defaults. Change `f_stop` to set the defect tolerance on the test tube ensemble defect $\mathcal{M}$.
+Specify any non-default job options (defaults shown below): 
 
 ```python
+# algorithm parameters (see Supp Info of [@Wolfe17] for details)
 options = DesignOptions(
-    seed=0,     # random number generation seed
-    f_stop=0.02,  # stop condition
-    f_passive=0.01,
-    H_split=2,
+    f_stop=0.02,      # stop condition for sequence optimization
+    seed=0,           # random seed if 0, use specified seed if non-zero
+    H_split=2,        # default: 2 for RNA, 3 for DNA and custom
     N_split=12,
-    f_split=0.99,
-    f_stringent=0.99,
-    dG_clamp=-20,
-    M_bad=300, # number of bad
+    f_split=0.99,     # in interal (0,1)
+    f_stringent=0.99, # in interval (0,1)
+    dG_clamp=-20,     # kcal/mol
+    M_bad=300,
     M_reseed=50,
     M_reopt=3,
-    f_redecomp=0.03,
-    f_refocus=0.03,
-    cache_bytes_of_RAM=0,
-    min_ppair=1e-05,
+    f_passive=0.01,   # in interval (0,1)
+    f_redecomp=0.03,  # in interval (0,1)
+    f_refocus=0.03,   # in interval (0,1)
+    max_cache=4,      # maximum cache size (GB) used for test tube ensemble (see [@Fornace20])
+    f_sparse=1e-05    # threshold pair probs for efficient sparse representation in decomposition tree
 )
 ```
 
-In addition to the multistate test tube design algorithm options, a few others are included in the `DesignOptions` object:
+!!! Note
+    Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition. 
 
-* ```seed```: The seed for the random number generator allowing reproducible design runs
-* ```cache_bytes_of_RAM```: The number of bytes of RAM to set as a maximum cache size for thermodynamic block caching
-* ```min_ppair```: The minimum pair probability used as a threshhold for converting dense pair probability matrices into sparse representation for efficiency
+```python
+options = DesignOptions(
+    f_stop=0.05
+)
+```
+
+!!! Note
+    A design job with a non-zero `seed` will give the same result each time it is run. 
+
+!!! Note
+    Reduce `max_cache` if you have less than 4GB of memory available per design trial.
+
+
 
 ---
 

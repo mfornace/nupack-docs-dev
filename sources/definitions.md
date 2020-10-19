@@ -542,7 +542,7 @@ total number of target test tubes is then $|\Omega| = 8*3 + 1 = 25$. See [@Wolfe
 The design objective function is the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect) [@Wolfe17],
 
 \begin{align}
-\mathcal{M},
+\mathcal{M}\in[0,1],
 \end{align}
 
 representing the average equilibrium fraction of incorrectly paired nucleotides over the multitube ensemble, $\Omega$.
@@ -609,20 +609,20 @@ Here, $f_k(\phi_\Psi)\in[0,1]$ is the penalty function for soft constraint $k$ a
  Soft constraints can reduce design cost relative to the corresponding hard constraint by making it easier for the optimization process to identify candidate sequence mutations. Soft constraints can also increase flexibility by enabling specification of new design goals (e.g., designing a set of toeholds to have comparable binding strength) for which there is no hard constraint analog.
 The following types of soft constraints can be imposed:
 
-- **Similarity:** Penalize consecutive nucleotides $a,\dots,b$ if they fail to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g.,
-to drive the fraction of nucleotides matching an mRNA sequence to fall in the range $[f^{\rm min}, f^{\rm max}]$).
+- **Similarity:** Penalize consecutive nucleotides $a,\dots,b$ if they fail to be similar to a specified sequence of length $n=b-a+1$ to a specified degree (e.g., 
+to drive the fraction of nucleotides matching an mRNA sequence to fall in the range $[f^{\rm min}, f^{\rm max}]$). 
 
-- **Pattern prevention:** Penalize consecutive nucleotides $a,\dots,b$ if they contain a specified subsequence of length $n\le b-a+1$ (e.g., to discourage use of `GGGG`,
-which is prone to forming `G`-quadruplexes that are not accounted for in nearest-neighbor free energy models).
+- **Pattern prevention:** Penalize consecutive nucleotides $a,\dots,b$ if they contain a specified subsequence of length $n\le b-a+1$ (e.g., to discourage use of `GGGG`, 
+which is prone to forming `G`-quadruplexes that are not accounted for in nearest-neighbor free energy models). 
 
-- **Sequence symmetry minimization:** Penalize consecutive nucleotides $a,\dots,b$ of a specified *word length*, $L_w$, if [@Seeman82]: 1) a word appears in more than one location in the design
-(unless sequence domains are explicitly constrained to be identical), 2) a word and its reverse complement both appear in the design but they are specified in a target structure not to form a duplex,
-3) a word that appears in the design is self-complementary. Sequence symmetry minimization is a negative design heuristic [@Dirks04] that destabilizes formation of off-target structures by ensuring they cannot form without mismatches in any subsequence of the word length.
+- **Sequence symmetry minimization:** Penalize consecutive nucleotides $a,\dots,b$ of a specified *word length*, $L_w$, if [@Seeman82]: 1) a word appears in more than one location in the design 
+(unless sequence domains are explicitly constrained to be identical), 2) a word and its reverse complement both appear in the design but they are specified in a target structure not to form a duplex, 
+3) a word that appears in the design is self-complementary. Sequence symmetry minimization is a negative design heuristic [@Dirks04] that destabilizes formation of off-target structures by ensuring they cannot form without mismatches in any subsequence of the word length. 
 
 
-- **Toehold free energy equalization:** Consider a set of toeholds and toehold complements that are intended to form duplexes with [structure free energies](definitions.md#structure-free-energy) that match each other or a specified reference free energy. This soft constraint will penalize toeholds and their complements to the extent they deviate from the desired duplex structure free energy.
+- **Energy match:** Consider a set of duplexes (e.g., toeholds and toehold complements) that are intended to have [structure free energies](definitions.md#structure-free-energy) that match each other or a specified reference free energy. This soft constraint will penalize duplexes to the extent they deviate from the desired structure free energy. 
 
-Let $\mathcal S$ denote the user-specified set of soft constraints for a design problem.
+Let $\mathcal S$ denote the user-specified set of soft constraints for a design problem. 
 
 
 ### Constrained multi-tube design problem
@@ -635,7 +635,13 @@ the constrained multi-tube design problem is:
 \end{align}
 
 where $\mathcal{M}_\mathcal{W}$ is the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect) including user-specified [defect weights](definitions.md#defect-weights) $\mathcal{W}$.
-The sequence design algorithm seeks to iteratively reduce the the augmented objective function in the square brackets below a user-specified stop condition while satisfying the hard constraints in $\mathcal{R}$.
+The sequence design algorithm seeks to iteratively reduce the **augmented objective function** (weighted ensemble defect plus weighted soft constraints) below the **stop condition** 
+
+\begin{align}
+\left[\mathcal{M} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] \le f_\textrm{stop}
+\end{align}
+for user-specified $f_\textrm{stop} \in (0,1)$
+while satisfying the hard constraints in $\mathcal{R}$.
 
 
 !!! warning
