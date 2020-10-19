@@ -16,7 +16,7 @@ For interactive usage, the following packages are recommended:
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is currently *not* supported, though we hope to address this in the future. Windows users may instead to run NUPACK inside [Docker](#installing-nupack-via-docker).
+NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is *not*  directly supported, though we hope to address this in the future. Windows users may instead to install NUPACK on the [Linux subsystem](#installing-nupack-on-windows).
 
 ---
 
@@ -39,21 +39,21 @@ conda info
 
 The output of this command should show your Python version and other information. (If this command cannot be run, troubleshoot your Anaconda installation. You may not have your `$PATH` environmental variable set correctly.)
 
- After installing your preferred distribution, download the NUPACK package `nupack-4` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command:
+ After installing your preferred distribution, download the NUPACK package `nupack-4.0.0` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command:
 
 ```bash
-conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack
+conda install -c conda-forge -c ~/Downloads/nupack-4.0.0/package nupack
 ```
 
 <!-- This step should usually complete in 1 minute or less; it should always take less than 5 minutes.  -->
-You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, run the following:
+You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, you may run the following:
 
 ```bash
 conda install pytest
 pytest -v --pyargs nupack
 ```
 
-Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4` directory (for example, `cd ~/Downloads/nupack-4/examples`).
+Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4.0.0` directory (for example, `cd ~/Downloads/nupack-4.0.0/examples`).
 For each example notebook therein, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
 See the next section for help on opening the Jupyter notebooks.
 
@@ -80,21 +80,53 @@ A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `exa
 
 Examples are provided for the following use cases:
 
-- [Complex analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
-- [Tube analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
-- [Complex design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
-- [Tube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
-- [Multitube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
-- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/)
+- Complex analysis ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb))
+- Tube analysis ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb))
+- Complex design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb))
+- Tube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb))
+- Multitube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-simple.ipynb)/[evaluation](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-simple-evaluate.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb))
+- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
 
 ---
 
-## Installing NUPACK via Docker
+## Installing NUPACK on Windows
 
-The downloaded NUPACK 4 source code includes a built Docker image as `nupack-4-docker.zip`.
+NUPACK may be installed on Windows using the Windows Subsystem for Linux 2 (WSL2).
 
-!!! Warning
-    Put this information in.
+1. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
+![Feature](/figs/windows/winfeatures.PNG)
+1. Download Ubuntu from the Microsoft Store
+![Store](/figs/windows/ubuntudl.PNG)
+2. Open the Ubuntu app and set a username and password
+![Setup](/figs/windows/ubuntusetup2.PNG)
+	* (Optional) Open the properties window and enable copy paste
+	![Properties](/figs/windows/properties.PNG)
+3. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
+
+```bash
+mkdir nupack-latest
+cd nupack-latest
+wget -O nupack-latest.zip "oururlhere"
+sudo apt install unzip
+unzip nupack-latest.zip
+cd ..
+
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+/bin/bash Miniconda3-latest-Linux-x86_64.sh -b
+miniconda3/bin/conda update -n base -c defaults conda
+rm Miniconda3-latest-Linux-x86_64.sh
+
+export PATH=$HOME/miniconda3/bin:$PATH
+echo 'export PATH=$HOME/miniconda3/bin:$PATH' >> ~/.bashrc
+
+conda install -c conda-forge numpy scipy pip matplotlib bokeh pandas jupyterlab
+conda install -c conda-forge -c ./nupack-latest/package nupack
+
+jupyter lab
+```
+
+4. Open localhost:8888 with your browser and use Jupyter lab with NUPACK installed
+
 
 ---
 
