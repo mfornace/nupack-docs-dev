@@ -119,7 +119,7 @@ rm Miniconda3-latest-Linux-x86_64.sh
 export PATH=$HOME/miniconda3/bin:$PATH
 echo 'export PATH=$HOME/miniconda3/bin:$PATH' >> ~/.bashrc
 
-conda install -c conda-forge numpy scipy pip matplotlib bokeh pandas jupyterlab
+conda install -c conda-forge numpy scipy pip matplotlib pandas jupyterlab
 conda install -c conda-forge -c ./nupack-latest/package nupack
 
 jupyter lab
