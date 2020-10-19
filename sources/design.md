@@ -934,13 +934,46 @@ Output:
 
 ### Programmatic access
 
-Both `.run()` and `.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
+Both `.run()` and `.evaluate()` return `DesignResult` objects which may be introspected by the user. A `DesignResult` contains the following fields:
 
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
+- `.concentrations`: a rundown of concentration information for on- and off-targets.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
-- `.stats`: a rundown of the statistics and timings for the design that took place.
 
+Each field may be displayed individually:
+
+```python
+result.mapping
+```
+
+Output:
+
+> <img src="/figs/design-output-mapping.png" alt="Design output" title="Example design output" width="220" />
+
+```python
+result.defects
+```
+
+Output:
+
+> <img src="/figs/design-output-defects.png" alt="Design output" title="Example design output" width="600" />
+
+```python
+result.concentrations
+```
+
+Output:
+
+> <img src="/figs/design-output-concentrations.png" alt="Design output" title="Example design output" width="630" />
+
+```python
+result.analysis
+```
+
+Output:
+
+> <img src="/figs/design-output-analysis.png" alt="Design output" title="Example design output" width="270" />
 
 You can also interface with the `DesignResult` within Python.
 
@@ -948,19 +981,19 @@ You can also interface with the `DesignResult` within Python.
 1. For instance, you can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
 
 ```python
-print(result.mapping[tube])
-print(result.mapping[C])
-print(result.mapping[A])
-print(result.mapping[a])
+print(result.mapping[tube]) # --> Tube(tube1: {A: 1e-08, B: 1e-08})
+print(result.mapping[C])    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
+print(result.mapping[B])    # --> CCAGACCCCATTATTGGGGG
+print(result.mapping[a])    # --> CCCCCAATAATGGGGTCTGG
 ```
 
 2. You can look at the different defects by looking at the `defects` field, which contains the
 
 ```python
-print(result.defects.ensemble_defect)
-print(result.defects.tubes)
-print(result.defects.complexes)
-print(result.defects.tube_complexes)
+print(result.defects.ensemble_defect) # 0.010181549966458123
+print(result.defects.tubes)           # --> table of defect information for each tube
+print(result.defects.complexes)       # --> table of defect information for each on-target
+print(result.defects.tube_complexes)  # --> table of defect information for each on-target in each tube
 ```
 
 The subfields `tubes`, `complexes`, and `tube_complexes` are `pandas.DataFrame`s. These tables contain columns `tube` and `complex` containing the corresponding Python objects. For convenience, these tables also include `tube_name` and `complex_name` corresponding to the `str` names of those objects.
