@@ -181,7 +181,7 @@ print(myweight[t1][c2][A][d])
 # `f_redecomp = 0.03`:
 # `f_refocus = 0.03`:
 # `cache_bytes_of_RAM = 0`:
-# `min_ppair = 1e-05`:
+# `f_sparse = 1e-05`:
 # `slowdown = 0`:
 # `log = None`:
 # `decomposition_log = None`:
