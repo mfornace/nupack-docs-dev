@@ -829,7 +829,7 @@ Specify any non-default job options (defaults shown below):
 # algorithm parameters (see Supp Info of [@Wolfe17] for details)
 options = DesignOptions(
     f_stop=0.02,      # stop condition for sequence optimization
-    seed=0,           # if 0 then random seed; else use specified seed to get reproducible design trial 
+    seed=0,           # random seed if 0; specified seed otherwise (reproducible trial)
     H_split=2,        # default: 2 for RNA, 3 for DNA and custom
     N_split=12,
     f_split=0.99,     # in interal (0,1)
@@ -841,9 +841,7 @@ options = DesignOptions(
     f_passive=0.01,   # in interval (0,1)
     f_redecomp=0.03,  # in interval (0,1)
     f_refocus=0.03,   # in interval (0,1)
-    f_sparse=1e-05    # threshold pair probs for efficient sparse representation in decomposition tree
-    max_cache=4,      # max cache size (GB) used for matrix caching (see [@Fornace20])
-    max_cores=1       # max compute cores used for calculation
+    f_sparse=1e-05    # threshold pair probs for sparse storage in decomposition tree
 )
 ```
 
@@ -856,56 +854,42 @@ options = DesignOptions(
 )
 ```
 
-!!! Note
-    Reduce `max_cache` if you have less than 4GB of memory available per design trial. 
-
-
 
 ---
 
 ## Job results
 
-Both `.run()` and `.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
-
-- `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
-- `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
-- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
-- `.stats`: a rundown of the statistics and timings for the design that took place.
-
-As an example, consider the following design result:
+The results of NUPACK design jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube design job:
 
 ```python
 a = Domain('N20', name='a')
-
 A = TargetStrand([a], name='A')
 B = TargetStrand([~a], name='B')
-
 C = TargetComplex([A, B], '(20+)20', name='C')
 
 tube = TargetTube({C: 1e-6}, max_size=2, name='tube1')
 
 my_design = tube_design([tube], model=Model())
-result = my_design.run(trials=1)[0]
+my_result = my_design.run(trials=1)[0]
 ```
 
 ---
 
-### Textual display
-
-The quickest way to look at your results is to use the built-in notebook output function by just running a cell containing the following line:
+### Tabular display
+You can display a summary table of results in a Jupyter notebook, for example:
 
 ```python
-result
+my_result
 ```
-
-This displays the result object as something like the following:
+Output:
 
 > <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="600" />
 
-You may also use the `print` function, for output in a raw ASCII form:
+### Textual display
+You can view an ASCII representation of the same data by using the `print` function: 
 
 ```python
-print(result)
+print(my_result)
 ```
 
 Output:
@@ -948,7 +932,15 @@ Output:
 
 ---
 
-### Introspection
+### Programmatic access
+
+Both `.run()` and `.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
+
+- `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
+- `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
+- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
+- `.stats`: a rundown of the statistics and timings for the design that took place.
+
 
 You can also interface with the `DesignResult` within Python.
 
@@ -988,30 +980,28 @@ conc_results = complex_concentrations(t1_designed, result.analysis,
 
 ---
 
-## Saving, checkpointing, and restarting
+### Saving a job summary
 
----
-
-### Saving results to a text file
-
-Any design result can be saved to a text file for later use as follows. However, the result may not be loaded in programmatically; for that purpose, save a binary file instead.
+To save a textual job summary using the `save_text` method: 
 
 ```python
-result.save_text('design-result.txt')
+my_result.save_text('my-result.txt')
 ```
 
-### Saving and loading results to a binary file
+### Saving and reloading job results
 
-Saving a `DesignResult` as a binary file is simple. Under the hood it just uses the Python's builtin `pickle` module. Just specify the file name like the following example:
+Save a `DesignResult` as a binary file using the `save` method:
 
 ```python
-result.save('design-result.o')
+my_result.save('my-result.o')
 ```
 
-Later, you can load the result back into your Python session with the following class method syntax:
-
+to enable reloading during a future session using the `load` method: 
+ 
 ```python
-result = DesignResult.load('design-result.o')
+my_result = DesignResult.load('my-result.o')
 ```
+
+This functionality uses Python's built-in `pickle` module. 
 
 ---
