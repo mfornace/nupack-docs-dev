@@ -15,9 +15,9 @@ complex('C1', ['A'])
 complex('C2', ['A', 'B', 'B', 'C'])
 complex('C3', ['A', 'A'])
 
-tube('T1', strands={'A': 1e-6, 'B': 1e-8},  
+tube('T1', strands={'A': 1e-6, 'B': 1e-8},
     complexes=[maxsize=3, exclude='C1'])
-tube('T2', strands={'A': 1e-6, 'B': 1e-8, 'C': 1e-12},  
+tube('T2', strands={'A': 1e-6, 'B': 1e-8, 'C': 1e-12},
     complexes = [maxsize=3, explicit='C2', exclude='C1'])
 
 my_results = tube_analysis(tubes = ['T1', 'T2'], compute = [pairs,mfe]) # calculate pfuncs and concentrations
@@ -30,7 +30,7 @@ my_results = tube_analysis(tubes = ['T1', 'T2'], compute = [pairs,mfe]) # calcul
 # calculate pfuncs and concentrations in separate steps
 # (as a result, don't define "tube")
 
-my_complexes = complex_analysis(strands={'A', 'B'},   # calculate pfuncs 
+my_complexes = complex_analysis(strands={'A', 'B'},   # calculate pfuncs
     complexes=[maxsize=3, explicit='C2', exclude='C1'],
     compute = [pairs,mfe])
 
@@ -114,14 +114,14 @@ penalty('mypenalties',
     pattern: {['AAAA', 'UUUU'], names='a'},
     patterns: {['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b']},
     patterns: {['AAAA', 'CCCC', 'GGGG', 'UUUU',
-        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 
+        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS',
         'RRRRRR', 'YYYYYY'], weight=0.5},
     similarity: {'b', 'S'*20, [0.45, 0.55], weight=0.25},
     ssm: {['C', 'D'], word = 4, weight = 0.15},
-    energy_diff: {['a', 'b']}, # min energy diff to median 
+    energy_diff: {['a', 'b']}, # min energy diff to median
     energy_diff: {['a', 'b'], energy_ref = -17, weight=0.5}) # energy diff to reference
 
-weight('myweights', 
+weight('myweights',
     {2, domain = 'a'},
     {4, complex = 'S3'},
     {2, tube = 'T2'},
@@ -138,7 +138,7 @@ weight('myweights', 0.1, complex = 'S4', domain = 'b')
 
 constraint.match('myconstraints',['c'], ['b', 'e*'])
 constraint.match('myconstraints',['a', 'b'], ['d', 'd', 'e'])
-complement: 
+complement:
 
 #match constraints
 constraint('myconstraints', match: {['c'], ['b', 'e*']})
@@ -146,7 +146,7 @@ constraint.match('myconstraints',['c'], ['b', 'e*'])
 constraint.match('myconstraints',['a', 'b'], ['d', 'd', 'e'])
 
 #complementarity constraints
-constraint('myconstraints', complement: 
+constraint('myconstraints', complement:
     {['a', 'b'], ['c', 'd', 'e'],allow_wobble=true}) # or should flag be global?
 constraint.complement('myconstraints',['a', 'b'], ['c', 'd', 'e'],allow_wobble=true) # or should flag be global?
 
@@ -200,7 +200,7 @@ penalty.pattern('mypenalties',
     patterns=['AAAAA', 'CCCCC', 'GGGGG', 'UUUUU'], names=['A', 'b'])
 penalty.pattern('mypenalties',
     patterns=['AAAA', 'CCCC', 'GGGG', 'UUUU',
-        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS', 
+        'MMMMMM', 'KKKKKK', 'WWWWWW', 'SSSSSS',
         'RRRRRR', 'YYYYYY'], weight=0.5) # specify weight
 
 penalty.similarity('mypenalties','b', 'S'*20, [0.45, 0.55], weight=0.25)
@@ -209,7 +209,7 @@ penalty.ssm('mypenalties',['C', 'D'], word = 4, weight = 0.15)
 penalty.ssm('mypenalties',['C', 'D'], word = 5, weight = 0.15)
 penalty.ssm('mypenalties',['C', 'D'], word = 6, weight = 0.15) # can SSM penalties be applied to strands, or globally?
 
-penalty.energy_diff('mypenalties',['a', 'b']) # min energy diff to median 
+penalty.energy_diff('mypenalties',['a', 'b']) # min energy diff to median
 penalty.energy_diff('mypenalties',['a', 'b'], energy_ref = -17, weight=0.5) # energy diff to reference
 
 # Define defect weights
@@ -219,7 +219,7 @@ weight('myweights', 4, complex = 'S3')
 weight('myweights', 2, tube = 'T2')
 
 # weights for combinations of adjacent granularity levels
-weight('myweights', 5, tube = 'T1', complex = 'S1') # how to denote intersection 
+weight('myweights', 5, tube = 'T1', complex = 'S1') # how to denote intersection
 weight('myweights', 0.75, strand = 'A', domain = 'b')
 weight('myweights', 0.5, tube = 'T2', complex = 'S4', strand = 'D', domain = 'a')
 
@@ -244,14 +244,14 @@ weight('myweights', 0.1, complex = 'S4', domain = 'b')
 # `f_redecomp = 0.03`:
 # `f_refocus = 0.03`:
 # `cache_bytes_of_RAM = 0`:
-# `min_ppair = 1e-05`:
+# `f_sparse = 1e-05`:
 # `slowdown = 0`:
 # `log = None`:
 # `decomposition_log = None`:
 # `thermo_log = None`:
 # `time_analysis = 1`:
 
-parameters('myparameters', stop = 0.01, seed = 1, trials = 10) 
+parameters('myparameters', stop = 0.01, seed = 1, trials = 10)
 
 # run the job
 myresults = tube_design(tubes=['T1', 'T2', 'Crosstalk'],
@@ -261,7 +261,7 @@ myresults = tube_design(tubes=['T1', 'T2', 'Crosstalk'],
 
 
 # constraint list
-# passing jobs between analysis, design, utilities 
+# passing jobs between analysis, design, utilities
 
 ## Alternative analysis
 

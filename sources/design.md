@@ -934,12 +934,46 @@ Output:
 
 ### Programmatic access
 
-Both `.run()` and `.evaluate()` return a `DesignResult` object which may be introspected by the user. A `DesignResult` contains the following fields:
+Both `.run()` and `.evaluate()` return `DesignResult` objects which may be introspected by the user. A `DesignResult` contains the following fields:
 
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
+- `.concentrations`: a rundown of concentration information for on- and off-targets.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
 
+Each field may be displayed individually:
+
+```python
+my_result.mapping
+```
+
+Output:
+
+> <img src="/figs/design-output-mapping.png" alt="Design output" title="Example design output" width="220" />
+
+```python
+my_result.defects
+```
+
+Output:
+
+> <img src="/figs/design-output-defects.png" alt="Design output" title="Example design output" width="600" />
+
+```python
+my_result.concentrations
+```
+
+Output:
+
+> <img src="/figs/design-output-concentrations.png" alt="Design output" title="Example design output" width="630" />
+
+```python
+my_result.analysis
+```
+
+Output:
+
+> <img src="/figs/design-output-analysis.png" alt="Design output" title="Example design output" width="270" />
 
 You can also interface with the `DesignResult` within Python.
 
@@ -947,19 +981,19 @@ You can also interface with the `DesignResult` within Python.
 1. For instance, you can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
 
 ```python
-print(result.mapping[tube])
-print(result.mapping[C])
-print(result.mapping[A])
-print(result.mapping[a])
+print(my_result.mapping[tube]) # --> Tube(tube1: {A: 1e-08, B: 1e-08})
+print(my_result.mapping[C])    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
+print(my_result.mapping[B])    # --> CCAGACCCCATTATTGGGGG
+print(my_result.mapping[a])    # --> CCCCCAATAATGGGGTCTGG
 ```
 
 2. You can look at the different defects by looking at the `defects` field, which contains the
 
 ```python
-print(result.defects.ensemble_defect)
-print(result.defects.tubes)
-print(result.defects.complexes)
-print(result.defects.tube_complexes)
+print(my_result.defects.ensemble_defect) # 0.010181549966458123
+print(my_result.defects.tubes)           # --> table of defect information for each tube
+print(my_result.defects.complexes)       # --> table of defect information for each on-target
+print(my_result.defects.tube_complexes)  # --> table of defect information for each on-target in each tube
 ```
 
 The subfields `tubes`, `complexes`, and `tube_complexes` are `pandas.DataFrame`s. These tables contain columns `tube` and `complex` containing the corresponding Python objects. For convenience, these tables also include `tube_name` and `complex_name` corresponding to the `str` names of those objects.
@@ -967,14 +1001,14 @@ The subfields `tubes`, `complexes`, and `tube_complexes` are `pandas.DataFrame`s
 3. You can re-analyze your designed complexes and tubes via the `analysis` field:
 
 ```python
-t1_designed = result.mapping[tube]
+t1_designed = my_result.mapping[tube]
 
 # Compute the MFEs of the designed complexes that were in t1
 tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
 
 # Compute complex concentrations with a different set of strand concentrations
-conc_results = complex_concentrations(t1_designed, result.analysis,
-    concentrations={result.mapping[A]: 1e-8, result.mapping[B]: 1e-9})
+conc_results = complex_concentrations(t1_designed, my_result.analysis,
+    concentrations={my_result.mapping[A]: 1e-8, my_result.mapping[B]: 1e-9})
 ```
 
 ---
