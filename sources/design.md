@@ -829,7 +829,7 @@ Specify any non-default job options (defaults shown below):
 # algorithm parameters (see Supp Info of [@Wolfe17] for details)
 options = DesignOptions(
     f_stop=0.02,      # stop condition for sequence optimization
-    seed=0,           # random seed if 0, use specified seed if non-zero
+    seed=0,           # if 0 then random seed; else use specified seed to get reproducible design trial 
     H_split=2,        # default: 2 for RNA, 3 for DNA and custom
     N_split=12,
     f_split=0.99,     # in interal (0,1)
@@ -841,8 +841,9 @@ options = DesignOptions(
     f_passive=0.01,   # in interval (0,1)
     f_redecomp=0.03,  # in interval (0,1)
     f_refocus=0.03,   # in interval (0,1)
-    max_cache=4,      # maximum cache size (GB) used for test tube ensemble (see [@Fornace20])
     f_sparse=1e-05    # threshold pair probs for efficient sparse representation in decomposition tree
+    max_cache=4,      # max cache size (GB) used for matrix caching (see [@Fornace20])
+    max_cores=1       # max compute cores used for calculation
 )
 ```
 
@@ -856,10 +857,7 @@ options = DesignOptions(
 ```
 
 !!! Note
-    A design job with a non-zero `seed` will give the same result each time it is run. 
-
-!!! Note
-    Reduce `max_cache` if you have less than 4GB of memory available per design trial.
+    Reduce `max_cache` if you have less than 4GB of memory available per design trial. 
 
 
 
