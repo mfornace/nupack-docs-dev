@@ -32,11 +32,11 @@ tube_results[t1].epairs
 tube_results[t1][c1].ppairs
 
 complex_results = analyze_complexes(strands={A, B},   # calculate pfuncs
-    complexes = {maxsize=3, explicit=[c2], exclude=[c1]}, 
+    complexes = {maxsize=3, explicit=[c2], exclude=[c1]},
     compute=['pairs', 'mfe'])
     # alternatively provide tubes = [t1 t2] instead of strands and complexes
 
-complex_results 
+complex_results
 complex_results.mfe # set of mfes for all complexes
 complex_results.ppairs # ppairs matrix for all complexes
 complex_results[c1] # all results for complex c1
@@ -44,7 +44,7 @@ complex_results[c1].pfunc # pfunc for complex c1
 complex_results[c1].mfe # mfe for complex c1
 complex_results[c1].ppairs # ppairs matrix for complex c1
 
-conc_results = analyze_concentrations(tubes = [t1 t2]}, precompute = complexresults) #calculate concentrations 
+conc_results = analyze_concentrations(tubes = [t1 t2]}, precompute = complexresults) #calculate concentrations
 
 # conc_results.t1
 # conc_results.t1.conc
@@ -94,13 +94,13 @@ c2 = TargetComplex('Complex c2', [A, B, B, C], structure='.1(3.8)3.9')
 c3 = TargetComplex('Complex c3', [A, A], structure='U1 D3 U8 U9')
 
 # define target test tubes
-t1 = TargetTube('Tube t1', on={c1: 1e-8, c2: 1e-8}, 
+t1 = TargetTube('Tube t1', on={c1: 1e-8, c2: 1e-8},
     off = ComplexSet(maxsize=3, include=[c2], exclude=[c1]))
 
-t2 = TargetTube('Tube t2', on={c1: 1e-8, c2: 1e-8}, 
+t2 = TargetTube('Tube t2', on={c1: 1e-8, c2: 1e-8},
     off = ComplexSet{maxsize=3, include=[c2], exclude=[c1]))
 
-crosstalk = TargetTube('crosstalk tube', on={c1: 1e-8, c2: 1e-8}, 
+crosstalk = TargetTube('crosstalk tube', on={c1: 1e-8, c2: 1e-8},
     off = ComplexSet{maxsize=2))
 
 targettubes = [t1, t2, crosstalk]
@@ -138,8 +138,8 @@ softconstraints = [
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity(b, 'S20', range=[0.45, 0.55], weight=0.25),
     SSM([C, D], word=4, weight=0.15),
-    EnergyDiff([a, b]), # min energy diff to median
-    EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
+    EnergyMatch([a, b]), # min energy diff to median
+    EnergyMatch([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
 
 # define defect weights to prioritize design effort

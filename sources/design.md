@@ -606,8 +606,8 @@ my_soft_constraints = [
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
     SSM(word=4, scope=[C], weight=0.15),
-    EnergyDiff([a, b]), # min energy diff to median
-    EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
+    EnergyMatch([a, b]), # min energy diff to median
+    EnergyMatch([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
 ```
 
@@ -700,7 +700,7 @@ ssm2 = SSM(word=5, scope=[C, D], weight=0.25)
 ssm3 = SSM(word=6, scope=[C, D], weight=0.45)
 
 #global SSM constraint applies to all on-target complexes in the design
-ssm4 = SSM(word=6, weight=0.5) 
+ssm4 = SSM(word=6, weight=0.5)
 ```
 
 !!! Note
@@ -711,9 +711,9 @@ ssm4 = SSM(word=6, weight=0.5)
 
 ### Energy match
 
-An [energy match constraint](definitions.md#soft-constraints) penalizes a set of duplexes if their [structure free energies](definitions.md#structure-free-energy) deviate from the median value, or alternatively deviate from a specified reference free energy. An `EnergyMatch` soft constraint is specified as: 
+An [energy match constraint](definitions.md#soft-constraints) penalizes a set of duplexes if their [structure free energies](definitions.md#structure-free-energy) deviate from the median value, or alternatively deviate from a specified reference free energy. An `EnergyMatch` soft constraint is specified as:
 
-- a list of domains, each to be evaluated as a duplex with its reverse complement 
+- a list of domains, each to be evaluated as a duplex with its reverse complement
 - an optional reference free energy in kcal/mol (keyword `energy_ref`)
 - an optional weight $\in[0,\infty)$  (default: 1) that can be used to prioritize or de-prioritize design effort
 
@@ -731,7 +731,7 @@ diff2 = EnergyMatch([a, b, c, d], energy_ref=-17, weight=0.5)
 ```
 
 !!! Note
-    An energy match constraint can be used to design a set of toeholds of comparable strength. 
+    An energy match constraint can be used to design a set of toeholds of comparable strength.
 
 ---
 
@@ -785,7 +785,7 @@ weights[t2, :, :, b] = 3
 weights[:,:,:,:] *=2
 ```
 !!! Note
-    Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints. 
+    Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 
@@ -823,7 +823,7 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 ## Job options
 
-Specify any non-default job options (defaults shown below): 
+Specify any non-default job options (defaults shown below):
 
 ```python
 # algorithm parameters (see Supp Info of [@Wolfe17] for details)
@@ -846,7 +846,7 @@ options = DesignOptions(
 ```
 
 !!! Note
-    Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition. 
+    Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition.
 
 ```python
 options = DesignOptions(
@@ -886,7 +886,7 @@ Output:
 > <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="600" />
 
 ### Textual display
-You can view an ASCII representation of the same data by using the `print` function: 
+You can view an ASCII representation of the same data by using the `print` function:
 
 ```python
 print(my_result)
@@ -982,7 +982,7 @@ conc_results = complex_concentrations(t1_designed, result.analysis,
 
 ### Saving a job summary
 
-To save a textual job summary using the `save_text` method: 
+To save a textual job summary using the `save_text` method:
 
 ```python
 my_result.save_text('my-result.txt')
@@ -996,12 +996,12 @@ Save a `DesignResult` as a binary file using the `save` method:
 my_result.save('my-result.o')
 ```
 
-to enable reloading during a future session using the `load` method: 
- 
+to enable reloading during a future session using the `load` method:
+
 ```python
 my_result = DesignResult.load('my-result.o')
 ```
 
-This functionality uses Python's built-in `pickle` module. 
+This functionality uses Python's built-in `pickle` module.
 
 ---
