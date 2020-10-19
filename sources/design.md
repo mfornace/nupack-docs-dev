@@ -939,7 +939,6 @@ Both `.run()` and `.evaluate()` return a `DesignResult` object which may be intr
 - `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
 - `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
-- `.stats`: a rundown of the statistics and timings for the design that took place.
 
 
 You can also interface with the `DesignResult` within Python.
