@@ -26,3 +26,32 @@ config.cache = 8.0 # GB
 ```
 
 This flag may be set to `0.0` to disable caching if your hardware has very little memory. 
+
+
+## Named objects
+
+The remaining core objects accept a first argument of `name` to be specified by the user.
+
+!!!note "Note"
+    The name may specified as a `tuple` or `list` instead of a `str`, in which case a `'[]'` based string will be automatically generated. This is specifically useful for repeated definitions:
+
+    ```python
+    domains = [Domain('N6', name=['a', i]) for i in range(4)]
+    print([d.name for d in domains]) # --> ['a[0]', 'a[1]', 'a[2]', 'a[3]']
+    ```
+
+Note that for text formatting, the following behavior has been implemented on the following objects:
+
+- `str()` prints the value of the object
+- `repr()` prints an expression which is equivalent to the one used to construct the object
+
+For example:
+
+```python
+s = Domain('N6', name='a')
+print(s) # --> NNNNNN
+print(repr(s)) # --> Domain('a', 'NNNNNN')
+```
+
+!!! note
+    In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
