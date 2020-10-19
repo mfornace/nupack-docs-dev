@@ -442,3 +442,26 @@ Output:
  [0.0001 0.0000 0.0000 0.0000 0.0000 0.9999]]
 ```
 
+### Saving a job summary
+
+To save a textual job summary using the `save_text` method: 
+
+```python
+my_result.save_text('my-result.txt')
+```
+
+### Saving and reloading job results
+
+Save an `AnalysisResult` as a binary file using the `save` method:
+
+```python
+my_result.save('my-result.o')
+```
+
+to enable reloading during a future session using the `load` method: 
+ 
+```python
+my_result = AnalysisResult.load('my-result.o')
+```
+
+This functionality uses Python's built-in `pickle` module. 
