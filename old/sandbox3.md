@@ -158,8 +158,8 @@ penalties = [
     Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
     Similarity(b, 'S20', range=[0.45, 0.55], weight=0.25),
     SSM([C, D], word=4, weight=0.15),
-    EnergyDiff([a, b]), # min energy diff to median
-    EnergyDiff([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
+    EnergyMatch([a, b]), # min energy diff to median
+    EnergyMatch([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
 ]
 
 # define defect weights to prioritize design effort

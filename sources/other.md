@@ -260,10 +260,10 @@ spec.subopt(strands, gap=0.4)
 
 ## Computation
 
-After queueing the computations you want to run, run the following command to start computation.
+After queueing the computations you want to run, run the following command to carry out all computation.
 
 ```python
-analysis_result = spec.compute(analysis.Options(threads=1, cache_bytes=4e9)) # same as analysis.compute()
+analysis_result = spec.compute()
 ```
 
 You may specify the number of threads via the `threads` keyword and the maximum memory to use via the `cache_bytes` keyword. It is especially important on Linux systems not to set `cache_bytes` higher than your available RAM. The specification is in bytes, so `cache_bytes=4e9` is equivalent to a limit of 4 GB.
