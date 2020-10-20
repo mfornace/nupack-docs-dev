@@ -60,7 +60,7 @@ print(partition_function)
 `structure_energy` calculates the [structure free energy](definitions.md#structure-free-energy) for the specified secondary structure:
 
 ```python
-dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))', 
+dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))',
     model=my_model)
 print(dGstruc)
 # --> -0.18135141907945873
@@ -73,7 +73,7 @@ print(dGstruc)
 `structure_probability` calculates the [equilibrium structure probability](definitions.md#equilibrium-structure-probability) of a specified secondary structure contained in the complex ensemble:
 
 ```python
-probability = structure_probability(strands=['CCC', 'GGG'], structure='(((+)))', 
+probability = structure_probability(strands=['CCC', 'GGG'], structure='(((+)))',
     model=my_model)
 print(probability)
 # --> 0.7152766753194949
@@ -120,11 +120,22 @@ print(probability_matrix)
 mfe_structures = mfe(strands=['CCC', 'GGG'], model=my_model)
 print('Free energy of MFE proxy structure: %.2f kcal/mol' % mfe_structures[0].energy)
 print('MFE proxy structure in dot-parens-plus notation: %s' % mfe_structures[0].structure)
-print('MFE proxy structure as structure matrix: %s \n' % mfe_structures[0].structure.matrix())
+print('MFE proxy structure as structure matrix:\n%s' % mfe_structures[0].structure.matrix())
 ```
 
-Output: 
+Output:
 
+```
+Free energy of MFE proxy structure: -4.98 kcal/mol
+MFE proxy structure in dot-parens-plus notation: (((+)))
+MFE proxy structure as structure matrix:
+[[0 0 0 0 0 1]
+ [0 0 0 0 1 0]
+ [0 0 0 1 0 0]
+ [0 0 1 0 0 0]
+ [0 1 0 0 0 0]
+ [1 0 0 0 0 0]]
+```
 
 
 If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state.

@@ -61,7 +61,7 @@ Or you can access its data and calculating its corresponding structure matrix:
 ```python
 s.array()  # --> array([4, 1, 2, 3, 0], dtype=int32)
 
-s.structure_matrix() # --> array([[0, 0, 0, 0, 1],
+s.matrix() # --> array([[0, 0, 0, 0, 1],
                      #            [0, 1, 0, 0, 0],
                      #            [0, 0, 1, 0, 0],
                      #            [0, 0, 0, 1, 0],
