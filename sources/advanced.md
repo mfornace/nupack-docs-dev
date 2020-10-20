@@ -11,7 +11,7 @@ config.parallelism = True
 
 If this flag is set to `True`, then NUPACK jobs will be permitted to use all available cores on your machine. This type of parallelism enables:
 
-- **Block-level parallelism**. Subcomplex blocks in the dynamic program will be calculated in parallel (e.g., triangular blocks `A`, `B`, `C`, and rectangular blocks `AB`, `BC`, and `ABC` for complex `ABC`; see Figure 8 of [@Fornace20]). This mode of parallelism will be enabled for all complexes in a multi-tube ensemble. 
+- **Block-level parallelism**. Subcomplex blocks in the dynamic program will be calculated in parallel (e.g., triangular blocks `A`, `B`, `C`, and rectangular blocks `AB`, `BC`, and `ABC` for complex `ABC`; see Figure 8 of [@Fornace20]). This mode of parallelism will be enabled for all complexes in a multi-tube ensemble.
 
 - **Element-level parallelism**. Subsequence elements will be calculated in parallel within a subcomplex block. This mode of parallelism will only be employed for subcomplex blocks containing at least 128 nt.
 
@@ -25,12 +25,12 @@ from nupack import *
 config.cache = 8.0 # GB
 ```
 
-This flag may be set to `0.0` to disable caching if your hardware has very little memory. 
+This flag may be set to `0.0` to disable caching if your hardware has very little memory.
 
 
-## Named objects
+## Object naming
 
-The remaining core objects accept a first argument of `name` to be specified by the user.
+Objects of type `Domain`, `Strand`, `TargetStrand`, `TargetComplex`, `Tube`, and `TargetTube` all accept a keyword argument of `name` to be specified by the user.
 
 !!!note "Note"
     The name may specified as a `tuple` or `list` instead of a `str`, in which case a `'[]'` based string will be automatically generated. This is specifically useful for repeated definitions:

@@ -15,7 +15,7 @@ For interactive usage, the following packages are recommended:
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is *not*  directly supported, though we hope to address this in the future. Windows users may instead to install NUPACK on the [Linux subsystem](#installing-nupack-on-windows).
+NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is *not*  directly supported, though we hope to address this in the future. Windows 10 users may instead to install NUPACK on the [Linux subsystem](#installing-nupack-on-windows).
 
 ### Mac/Linux as Anaconda Python package
 
@@ -74,7 +74,7 @@ If no browser window appears, you may try navigating to the displayed link in yo
 
 ### Windows
 
-NUPACK may be installed on Windows using the Windows Subsystem for Linux 2 (WSL2).
+NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).
 
 1. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
 ![Feature](/figs/windows/winfeatures.PNG)
