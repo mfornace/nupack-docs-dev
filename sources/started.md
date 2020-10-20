@@ -77,14 +77,16 @@ If no browser window appears, you may try navigating to the displayed link in yo
 NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).
 
 1. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
-![Feature](/figs/windows/winfeatures.PNG)
+![Feature](/)
+> <img src="/figs/windows/winfeatures.PNG" alt="Windows features" title="Example pair probability output" width="400" />
+
 1. Download Ubuntu from the Microsoft Store
 ![Store](/figs/windows/ubuntudl.PNG)
-2. Open the Ubuntu app and set a username and password
+3. Open the Ubuntu app and set a username and password
 ![Setup](/figs/windows/ubuntusetup2.PNG)
 	* (Optional) Open the properties window and enable copy paste
 	![Properties](/figs/windows/properties.PNG)
-3. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
+4. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
 
 ```bash
 mkdir nupack-latest
@@ -171,9 +173,9 @@ Examples are provided for the following use cases:
 
 - Complex analysis ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb))
 - Tube analysis ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb))
-- Complex design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb))
-- Tube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb))
-- Multitube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-simple.ipynb)/[evaluation](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-simple-evaluate.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb))
+- Complex design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb)/[stickman](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb))
+- Tube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb)/[stickman](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb))
+- Multitube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb))
 - [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
 
 ---
