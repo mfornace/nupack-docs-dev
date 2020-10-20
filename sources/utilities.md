@@ -2,37 +2,6 @@
 
 # Utilities Jobs
 
-<!--!!! note
-    Seems less error-prone to just insist on specified model, especially for utilities?
--->
-
-<!--
-Use `pfunc` to calculate a partition function:
-my_pfunc = pfunc(c1, model=model) # pfunc(c1, model)
-
-Use `mfe` to calculate a complex's MFE structure(s) and free energy(s):
-my_mfe = mfe(c1, model=model)
-
-Use `count` to calculate the size of the secondary structure ensemble:
-my_count = count(c1, model=model)
-
-Use `pairs` to calculate equilibrium base pair probability:
-my_pairs = pairs(c1, model=model)
-
-Use `prob` to calculate equilibrium structure probability:
-my_prob = prob(c1, structure=s1) # 0.12385347
-
-Use `subopt` to determine a set of suboptimal structures:
-my_subopt = subopt(c1, energy_gap=1.2)
-
-Use `sample` to randomly generate a set of secondary structures:
-my_samples = sample(c1, num_sample=100)
-
-s1 = Structure('.1(3.8)3.9') # Is there a use for named structures?
-my_energy = energy(c1, structure='.(((........))).........') -->
-
-
-<!-- Then call any of the functions documented below. The first input to each function is a list of strands. This may be specified as a list (e.g. `['AAT', 'TTTA']`) or as a `+`-delimited string (e.g. `'AAT+TTTA'`).  -->
 Utilities commands analyze or design a single complex ensemble. For each command, the strand ordering of the complex is specified using keyword `strands` and the [physical model](model.md#model-specification) is specified using keyword `model`.
 For commands that require a structure (e.g., calculation of the equilibrium structure probability using `prob`), the structure is specified using the keyword `structure`.
 
@@ -206,4 +175,50 @@ print(designed_sequence2)
 ensemble_defect = defect(strands=['CCC', 'GGG'], structure='(((+)))', model=my_model)
 print(ensemble_defect)
 # --> 0.20883411169052118
+```
+
+---
+
+## Represent a structure
+A [secondary structure](definitions.md#secondary-structure) can be defined using any of three notations (keyword `Structure`): 
+
+```python
+s1 = Structure('((((((((((((+..........))))))))))))') # dot-parens-plus notation
+s2 = Structure('(12+.10)12') # run-length-encoded dot-parens-plus notation
+s3 = Structure('D12 (+ U10)') # DU+ notation
+```
+
+Any object or command that accepts a structure as an argument (e.g, `TargetComplex` in Design or `structure_probability` in Utilities) will accept either a structure defined in one of the above three notations, or a previously defined `Structure` object:
+
+```python
+dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))',
+    model=my_model)
+
+my_struc = Structure('((((+))))')
+dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure=my_struc,
+    model=my_model)
+```
+
+`Structure` supports the following methods to assist with structure representation: 
+
+- pairlist(): A pair list contains a list $S$ of zero-based indices such that $S_i = j$ if bases $i$ and $j$ are paired, and $S_i = i$ if base $i$ is unpaired.
+- matrix(): A [structure matrix](definitions.md#secondary-structure) of the structure.
+- nicks(): A list N of zero-based indices of each base 3$'$ of a nick between strands
+- dotparensplus(): Representation of the structure in dot-parens-plus notation.
+- rel_dotparensplus(): Representation of the structure in run-length-encoded dot-parens-plus notation.
+
+For example:
+
+```python
+s4 = Structure('((+.))')
+print(s4.pairlist())  # --> array([4, 1, 2, 3, 0], dtype=int32)
+
+print(s4.matrix()) # --> array([[0, 0, 0, 0, 1],
+           #            [0, 1, 0, 0, 0],
+           #            [0, 0, 1, 0, 0],
+           #            [0, 0, 0, 1, 0],
+           #            [1, 0, 0, 0, 0]], dtype=int32)
+print(s4.nicks())
+print(s4.dotparensplus())
+print(s4.rle_dotparensplus())
 ```
