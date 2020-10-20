@@ -329,6 +329,19 @@ Equilibrium pair probabilities:
  [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]
 ```
 
+If desired, the MFE proxy structure can be represented as a [structure matrix](definitions.md#secondary-structure) of zeros and ones: 
+
+```python
+c_result = my_result[c]
+print('MFE proxy structure: %s \n' % c_result.mfe[0].structure.structure_matrix())
+```
+
+Output
+
+```
+
+```
+
 The equilibrium pair probability matrix can be easily displayed visually inside a Jupyter notebook, for example:
 
 ```python

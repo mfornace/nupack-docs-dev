@@ -118,9 +118,14 @@ print(probability_matrix)
 
 ```python
 mfe_structures = mfe(strands=['CCC', 'GGG'], model=my_model)
-print(mfe_structures)
-# --> [StructureEnergy(Structure('(((+)))'), energy=-4.981351375579834, stack_energy=-4.981351375579834)]
+print('Free energy of MFE proxy structure: %.2f kcal/mol' % mfe_structures[0].energy)
+print('MFE proxy structure in dot-parens-plus notation: %s' % mfe_structures[0].structure)
+print('MFE proxy structure as structure matrix: %s \n' % mfe_structures[0].structure.structure_matrix())
 ```
+
+Output: 
+
+
 
 If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state.
 

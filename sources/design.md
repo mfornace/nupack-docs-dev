@@ -867,9 +867,9 @@ A = TargetStrand([a], name='A')
 B = TargetStrand([~a], name='B')
 C = TargetComplex([A, B], '(20+)20', name='C')
 
-tube = TargetTube({C: 1e-6}, max_size=2, name='tube1')
+tube1 = TargetTube({C: 1e-6}, max_size=2, name='tube1')
 
-my_design = tube_design([tube], model=Model())
+my_design = tube_design([tube1], model=Model())
 my_result = my_design.run(trials=1)[0]
 ```
 
@@ -934,17 +934,17 @@ Output:
 
 ### Programmatic access
 
-Both `.run()` and `.evaluate()` return `DesignResult` objects which may be introspected by the user. A `DesignResult` contains the following fields:
+A `DesignResult` object allows programmatic access via several fields:
 
-- `.mapping`: a `dict`-like class from the undesigned domains, strands, complexes, and tubes to their designed equivalents.
-- `.defects`: a report of the different types of defects at each level, held internally as `pandas.DataFrame`s.
-- `.concentrations`: a rundown of concentration information for on- and off-targets.
-- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed complexes and tubes.
+- `.sequences`: the sequence of each designed domain and strand.
+- `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
+- `.concentrations`: concentration information for on-target complex and significant off-target complexes.
+- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
 
-Each field may be displayed individually:
+Fields may be displayed individually, for example: 
 
 ```python
-my_result.mapping
+my_result.sequences
 ```
 
 Output:
@@ -975,40 +975,44 @@ Output:
 
 > <img src="/figs/design-output-analysis.png" alt="Design output" title="Example design output" width="270" />
 
-You can also interface with the `DesignResult` within Python.
-
-
-1. For instance, you can look up the designed equivalent of any tube, complex, strand, or domain that was in your design like this:
+You can query any field of the `DesignResult` using Python, for example: 
 
 ```python
-print(my_result.mapping[tube]) # --> Tube(tube1: {A: 1e-08, B: 1e-08})
-print(my_result.mapping[C])    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
-print(my_result.mapping[B])    # --> CCAGACCCCATTATTGGGGG
-print(my_result.mapping[a])    # --> CCCCCAATAATGGGGTCTGG
-```
+# print various designed sequences
+print(my_result.sequences[tube1]) # --> Tube(tube1: {A: 1e-08, B: 1e-08})
+print(my_result.sequences[C])    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
+print(my_result.sequences[B])    # --> CCAGACCCCATTATTGGGGG
+print(my_result.sequences[a])    # --> CCCCCAATAATGGGGTCTGG
 
-2. You can look at the different defects by looking at the `defects` field, which contains the
-
-```python
+# print specific defect contributions
 print(my_result.defects.ensemble_defect) # 0.010181549966458123
-print(my_result.defects.tubes)           # --> table of defect information for each tube
-print(my_result.defects.complexes)       # --> table of defect information for each on-target
-print(my_result.defects.tube_complexes)  # --> table of defect information for each on-target in each tube
+print(my_result.defects.tubes)           # --> each tube
+print(my_result.defects.complexes)       # --> each on-target
+print(my_result.defects.tube_complexes)  # --> each on-target in each tube
 ```
 
-The subfields `tubes`, `complexes`, and `tube_complexes` are `pandas.DataFrame`s. These tables contain columns `tube` and `complex` containing the corresponding Python objects. For convenience, these tables also include `tube_name` and `complex_name` corresponding to the `str` names of those objects.
+Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s. For convenience, these tables contain Python objects and the corresponding object name (e.g., `tube` object and corresponding `tube_name` string). 
 
-3. You can re-analyze your designed complexes and tubes via the `analysis` field:
+### Analyze additional properties of the design ensemble 
+You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex: 
 
 ```python
-t1_designed = my_result.mapping[tube]
+t1_designed = my_result.sequences[tube]
 
-# Compute the MFEs of the designed complexes that were in t1
-tube_results = tube_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
+# Calculate the MFE structure for each on-target complex in the design ensemble
+tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
+```
 
-# Compute complex concentrations with a different set of strand concentrations
+### Re-analyze the design ensemble with different strand concentrations
+
+You can re-analyze your designed sequences for specified strand concentrations by using the `analysis` field to supply an `AnalysisResult` object to `complex_concentrations`: 
+
+```python
+t1_designed = my_result.sequences[tube]
+
+# Re-compute complex concentrations for a different set of strand concentrations 
 conc_results = complex_concentrations(t1_designed, my_result.analysis,
-    concentrations={my_result.mapping[A]: 1e-8, my_result.mapping[B]: 1e-9})
+    concentrations={my_result.sequences[A]: 1e-8, my_result.sequences[B]: 1e-9})
 ```
 
 ---
