@@ -78,15 +78,20 @@ NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (W
 
 1. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
 ![Feature](/)
-> <img src="/figs/windows/winfeatures.PNG" alt="Windows features" title="Example pair probability output" width="400" />
+> <img src="/figs/windows/winfeatures.PNG" alt="Windows features" title="Windows features" width="400" />
 
-1. Download Ubuntu from the Microsoft Store
-![Store](/figs/windows/ubuntudl.PNG)
+2. Download Ubuntu from the Microsoft Store
+
+> <img src="/figs/windows/ubuntudl.PNG" alt="Windows store" title="Windows store" width="400" />
+
 3. Open the Ubuntu app and set a username and password
-![Setup](/figs/windows/ubuntusetup2.PNG)
-	* (Optional) Open the properties window and enable copy paste
-	![Properties](/figs/windows/properties.PNG)
-4. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
+> <img src="/figs/windows/ubuntusetup2.PNG" alt="Ubuntu setup" title="Ubuntu setup" width="400" />
+
+4. (Optional) Open the properties window and enable copy paste
+
+> <img src="/figs/windows/properties.PNG" alt="Ubuntu properties" title="Ubuntu properties" width="400" />
+
+5. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
 
 ```bash
 mkdir nupack-latest
@@ -110,7 +115,7 @@ conda install -c conda-forge -c ./nupack-latest/package nupack
 jupyter lab
 ```
 
-4. Open localhost:8888 with your browser and use Jupyter lab with NUPACK installed
+6. Open localhost:8888 with your browser and use Jupyter lab with NUPACK installed
 
 
 ---
