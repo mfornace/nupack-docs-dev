@@ -211,16 +211,17 @@ For example:
 
 ```python
 s4 = Structure('(((+))).')
-print(s4.pairlist())  # --> [5 4 3 2 1 0 6]
 
-print(s4.matrix()) # -->-[[0 0 0 0 0 1 0]
-                   #      [0 0 0 0 1 0 0]
-                   #      [0 0 0 1 0 0 0]
-                   #      [0 0 1 0 0 0 0]
-                   #      [0 1 0 0 0 0 0]
-                   #      [1 0 0 0 0 0 0]
-                   #      [0 0 0 0 0 0 1]]
-print(s4.nicks()) # --> [3 7]
-print(s4.dotparensplus()) # --> (((+))).
+print(s4.pairlist())          # --> [5 4 3 2 1 0 6]
+
+print(s4.matrix())            # --> [[0 0 0 0 0 1 0]
+                              #      [0 0 0 0 1 0 0]
+                              #      [0 0 0 1 0 0 0]
+                              #      [0 0 1 0 0 0 0]
+                              #      [0 1 0 0 0 0 0]
+                              #      [1 0 0 0 0 0 0]
+                              #      [0 0 0 0 0 0 1]]
+print(s4.nicks())             # --> [3 7]
+print(s4.dotparensplus())     # --> (((+))).
 print(s4.rle_dotparensplus()) # --> (3+)3.
 ```
