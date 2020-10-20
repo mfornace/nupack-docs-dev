@@ -948,7 +948,7 @@ Output:
 
 A `DesignResult` object allows programmatic access via several fields:
 
-- `.mapping`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domains` which is not used for analysis jobs). 
+- `.mapping`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domains` which is not used for analysis jobs).
 - `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
@@ -1009,7 +1009,7 @@ Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s.
 You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex:
 
 ```python
-t1_designed = my_result.mapping[tube] # Tube object based on TargetTube with designed sequences
+t1_designed = my_result.mapping[tube1] # Tube object based on TargetTube with designed sequences
 
 # Calculate the MFE structure for each on-target complex in the design ensemble
 tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
@@ -1020,7 +1020,7 @@ tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_m
 You can re-analyze your designed sequences for specified strand concentrations by using the `analysis` field to supply an `AnalysisResult` object to `complex_concentrations`:
 
 ```python
-t1_designed = my_result.mapping[tube] # Tube object based on TargetTube with designed sequences
+t1_designed = my_result.mapping[tube1] # Tube object based on TargetTube with designed sequences
 
 # Re-compute complex concentrations for a different set of strand concentrations
 conc_results = complex_concentrations(t1_designed, my_result.analysis,

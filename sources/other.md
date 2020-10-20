@@ -54,7 +54,7 @@ print(s)   # --> [4 1 2 3 0]
 Or you can access its data and calculating its corresponding structure matrix:
 
 ```python
-s.array()  # --> array([4, 1, 2, 3, 0], dtype=int32)
+s.pairlist()  # --> array([4, 1, 2, 3, 0], dtype=int32)
 
 s.matrix() # --> array([[0, 0, 0, 0, 1],
            #            [0, 1, 0, 0, 0],
@@ -78,7 +78,7 @@ As a result, NUPACK provides a `Structure` class, which inherits from `PairList`
 s = Structure('(((+)))')
 s                      # --> Structure('(((+)))')
 print(s)               # --> (((+)))
-print(s.array())       # --> [5 4 3 2 1 0]
+print(s.pairlist())       # --> [5 4 3 2 1 0]
 ```
 
 ---
