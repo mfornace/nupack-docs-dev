@@ -120,7 +120,7 @@ print(probability_matrix)
 mfe_structures = mfe(strands=['CCC', 'GGG'], model=my_model)
 print('Free energy of MFE proxy structure: %.2f kcal/mol' % mfe_structures[0].energy)
 print('MFE proxy structure in dot-parens-plus notation: %s' % mfe_structures[0].structure)
-print('MFE proxy structure as structure matrix: %s \n' % mfe_structures[0].structure.structure_matrix())
+print('MFE proxy structure as structure matrix: %s \n' % mfe_structures[0].structure.matrix())
 ```
 
 Output: 

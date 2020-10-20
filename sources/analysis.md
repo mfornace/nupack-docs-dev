@@ -333,7 +333,7 @@ If desired, the MFE proxy structure can be represented as a [structure matrix](d
 
 ```python
 c_result = my_result[c]
-print('MFE proxy structure: %s \n' % c_result.mfe[0].structure.structure_matrix())
+print('MFE proxy structure: %s \n' % c_result.mfe[0].structure.matrix())
 ```
 
 Output
