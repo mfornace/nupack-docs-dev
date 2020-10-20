@@ -43,14 +43,14 @@ Objects of type `Domain`, `Strand`, `TargetStrand`, `TargetComplex`, `Tube`, and
 Note that for text formatting, the following behavior has been implemented on the following objects:
 
 - `str()` prints the value of the object
-- `repr()` prints an expression which is equivalent to the one used to construct the object
+- `repr()` prints a `<...>` expression similar to other standard python classes
 
 For example:
 
 ```python
 s = Domain('N6', name='a')
-print(s) # --> NNNNNN
-print(repr(s)) # --> Domain('a', 'NNNNNN')
+print(str(s)) # --> NNNNNN
+print(repr(s)) # --> <Domain a>
 ```
 
 !!! note
