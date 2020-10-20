@@ -180,7 +180,7 @@ print(ensemble_defect)
 ---
 
 ## Represent a structure
-A [secondary structure](definitions.md#secondary-structure) can be defined using any of three notations (keyword `Structure`): 
+A [secondary structure](definitions.md#secondary-structure) can be defined using any of three notations (keyword `Structure`):
 
 ```python
 s1 = Structure('((((((((((((+..........))))))))))))') # dot-parens-plus notation
@@ -199,26 +199,28 @@ dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure=my_struc,
     model=my_model)
 ```
 
-`Structure` supports the following methods to assist with structure representation: 
+`Structure` supports the following methods to assist with structure representation:
 
-- pairlist(): A pair list contains a list $S$ of zero-based indices such that $S_i = j$ if bases $i$ and $j$ are paired, and $S_i = i$ if base $i$ is unpaired.
-- matrix(): A [structure matrix](definitions.md#secondary-structure) of the structure.
-- nicks(): A list N of zero-based indices of each base 3$'$ of a nick between strands
-- dotparensplus(): Representation of the structure in dot-parens-plus notation.
-- rel_dotparensplus(): Representation of the structure in run-length-encoded dot-parens-plus notation.
+- `pairlist()`: A pair list contains a list $S$ of zero-based indices such that $S_i = j$ if bases $i$ and $j$ are paired, and $S_i = i$ if base $i$ is unpaired.
+- `matrix()`: A [structure matrix](definitions.md#secondary-structure) of the structure.
+- `nicks()`: A list of zero-based indices of each base 3$'$ of a nick between strands (one entry per strand)
+- `dotparensplus()`: Representation of the structure in dot-parens-plus notation.
+- `rle_dotparensplus()`: Representation of the structure in run-length-encoded dot-parens-plus notation.
 
 For example:
 
 ```python
-s4 = Structure('((+.))')
-print(s4.pairlist())  # --> array([4, 1, 2, 3, 0], dtype=int32)
+s4 = Structure('(((+))).')
+print(s4.pairlist())  # --> [5 4 3 2 1 0 6]
 
-print(s4.matrix()) # --> array([[0, 0, 0, 0, 1],
-           #            [0, 1, 0, 0, 0],
-           #            [0, 0, 1, 0, 0],
-           #            [0, 0, 0, 1, 0],
-           #            [1, 0, 0, 0, 0]], dtype=int32)
-print(s4.nicks())
-print(s4.dotparensplus())
-print(s4.rle_dotparensplus())
+print(s4.matrix()) # -->-[[0 0 0 0 0 1 0]
+                   #      [0 0 0 0 1 0 0]
+                   #      [0 0 0 1 0 0 0]
+                   #      [0 0 1 0 0 0 0]
+                   #      [0 1 0 0 0 0 0]
+                   #      [1 0 0 0 0 0 0]
+                   #      [0 0 0 0 0 0 1]]
+print(s4.nicks()) # --> [3 7]
+print(s4.dotparensplus()) # --> (((+))).
+print(s4.rle_dotparensplus()) # --> (3+)3.
 ```

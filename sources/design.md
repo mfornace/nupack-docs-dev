@@ -50,6 +50,8 @@ D = TargetStrand([d, d, d], name='Strand D')
 
 The reverse complement of domain `a` is denoted `~a`. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G$\cdot$U wobble pairs for RNA if wobble mutations are permitted (see [Job Options](design.md#job-options)).
 
+You can use `len()` to get the number of domains in a `TargetStrand` or `.nt()` to get its number of nucleotides.
+
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
 
@@ -98,6 +100,8 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 
 !!! note
     Note that a bonus applied to the [complex free energy](definitions.md#complex-free-energy) is equivalent to applying the bonus to every [structure free energy](definitions.md#structure-free-energy) in the complex ensemble. As a result, the bonus alters the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentrations) within the [test tube ensemble](definitions.md#test-tube-ensemble), but does not alter the [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) within the [complex ensemble](definitions.md#complex-ensemble).
+
+You can use `len()` to get the number of strands in a `TargetComplex` or `.nt()` to get its number of nucleotides.
 
 ---
 ## Specify a target tube
@@ -941,7 +945,7 @@ A `DesignResult` object allows programmatic access via several fields:
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
 
-Fields may be displayed individually, for example: 
+Fields may be displayed individually, for example:
 
 ```python
 my_result.sequences
@@ -975,7 +979,7 @@ Output:
 
 > <img src="/figs/design-output-analysis.png" alt="Design output" title="Example design output" width="270" />
 
-You can query any field of the `DesignResult` using Python, for example: 
+You can query any field of the `DesignResult` using Python, for example:
 
 ```python
 # print various designed sequences
@@ -991,10 +995,10 @@ print(my_result.defects.complexes)       # --> each on-target
 print(my_result.defects.tube_complexes)  # --> each on-target in each tube
 ```
 
-Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s. For convenience, these tables contain Python objects and the corresponding object name (e.g., `tube` object and corresponding `tube_name` string). 
+Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s. For convenience, these tables contain Python objects and the corresponding object name (e.g., `tube` object and corresponding `tube_name` string).
 
-### Analyze additional properties of the design ensemble 
-You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex: 
+### Analyze additional properties of the design ensemble
+You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex:
 
 ```python
 t1_designed = my_result.sequences[tube]
@@ -1005,12 +1009,12 @@ tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_m
 
 ### Re-analyze the design ensemble with different strand concentrations
 
-You can re-analyze your designed sequences for specified strand concentrations by using the `analysis` field to supply an `AnalysisResult` object to `complex_concentrations`: 
+You can re-analyze your designed sequences for specified strand concentrations by using the `analysis` field to supply an `AnalysisResult` object to `complex_concentrations`:
 
 ```python
 t1_designed = my_result.sequences[tube]
 
-# Re-compute complex concentrations for a different set of strand concentrations 
+# Re-compute complex concentrations for a different set of strand concentrations
 conc_results = complex_concentrations(t1_designed, my_result.analysis,
     concentrations={my_result.sequences[A]: 1e-8, my_result.sequences[B]: 1e-9})
 ```
