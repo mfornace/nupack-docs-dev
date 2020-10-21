@@ -26,7 +26,7 @@ A `Strand` sequence must contain only `'ACGTU'`. Two strands are treated as indi
 A `Strand` object supports a `nt()` method for calculating the number of nucleotides, for example:
 
 ```python
-A.nt() # -->
+A.nt() # --> 24
 ```
 
 ---
@@ -50,12 +50,12 @@ Additional fields and methods are available for a `Complex` object:
 - `.nt()`: the number of nucleotides in the complex
 
 
-For example: 
+For example:
 
 ```python
-c2.strands    # --> 
-c2.nstrands() # --> 
-c2.nt()       # --> 
+c2.strands    # --> (<Strand A>, <Strand B>, <Strand B>, <Strand C>)
+c2.nstrands() # --> 4
+c2.nt()       # --> 168
 ```
 ---
 
