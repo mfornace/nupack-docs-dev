@@ -50,14 +50,22 @@ D = TargetStrand([d, d, d], name='Strand D')
 
 The reverse complement of domain `a` is denoted `~a`. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G$\cdot$U wobble pairs for RNA if wobble mutations are permitted (see [Job Options](design.md#job-options)).
 
-Additional fields and methods are available on `TargetStrand`:
-
-- `.domains`: the tuple of the contained domains
-- `.nt()`: a method returning the number of nucleotides in the strand
-- `.ndomains()`: a method returning the number of domains in the strand
-
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
+
+Additional fields and methods are available for a `TargetStrand` object:
+
+- `.domains`: a tuple of the domains comprising the strand
+- `.ndomains()`: the number of domains in the strand
+- `.nt()`: the number of nucleotides in the strand
+
+For example: 
+
+```python
+A.domains    # --> 
+A.ndomains() # --> 
+A.nt()       # --> 
+```
 
 ---
 ## Specify a target complex
@@ -92,6 +100,20 @@ C5 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C5')
 !!! note
     The target structure will be used in all target test tubes in which a complex appears as an on-target complex and will be ignored in those target test tubes where a complex appears as an off-target complex.
 
+Additional fields and methods are available for a `TargetComplex` object:
+
+- `.strands`: a tuple of the strands
+- `.nstrands()`: the number of strands in the complex
+- `.nt()`: the number of nucleotides in the complex
+
+For example: 
+
+```python
+C1.strands    # --> 
+C1.nstrands() # --> 
+C1.nt()       # --> 
+```
+
 In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):
 
 ```python
@@ -105,11 +127,6 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 !!! note
     Note that a bonus applied to the [complex free energy](definitions.md#complex-free-energy) is equivalent to applying the bonus to every [structure free energy](definitions.md#structure-free-energy) in the complex ensemble. As a result, the bonus alters the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentrations) within the [test tube ensemble](definitions.md#test-tube-ensemble), but does not alter the [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) within the [complex ensemble](definitions.md#complex-ensemble).
 
-Additional fields and methods are available on `TargetComplex`:
-
-- `.strands`: the tuple of the contained strands
-- `.nt()`: a method returning the number of nucleotides in the complex
-- `.nstrands()`: a method returning the number of strands in the complex
 
 ---
 ## Specify a target tube

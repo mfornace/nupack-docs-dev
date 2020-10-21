@@ -23,6 +23,12 @@ C = Strand('AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG', name='C')
 
 A `Strand` sequence must contain only `'ACGTU'`. Two strands are treated as indistinguishable only if they have the same name and the same sequence.
 
+A `Strand` object supports a `nt()` method for calculating the number of nucleotides, for example:
+
+```python
+A.nt() # -->
+```
+
 ---
 
 ## Specify a complex ensemble
@@ -37,6 +43,20 @@ c3 = Complex([A, A], name='AA')
 !!! Note
     Commands that expect a `Complex` as an argument (e.g., `c2`) will alternatively accept a strand ordering (e.g.,`[A, B, B, C]`). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
 
+Additional fields and methods are available for a `Complex` object:
+
+- `.strands`: a tuple of strands
+- `.nstrands()`: the number of strands in the complex
+- `.nt()`: the number of nucleotides in the complex
+
+
+For example: 
+
+```python
+c2.strands    # --> 
+c2.nstrands() # --> 
+c2.nt()       # --> 
+```
 ---
 
 ## Specify a test tube ensemble
