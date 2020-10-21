@@ -991,7 +991,7 @@ You can query any field of the `DesignResult` using Python, for example:
 
 ```python
 # print various designed sequences
-print(my_result.mapping[tube1]) # --> Tube(tube1: {A: 1e-06, B: 1e-06})
+print(my_result.mapping[tube1]) # --> Tube({A: 1e-06, B: 1e-06}, name='tube1')
 print(my_result.mapping[C])    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
 print(my_result.mapping[B])    # --> CCAGACCCCATTATTGGGGG
 print(my_result.mapping[a])    # --> CCCCCAATAATGGGGTCTGG
