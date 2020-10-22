@@ -36,21 +36,23 @@ conda info
 
 The output of this command should show your Python version and other information. (If this command cannot be run, troubleshoot your Anaconda installation. You may not have your `$PATH` environmental variable set correctly.)
 
- After installing your preferred distribution, download the NUPACK package `nupack-4.0.0` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command:
+While not strict prerequisites for installation, we advise that you install
+
+After installing your preferred distribution, download the NUPACK package `nupack-4.0.0` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command (type __y__ when prompted):
 
 ```bash
-conda install -c conda-forge -c ~/Downloads/nupack-4.0.0/package nupack
+conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab
 ```
 
 <!-- This step should usually complete in 1 minute or less; it should always take less than 5 minutes.  -->
-You can change the path of your downloaded directory as you want, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, you may run the following:
+You can change the path of your downloaded directory as you need, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, you may run the following:
 
 ```bash
 conda install pytest
-pytest -v --pyargs nupack
+pytest -v --pyargs nupack # optional, may take a couple of minutes
 ```
 
-Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4.0.0` directory (for example, `cd ~/Downloads/nupack-4.0.0/examples`).
+Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4` directory (for example, `cd ~/Downloads/nupack-4/examples`).
 For each example notebook therein, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
 See the next section for help on opening the Jupyter notebooks.
 
@@ -77,7 +79,7 @@ If no browser window appears, you may try navigating to the displayed link in yo
 NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).
 
 1. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
-![Feature](/)
+
 > <img src="/figs/windows/winfeatures.PNG" alt="Windows features" title="Windows features" width="400" />
 
 2. Download Ubuntu from the Microsoft Store
@@ -131,40 +133,58 @@ Installation via Anaconda is by far the easiest option and is recommended for al
 
 ### Directions
 
-Make sure `python` points to your desired version of Python. On a Unix-like system, clone the repository and install in Terminal via the following commands.
-
-First install dependencies using the included `vcpkg` submodule:
+1. On a Unix-like system, navigate to the `source` folder in the provided download:
 
 ```bash
-cd nupack # navigate to the source directory
+cd ~/Downloads/nupack-4/source # navigate to the source directory
+```
 
+2. Next build the included `vcpkg` submodule:
+
+```bash
 ./external/vcpkg/bootstrap-vcpkg.sh
+```
 
+If you are using a Mac and have not previously installed a C++ compiler, use the following flags:
+
+```bash
+./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang
+```
+
+3. Next install the dependencies for NUPACK compilation using `vcpkg`:
+
+```
 ./external/vcpkg/vcpkg install armadillo tbb gecode \
     nlohmann-json jsoncpp tclap spdlog boost-context boost-graph boost-align boost-ublas \
     boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-coroutine2
 ```
 
-Make a build folder and navigate into it.
+4. Make a build folder and navigate into it.
 
 ```bash
 mkdir build
 cd build
 ```
 
-Run the CMake configuration. You may add any custom compilation options as flags to the `cmake` command if desired. For instance, you could add `-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_CXX_COMPILER=clang++` to use a specified install directory and C++ compiler.
+5. Run the CMake configuration.
 
-```
-cmake ..
+```bash
+cmake .. -DCMAKE_BUILD_TYPE=Release
 ```
 
-Build the NUPACK Python module.
+You may add custom compilation options as flags to the `cmake` command if desired. Some examples might be:
+
+- Add `-DCMAKE_CXX_COMPILER=clang++` to use the `clang++` compiler. As noted above, compilers besides `clang` are not generally supported.
+- Add `-DREBIND_PYTHON=/usr/local/bin/python3` to build for a specific Python executable (by default, the `python` in the user's `$PATH` is used).
+- Add `-DCMAKE_CXX_FLAGS="<custom compile options>"` to add custom C++ compilation flags.
+
+6. Build the C++ code.
 
 ```bash
 cmake --build . --target nupack-python
 ```
 
-Install the NUPACK Python module and binding module.
+7. Install the NUPACK Python module.
 
 ```bash
 pip3 install .
