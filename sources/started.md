@@ -98,7 +98,7 @@ NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (W
 ```bash
 mkdir nupack-latest
 cd nupack-latest
-wget -O nupack-latest.zip "oururlhere"
+cp /mnt/c/Users/YourUserName/Downloads/nupack-latest.zip ./
 sudo apt install unzip
 unzip nupack-latest.zip
 cd ..
