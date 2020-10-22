@@ -41,7 +41,7 @@ While not strict prerequisites for installation, we advise that you install
 After installing your preferred distribution, download the NUPACK package `nupack-4.0.0` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command (type __y__ when prompted):
 
 ```bash
-conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab
+conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab matplotlib
 ```
 
 <!-- This step should usually complete in 1 minute or less; it should always take less than 5 minutes.  -->
