@@ -57,8 +57,8 @@ c2.strands    # --> (<Strand A>, <Strand B>, <Strand B>, <Strand C>)
 c2.nstrands() # --> 4
 c2.nt()       # --> 168
 ```
----
 
+---
 ## Specify a test tube ensemble
 
 A `Tube` is specified as a tube name (keyword `name`) and a set of strands (keyword `strands`), each introduced at a user-specified concentration (keyword `concentrations`; units of `M`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
