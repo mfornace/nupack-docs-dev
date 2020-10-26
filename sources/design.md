@@ -279,6 +279,9 @@ my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
 
 ### Evaluate a design
 
+!!!warning
+    `evaluate()` should not be used for designs containing wobble pairs (any parameter sets `rna*.json` or `dna04-nupack3.json`).
+
 The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)), for example:
 
 ```python
@@ -898,7 +901,10 @@ C = TargetComplex([A, B], '(20+)20', name='C')
 
 tube1 = TargetTube({C: 1e-6}, max_size=2, name='tube1')
 
-my_design = tube_design([tube1], model=Model())
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+hard = [Diversity(word=4, types=2, scope=[a])]
+
+my_design = tube_design([tube1], model=Model(), soft_constraints=soft, hard_constraints=hard)
 my_result = my_design.run(trials=1)[0]
 ```
 
@@ -926,29 +932,32 @@ Output:
 > ```
 > Domain results:
 > Domain              Sequence
->      a  GCATTGAGAAAACGCAAGAG
+>      a  CAGATAAGAACTGAGTAAGC
+>     a*  GCTTACTCAGTTCTTATCTG
 >
 > Strand results:
 > Strand              Sequence
->      A  GCATTGAGAAAACGCAAGAG
->      B  CTCTTGCGTTTTCTCAATGC
+>      A  CAGATAAGAACTGAGTAAGC
+>      B  GCTTACTCAGTTCTTATCTG
 >
 > Objective function:
->            Objective type  Value
->  Weighted ensemble defect 0.0112
+>                Objective type   Value
+>      Weighted ensemble defect  0.0104
+>  Soft constraints: similarity 0.00833
+>                         Total  0.0187
 >
-> Ensemble defect: 0.0112
+> Ensemble defect: 0.0104
 >
 > Complex Complex defect (nt) Normalized complex defect
->       C               0.448                    0.0112
+>       C               0.415                    0.0104
 >
 > On-target complex defects:
 >   Tube Tube defect (M) Normalized tube defect
->  tube1        4.48e-07                 0.0112
+>  tube1        4.15e-07                 0.0104
 >
 > Tube defects:
 >   Tube On-target complex Structural defect (M) Concentration defect (M) Total defect (M)
->  tube1                 C              4.48e-07                 1.71e-12         4.48e-07
+>  tube1                 C              4.15e-07                 6.84e-13         4.15e-07
 >
 > On-target complex concentrations:
 >   Tube Complex Concentration (M) Target concentration (M)
