@@ -1,7 +1,19 @@
-# Getting started
+# Getting Started
 
-## Installation
-### Requirements
+## Examples
+
+Here, we provide Jupyter notebooks for a variety of examples that that can be downloaded for interactive use:
+
+- Complex analysis: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb)
+- Tube analysis: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb)
+- Complex design: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb), [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb)
+- Tube design: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb), [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb)
+- Multitube design: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb)
+- [Converting NUPACK 3 input files into NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
+
+
+
+## Installation requirements
 
 NUPACK 4 is a C++ library distributed as a Python package for portability and ease of use. Before installing NUPACK, you must have Python 3 and a few common packages installed on your computer. Note that Python 2 is not currently supported. The specific Python package requirements for NUPACK 4 are:
 
@@ -17,7 +29,7 @@ For interactive usage, the following packages are recommended:
 
 NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is *not*  directly supported, though we hope to address this in the future. Windows 10 users may instead to install NUPACK on the [Linux subsystem](#installing-nupack-on-windows).
 
-### Mac/Linux as Anaconda Python package
+## Mac/Linux installation
 
 The easiest way to install NUPACK is to install [Anaconda](https://www.anaconda.com/distribution/), which comes with many Python packages preinstalled. Alternatively, you can install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for a smaller installation size. Make sure the distribution you use contains Python 3.6 or newer.
 
@@ -56,11 +68,11 @@ Example notebooks are provided within the distributed package. In Terminal, navi
 For each example notebook therein, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
 See the next section for help on opening the Jupyter notebooks.
 
-#### Opening a Jupyter notebook from the Anaconda GUI
+Opening a Jupyter notebook from the Anaconda GUI
 
 Open the Anaconda application and select the JupyterLab option to open a notebook browser. Browse to open the desired notebook using the left toolbar.
 
-#### Opening a Jupyter notebook from the command line
+Opening a Jupyter notebook from the command line
 
 Run the following commands in your terminal from your desired directory:
 
@@ -74,7 +86,7 @@ If no browser window appears, you may try navigating to the displayed link in yo
 ---
 
 
-### Windows
+## Windows installation
 
 NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).
 
@@ -122,16 +134,16 @@ jupyter lab
 
 ---
 
-### Source
+## Source installation
 
 Installation via Anaconda is by far the easiest option and is recommended for almost every user. However, NUPACK may also be built from source if it is desired.
 
-### External dependencies for C++ libraries
+External dependencies for C++ libraries
 
 - C++17 compliant compiler (generally requires Clang or AppleClang)
 - CMake
 
-### Directions
+Directions
 
 1. On a Unix-like system, navigate to the `source` folder in the provided download:
 
@@ -190,17 +202,4 @@ cmake --build . --target nupack-python
 pip3 install .
 ```
 
-## Examples
 
-A number of Jupyter notebooks are bundled with the NUPACK 4 download in the `examples/` folder. For reference, non-interactive versions of these notebooks may be found on [nbviewer](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/).
-
-Examples are provided for the following use cases:
-
-- Complex analysis ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb))
-- Tube analysis ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb))
-- Complex design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb)/[stickman](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb))
-- Tube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb)/[stickman](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb))
-- Multitube design ([simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb)/[advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb))
-- [Small examples of converting NUPACK 3 input files to NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
-
----
