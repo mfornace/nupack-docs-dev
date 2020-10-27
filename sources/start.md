@@ -1,6 +1,6 @@
 # Getting Started
 
-## Examples
+## Example notebooks
 
 Here, we provide Jupyter notebooks for a variety of examples that that can be downloaded for interactive use:
 
@@ -15,25 +15,23 @@ Here, we provide Jupyter notebooks for a variety of examples that that can be do
 
 ## Installation requirements
 
-NUPACK 4 is a C++ library distributed as a Python package for portability and ease of use. Before installing NUPACK, you must have Python 3 and a few common packages installed on your computer. Note that Python 2 is not currently supported. The specific Python package requirements for NUPACK 4 are:
+NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required: 
 
 - Python 3.6-3.8
 - numpy
 - scipy
 - pandas
 
-For interactive usage, the following packages are recommended:
+The following packages are recommended to facilitate interactive usage:
 
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages are provided for Mac and Linux operating systems. Windows is *not*  directly supported, though we hope to address this in the future. Windows 10 users may instead to install NUPACK on the [Linux subsystem](#installing-nupack-on-windows).
+NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10. Alternatively, NUPACK may be compiled from source on Mac/Linux. 
 
-## Mac/Linux installation
+## Mac/Linux installation 
 
-The easiest way to install NUPACK is to install [Anaconda](https://www.anaconda.com/distribution/), which comes with many Python packages preinstalled. Alternatively, you can install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for a smaller installation size. Make sure the distribution you use contains Python 3.6 or newer.
-
-Next, open a new window in your terminal. It is often helpful to update your installation of Anaconda by running the following terminal commands:
+The easiest way to install NUPACK is to install [Anaconda](https://www.anaconda.com/distribution/) by typing the following commands in a terminal:
 
 ```bash
 conda update conda
@@ -46,42 +44,36 @@ You can verify your installation by running the terminal command:
 conda info
 ```
 
-The output of this command should show your Python version and other information. (If this command cannot be run, troubleshoot your Anaconda installation. You may not have your `$PATH` environmental variable set correctly.)
+Make sure you have Python 3.6 or newer. (If this command does not run, troubleshoot your Anaconda installation. You may not have your `$PATH` environment variable set correctly.)
 
-While not strict prerequisites for installation, we advise that you install
-
-After installing your preferred distribution, download the NUPACK package `nupack-4.0.0` into your Downloads folder. If you have a `.zip` file, decompress it. Then open Terminal and run the following command (type __y__ when prompted):
+After [agreeing to the NUPACK license](http://www.nupack.org/downloads/register), download the NUPACK package (e.g., `nupack-4.0.0`) into your Downloads folder and make sure it is unzipped. To install the NUPACK 4 Python module, run the following command in your terminal (type `y` when prompted):
 
 ```bash
 conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab matplotlib
 ```
 
-<!-- This step should usually complete in 1 minute or less; it should always take less than 5 minutes.  -->
-You can change the path of your downloaded directory as you need, but be aware that you must use a full (not relative) path. This command will install the NUPACK C++ and Python packages. To validate your installation, you may run the following:
+If you change the path of your download directory, be sure to specify an absolute (not relative) path. If desired, validate your NUPACK 4 installation by running the following commands: 
 
 ```bash
 conda install pytest
-pytest -v --pyargs nupack # optional, may take a couple of minutes
+python -m pytest -v --pyargs nupack 
 ```
 
-Example notebooks are provided within the distributed package. In Terminal, navigate to the `nupack-4` directory (for example, `cd ~/Downloads/nupack-4/examples`).
-For each example notebook therein, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
-See the next section for help on opening the Jupyter notebooks.
+NUPACK 4 is now installed and you can conveniently run jobs as Jupyter notebooks. See above for [example notebooks](start.md#example-notebooks) that you can download to provide a starting point for writing your own scripts. 
 
-Opening a Jupyter notebook from the Anaconda GUI
+To open a Jupyter notebook, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. 
 
-Open the Anaconda application and select the JupyterLab option to open a notebook browser. Browse to open the desired notebook using the left toolbar.
-
-Opening a Jupyter notebook from the command line
-
-Run the following commands in your terminal from your desired directory:
+Alternatively, you can launch a web-based Jupyter notebook browser form the command line: 
 
 ```bash
 conda install jupyterlab
 jupyter lab
 ```
 
-If no browser window appears, you may try navigating to the displayed link in your terminal (this URL should look like <http://127.0.0.1:8889/?token=78f1ffcdcf04cec0e97e74912e36b4eb5b530aa546411ea3>). If this doesn't work, troubleshoot your Jupyter installation. Browse to open the desired notebook using the GUI in your web browser.
+If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation. Browse to open your notebook of choice.
+
+For each example notebook, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
+
 
 ---
 
@@ -90,7 +82,7 @@ If no browser window appears, you may try navigating to the displayed link in yo
 
 NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).
 
-1. Click the start menu and search for "Windows Features", click on "Turn Windows Features On or Off". Check the "Windows Subsystems for Linux icon"
+1. Click the start menu and search for "Windows Features". Click on "Turn Windows features on or off". Check the "Windows Subsystem for Linux" icon
 
 > <img src="/figs/windows/winfeatures.PNG" alt="Windows features" title="Windows features" width="400" />
 
@@ -105,7 +97,7 @@ NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (W
 
 > <img src="/figs/windows/properties.PNG" alt="Ubuntu properties" title="Ubuntu properties" width="400" />
 
-5. Install NUPACK normally as if using Linux. Specifically run these commands in order and type __y__ when prompted:
+5. Install NUPACK as if using Linux using the following commands (type `y` when prompted):
 
 ```bash
 mkdir nupack-latest
@@ -129,35 +121,35 @@ conda install -c conda-forge -c ./nupack-latest/package nupack
 jupyter lab
 ```
 
-6. Open localhost:8888 with your browser and use Jupyter lab with NUPACK installed
+6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-notebooks). 
 
 
 ---
 
 ## Source installation
 
-Installation via Anaconda is by far the easiest option and is recommended for almost every user. However, NUPACK may also be built from source if it is desired.
+For Mac/Linux users, installation via Anaconda is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.
 
-External dependencies for C++ libraries
+The following are required: 
 
-- C++17 compliant compiler (generally requires Clang or AppleClang)
+- C++17 compliant compiler (Clang or AppleClang)
 - CMake
 
-Directions
+Directions:
 
-1. On a Unix-like system, navigate to the `source` folder in the provided download:
+1. On a Mac/Linux system, navigate to the `source` directory within the NUPACK download:
 
 ```bash
-cd ~/Downloads/nupack-4/source # navigate to the source directory
+cd ~/Downloads/nupack-4/source 
 ```
 
-2. Next build the included `vcpkg` submodule:
+2. Build the included `vcpkg` submodule using:
 
 ```bash
 ./external/vcpkg/bootstrap-vcpkg.sh
 ```
 
-If you are using a Mac and have not previously installed a C++ compiler, use the following flags:
+or if you are using a Mac and have not previously installed a C++ compiler, using the following flags:
 
 ```bash
 ./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang
@@ -171,14 +163,14 @@ If you are using a Mac and have not previously installed a C++ compiler, use the
     boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-coroutine2
 ```
 
-4. Make a build folder and navigate into it.
+4. Make a build directory and navigate into it:
 
 ```bash
 mkdir build
 cd build
 ```
 
-5. Run the CMake configuration.
+5. Run the CMake configuration:
 
 ```bash
 cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -190,16 +182,14 @@ You may add custom compilation options as flags to the `cmake` command if desire
 - Add `-DREBIND_PYTHON=/usr/local/bin/python3` to build for a specific Python executable (by default, the `python` in the user's `$PATH` is used).
 - Add `-DCMAKE_CXX_FLAGS="<custom compile options>"` to add custom C++ compilation flags.
 
-6. Build the C++ code.
+6. Build the C++ code:
 
 ```bash
 cmake --build . --target nupack-python
 ```
 
-7. Install the NUPACK Python module.
+7. Install the NUPACK Python module:
 
 ```bash
 pip3 install .
 ```
-
-
