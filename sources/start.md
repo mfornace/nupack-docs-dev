@@ -31,49 +31,51 @@ NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on 
 
 ## Mac/Linux installation 
 
-The easiest way to install NUPACK is to install [Anaconda](https://www.anaconda.com/distribution/) by typing the following commands in a terminal:
+The easiest way to install NUPACK is using [Anaconda](https://www.anaconda.com/distribution/).
 
-```bash
-conda update conda
-conda update --all
-```
+1. Install Anaconda by running the following commands in a terminal:
 
-You can verify your installation by running the terminal command:
+    ```bash
+    conda update conda
+    conda update --all
+    ```
 
-```bash
-conda info
-```
+2. Verify your installation (make sure you have Python 3.6 or newer):
 
-Make sure you have Python 3.6 or newer. (If this command does not run, troubleshoot your Anaconda installation. You may not have your `$PATH` environment variable set correctly.)
+    ```bash
+    conda info
+    ```
 
-After [agreeing to the NUPACK license](http://www.nupack.org/downloads/register), download the NUPACK package (e.g., `nupack-4.0.0`) into your Downloads folder and make sure it is unzipped. To install the NUPACK 4 Python module, run the following command in your terminal (type `y` when prompted):
+    If this command does not run, troubleshoot your Anaconda installation. You may not have your `$PATH` environment variable set correctly.
 
-```bash
-conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab matplotlib
-```
+3. After [agreeing to the NUPACK license](http://www.nupack.org/downloads/register), download the NUPACK package (e.g., `nupack-4.0.0`) into your Downloads folder and make sure it is unzipped. 
 
-If you change the path of your download directory, be sure to specify an absolute (not relative) path. If desired, validate your NUPACK 4 installation by running the following commands: 
+4. Install the NUPACK 4 Python module by running the following command in your terminal (type `y` when prompted):
 
-```bash
-conda install pytest
-python -m pytest -v --pyargs nupack 
-```
+    ```bash
+    conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab matplotlib
+    ```
 
-NUPACK 4 is now installed and you can conveniently run jobs as Jupyter notebooks. See above for [example notebooks](start.md#example-notebooks) that you can download to provide a starting point for writing your own scripts. 
+    If you change the path of your download directory, be sure to specify an absolute (not relative) path. 
 
-To open a Jupyter notebook, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. 
+5. Validate your NUPACK 4 installation by running the following commands: 
 
-Alternatively, you can launch a web-based Jupyter notebook browser form the command line: 
+    ```bash
+    conda install pytest
+    python -m pytest -v --pyargs nupack 
+    ```
 
-```bash
-conda install jupyterlab
-jupyter lab
-```
+6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). To open a Jupyter notebook on a Mac, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. Click `Cell->Run All` to run the entire notebook.
 
-If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation. Browse to open your notebook of choice.
+    Alternatively, you can launch a web-based Jupyter notebook browser from the command line: 
 
-For each example notebook, you can open the notebook a Jupyter lab session and click `Cell->Run All` to run the entire notebook.
+    ```bash
+    jupyter lab
+    ```
 
+    and browse to open your notebook of choice. Click `Run->Run All Cells` to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation. 
+
+    
 
 ---
 
