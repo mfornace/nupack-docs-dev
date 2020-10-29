@@ -132,12 +132,20 @@ for i in range(systems):
     tubes += [Step_0, Step_1, Step_2]
 
 crosstalk = TargetTube(crosstalkTargets, max_size=2, exclude=crosstalkExcludes, name='crosstalk')
+tubes.append(crosstalk)
+```
+
+We can create a set of tubes and weight the crosstalk tube by the number of systems:
+
+```python
+weights = Weights(tubes)
+weights[crosstalk] *= systems
 ```
 
 Finally, we can create a design containing all of the reaction pathway tubes:
 
 ```python
-my_design = tube_design(tubes + [crosstalk], model=my_model)
+my_design = tube_design(tubes, model=my_model, defect_weights=weights)
 ```
 
 The design may be run as described in the [design documentation](design.md#run-a-test-tube-design-job). See the example notebook `multisystem-design-dicer.ipynb` for a complete example.
