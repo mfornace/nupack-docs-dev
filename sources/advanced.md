@@ -56,12 +56,9 @@ print(repr(s)) # --> <Domain a>
 !!! note
     In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
 
-## Multi-system designs
+## Design of multiple orthogonal systems
 
-!!! warn
-    Elaborate more
-
-In this section we walk through a simplified multitube design for two Dicer scRNA systems as described in [@Hochrein13]. First, we can initialize global parameters for the design:
+In this section we walk through a simplified multitube design for two Dicer scRNA systems as described in [@Hochrein13]. With the flexibility of Python, we can simply define a design for any number of orthogonal systems. First, we can initialize global parameters for the design:
 
 ```python
 # Specify source RNA for window constraints
@@ -72,7 +69,7 @@ tubes = [] # empty set of tubes
 systems = 2 #set number of systems
 ```
 
-Next, we can iterate through each of the systems to define its components:
+Next, we can iterate through each of the systems to define its components. We keep track of species to place in the crosstalk tube along the way.
 
 ```python
 for i in range(systems):
