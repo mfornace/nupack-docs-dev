@@ -4,7 +4,7 @@ from textwrap import dedent
 from tempfile import TemporaryDirectory
 
 glob = (Path(__file__).parent/'sources').glob('*.md')
-out = Path(__file__).parent/'examples'
+out = Path(__file__).parent/'snippets'
 out.mkdir(exist_ok=True)
 
 

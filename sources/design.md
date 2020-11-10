@@ -37,21 +37,33 @@ f = Domain('R2S2A3C2A',  name='f') # equivalent sequence specification
 g = Domain('N10',        name='g')
 ```
 
+The reverse complement of domain `a` is denoted `~a`. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G$\cdot$U wobble pairs for RNA if wobble mutations are permitted (see [Job Options](design.md#job-options)).
+
+!!! Note
+    Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
+
+In some select cases, it may be desirable to manually specify the domain reverse complement that `~a` refers to. This is particular useful when evaluating designs containing wobble complements for RNA. To manually specify the domain reverse complement, use the `complement` keyword:
+
+```python
+h = Domain('GGGG', name='h')
+print(~h) # --> CCCC
+
+i = Domain('GGGG', name='i', complement='CTTC')
+print(~i) # --> CTTC
+```
+
 ---
 
 ## Specify a target strand
+
 A `TargetStrand` is a single RNA or DNA molecule specified as a sequence (specified 5$'$ to 3$'$ in terms of previously defined domains) and a target strand name (keyword `name`):
+
 ```python
 A = TargetStrand([a, b, g], name='Strand A')
 B = TargetStrand([d, ~e],   name='Strand B')  # ~e denotes the reverse complement of e
 C = TargetStrand([e, a, f], name='Strand C')
 D = TargetStrand([d, d, d], name='Strand D')
 ```
-
-The reverse complement of domain `a` is denoted `~a`. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G$\cdot$U wobble pairs for RNA if wobble mutations are permitted (see [Job Options](design.md#job-options)).
-
-!!! Note
-    Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
 
 Additional fields and methods are available for a `TargetStrand` object:
 
@@ -67,8 +79,12 @@ A.ndomains() # --> 3
 A.nt()       # --> 18
 ```
 
+The reverse complement of a `TargetStrand` maybe analogous obtained, for example, as `~A`.
+
 ---
+
 ## Specify a target complex
+
 A `TargetComplex` is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a [polymer graph](definitions.md#secondary-structure)) and a complex name (keyword `name`). If the complex is to be used as an on-target complex in at least one target test tube, it is specified with an on-target [secondary structure](definitions.md#secondary-structure) (specified in dot-parens-plus, run-length encoded dot-parens-plus, or DU+ notation):
 
 <!-- ```python
@@ -80,7 +96,6 @@ c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2')
 # DU+ notation
 c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 ``` -->
-
 
 ```python
 # dot-parens-plus notation
@@ -133,8 +148,8 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
 ```python
-t1 = TargetTube(targets={C1: 1e-8, C2: 1e-8},
-    max_size=3, include=[[B, B, B, B]], exclude=[C4], name='t1')
+t1 = TargetTube({C1: 1e-8, C2: 1e-8}, max_size=3,
+    include=[[B, B, B, B]], exclude=[C4], name='t1')
 ```
 
 !!! note
@@ -173,8 +188,6 @@ Either method can be used to restart from a previous design result (keyword `res
     `run()` is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.`launch()` is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling you to run long design trials in the background with built-in checkpointing.
 
 ---
-
-
 
 ### Run design trials in the foreground
 
@@ -299,7 +312,7 @@ tube_des = tube_design([tube], model=Model(material='dna'))
 my_evaluated_result = tube_des.evaluate()
 ```
 
-An error will be returned if any domain contains nucleotides other than `ACGTU`. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
+An error will be returned if any domain contains nucleotides other than `ACGTU`. See the `complement` keyword for `Domain` in [Specify a domain](#specify-a-domain) to specify domain complements for designs containing wobble complements. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
 
 ```python
 my_evaluated_result
@@ -974,7 +987,7 @@ Output:
 
 A `DesignResult` object allows programmatic access via several fields:
 
-- `.mapping`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domains` which is not used for analysis jobs).
+- `.to_analysis`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domains` which is not used for analysis jobs).
 - `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
@@ -982,7 +995,7 @@ A `DesignResult` object allows programmatic access via several fields:
 Fields may be displayed individually, for example:
 
 ```python
-my_result.mapping
+my_result.to_analysis
 ```
 
 Output:
@@ -1017,10 +1030,10 @@ You can query any field of the `DesignResult` using Python, for example:
 
 ```python
 # print various designed sequences
-print(my_result.mapping[tube1]) # --> Tube({A: 1e-06, B: 1e-06}, name='tube1')
-print(my_result.mapping[C])    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
-print(my_result.mapping[B])    # --> CCAGACCCCATTATTGGGGG
-print(my_result.mapping[a])    # --> CCCCCAATAATGGGGTCTGG
+print(my_result.to_analysis(tube1)) # --> Tube({A: 1e-06, B: 1e-06}, name='tube1')
+print(my_result.to_analysis(C))    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
+print(my_result.to_analysis(B))    # --> CCAGACCCCATTATTGGGGG
+print(my_result.to_analysis(a))    # --> CCCCCAATAATGGGGTCTGG
 
 # print specific defect contributions
 print(my_result.defects.ensemble_defect) # 0.010181549966458123
@@ -1035,7 +1048,7 @@ Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s.
 You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex:
 
 ```python
-t1_designed = my_result.mapping[tube1] # Tube object based on TargetTube with designed sequences
+t1_designed = my_result.to_analysis(tube1) # Tube object based on TargetTube with designed sequences
 
 # Calculate the MFE structure for each on-target complex in the design ensemble
 tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
@@ -1046,11 +1059,11 @@ tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_m
 You can re-analyze your designed sequences for specified strand concentrations by using the `analysis` field to supply an `AnalysisResult` object to `complex_concentrations`:
 
 ```python
-t1_designed = my_result.mapping[tube1] # Tube object based on TargetTube with designed sequences
+t1_designed = my_result.to_analysis(tube1) # Tube object based on TargetTube with designed sequences
 
 # Re-compute complex concentrations for a different set of strand concentrations
 conc_results = complex_concentrations(t1_designed, my_result.analysis,
-    concentrations={my_result.mapping[A]: 1e-8, my_result.mapping[B]: 1e-9})
+    concentrations={my_result.to_analysis(A): 1e-8, my_result.to_analysis(B): 1e-9})
 ```
 
 ---

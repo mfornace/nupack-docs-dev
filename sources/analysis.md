@@ -58,20 +58,49 @@ c2.nstrands() # --> 4
 c2.nt()       # --> 168
 ```
 
----
-## Specify a test tube ensemble
+## Specify a set of complexes
 
-A `Tube` is specified as a tube name (keyword `name`) and a set of strands (keyword `strands`), each introduced at a user-specified concentration (keyword `concentrations`; units of `M`), that interact to form a set of complexes. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
+A set of complexes may be conveniently built up using the `ComplexSet` class. The set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
 
 ```python
-t1 = Tube(strands=[A, B], concentrations=[1e-6, 1e-8], name='t1') # max_size=1 default
+my_complexes = ComplexSet(strands=[A, B, C], max_size=3,
+    include=[c2, [B, B, B, B]], exclude=[c1])
+```
 
-t2 = Tube(strands=[A, B, C], concentrations=[1e-6, 1e-8, 1e-12],
-    max_size=3, include=[c2,[B, B, B, B]], exclude=[c1], name='t2')
+Multiple `ComplexSet`s may be combined using the class method `union`:
+
+```python
+my_complexes2 = ComplexSet(strands=[A, C], max_size=4)
+ComplexSet.union([my_complexes, my_complexes2])
 ```
 
 !!! Note
     Note that `include` and `exclude` accept both complex identifiers (e.g., `c2`) and strand orderings (e.g., `[B, B, B, B]`).
+
+---
+
+## Specify a test tube ensemble
+
+A `Tube` is specified as a tube name (keyword `name`) and a set of strands (keyword `strands`), each introduced at a user-specified concentration (units of `M`), that interact to form a set of complexes. Like a `ComplexSet`, the set of complexes is specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes; 3) using keyword `exclude` to exclude an explicitly specified set of complexes:
+
+```python
+t1 = Tube({A: 1e-6, B: 1e-8}, name='t1') # max_size=1 by default
+
+t2 = Tube({A: 1e-6, B: 1e-8, C: 1e-12}, max_size=3,
+    include=[c2,[B, B, B, B]], exclude=[c1], name='t2')
+```
+
+Multiple `Tube`s may be combined additively using the class method `union`:
+
+```python
+Tube.union([t1, t2])
+```
+
+To obtain a `ComplexSet` taking a union of all complexes over a set of tubes, use the class method `union` of `ComplexSet`. The `Tube` class derives from `ComplexSet`.
+
+```python
+ComplexSet.union([t1, t2])
+```
 
 ---
 
@@ -85,8 +114,8 @@ a = Strand('CTGATCGAT', name='a')
 b = Strand('GATCGTAGTC', name='b')
 
 # specify tubes
-t1 = Tube(strands=[a, b], concentrations=[1e-8, 1e-9], max_size=3, name='t1')
-t2 = Tube(strands=[a, b], concentrations=[1e-10, 1e-9], max_size=2, name='t2')
+t1 = Tube({a: 1e-8, b: 1e-9}, max_size=3, name='t1')
+t2 = Tube({a: 1e-10, b: 1e-9}, max_size=2, name='t2')
 
 # analyze tubes
 model1 = Model()
@@ -101,7 +130,7 @@ tube_results
 Output:
 > <img src="/figs/tube-analysis-output.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
-For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concenration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
+For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
 ---
 
@@ -137,7 +166,7 @@ Hence, if you intend to analyze N test tubes containing the same strand species 
 
 ## Run a complex analysis job
 
-Use the `complex_analysis` command to calculate the [partition function](definitions.md#partition-function) (and other additional quantities -- see [Job Options](analysis.md#job-options)) for each complex in a set (specified as a `Tube`):
+Use the `complex_analysis` command to calculate the [partition function](definitions.md#partition-function) (and other additional quantities -- see [Job Options](analysis.md#job-options)) for each complex in a set (specified as a `ComplexSet`):
 
 ```python
 # specify strands
@@ -145,15 +174,14 @@ a = Strand('CTGATCGAT', name='a')
 b = Strand('GATCGTAGTC', name='b')
 
 # specify tubes
-t1 = Tube(strands=[a, b], max_size=3, name='t1')
-t2 = Tube(strands=[a, b], concentrations=[1e-10, 1e-9], max_size=2, name='t2')
+complexes = ComplexSet(strands=[a, b], max_size=3)
 
 # analyze tubes
 model1 = Model()
-complex_results = complex_analysis(tubes=[t1, t2], model=model1, compute=['pfunc'])
+complex_results = complex_analysis(complexes, model=model1, compute=['pfunc'])
 ```
 
-Note that tube `t1` defines a set of complexes (all complexes of up to `max_size=3` strands) but omits optional concentrations for strands `a` and `b` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. On the other hand, tube `t2` defines optional strand concentrations that will be ignored by `complex_analysis`.
+Note that tube `complexes` defines a set of complexes (all complexes of up to `max_size=3` strands) but omits optional concentrations for strands `a` and `b` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. Not that a `Tube` may be used instead of a `ComplexSet` as well; in this case, the input strand concentrations will be ignored.
 
 ---
 
@@ -236,8 +264,8 @@ a = Strand('CCC', name='a')
 b = Strand('GGG', name='b')
 c = Complex([a, b])
 
-t1 = Tube([a, b], concentrations=[1e-6, 1e-9], include=[c], name='t1')
-t2 = Tube([a, b], concentrations=[1e-8, 1e-9], include=[c], name='t2')
+t1 = Tube({a: 1e-6, b: 1e-9}, include=[c], name='t1')
+t2 = Tube({a: 1e-8, b: 1e-9}, include=[c], name='t2')
 
 my_model = Model()
 my_result = tube_analysis([t1, t2], model=my_model,
