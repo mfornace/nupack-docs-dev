@@ -180,6 +180,7 @@ print(ensemble_defect)
 ---
 
 ## Represent a structure
+
 A [secondary structure](definitions.md#secondary-structure) can be defined using any of three notations (keyword `Structure`):
 
 ```python
@@ -224,4 +225,18 @@ print(s4.matrix())            # --> [[0 0 0 0 0 1 0]
 print(s4.nicks())             # --> [3 7]
 print(s4.dotparensplus())     # --> (((+))).
 print(s4.rle_dotparensplus()) # --> (3+)3.
+```
+
+## Compute sequence and structure distances
+
+The Hamming distance between two sequences of the same length can be found using the `seq_distance` function:
+
+```python
+seq_distance('G5', 'G3C2') # --> 2
+```
+
+Likewise, the nucleotide distance between two structures of the same length can be found using the `nt_distance` function:
+
+```python
+nt_distance('.15', '(5.5)5') # --> 10
 ```

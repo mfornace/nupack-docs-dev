@@ -144,7 +144,9 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 
 
 ---
+
 ## Specify a target tube
+
 A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
 
 ```python
@@ -163,6 +165,13 @@ t1 = TargetTube({C1: 1e-8, C2: 1e-8}, max_size=3,
     Note that used together, `max_size` and `exclude` provide a powerful combination for specifying [target test tubes](definitions.md#target-test-tubes). With `max_size` it is possible to specify a large set of off-target complexes formed from a set of system components. With `exclude` it is further possible to remove from this large set all of the cognate products that should form between these system components (so they appear as neither on-targets nor off-targets in the tube ensemble). For example, with this approach, the reactive species in a global crosstalk tube can be forced to either perform no reaction (remaining as desired on-targets) or to undergo a crosstalk reaction (forming undesired off-targets), enabling minimization of global crosstalk during sequence optimization.
 
     An ensemble that excludes cognate reaction products can never be studied in the lab but provides a powerful framework for computational sequence optimization.
+
+To view the on- and off-targets of a given `TargetTube`, access its corresponding attributes like this:
+
+```python
+print(t1.on_targets)  # --> {<TargetComplex AB>: 1e-08}
+print(t1.off_targets) # --> {<TargetComplex [A]>, <TargetComplex [B]>}
+```
 
 ## Run a test tube design job
 
@@ -924,6 +933,7 @@ my_result = my_design.run(trials=1)[0]
 ---
 
 ### Tabular display
+
 You can display a summary table of results in a Jupyter notebook, for example:
 
 ```python
@@ -934,6 +944,7 @@ Output:
 > <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="600" />
 
 ### Textual display
+
 You can view an ASCII representation of the same data by using the `print` function:
 
 ```python
@@ -1044,7 +1055,31 @@ print(my_result.defects.tube_complexes)  # --> each on-target in each tube
 
 Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s. For convenience, these tables contain Python objects and the corresponding object name (e.g., `tube` object and corresponding `tube_name` string).
 
+### Evaluate a design result using different parameters
+
+Any combination of a different free energy model, different soft constraints, objective weights, and defect weights may be applied to a finished design result using the `evaluate_with` method:
+
+```python
+# Evaluate the result with a different free energy model
+new_model = Model(celsius=40)
+my_result.evaluate_with(model=new_model)
+```
+
+```python
+# Evaluate the result with a different free energy model and soft constraints
+new_soft = [Similarity([a], 'G20', limits=[0.4,0.6], weight=0.5)]
+my_result.evaluate_with(model=new_model, soft_constraints=new_soft)
+```
+
+```python
+# Evaluate the result with different defect weights
+new_weights = Weights([tube1])
+new_weights[:, :, A] *= 10
+my_result.evaluate_with(defect_weights=new_weights)
+```
+
 ### Analyze additional properties of the design ensemble
+
 You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex:
 
 ```python
