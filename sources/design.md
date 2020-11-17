@@ -147,31 +147,44 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 
 ## Specify a target tube
 
-A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `targets`; units of `M`). Off-target complexes can be specified in any of three ways: 1) combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`); 2) using keyword `include` to include an explicitly specified set of complexes (default: `None`); 3) using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`):
+A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `on_targets`; units of `M`). Off-target complexes can be specified in any of three ways (keyword `off_targets`): 
+
+- combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`),
+- using keyword `include` to include an explicitly specified set of complexes (default: `None`), 
+- using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`).
+
+For example: 
 
 ```python
 t1 = TargetTube({C1: 1e-8, C2: 1e-8}, max_size=3,
     include=[[B, B, B, B]], exclude=[C4], name='t1')
+
+
+t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, 
+    off_targets={'max_size':3, 'include':[[B, B, B, B]], 'exclude':[C4]}, 
+    name='t1')
 ```
 
-!!! note
-    Note that `include` and `exclude` accept both target complex identifiers (e.g., `C3`) and strand orderings (e.g., `[B, B, B, B]`).
+The on-target and off-target sets for a specified `TargetTube` can be queried as follows: 
 
-    Note that for an off-target specified using a target complex identifier (e.g., `C3`), the target structure is ignored since by definition, there is no target structure for an off-target complex.
+```python
+print(t1.on_targets)  # --> {<TargetComplex AB>: 1e-08}
+print(t1.off_targets) # --> {<TargetComplex [A]>, <TargetComplex [B]>}
+```
+
+
+!!! note
+    Note that `include` and `exclude` accept both target complex identifiers (e.g., `C4`) and strand orderings (e.g., `[B, B, B, B]`).
+
+    Note that for an off-target specified using a target complex identifier (e.g., `C4`), the target structure is ignored since by definition, there is no target structure for an off-target complex.
 
     Note that any complex included as an on-target complex will not be included as an off-target complex when processing `max_size` and `include`.
 
 !!! note
     Note that used together, `max_size` and `exclude` provide a powerful combination for specifying [target test tubes](definitions.md#target-test-tubes). With `max_size` it is possible to specify a large set of off-target complexes formed from a set of system components. With `exclude` it is further possible to remove from this large set all of the cognate products that should form between these system components (so they appear as neither on-targets nor off-targets in the tube ensemble). For example, with this approach, the reactive species in a global crosstalk tube can be forced to either perform no reaction (remaining as desired on-targets) or to undergo a crosstalk reaction (forming undesired off-targets), enabling minimization of global crosstalk during sequence optimization.
 
-    An ensemble that excludes cognate reaction products can never be studied in the lab but provides a powerful framework for computational sequence optimization.
+    An ensemble that excludes cognate reaction products can never be studied in the lab but provides a important framework for computational sequence optimization.
 
-To view the on- and off-targets of a given `TargetTube`, access its corresponding attributes like this:
-
-```python
-print(t1.on_targets)  # --> {<TargetComplex AB>: 1e-08}
-print(t1.off_targets) # --> {<TargetComplex [A]>, <TargetComplex [B]>}
-```
 
 ## Run a test tube design job
 
