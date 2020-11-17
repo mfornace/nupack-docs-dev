@@ -12,6 +12,12 @@ For example, if a complex has three strands of length 15, 20, and 13, respective
 <!--
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
 
+The **sequence distance** between two sequences $\phi_1$ and $\phi_2$ of equal length ($|\phi_1|=|\phi_2|=N$) is the number of nucleotides that are different in the two sequences:
+
+\begin{align}
+d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a = \phi_2^a\\ 1: &\phi_1^a \neq \phi_2^a \end{array} \right.
+\end{align}
+
 <hr>
 
 ## Secondary structure
@@ -29,8 +35,6 @@ Secondary structures may be specified one of three ways for NUPACK calculations:
 
 - **DU+ notation**: Using DU+ notation, a duplex is represented by `D` and an unpaired region of length nucleotides is represented by `U` [@Zadeh10c]. Each duplex is followed immediately by the substructure (specified in DU+ notation) that is 'enclosed' by the duplex. If this substructure includes more than one element, parentheses are used to denote scope. A nick between strands is specified by a '+'. See the table below for examples.
 
-In mathematical expressions, it is convenient to represent secondary structure $s$ using a **structure matrix** $S(s)$ with entries $S^{a,b}(s) = 1$ if structure $s$ contains base pair $a\cdot b$ and $S^{a,b}(s) = 0$ otherwise. Abusing notation, the entry $S^{a,a}(s) = 1$ if base $a$ is unpaired in structure $s$ and $0$ otherwise. Hence, $S(s)$ is a symmetric matrix with row and column sums of 1.
-
 
 <!-- 4. **pair list notation**: A list of zero-based indices $p$ such that if $p_i = j$, bases $i$ and $j$ are paired, and if $p_i = i$, base $i$ is unpaired. Any secondary structure, including highly-nested pseudoknots, may be specified in this way. -->
 
@@ -47,6 +51,14 @@ In mathematical expressions, it is convenient to represent secondary structure $
 </p>
 
 <p style="text-align:center;"><b>Figure</b>: Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.</p>
+
+
+In mathematical expressions, it is convenient to represent secondary structure $s$ using a **structure matrix** $S(s)$ with entries $S^{a,b}(s) = 1$ if structure $s$ contains base pair $a\cdot b$ and $S^{a,b}(s) = 0$ otherwise. Abusing notation, the entry $S^{a,a}(s) = 1$ if base $a$ is unpaired in structure $s$ and $0$ otherwise. Hence, $S(s)$ is a symmetric matrix with row and column sums of 1.
+
+The **structure distance** between two secondary structures $s_1$ and $s_2$ of equal size ($|s_1|=|s_2|=N$) is the number of nucleotides in a different base-pairing state in the two structures:
+\begin{align}
+d_\textrm{struc}(s_1,s_2)=N-\sum_{1\le a\le N,~1\le b \le N} S_{a,b}(s_1)S_{a,b}(s_2)
+\end{align} 
 
 <hr>
 

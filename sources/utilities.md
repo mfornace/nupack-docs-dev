@@ -227,16 +227,24 @@ print(s4.dotparensplus())     # --> (((+))).
 print(s4.rle_dotparensplus()) # --> (3+)3.
 ```
 
-## Compute sequence and structure distances
-
-The Hamming distance between two sequences of the same length can be found using the `seq_distance` function:
+## Compute sequence distance
+`seq_distance` calculates the [sequence distance](definitions.md#secondary-structure) for two sequences that have the same number of nucleotides:
 
 ```python
+seq_distance('ACGUUUU+ACCC','ACGUUUU+AGGG') # --> 3
+
 seq_distance('G5', 'G3C2') # --> 2
 ```
 
-Likewise, the nucleotide distance between two structures of the same length can be found using the `nt_distance` function:
+
+## Compute structure distance 
+`struc_distance` calculates the [structure distance](definitions.md#secondary-structure) for two structures that have the same number of nucleotides:
 
 ```python
-nt_distance('.15', '(5.5)5') # --> 10
+struc_distance('((((((((+..........))))))))', '(((((((.+...........)))))))') # --> 2
+
+struc_distance('.15', '(5.5)5') # --> 10
 ```
+
+!!! Note 
+    Note that [sequence distance](definitions.md#sequence) and [structure distance](definitions.md#secondary-structure) are defined independent of whether the nick locations match between two sequences or two structures. However, `seq_distance` and `struc_distance` will return a warning if the nick locations do not match. 
