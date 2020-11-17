@@ -156,10 +156,6 @@ A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-targ
 For example: 
 
 ```python
-t1 = TargetTube({C1: 1e-8, C2: 1e-8}, max_size=3,
-    include=[[B, B, B, B]], exclude=[C4], name='t1')
-
-
 t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, 
     off_targets={'max_size':3, 'include':[[B, B, B, B]], 'exclude':[C4]}, 
     name='t1')
