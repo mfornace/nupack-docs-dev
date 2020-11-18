@@ -228,7 +228,7 @@ complex_results2 = complex_analysis(complexes=tube1, model=model1, compute=['pfu
 
 ## Run a complex concentrations job
 
-Use the `complex_concentrations` command to calculate the [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) of each complex in a test tube ensemble using the output from a previous call to `complex_analysis` (which at minimum must have calculated the partition function for each complex):
+Use the `complex_concentrations` command to calculate the [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) of each complex in a test tube ensemble using the `AnalysisResult` data from a previous call to `complex_analysis` (which at minimum must contain the partition function for each complex):
 
 ```python
  # specify strand concentrations for set1
