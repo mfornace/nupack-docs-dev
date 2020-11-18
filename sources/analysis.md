@@ -153,7 +153,7 @@ Note that `pairs` and `sample` results are too large to be included in the summa
 
 ## Specify a set of complexes
 
-A `ComplexSet` is specified as a set name (keyword `name`) and a set of strands (keyword `strands`) that interact to form a set of complexes (keyword `complexes`: defaults to the strand set). The set of complexes is optionally specified using `SetSpec()` in any of three ways: 
+A `ComplexSet` is specified as a set of strands (keyword `strands`) that interact to form a set of complexes (keyword `complexes`: defaults to the strand set). The set of complexes is optionally specified using `SetSpec()` in any of three ways: 
 
 - Combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`).
 - Using keyword `include` to include an explicitly specified set of complexes (default: `None`). 
@@ -162,11 +162,10 @@ A `ComplexSet` is specified as a set name (keyword `name`) and a set of strands 
 For example: 
 
 ```python
-set1 = ComplexSet(strands=[A, B, C], name='set1') # complexes defaults to [A, B, C]
+set1 = ComplexSet(strands=[A, B, C]) # complexes defaults to [A, B, C]
 
 set2 = ComplexSet(strands=[A, B, C], 
-    complexes=SetSpec(max_size=3, include=[c2, [B, B, B, B]], exclude=[c1]),
-    name='set1')
+    complexes=SetSpec(max_size=3, include=[c2, [B, B, B, B]], exclude=[c1]))
 ```
 
 !!! Note 
