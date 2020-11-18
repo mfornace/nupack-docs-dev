@@ -137,21 +137,21 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 
 ## Specify a target tube
 
-A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `on_targets`; units of `M`). Off-target complexes can be specified in any of three ways (keyword `off_targets`): 
+A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `on_targets`; units of `M`). Off-target complexes (keyword `off_targets`: defaults to none) can be specified using `SetSpec()` in any of three ways: 
 
-- combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`),
-- using keyword `include` to include an explicitly specified set of complexes (default: `None`), 
-- using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`).
+- Combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`).
+- Using keyword `include` to include an explicitly specified set of complexes (default: `None`). 
+- Using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`).
 
 For example: 
 
 ```python
 t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, 
-    off_targets={'max_size':3, 'include':[[B, B, B, B]], 'exclude':[C4]}, 
+    off_targets=SetSpec(max_size=3, include=[[B, B, B, B]], exclude=[C4]), 
     name='t1')
 ```
 
-The on-target and off-target sets for a specified `TargetTube` can be queried as follows: 
+If desired, the on-target and off-target sets for a specified `TargetTube` can be queried as follows: 
 
 ```python
 print(t1.on_targets)  # --> {<TargetComplex AB>: 1e-08}
