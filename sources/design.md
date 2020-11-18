@@ -1063,55 +1063,58 @@ Output:
     ```
     The `evaluate()` method will return a warning if `wobble_mutations` are active and a reverse complement domain has not been manually defined. 
 
-### Evaluate a design using different parameters
+### Evaluate a design using a different model, soft constraints, and/or defect weights
 
-Any combination of a different free energy model, different soft constraints, objective weights, and defect weights may be applied to a finished design result using the `evaluate_with` method:
+A `DesignResult` object can be evaluted using any a different free energy model, different soft constraints, and/or different defect weights using the `evaluate_with` method:
 
 ```python
 # Evaluate the result with a different free energy model
 new_model = Model(celsius=40)
 my_result.evaluate_with(model=new_model)
-```
 
-```python
 # Evaluate the result with a different free energy model and soft constraints
 new_soft = [Similarity([a], 'G20', limits=[0.4,0.6], weight=0.5)]
 my_result.evaluate_with(model=new_model, soft_constraints=new_soft)
-```
 
-```python
 # Evaluate the result with different defect weights
 new_weights = Weights([tube1])
 new_weights[:, :, A] *= 10
 my_result.evaluate_with(defect_weights=new_weights)
 ```
 
-### Analyze additional properties of the design ensemble
+### Analyze additional physical quantities for a designed ensemble
 
-You can analyze additional physical properites of the design ensemble, for example the MFE structure for each on-target complex:
+To analyze additional physical quantities for a designed ensemble (e.g., the MFE structure of each designed on-target complex), use the 
+`to_analysis()` method to make a version of the design ensemble containing designed sequences and then run a [test tube analysis job](analysis.md#run-a-test-tube-analysis-job) or [complex analysis job](analysis.md#run-a-complex-analysis-job) as desired. For example:
 
 ```python
-t1_designed = my_result.to_analysis(tube1) # Tube object based on TargetTube with designed sequences
+# Tube object based on TargetTube with designed sequences
+t1_designed = my_result.to_analysis(tube1) 
 
 # Calculate the MFE structure for each on-target complex in the design ensemble
 tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
 ```
 
-### Re-analyze the design ensemble with different strand concentrations
+### Analyze a designed ensemble using different strand concentrations
 
-You can re-analyze your designed sequences for specified strand concentrations by using the `analysis` field to supply an `AnalysisResult` object to `complex_concentrations`:
+To re-analyze designed sequences using strand concentrations that differ from those in the design ensemble, use the 
+`to_analysis()` method to make a version of the design ensemble containing designed sequences, and 
+use the `analysis_result` field to supply an `AnalysisResult` object to run a [complex concentrations job](analysis.md#run-a-complex-concentrations-job):
 
 ```python
 t1_designed = my_result.to_analysis(tube1) # Tube object based on TargetTube with designed sequences
+strandA_designed = my_result.to_analysis(A)
+strandB_designed = my_result.to_analysis(B)
+my_analysis_result = my_result.analysis_result
 
 # Re-compute complex concentrations for a different set of strand concentrations
-conc_results = complex_concentrations(t1_designed, my_result.analysis,
-    concentrations={my_result.to_analysis(A): 1e-8, my_result.to_analysis(B): 1e-9})
+conc_results = complex_concentrations(t1_designed, my_analysis_result,
+    concentrations={strandA_designed: 1e-8, strandB_designed: 1e-9})
 ```
 
 ---
 
-### Saving a job summary
+### Save a job summary
 
 To save a textual job summary using the `save_text` method:
 
@@ -1119,7 +1122,7 @@ To save a textual job summary using the `save_text` method:
 my_result.save_text('my-result.txt')
 ```
 
-### Saving and reloading job results
+### Save and reload job results
 
 Save a `DesignResult` as a binary file using the `save` method:
 
