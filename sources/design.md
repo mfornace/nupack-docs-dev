@@ -42,16 +42,6 @@ The reverse complement of domain `a` is denoted `~a`. Complementarity refers to 
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
 
-In some select cases, it may be desirable to manually specify the domain reverse complement that `~a` refers to. This is particular useful when evaluating designs containing wobble complements for RNA. To manually specify the domain reverse complement, use the `complement` keyword:
-
-```python
-h = Domain('GGGG', name='h')
-print(~h) # --> CCCC
-
-i = Domain('GGGG', name='i', complement='CTTC')
-print(~i) # --> CTTC
-```
-
 ---
 
 ## Specify a target strand
@@ -307,39 +297,6 @@ An error will be returned if `trials` and `restart` specify different numbers of
 my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
     restart='my_checkpoints')
 ```
-
-### Evaluate a design
-
-!!!warning
-    `evaluate()` should not be used for designs containing wobble pairs (any parameter sets `rna*.json` or `dna04-nupack3.json`).
-
-The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)), for example:
-
-```python
-dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
-dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
-
-sl1 = TargetStrand([dl1], name='sl1')
-sl2 = TargetStrand([dl2], name='sl2')
-
-dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
-
-tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
-
-tube_des = tube_design([tube], model=Model(material='dna'))
-my_evaluated_result = tube_des.evaluate()
-```
-
-An error will be returned if any domain contains nucleotides other than `ACGTU`. See the `complement` keyword for `Domain` in [Specify a domain](#specify-a-domain) to specify domain complements for designs containing wobble complements. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
-
-```python
-my_evaluated_result
-```
-
-Output:
-
-> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
-
 
 ---
 
@@ -1007,7 +964,7 @@ Output:
 
 A `DesignResult` object allows programmatic access via several fields:
 
-- `.to_analysis`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domains` which is not used for analysis jobs).
+- `.to_analysis`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domain` which is not used for analysis jobs).
 - `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
 - `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
@@ -1064,7 +1021,49 @@ print(my_result.defects.tube_complexes)  # --> each on-target in each tube
 
 Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s. For convenience, these tables contain Python objects and the corresponding object name (e.g., `tube` object and corresponding `tube_name` string).
 
-### Evaluate a design result using different parameters
+### Evaluate a design
+
+The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)), for example:
+
+```python
+dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
+dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
+
+sl1 = TargetStrand([dl1], name='sl1')
+sl2 = TargetStrand([dl2], name='sl2')
+
+dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
+
+tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
+
+tube_des = tube_design([tube], model=Model(material='dna'))
+my_evaluated_result = tube_des.evaluate()
+```
+
+An error will be returned if any domain contains nucleotides other than `ACGTU`. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
+
+```python
+my_evaluated_result
+```
+
+Output:
+
+> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
+
+!!! Note
+
+    Consider using the `evaluate()` method an RNA design that was performed with `wobble_mutations` enabled and that uses both domain `a` and the reverse complement domain `~a` in the specification of the design ensemble. Then the definition of the reverse complement domain `~a` is not fully defined since a G in domain `a` could be paired to either a C or a U in the final designed version of `~a`. This ambiguity can be overcome by manually defining `~a` using the `complement` keyword: 
+
+    ```python
+    h = Domain('GGGG', name='h')
+    print(~h) # --> CCCC
+
+    i = Domain('GGGG', name='i', complement='CUUC')
+    print(~i) # --> CUUC
+    ```
+    The `evaluate()` method will return a warning if `wobble_mutations` are active and a reverse complement domain has not been manually defined. 
+
+### Evaluate a design using different parameters
 
 Any combination of a different free energy model, different soft constraints, objective weights, and defect weights may be applied to a finished design result using the `evaluate_with` method:
 
