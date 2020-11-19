@@ -84,7 +84,12 @@ If desired, the complexes in a specified `Tube` can be queried as follows:
 
 ```python
 print(t1.complexes) # --> {<Complex A>, <Complex B>}
-print(t2.complexes) # --> {<Complex A>, ???}
+print(t2.complexes) # --> {<Complex [C+C+B]>, <Complex [B]>, <Complex [A+C+B]>,
+    # <Complex [C+C+C]>, <Complex [C]>, <Complex [A+A+B]>, <Complex [A+C]>,
+    # <Complex [B+B+B+B]>, <Complex [A+A]>, <Complex [A+B+B]>, <Complex [B+B]>,
+    # <Complex [A+B]>, <Complex [B+B+B]>, <Complex [A+B+C]>, <Complex [A+C+C]>,
+    # <Complex [A+A+A]>, <Complex [C+C]>, <Complex [A+A+C]>, <Complex [A+B+B+C]>,
+    # <Complex [C+B+B]>, <Complex [C+B]>}
 ```
 
 !!! Note
@@ -153,7 +158,7 @@ Note that `pairs` and `sample` results are too large to be included in the summa
 
 ## Specify a set of complexes
 
-A `ComplexSet` is specified as a set of strands (keyword `strands`) that interact to form a set of complexes (keyword `complexes`: defaults to the strand set). The set of complexes is optionally specified using `SetSpec()` in any of three ways: 
+A `ComplexSet` is specified as a set of strands (keyword `strands`) that interact to form a set of complexes (keyword `complexes`: defaults to the strand set). The set of complexes is optionally specified using `SetSpec()` in any of three ways:
 
 - Combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`).
 - Using keyword `include` to include an explicitly specified set of complexes (default: `None`).
