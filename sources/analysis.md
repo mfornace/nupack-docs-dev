@@ -43,6 +43,16 @@ c3 = Complex([A, A], name='AA')
 !!! Note
     Commands that expect a `Complex` as an argument (e.g., `c2`) will alternatively accept a strand ordering (e.g.,`[A, B, B, C]`). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
 
+In certain cases, it may be desirable to adjust the free energy of a complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):
+
+```python
+# destabilize c4 by 1 kcal/mol
+c4 = Complex([A, B, C], name='ABC', bonus=+1.0)
+
+# stabilize c5 by 10 kcal/mol
+c5 = Complex([A, B], name='AB', bonus=-10.0)
+```
+
 Additional fields and methods are available for a `Complex` object:
 
 - `.strands`: a tuple of strands
