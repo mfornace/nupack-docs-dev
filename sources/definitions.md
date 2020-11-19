@@ -12,11 +12,39 @@ For example, if a complex has three strands of length 15, 20, and 13, respective
 <!--
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
 
-The **sequence distance** between two sequences $\phi_1$ and $\phi_2$ of equal length ($|\phi_1|=|\phi_2|=N$) is the number of nucleotides that are different in the two sequences:
+### Degenerate nucleotide codes
+Sequence constraints can be specified using IUPAC **degenerate nucleotide codes**, which for RNA are as follows:
+
+Code | Nucleotides
+-----|------------
+  M  | A or C
+  R  | A or G
+  W  | A or U
+  S  | C or G
+  Y  | C or U
+  K  | G or U
+  V  | A, C, or G
+  H  | A, C, or U
+  D  | A, G, or U
+  B  | C, G, or U
+  N  | A, C, G, or U
+
+  For DNA, T replaces U.
+
+### Sequence distance
+The **sequence distance** between two sequences $\phi_1$ and $\phi_2$ of equal length ($|\phi_1|=|\phi_2|=N$) is the number of (possibly degenerate) nucleotide codes that are non-intersecting in the two sequences:
+
+\begin{align}
+d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a \cap \phi_2^a \neq \emptyset\\ 1: &\phi_1^a \cap \phi_2^a = \emptyset\end{array} \right.
+\end{align}
+
+For example, $d_\textrm{seq}$(ACGU, SSWW) = 2. If $\phi_1$ and $\phi_2$ contain no degenerate nucleotide codes, this definition simplifies to the number of nucleotides that are different in the two sequences:
 
 \begin{align}
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a = \phi_2^a\\ 1: &\phi_1^a \neq \phi_2^a \end{array} \right.
 \end{align}
+
+For example, $d_\textrm{seq}$(ACGU, ACUU) = 1. 
 
 <hr>
 
@@ -25,36 +53,44 @@ d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0
 A **secondary structure**, $s$, of one or more interacting RNA strands is defined by a set of base pairs, each a Watson--Crick pair \[A$\cdot$U or C$\cdot$G\] or a wobble pair \[G$\cdot$U\]). For DNA, the corresponding Watson--Crick pairs are A$\cdot$T or C$\cdot$G and there are no wobble pairs.
 A **polymer graph** representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5$'$ to 3$'$ around the circumference with a *nick* between each strand, and drawing straight lines connecting paired bases.
 A secondary structure is **unpseudoknotted** if there exists a strand ordering for which the polymer graph has no crossing lines, or **pseudoknotted** if all strand orderings contain crossing lines. In NUPACK 4, pseudoknots are excluded from the structural ensemble.
-A secondary structure is **connected** if no subset of the strands is free of the others.
+A secondary structure is **connected** if no subset of the strands is free of the others. Secondary structures may be specified one of three ways for NUPACK calculations as described in the following three sections.
 
-Secondary structures may be specified one of three ways for NUPACK calculations:
+### Dot-parens-plus notation
+Each unpaired base is represented by a dot, each base pair by matching parentheses, and each nick between strands by a plus [@Zadeh11a]. For example, `((...))` specifies that bases 0 and 1 are paired to bases 6 and 5, respectively, while bases 2, 3, and 4 are unpaired. `((+...))` specifies that bases 0 and 1 of strand 0 are paired to bases 4 and 3 of strand 1.
 
-- **dot-parens-plus notation**: Each unpaired base is represented by a dot, each base pair by matching parentheses, and each nick between strands by a plus [@Zadeh11a]. For example, `((...))` specifies that bases 0 and 1 are paired to bases 6 and 5, respectively, while bases 2, 3, and 4 are unpaired. `((+...))` specifies that bases 0 and 1 of strand 0 are paired to bases 4 and 3 of strand 1.
+### Run-length encoded dot-parens-plus notation
+As a shorthand for dot-parens-plus, any sequence of consecutive characters in dot-parens-plus may be replaced by the character followed by a number. For instance, `(((((+...........)))))`  may be written as `(5+.11)5`.
 
-- **run-length encoded dot-parens-plus notation**: As a shorthand for dot-parens-plus, any sequence of consecutive characters in dot-parens-plus may be replaced by the character followed by a number. For instance, `(((((+...........)))))`  may be written as `(5+.11)5`.
-
-- **DU+ notation**: Using DU+ notation, a duplex is represented by `D` and an unpaired region of length nucleotides is represented by `U` [@Zadeh10c]. Each duplex is followed immediately by the substructure (specified in DU+ notation) that is 'enclosed' by the duplex. If this substructure includes more than one element, parentheses are used to denote scope. A nick between strands is specified by a '+'. See the table below for examples.
+### DU+ notation
+Using DU+ notation, a duplex is represented by `D` and an unpaired region of length nucleotides is represented by `U` [@Zadeh10c]. Each duplex is followed immediately by the substructure (specified in DU+ notation) that is 'enclosed' by the duplex. If this substructure includes more than one element, parentheses are used to denote scope. A nick between strands is specified by a '+'. See the table below for examples.
 
 
 <!-- 4. **pair list notation**: A list of zero-based indices $p$ such that if $p_i = j$, bases $i$ and $j$ are paired, and if $p_i = i$, base $i$ is unpaired. Any secondary structure, including highly-nested pseudoknots, may be specified in this way. -->
 
-| Dot-parens-plus                       | RLE dot-parens-plus  | DU+ notation |
-| ------------------------------------- | -------------------  | ------------ |
-| `((((((((((((..........))))))))))))`  |  `(12.10)12`         | `D12 U10`    |
-| `((((((((((((+))))))))))))..........` |  `(12+)12.10`        | `D12 + U10`  |
-| `((((((((((((+..........))))))))))))` |  `(12+.10)12`        |`D12 (+ U10)` |
+!!! Example  
+    <center>
 
-<p style="text-align:center;"><b>Table</b>: Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation.</p>
+    | Dot-parens-plus                       | RLE dot-parens-plus  | DU+ notation |
+    | ------------------------------------- | -------------------  | ------------ |
+    | `((((((((((((..........))))))))))))`  |  `(12.10)12`         | `D12 U10`    |
+    | `((((((((((((+))))))))))))..........` |  `(12+)12.10`        | `D12 + U10`  |
+    | `((((((((((((+..........))))))))))))` |  `(12+.10)12`        |`D12 (+ U10)` |
+    
+    </center>
 
-<p align="center">
-<img src="/figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
-</p>
+    <p style="text-align:center;"><b>Table</b>: Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation.</p>
 
-<p style="text-align:center;"><b>Figure</b>: Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.</p>
+!!! Example  
+    <p align="center">
+    <img src="/figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
+    </p>
 
+    <p style="text-align:center;"><b>Figure</b>: Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.</p>
 
+### Structure matrix
 In mathematical expressions, it is convenient to represent secondary structure $s$ using a **structure matrix** $S(s)$ with entries $S^{a,b}(s) = 1$ if structure $s$ contains base pair $a\cdot b$ and $S^{a,b}(s) = 0$ otherwise. Abusing notation, the entry $S^{a,a}(s) = 1$ if base $a$ is unpaired in structure $s$ and $0$ otherwise. Hence, $S(s)$ is a symmetric matrix with row and column sums of 1.
 
+### Structure distance
 The **structure distance** between two secondary structures $s_1$ and $s_2$ of equal size ($|s_1|=|s_2|=N$) is the number of nucleotides in a different base-pairing state in the two structures:
 \begin{align}
 d_\textrm{struc}(s_1,s_2)=N-\sum_{1\le a\le N,~1\le b \le N} S_{a,b}(s_1)S_{a,b}(s_2)
@@ -564,25 +600,6 @@ To prioritize or de-prioritize design quality for a portion of the design ensemb
 With the default value of unity for all weights, $\mathcal{M}_\mathcal{W}$ is simply the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect), $\mathcal{M}$.
 With custom defect weights in the range $[0,\infty)$, the physical meaning of
 the objective function is distorted in the service of adjusting design priorities. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity.
-
-### Degenerate nucleotide codes
-Sequence constraints can be specified using IUPAC degenerate nucleotide codes, which for RNA are as follows:
-
-Code | Nucleotides
------|------------
-  M  | A or C
-  R  | A or G
-  W  | A or U
-  S  | C or G
-  Y  | C or U
-  K  | G or U
-  V  | A, C, or G
-  H  | A, C, or U
-  D  | A, G, or U
-  B  | C, G, or U
-  N  | A, C, G, or U
-
-  For DNA, T replaces U.
 
 ### Hard constraints
 Sequence design can be performed subject to **hard constraints** that prohibit sequences violating the constraints.
