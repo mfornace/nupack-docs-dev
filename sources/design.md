@@ -137,21 +137,20 @@ C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)
 
 ## Specify a target tube
 
-A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `on_targets`; units of `M`). Off-target complexes (keyword `off_targets`: defaults to none) can be specified using `SetSpec()` in any of three ways: 
+A `TargetTube` is specified as a tube name (keyword `name`) and a set of on-target complexes each with a target concentration (keyword `on_targets`; units of `M`). Off-target complexes (keyword `off_targets`: defaults to none) can be specified using `SetSpec()` in any of three ways:
 
 - Combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`).
-- Using keyword `include` to include an explicitly specified set of complexes (default: `None`). 
+- Using keyword `include` to include an explicitly specified set of complexes (default: `None`).
 - Using keyword `exclude` to exclude an explicitly specified set of complexes (default: `None`).
 
-For example: 
+For example:
 
 ```python
-t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, 
-    off_targets=SetSpec(max_size=3, include=[[B, B, B, B]], exclude=[C4]), 
-    name='t1')
+t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, name='t1',
+    off_targets=SetSpec(max_size=3, include=[[B, B, B, B]], exclude=[C4]))
 ```
 
-If desired, the on-target and off-target sets for a specified `TargetTube` can be queried as follows: 
+If desired, the on-target and off-target sets for a specified `TargetTube` can be queried as follows:
 
 ```python
 print(t1.on_targets)  # --> {<TargetComplex AB>: 1e-08}
@@ -887,7 +886,7 @@ A = TargetStrand([a], name='A')
 B = TargetStrand([~a], name='B')
 C = TargetComplex([A, B], '(20+)20', name='C')
 
-tube1 = TargetTube({C: 1e-6}, max_size=2, name='tube1')
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 
 soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
 hard = [Diversity(word=4, types=2, scope=[a])]
@@ -967,7 +966,7 @@ A `DesignResult` object allows programmatic access via several fields:
 - `.to_analysis`: a mapping from an object to be designed (`Domain`, `TargetStrand`, `TargetComplex`, `TargetTube`) specified in terms of [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to the corresponding object containing the designed sequences (`Domain`, `Strand`, `Complex`, `Tube`). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of `Domain` which is not used for analysis jobs).
 - `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
-- `.analysis`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
+- `.analysis_result`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
 
 Fields may be displayed individually, for example:
 
@@ -996,7 +995,7 @@ Output:
 > <img src="/figs/design-output-concentrations.png" alt="Design output" title="Example design output" width="630" />
 
 ```python
-my_result.analysis
+my_result.analysis_result
 ```
 
 Output:
@@ -1021,26 +1020,27 @@ print(my_result.defects.tube_complexes)  # --> each on-target in each tube
 
 Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s. For convenience, these tables contain Python objects and the corresponding object name (e.g., `tube` object and corresponding `tube_name` string).
 
+
 ### Evaluate a design
 
 The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)), for example:
 
 ```python
-dl1 = Domain('GCACATTGAGCAGCAGACAGGTTTTGAGTTGGGGTGGTTGGTA', name='dl1')
-dl2 = Domain('GTGGTGTTGATGGGAGTTTGTTGCTGTCTGCTGCTCAATGTGC', name='dl2')
+a = Domain('CAGATAAGAACTGAGTAAGC', name='a')
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
+C = TargetComplex([A, B], '(20+)20', name='C')
 
-sl1 = TargetStrand([dl1], name='sl1')
-sl2 = TargetStrand([dl2], name='sl2')
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 
-dimer = TargetComplex([sl1, sl2], '(20.23+.23)20', name='dimer')
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+hard = [Diversity(word=4, types=2, scope=[a])]
 
-tube = TargetTube({dimer: 1e-06}, max_size=2, name='tube')
-
-tube_des = tube_design([tube], model=Model(material='dna'))
-my_evaluated_result = tube_des.evaluate()
+my_evaluated_design = tube_design([tube1], model=Model(), soft_constraints=soft, hard_constraints=hard)
+my_evaluated_result = my_evaluated_design.evaluate()
 ```
 
-An error will be returned if any domain contains nucleotides other than `ACGTU`. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
+An exception will be raised if any domain contains nucleotides other than `ACGTU`, or if the hard constraints are incompatible with the given domains. Just as for any `DesignResult` object, a convenient results table can be displayed in a Jupyter notebook:
 
 ```python
 my_evaluated_result
@@ -1052,7 +1052,7 @@ Output:
 
 !!! Note
 
-    Consider using the `evaluate()` method an RNA design that was performed with `wobble_mutations` enabled and that uses both domain `a` and the reverse complement domain `~a` in the specification of the design ensemble. Then the definition of the reverse complement domain `~a` is not fully defined since a G in domain `a` could be paired to either a C or a U in the final designed version of `~a`. This ambiguity can be overcome by manually defining `~a` using the `complement` keyword: 
+    Consider using the `evaluate()` method an RNA design that was performed with `wobble_mutations` enabled and that uses both domain `a` and the reverse complement domain `~a` in the specification of the design ensemble. Then the definition of the reverse complement domain `~a` is not fully defined since a G in domain `a` could be paired to either a C or a U in the final designed version of `~a`. This ambiguity can be overcome by manually defining `~a` using the `complement` keyword:
 
     ```python
     h = Domain('GGGG', name='h')
@@ -1061,11 +1061,27 @@ Output:
     i = Domain('GGGG', name='i', complement='CUUC')
     print(~i) # --> CUUC
     ```
-    The `evaluate()` method will return a warning if `wobble_mutations` are active and a reverse complement domain has not been manually defined. 
+
+    The `evaluate()` method will raise an exception if `wobble_mutations` are active and a reverse complement domain has not been manually defined. A working design evaluation may be used as in the following example, where the domains are specified with the `complement` keyword.
+
+    ```python
+    a = Domain('CAGAUAAGAACUGAGUAAGC', complement='GCTTAUTCAGUUCUUATCTG', name='a')
+    A = TargetStrand([a], name='A')
+    B = TargetStrand([~a], name='B')
+    C = TargetComplex([A, B], '(20+)20', name='C')
+
+    tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
+
+    soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+    hard = [Diversity(word=4, types=2, scope=[a])]
+
+    wobble_design = tube_design([tube1], model=Model(), soft_constraints=soft, hard_constraints=hard, wobble_mutations=True)
+    wobble_result = wobble_design.evaluate()
+    ```
 
 ### Evaluate a design using a different model, soft constraints, and/or defect weights
 
-A `DesignResult` object can be evaluted using any a different free energy model, different soft constraints, and/or different defect weights using the `evaluate_with` method:
+A `DesignResult` object can be evaluated using modified domains, a different free energy model, different soft constraints, and/or different defect weights using the `evaluate_with` method:
 
 ```python
 # Evaluate the result with a different free energy model
@@ -1080,25 +1096,29 @@ my_result.evaluate_with(model=new_model, soft_constraints=new_soft)
 new_weights = Weights([tube1])
 new_weights[:, :, A] *= 10
 my_result.evaluate_with(defect_weights=new_weights)
+
+# Evaluate the result with a different model and different domains
+new_domains = [Domain('CAGAUAAGAACUGAGUAAGC', name='a')]
+my_result.evaluate_with(domains=new_domains, model=new_model)
 ```
 
 ### Analyze additional physical quantities for a designed ensemble
 
-To analyze additional physical quantities for a designed ensemble (e.g., the MFE structure of each designed on-target complex), use the 
+To analyze additional physical quantities for a designed ensemble (e.g., the MFE structure of each designed on-target complex), use the
 `to_analysis()` method to make a version of the design ensemble containing designed sequences and then run a [test tube analysis job](analysis.md#run-a-test-tube-analysis-job) or [complex analysis job](analysis.md#run-a-complex-analysis-job) as desired. For example:
 
 ```python
 # Tube object based on TargetTube with designed sequences
-t1_designed = my_result.to_analysis(tube1) 
+t1_designed = my_result.to_analysis(tube1)
 
 # Calculate the MFE structure for each on-target complex in the design ensemble
-tube_results = complex_analysis(tubes=[t1_designed], compute=['mfe'], model=my_model)
+tube_results = complex_analysis(t1_designed, compute=['mfe'], model=my_model)
 ```
 
 ### Analyze a designed ensemble using different strand concentrations
 
-To re-analyze designed sequences using strand concentrations that differ from those in the design ensemble, use the 
-`to_analysis()` method to make a version of the design ensemble containing designed sequences, and 
+To re-analyze designed sequences using strand concentrations that differ from those in the design ensemble, use the
+`to_analysis()` method to make a version of the design ensemble containing designed sequences, and
 use the `analysis_result` field to supply an `AnalysisResult` object to run a [complex concentrations job](analysis.md#run-a-complex-concentrations-job):
 
 ```python

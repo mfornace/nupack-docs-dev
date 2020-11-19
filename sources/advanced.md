@@ -106,11 +106,14 @@ for i in range(systems):
     A_toe  = TargetComplex([A_toe_s],   'U8', name=['A_toe', i])
 
     # on-target tubes
-    Step_0 = TargetTube({C: 1e-08, X: 1e-08, A_B: 1e-08}, max_size=2, include=[[A_s], [B_s]], exclude=[X_A], name=['Step_0', i])
+    Step_0 = TargetTube({C: 1e-08, X: 1e-08, A_B: 1e-08}, name=['Step_0', i],
+        off_targets=SetSpec(max_size=2, include=[[A_s], [B_s]], exclude=[X_A]))
 
-    Step_1 = TargetTube({X_A: 1e-08, B: 1e-08}, max_size=2, include=[X, A_B], name=['Step_1', i])
+    Step_1 = TargetTube({X_A: 1e-08, B: 1e-08}, name=['Step_1', i],
+        off_targets=SetSpec(max_size=2, include=[X, A_B]))
 
-    Step_2 = TargetTube({B_C: 1e-08}, max_size=2, include=[B, C], name=['Step_2', i])
+    Step_2 = TargetTube({B_C: 1e-08}, name=['Step_2', i],
+        off_targets=SetSpec(max_size=2, include=[B, C]))
 
     # Crosstalk tube elements
     crosstalkTargets.update({
@@ -128,7 +131,8 @@ for i in range(systems):
     # Add tubes
     tubes += [Step_0, Step_1, Step_2]
 
-crosstalk = TargetTube(crosstalkTargets, max_size=2, exclude=crosstalkExcludes, name='crosstalk')
+crosstalk = TargetTube(crosstalkTargets, name='crosstalk',
+    off_targets=SetSpec(max_size=2, exclude=crosstalkExcludes))
 tubes.append(crosstalk)
 ```
 

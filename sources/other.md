@@ -2,23 +2,23 @@
 If `complexes` is not specified, all three defaults are used (i.e., the set of complexes is simply the set of strands).
 
 
-Note that `ComplexSet` defines a set of complexes (all complexes of up to `max_size=3` strands) but omits optional concentrations for strands `a` and `b` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. 
+Note that `ComplexSet` defines a set of complexes (all complexes of up to `max_size=3` strands) but omits optional concentrations for strands `a` and `b` since `complex_analysis` does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species.
 
 Multiple `Tube`s may be combined additively using the class method `union`:
 
-```python
+``` python
 Tube.union([t1, t2])
 ```
 
 To obtain a `ComplexSet` taking a union of all complexes over a set of tubes, use the class method `union` of `ComplexSet`. The `Tube` class derives from `ComplexSet`.
 
-```python
+``` python
 ComplexSet.union([t1, t2])
 ```
 
 Multiple `ComplexSet`s may be combined using the class method `union`:
 
-```python
+``` python
 my_complexes2 = ComplexSet(strands=[A, C], max_size=4)
 ComplexSet.union([my_complexes, my_complexes2])
 ```
