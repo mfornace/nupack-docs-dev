@@ -1084,6 +1084,18 @@ Output:
 A `DesignResult` object can be evaluated using modified domains, a different free energy model, different soft constraints, and/or different defect weights using the `evaluate_with` method:
 
 ```python
+a = Domain('N20', name='a')
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
+C = TargetComplex([A, B], '(20+)20', name='C')
+
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
+
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+
+my_design = tube_design([tube1], model=Model(), soft_constraints=soft)
+my_result = my_design.run(trials=1)[0]
+
 # Evaluate the result with a different free energy model
 new_model = Model(celsius=40)
 my_result.evaluate_with(model=new_model)
