@@ -43,21 +43,21 @@ NUPACK capabilities are presented in three categories:
 	```python
 	from nupack import *
 	```
-	
+
 	[Specify a physical model](model.md)
 	```python
 	model1 = Model(material='rna', celsius=37)
 	```
 
 	[Analyze a test tube](analysis.md)
-	
+
 	```python
 	# specify strands
 	A = Strand('CTGATCGAT', name='Strand A')
 	B = Strand('GATCGTAGTC', name='Strand B')
 
-	# specify tube 
-	t1 = Tube(strands={A: 1e-8, B: 1e-9}, 
+	# specify tube
+	t1 = Tube(strands={A: 1e-8, B: 1e-9},
 		complexes=SetSpec(max_size=2), name='Tube 1') # all complexes of up to 2 strands
 
 	# run tube analysis job
@@ -67,29 +67,28 @@ NUPACK capabilities are presented in three categories:
 	[Design a test tube](design.md)
 
 	```python
-	# specify domains
 	a = Domain('A4', name='Domain a')
 	b = Domain('N10', name='Domain b') # equivalent sequence specification
-	c = Domain('RRSSAAACCA', name='Domain c')
+	c = Domain('R5N5', name='Domain c')
 
 	# specify target strands
 	A = TargetStrand([a, a, b], name='Strand A')
-	B = TargetStrand([b, ~c], name='Strand B')  # ~e denotes the reverse complement of e
-	C = TargetStrand([c, a, c], name='Strand C')
+	B = TargetStrand([~b, ~c], name='Strand B')  # ~e denotes the reverse complement of e
+	C = TargetStrand([c], name='Strand C')
 
-	# specify target complexes 
-	C1 = TargetComplex([A, B, C], '.8(10+)10(10+)10.14', name='Complex C1')
-	C2 = TargetComplex([B, C], '.10(10+)10.14', name='Complex C2')
+	# specify target complexes
+	C1 = TargetComplex([A, B, C], '.8(10+)10(10+)10', name='Complex C1')
+	C2 = TargetComplex([B, C], '.10(10+)10', name='Complex C2')
 
 	# specify target tube
-	tt1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, 
-    	off_targets=SetSpec(max_size=3),  # all off-target complexes of up to 3 strands
-		name='TargetTube 1') 
+	tt1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8},
+		off_targets=SetSpec(max_size=3),  # all off-target complexes of up to 3 strands
+		name='TargetTube 1')
 
-	# specify tube design problem 
+	# specify tube design problem
 	my_des = tube_design(tubes=[tt1],
-    	hard_constraints=[], soft_constraints=[],
-    	defect_weights=None, options=None, model=model1)
+		hard_constraints=[], soft_constraints=[],
+		defect_weights=None, options=None, model=model1)
 
 	# run tube design job
 	des_results = my_des.run(trials=3) # run 3 independent design trials

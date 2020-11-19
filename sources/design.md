@@ -32,8 +32,8 @@ a = Domain('AAAA',       name='a')
 b = Domain('A4',         name='b') # equivalent sequence specification
 c = Domain('NNNNNNNNNN', name='c')
 d = Domain('N10',        name='d') # equivalent sequence specification
-e = Domain('RRSSAAACCA', name='e')
-f = Domain('R2S2A3C2A',  name='f') # equivalent sequence specification
+e = Domain('RRRRRNNNNN', name='e')
+f = Domain('R5N5',       name='f') # equivalent sequence specification
 g = Domain('N10',        name='g')
 ```
 
@@ -1036,7 +1036,7 @@ tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
 hard = [Diversity(word=4, types=2, scope=[a])]
 
-my_evaluated_design = tube_design([tube1], model=Model(), 
+my_evaluated_design = tube_design([tube1], model=Model(),
     soft_constraints=soft, hard_constraints=hard)
 my_evaluated_result = my_evaluated_design.evaluate()
 ```
@@ -1063,7 +1063,7 @@ Output:
     print(~i) # --> CUUC
     ```
 
-    The `evaluate()` method will raise an exception if `wobble_mutations` are active and a reverse complement domain has not been manually defined. The following example demonstrates use of the `complement` keyword to enable evaluation of a design performed with `wobble_mutations` enabled: 
+    The `evaluate()` method will raise an exception if `wobble_mutations` are active and a reverse complement domain has not been manually defined. The following example demonstrates use of the `complement` keyword to enable evaluation of a design performed with `wobble_mutations` enabled:
 
     ```python
     a = Domain('CAGAUAAGAACUGAGUAAGC', complement='GCUUAUUCAGUUCUUAUCUG', name='a')
@@ -1076,7 +1076,7 @@ Output:
     soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
     hard = [Diversity(word=4, types=2, scope=[a])]
 
-    wobble_design = tube_design([tube1], model=Model(material='rna'), 
+    wobble_design = tube_design([tube1], model=Model(material='rna'),
         soft_constraints=soft, hard_constraints=hard, wobble_mutations=True)
     wobble_result = wobble_design.evaluate()
     ```
