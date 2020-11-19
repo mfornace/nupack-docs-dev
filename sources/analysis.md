@@ -153,7 +153,7 @@ Note that `pairs` and `sample` results are too large to be included in the summa
 
 ## Specify a set of complexes
 
-A `ComplexSet` is specified as a set of strands (keyword `strands`) that interact to form a set of complexes (keyword `complexes`: defaults to the strand set). The set of complexes is optionally specified using `SetSpec()` in any of three ways:
+A `ComplexSet` is specified as a set of strands (keyword `strands`) that interact to form a set of complexes (keyword `complexes`: defaults to the strand set). The set of complexes is optionally specified using `SetSpec()` in any of three ways: 
 
 - Combinatorially using keyword `max_size` to automatically generate the set of all complexes up to a specified number of strands (default: `max_size=1`).
 - Using keyword `include` to include an explicitly specified set of complexes (default: `None`).
