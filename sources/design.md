@@ -1036,7 +1036,8 @@ tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
 hard = [Diversity(word=4, types=2, scope=[a])]
 
-my_evaluated_design = tube_design([tube1], model=Model(), soft_constraints=soft, hard_constraints=hard)
+my_evaluated_design = tube_design([tube1], model=Model(), 
+    soft_constraints=soft, hard_constraints=hard)
 my_evaluated_result = my_evaluated_design.evaluate()
 ```
 
@@ -1052,7 +1053,7 @@ Output:
 
 !!! Note
 
-    Consider using the `evaluate()` method an RNA design that was performed with `wobble_mutations` enabled and that uses both domain `a` and the reverse complement domain `~a` in the specification of the design ensemble. Then the definition of the reverse complement domain `~a` is not fully defined since a G in domain `a` could be paired to either a C or a U in the final designed version of `~a`. This ambiguity can be overcome by manually defining `~a` using the `complement` keyword:
+    Consider using the `evaluate()` method on an RNA design that was performed with `wobble_mutations` enabled and that uses both domain `a` and the reverse complement domain `~a` in the specification of the design ensemble. Then the definition of the reverse complement domain `~a` is not fully defined since a G in domain `a` could be paired to either a C or a U in the final designed version of `~a`. This ambiguity can be overcome by manually defining `~a` using the `complement` keyword:
 
     ```python
     h = Domain('GGGG', name='h')
@@ -1062,10 +1063,10 @@ Output:
     print(~i) # --> CUUC
     ```
 
-    The `evaluate()` method will raise an exception if `wobble_mutations` are active and a reverse complement domain has not been manually defined. A working design evaluation may be used as in the following example, where the domains are specified with the `complement` keyword.
+    The `evaluate()` method will raise an exception if `wobble_mutations` are active and a reverse complement domain has not been manually defined. The following example demonstrates use of the `complement` keyword to enable evaluation of a design performed with `wobble_mutations` enabled: 
 
     ```python
-    a = Domain('CAGAUAAGAACUGAGUAAGC', complement='GCTTAUTCAGUUCUUATCTG', name='a')
+    a = Domain('CAGAUAAGAACUGAGUAAGC', complement='GCUUAUUCAGUUCUUAUCUG', name='a')
     A = TargetStrand([a], name='A')
     B = TargetStrand([~a], name='B')
     C = TargetComplex([A, B], '(20+)20', name='C')
@@ -1075,11 +1076,12 @@ Output:
     soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
     hard = [Diversity(word=4, types=2, scope=[a])]
 
-    wobble_design = tube_design([tube1], model=Model(), soft_constraints=soft, hard_constraints=hard, wobble_mutations=True)
+    wobble_design = tube_design([tube1], model=Model(material='rna'), 
+        soft_constraints=soft, hard_constraints=hard, wobble_mutations=True)
     wobble_result = wobble_design.evaluate()
     ```
 
-### Evaluate a design using a different model, soft constraints, and/or defect weights
+### Evaluate a design using a different model, soft constraints, defect weights, and/or domains
 
 A `DesignResult` object can be evaluated using modified domains, a different free energy model, different soft constraints, and/or different defect weights using the `evaluate_with` method:
 
@@ -1096,11 +1098,11 @@ soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
 my_design = tube_design([tube1], model=Model(), soft_constraints=soft)
 my_result = my_design.run(trials=1)[0]
 
-# Evaluate the result with a different free energy model
+# Evaluate the result with a different model
 new_model = Model(celsius=40)
 my_result.evaluate_with(model=new_model)
 
-# Evaluate the result with a different free energy model and soft constraints
+# Evaluate the result with a different model and soft constraints
 new_soft = [Similarity([a], 'G20', limits=[0.4,0.6], weight=0.5)]
 my_result.evaluate_with(model=new_model, soft_constraints=new_soft)
 
@@ -1109,7 +1111,7 @@ new_weights = Weights([tube1])
 new_weights[:, :, A] *= 10
 my_result.evaluate_with(defect_weights=new_weights)
 
-# Evaluate the result with a different model and different domains
+# Evaluate the result with a different model and domains
 new_domains = [Domain('CAGAUAAGAACUGAGUAAGC', name='a')]
 my_result.evaluate_with(domains=new_domains, model=new_model)
 ```
