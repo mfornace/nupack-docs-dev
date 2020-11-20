@@ -397,7 +397,7 @@ You can index into `AnalysisResult` object via either a `Complex` object or a co
 For example, we can index the `AnalysisResult` object `my_result` with complex `c` to obtain a `ComplexResult` object `c_result` that enables printing of specific physical quantities for that complex:
 
 ```python
-c_result = my_result[c]
+c_result = my_result[c] # same as my_result['c']
 print('Physical quantities for complex c')
 print('Complex free energy: %.2f kcal/mol' % c_result.free_energy)
 print('Partition function: %.2e' % c_result.pfunc)
@@ -526,7 +526,7 @@ You can index into an `AnalysisResult` object via either a `Tube` object or a tu
 Concentrations may be printed as follows:
 
 ```python
-t1_result = my_result[t1]
+t1_result = my_result[t1] # same as my_result['t1']
 for my_complex, conc in t1_result.complex_concentrations.items():
     print('The equilibrium concentration of %s is %.3e M' % (my_complex.name, conc))
 ```
