@@ -442,10 +442,9 @@ MFE proxy structure:
  [1 0 0 0 0 0]]
 ```
 
-The equilibrium pair probability matrix can be easily displayed visually inside a Jupyter notebook, for example:
+The equilibrium pair probability matrix is returned as a `PairMatrix`, which for most use-cases may be converted into a full `numpy` array via the `to_array()` method or to a sparse `scipy` matrix via the `to_sparse()` method. It can be easily displayed visually inside a Jupyter notebook using the `to_array()` method, for example:
 
 ```python
-%matplotlib inline
 import matplotlib.pyplot as plt
 
 plt.imshow(my_result[c].pairs.to_array())
@@ -460,6 +459,8 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 Output:
 
 > <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="400" />
+
+Note that some users may need to include `%matplotlib inline` at the top of their notebook for the plot to appear.
 
 ---
 
