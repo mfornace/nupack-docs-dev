@@ -373,12 +373,12 @@ The information contained in these two fields depends on which type of analysis 
 - For [`complex_analysis`](#run-a-complex-analysis-job), only the `.complexes` field is non-empty.
 - For [`complex_concentrations`](#run-a-complex-concentration-job), only the `.tubes` field is non-empty.
 
-For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` as described in the following two sections.
+For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` as described in the following two sections. You may also index using just the name of the `Complex` or `Tube` instead.
 
 
 ### Results for individual complexes
 
-You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResult` object containing all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
+You can index into `AnalysisResult` object via either a `Complex` object or a complex name to get a `ComplexResult` object. This contains all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
 
 - `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
@@ -518,7 +518,7 @@ The equilibrium concentration of [b] is 1.00e-09 M
 
 ### Results for individual test tubes
 
-You can index into an `AnalysisResult` object via a `Tube` to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+You can index into an `AnalysisResult` object via either a `Tube` object or a tube name. This will return a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar (held as a `float`).
 - `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indices refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
@@ -534,9 +534,9 @@ for my_complex, conc in t1_result.complex_concentrations.items():
 Output:
 
 ```
-The equilibrium concentration of [a] is 1.00e-06 M
-The equilibrium concentration of [a+b] is 8.21e-14 M
-The equilibrium concentration of [b] is 1.00e-09 M
+The equilibrium concentration of (a) is 1.00e-06 M
+The equilibrium concentration of (a+b) is 8.21e-14 M
+The equilibrium concentration of (b) is 1.00e-09 M
 ```
 
 Test tube ensemble pair fractions may be printed as follows:
