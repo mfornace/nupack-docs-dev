@@ -776,35 +776,45 @@ my_tubes = [t1, t2]
 weights = Weights(my_tubes) # All weights are initialized to 1
 ```
 
-The weights are initialized to 1, but can be customized to take any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: TargetTube, TargetComplex, TargetStrand, Domain). For example:
+The weights are initialized to 1, but can be customized to take any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: Domain, TargetStrand, TargetComplex, TargetTube). For example:
 
 ```python
 # weight on domain a1
-weights[:, :, :, a1] *= 2
+weights[a1] *= 2
 
 # weight on target strand A
-weights[:, :, A] = 4
+weights[:, A] = 4
 
 # weight on tube t2
-weights[t2] = 2
+weights[:, :, :, t2] = 2
 
 # weight on target complex AB in tube t1
-weights[t1, AB] = 5
+weights[:, :, AB, t1] = 5
 
 # weight on domain a2 in target strand A in all target complexes in all tubes
-weights[:, :, A, a2] = 0.75
+weights[a2, A, :, :] = 0.75
 
 # weight on domain a1 in all target strands in target complex AA in tube t2
-weights[t2, AA, :, a1] = 0.5
+weights[a1, :, AA, t2] = 0.5
 
 # weight on domain b in all target strands and target complexes in tube t2
-weights[t2, :, :, b] = 3
+weights[b, :, :, t2] = 3
 
 # global weight on the entire multi-tube ensemble defect
 weights[:,:,:,:] *=2
 ```
 !!! Note
     Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.
+
+In a complex design, a `Weights` object may be initialized for just a list of complexes. The fourth axis (tube) is then absent:
+
+```python
+complex_weights = Weights([AA, AB])
+
+complex_weights[a1] *= 2
+complex_weights[:, A] = 4
+complex_weights[a2, A, AA] = 0.75
+```
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 
@@ -1108,7 +1118,7 @@ my_result.evaluate_with(model=new_model, soft_constraints=new_soft)
 
 # Evaluate the result with different defect weights
 new_weights = Weights([tube1])
-new_weights[:, :, A] *= 10
+new_weights[:, A] *= 10
 my_result.evaluate_with(defect_weights=new_weights)
 
 # Evaluate the result with a different model and domains

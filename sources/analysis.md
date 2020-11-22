@@ -43,6 +43,16 @@ c3 = Complex([A, A], name='AA')
 !!! Note
     Commands that expect a `Complex` as an argument (e.g., `c2`) will alternatively accept a strand ordering (e.g.,`[A, B, B, C]`). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., `Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])`).
 
+In certain cases, it may be desirable to adjust the free energy of a complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):
+
+```python
+# destabilize c4 by 1 kcal/mol
+c4 = Complex([A, B, C], name='ABC', bonus=+1.0)
+
+# stabilize c5 by 10 kcal/mol
+c5 = Complex([A, B], name='AB', bonus=-10.0)
+```
+
 Additional fields and methods are available for a `Complex` object:
 
 - `.strands`: a tuple of strands
@@ -363,12 +373,12 @@ The information contained in these two fields depends on which type of analysis 
 - For [`complex_analysis`](#run-a-complex-analysis-job), only the `.complexes` field is non-empty.
 - For [`complex_concentrations`](#run-a-complex-concentration-job), only the `.tubes` field is non-empty.
 
-For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` as described in the following two sections.
+For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` as described in the following two sections. You may also index using just the name of the `Complex` or `Tube` instead.
 
 
 ### Results for individual complexes
 
-You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResult` object containing all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
+You can index into `AnalysisResult` object via either a `Complex` object or a complex name to get a `ComplexResult` object. This contains all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
 
 - `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
@@ -387,7 +397,7 @@ You can index into `AnalysisResult` object via a `Complex` to get a `ComplexResu
 For example, we can index the `AnalysisResult` object `my_result` with complex `c` to obtain a `ComplexResult` object `c_result` that enables printing of specific physical quantities for that complex:
 
 ```python
-c_result = my_result[c]
+c_result = my_result[c] # same as my_result['c']
 print('Physical quantities for complex c')
 print('Complex free energy: %.2f kcal/mol' % c_result.free_energy)
 print('Partition function: %.2e' % c_result.pfunc)
@@ -432,10 +442,9 @@ MFE proxy structure:
  [1 0 0 0 0 0]]
 ```
 
-The equilibrium pair probability matrix can be easily displayed visually inside a Jupyter notebook, for example:
+The equilibrium pair probability matrix is returned as a `PairMatrix`, which for most use-cases may be converted into a full `numpy` array via the `to_array()` method or to a sparse `scipy` matrix via the `to_sparse()` method. It can be easily displayed visually inside a Jupyter notebook using the `to_array()` method, for example:
 
 ```python
-%matplotlib inline
 import matplotlib.pyplot as plt
 
 plt.imshow(my_result[c].pairs.to_array())
@@ -450,6 +459,8 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 Output:
 
 > <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="400" />
+
+Note that some users may need to include `%matplotlib inline` at the top of their notebook for the plot to appear.
 
 ---
 
@@ -507,7 +518,7 @@ The equilibrium concentration of [b] is 1.00e-09 M
 
 ### Results for individual test tubes
 
-You can index into an `AnalysisResult` object via a `Tube` to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+You can index into an `AnalysisResult` object via either a `Tube` object or a tube name. This will return a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar (held as a `float`).
 - `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indices refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
@@ -515,7 +526,7 @@ You can index into an `AnalysisResult` object via a `Tube` to get a `TubeResult`
 Concentrations may be printed as follows:
 
 ```python
-t1_result = my_result[t1]
+t1_result = my_result[t1] # same as my_result['t1']
 for my_complex, conc in t1_result.complex_concentrations.items():
     print('The equilibrium concentration of %s is %.3e M' % (my_complex.name, conc))
 ```
@@ -523,9 +534,9 @@ for my_complex, conc in t1_result.complex_concentrations.items():
 Output:
 
 ```
-The equilibrium concentration of [a] is 1.00e-06 M
-The equilibrium concentration of [a+b] is 8.21e-14 M
-The equilibrium concentration of [b] is 1.00e-09 M
+The equilibrium concentration of (a) is 1.00e-06 M
+The equilibrium concentration of (a+b) is 8.21e-14 M
+The equilibrium concentration of (b) is 1.00e-09 M
 ```
 
 Test tube ensemble pair fractions may be printed as follows:
