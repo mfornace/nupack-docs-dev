@@ -1,16 +1,49 @@
 # Getting Started
 
-## Example notebooks
+## Example Jupyter notebooks
 
-Here, we provide Jupyter notebooks for a variety of examples that that can be downloaded for interactive use:
+Here, we provide Jupyter notebooks for a variety of examples that that can be downloaded for interactive use.
 
-- Complex analysis: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb)
-- Tube analysis: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb)
-- Complex design: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb), [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb)
-- Tube design: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb), [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb)
-- Multitube design: [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb), [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb)
+
+!!! Note
+
+    Note that each Jupyter notebook starts by loading the NUPACK Python module: 
+
+    ```python
+    from nupack import *
+    ```
+
+
+### Analysis examples
+Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence analysis tools](analysis.md).
+
+- Analyze 2 strands in a test tube containing all complexes of up to 4 strands ([simple example](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)). 
+
+     
+
+- [Advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb)
+
+### Design examples
+Design the the sequences for one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence design tools](design.md).
+
+- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb) 
+- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb)
 - [Converting NUPACK 3 input files into NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
 
+- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)
+- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb)
+- [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb)
+
+- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)
+- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb)
+- [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb)
+
+
+### Utilities examples: 
+Analyze or design a single complex ensemble. These are [quick tools](utilities.md) applicable when your ensemble is a single complex.
+
+- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)
+- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb)
 
 
 ## Installation requirements
@@ -53,12 +86,12 @@ The easiest way to install NUPACK is using [Anaconda](https://www.anaconda.com/d
 4. Install the NUPACK 4 Python module by running the following command in your terminal (type `y` when prompted):
 
     ```bash
-    conda install -c conda-forge -c ~/Downloads/nupack-4/package nupack jupyterlab matplotlib
+    conda install -c conda-forge -c ~/Downloads/nupack-VERSION/package --update-all nupack jupyterlab matplotlib
     ```
 
-    If you change the path of your download directory, be sure to specify an absolute (not relative) path. 
+    Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4`).If you change the path of your download directory, be sure to specify an absolute (not relative) path. 
 
-5. Validate your NUPACK 4 installation by running the following commands: 
+5. Validate your NUPACK 4 installation by running the following commands (type `y` when prompted): 
 
     ```bash
     conda install pytest
@@ -75,7 +108,6 @@ The easiest way to install NUPACK is using [Anaconda](https://www.anaconda.com/d
 
     and browse to open your notebook of choice. Click `Run->Run All Cells` to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation. 
 
-    
 
 ---
 
@@ -118,10 +150,12 @@ export PATH=$HOME/miniconda3/bin:$PATH
 echo 'export PATH=$HOME/miniconda3/bin:$PATH' >> ~/.bashrc
 
 conda install -c conda-forge numpy scipy pip matplotlib pandas jupyterlab
-conda install -c conda-forge -c ./nupack-latest/package nupack
+conda install -c conda-forge -c ./nupack-VERSION/package --update-all nupack
 
 jupyter lab
 ```
+
+Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4`).
 
 6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-notebooks). 
 
