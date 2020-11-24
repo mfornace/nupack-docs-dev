@@ -99,9 +99,9 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
     python -m pytest -v --pyargs nupack
     ```
 
-6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). To open a Jupyter notebook on a Mac, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. Click `Cell->Run All` to run the entire notebook.
+6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). If using Anaconda with a Mac, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. Click `Cell->Run All` to run the entire notebook.
 
-    Alternatively, you can launch a web-based Jupyter notebook browser from the command line:
+    Otherwise, you can launch a web-based Jupyter notebook browser from the command line:
 
     ```bash
     jupyter lab
@@ -150,8 +150,8 @@ rm Miniconda3-latest-Linux-x86_64.sh
 export PATH=$HOME/miniconda3/bin:$PATH
 echo 'export PATH=$HOME/miniconda3/bin:$PATH' >> ~/.bashrc
 
-conda install -c conda-forge numpy scipy pip matplotlib pandas jupyterlab
-conda install -c conda-forge -c ./nupack-VERSION/package --update-all nupack
+conda install numpy scipy pip matplotlib pandas jupyterlab
+pip install -U nupack -f ./nupack-VERSION/package
 
 jupyter lab
 ```
@@ -165,7 +165,7 @@ Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupac
 
 ## Source installation
 
-For Mac/Linux users, installation via Anaconda is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.
+For Mac/Linux users, installation of binaries via `pip` is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.
 
 The following are required:
 
