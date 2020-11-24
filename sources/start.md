@@ -7,7 +7,7 @@ Here, we provide Jupyter notebooks for a variety of examples that that can be do
 
 !!! Note
 
-    Note that each Jupyter notebook starts by loading the NUPACK Python module: 
+    Note that each Jupyter notebook starts by loading the NUPACK Python module:
 
     ```python
     from nupack import *
@@ -17,16 +17,16 @@ Here, we provide Jupyter notebooks for a variety of examples that that can be do
 ### Analysis examples
 Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence analysis tools](analysis.md).
 
-- Analyze 2 strands in a test tube containing all complexes of up to 4 strands ([simple example](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)). 
+- Analyze 2 strands in a test tube containing all complexes of up to 4 strands ([simple example](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)).
 
-     
+
 
 - [Advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb)
 
 ### Design examples
 Design the the sequences for one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence design tools](design.md).
 
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb) 
+- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb)
 - [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb)
 - [Converting NUPACK 3 input files into NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
 
@@ -39,7 +39,7 @@ Design the the sequences for one or more test tube ensembles (or one or more com
 - [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb)
 
 
-### Utilities examples: 
+### Utilities examples:
 Analyze or design a single complex ensemble. These are [quick tools](utilities.md) applicable when your ensemble is a single complex.
 
 - [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)
@@ -48,7 +48,7 @@ Analyze or design a single complex ensemble. These are [quick tools](utilities.m
 
 ## Installation requirements
 
-NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required: 
+NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required:
 
 - Python 3.6-3.8
 - numpy
@@ -60,53 +60,54 @@ The following packages are recommended to facilitate interactive usage:
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10. Alternatively, NUPACK may be compiled from source on Mac/Linux. 
+NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10. Alternatively, NUPACK may be compiled from source on Mac/Linux.
 
-## Mac/Linux installation 
+An easy way to install all of these dependencies is by installing [Anaconda](https://www.anaconda.com/distribution/).
 
-The easiest way to install NUPACK is using [Anaconda](https://www.anaconda.com/distribution/).
+## Mac/Linux installation
 
-1. Install Anaconda by running the following commands in a terminal:
-
-    ```bash
-    conda update conda
-    conda update --all
-    ```
-
-2. Verify your installation (make sure you have Python 3.6 or newer):
+1. Verify your Python installation (make sure you have Python 3.6 or newer):
 
     ```bash
-    conda info
+    python --version
     ```
 
-    If this command does not run, troubleshoot your Anaconda installation. You may not have your `$PATH` environment variable set correctly.
+    If this command does not run, troubleshoot your Python installation. You may not have your `$PATH` environment variable set correctly.
 
-3. After [agreeing to the NUPACK license](http://www.nupack.org/downloads/register), download the NUPACK package (e.g., `nupack-4.0.0`) into your Downloads folder and make sure it is unzipped. 
+    If you are not using Anaconda and you see a Python 2 version displayed, you can replace instances of `python` and `pip` with `python3` and `pip3` in these directions (respectively).
+
+2. Update your installation of `pip`, which is necessary on some systems:
+
+    ```bash
+    pip install -U pip
+    ```
+
+3. After [agreeing to the NUPACK license](http://www.nupack.org/downloads/register), download the NUPACK package (e.g., `nupack-4.0.0`) into your Downloads folder and make sure it is unzipped.
 
 4. Install the NUPACK 4 Python module by running the following command in your terminal (type `y` when prompted):
 
     ```bash
-    conda install -c conda-forge -c ~/Downloads/nupack-VERSION/package --update-all nupack jupyterlab matplotlib
+    pip install -U nupack -f ~/Downloads/nupack-VERSION/package
     ```
 
-    Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4`).If you change the path of your download directory, be sure to specify an absolute (not relative) path. 
+    Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4.0.0`).
 
-5. Validate your NUPACK 4 installation by running the following commands (type `y` when prompted): 
+5. Validate your NUPACK 4 installation by running the following commands:
 
     ```bash
-    conda install pytest
-    python -m pytest -v --pyargs nupack 
+    pip install -U pytest
+    python -m pytest -v --pyargs nupack
     ```
 
 6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). To open a Jupyter notebook on a Mac, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. Click `Cell->Run All` to run the entire notebook.
 
-    Alternatively, you can launch a web-based Jupyter notebook browser from the command line: 
+    Alternatively, you can launch a web-based Jupyter notebook browser from the command line:
 
     ```bash
     jupyter lab
     ```
 
-    and browse to open your notebook of choice. Click `Run->Run All Cells` to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation. 
+    and browse to open your notebook of choice. Click `Run->Run All Cells` to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation.
 
 
 ---
@@ -157,7 +158,7 @@ jupyter lab
 
 Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4`).
 
-6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-notebooks). 
+6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-notebooks).
 
 
 ---
@@ -166,7 +167,7 @@ Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupac
 
 For Mac/Linux users, installation via Anaconda is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.
 
-The following are required: 
+The following are required:
 
 - C++17 compliant compiler (Clang or AppleClang)
 - CMake
@@ -176,7 +177,7 @@ Directions:
 1. On a Mac/Linux system, navigate to the `source` directory within the NUPACK download:
 
 ```bash
-cd ~/Downloads/nupack-4/source 
+cd ~/Downloads/nupack-4/source
 ```
 
 2. Build the included `vcpkg` submodule using:
