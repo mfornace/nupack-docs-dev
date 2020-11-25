@@ -36,7 +36,6 @@ Analyze or design a single complex ensemble --- these are [quick tools](utilitie
 
 - **Utilities:** [analyze or design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/utilities/utilities.ipynb)
 
-See also the design specifications for the [simple displacement design](https://github.com/Piercelab-Caltech/nupack-examples/raw/master/design-specs/design-spec-displacement.pdf) and [advanced dicer design](https://github.com/Piercelab-Caltech/nupack-examples/raw/master/design-specs/design-spec-dicer.pdf).
 
 !!! Note
 
