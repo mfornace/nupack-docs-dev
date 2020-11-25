@@ -29,7 +29,7 @@ print(partition_function)
 `structure_energy` calculates the [structure free energy](definitions.md#structure-free-energy) for the specified secondary structure:
 
 ```python
-dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))',
+dGstruc = structure_energy(strands=['AAAA', 'UUUU'], structure='((((+))))',
     model=my_model)
 print(dGstruc)
 # --> -0.18135141907945873
@@ -163,7 +163,7 @@ print(designed_sequence1)
 # design a sequence with sequence constraints
 designed_sequence2 = des(strands=['HHH','BBW'], structure='(((+)))', model=my_model)
 print(designed_sequence2)
-# --> ['ACC', 'GGT']
+# --> ['ACC', 'GGU']
 ```
 
 ---
@@ -237,7 +237,7 @@ seq_distance('G5', 'G3C2') # --> 2
 ```
 
 
-## Compute structure distance 
+## Compute structure distance
 `struc_distance` calculates the [structure distance](definitions.md#secondary-structure) for two structures that have the same number of nucleotides:
 
 ```python
@@ -246,5 +246,5 @@ struc_distance('((((((((+..........))))))))', '(((((((.+...........)))))))') # -
 struc_distance('.15', '(5.5)5') # --> 10
 ```
 
-!!! Note 
-    Note that [sequence distance](definitions.md#sequence) and [structure distance](definitions.md#secondary-structure) are defined independent of whether the nick locations match between two sequences or two structures. However, `seq_distance` and `struc_distance` will return a warning if the nick locations do not match. 
+!!! Note
+    Note that [sequence distance](definitions.md#sequence) and [structure distance](definitions.md#secondary-structure) are defined independent of whether the nick locations match between two sequences or two structures. However, `seq_distance` and `struc_distance` will return a warning if the nick locations do not match.

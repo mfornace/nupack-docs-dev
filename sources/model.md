@@ -153,22 +153,22 @@ The `Model.loop_energy` method calculates the [loop free energy](definitions.md#
 model = Model(material='RNA', ensemble='stacking')
 
 #Calculate the free energy of an unstructured strand
-dGloop2 = model.loop_energy(loop=['AATT'], structure='....')
+dGloop2 = model.loop_energy(loop=['AAUU'], structure='....')
 print(dGloop2)
 # --> 0.0
 
 #Calculate the free energy of a hairpin loop
-dGloop3 = model.loop_energy(loop=['AACCCTT'], structure='(....)')
+dGloop3 = model.loop_energy(loop=['AACCCUU'], structure='(....)')
 print(dGloop3)
 # --> 5.15
 
 #Calculate the free energy of an exterior loop
-dGloop4 = model.loop_energy(loop=['AA+TT'], structure='((+))')
+dGloop4 = model.loop_energy(loop=['AA+UU'], structure='((+))')
 print(dGloop4)
 # --> -0.9
 
 #Calculate the free energy of a multiloop
-dGloop5 = model.loop_energy(loop=['AAT+ACT+AGT'], structure='(.(+).(+).)')
+dGloop5 = model.loop_energy(loop=['AAU+ACU+AGU'], structure='(.(+).(+).)')
 print(dGloop5)
 # --> 9.355
 ```
@@ -186,17 +186,17 @@ For a loop defined as a list of N sequences, a stacking state is specified as a 
 
 ``` python
 # Calculate the dangle stacking state free energies for an exterior loop
-model.stack_energies('CA+TC', '.(+).')
+model.stack_energies('CA+UC', '.(+).')
 # --> {'nl': -0.1, 'nn': 0.0, 'rl': -0.6, 'rn': -0.3}
 # --> {'.(+)<': -0.1, '.(+).': 0.0, '>(+)<': -0.6, '>(+).': -0.3}
 
 # Calculate the coaxial stacking state free energies for an exterior loop
-model.stack_energies('AA+T+T', structure='((+)+)')
+model.stack_energies('AA+U+U', structure='((+)+)')
 # --> {'bnn': -0.9, 'nnn': 0.0}
 # --> {'[[+)+)': -0.9, '[[+)+)': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
-model.stack_energies('AT+AT+AT', structure='((+)(+))')
+model.stack_energies('AU+AU+AU', structure='((+)(+))')
 # --> {'bnn': -1.1, 'nbn': -1.1, 'nnb': -1.1, 'nnn': 0.0}
 # --> {'[[+)(+))': -1.1, '((+][+))': -1.1, '((+)(+]]': -1.1, '((+)(+))': 0.0}
 ```
@@ -204,7 +204,7 @@ model.stack_energies('AT+AT+AT', structure='((+)(+))')
 For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
 
 ``` python
-model.stack_energies('AAAAT', structure='(...)')
+model.stack_energies('AAAAU', structure='(...)')
 # --> {'n': 4.1}
 # --> {'(...)': 4.1}
 ```
