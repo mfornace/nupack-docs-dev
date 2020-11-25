@@ -13,38 +13,28 @@ Here, we provide Jupyter notebooks for a variety of examples that that can be do
     from nupack import *
     ```
 
-
 ### Analysis examples
 Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence analysis tools](analysis.md).
 
-- Analyze 2 strands in a test tube containing all complexes of up to 4 strands ([simple example](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)).
-
-
-
-- [Advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb)
+- [complex analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/complex-analysis.ipynb).
+- [multi-complex analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/multi-complex-analysis.ipynb)
+- [tube analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/tube-analysis.ipynb)
+- [multi-tube analysis](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/multi-tube-analysis.ipynb)
 
 ### Design examples
 Design the the sequences for one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence design tools](design.md).
 
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb)
-- [Converting NUPACK 3 input files into NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
-
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb)
-- [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb)
-
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb)
-- [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb)
-
+- [complex design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/complex-design.ipynb)
+- [tube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/tube-design.ipynb)
+- [simple multi-tube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-simple.ipynb)
+- [simple multi-tube-design (orthogonal systems)](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-simple-ortho.ipynb)
+- [advanced multi-tube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced.ipynb)
+- [advanced multi-tube design (orthogonal systems)](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced-ortho.ipynb)
 
 ### Utilities examples:
 Analyze or design a single complex ensemble. These are [quick tools](utilities.md) applicable when your ensemble is a single complex.
 
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb)
-
+- [all examples](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/utilities/utilities.ipynb)
 
 ## Installation requirements
 
