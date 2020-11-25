@@ -364,10 +364,15 @@ my_hard_constraints += [Complementarity([e], [f], wobble_mutations=True)]
 my_hard_constraints.append(Complementarity([e], [f], wobble_mutations=True))
 ```
 
-See below for information about how to specify each type of hard constraint.
-
 !!! Note
     Note that the specification of a domain using [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) (as in the example above) is an implicit hard sequence constraint.
+
+!!! Note
+    Note that NUPACK will return an error if a design specification contains a fixed sequence that violates a hard constraint
+
+See below for information about how to specify each type of hard constraint.
+
+
 
 ---
 

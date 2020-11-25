@@ -5,6 +5,39 @@
 Here, we provide Jupyter notebooks for a variety of examples that that can be downloaded for interactive use.
 
 
+
+
+### Analysis examples
+Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles) --- these are the [all-purpose sequence analysis tools](analysis.md).
+
+- **Tube analysis:** [analyze a test tube ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/tube-analysis.ipynb) 
+- **Multi-tube analysis:** [analyze a set of test tube ensembles](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/multi-tube-analysis.ipynb)
+- **Complex analysis:** [analyze a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/complex-analysis.ipynb) 
+- **Multi-complex analysis:** [analyze a set of complex ensembles](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/analysis/multi-complex-analysis.ipynb)
+
+### Design examples
+Design the the sequences for one or more test tube ensembles (or one or more complex ensembles) --- these are the [all-purpose sequence design tools](design.md).
+
+- **Tube design:** [design a test tube ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/tube-design.ipynb) 
+- **Multi-tube design (simple):** 
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.tex))
+    - [design a one-step reaction pathway](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-simple.ipynb) 
+    - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-simple-ortho.ipynb) 
+- **Multi-tube design (advanced):**
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-dicer.tex))
+    - [design a multi-step reaction pathway](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced.ipynb) 
+    -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced-ortho.ipynb) 
+- **Complex design:** [design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/complex-design.ipynb) 
+
+Sample $\LaTeX$ files are provided for the multi-tube design specifications to assist with making new design specs in a standardized format. 
+
+
+### Utilities examples: 
+Analyze or design a single complex ensemble --- these are [quick tools](utilities.md) applicable when your ensemble is a single complex.
+
+- **Utilities:** [analyze or design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/utilities/utilities.ipynb)
+
+
 !!! Note
 
     Note that each Jupyter notebook starts by loading the NUPACK Python module: 
@@ -12,38 +45,6 @@ Here, we provide Jupyter notebooks for a variety of examples that that can be do
     ```python
     from nupack import *
     ```
-
-
-### Analysis examples
-Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence analysis tools](analysis.md).
-
-- Analyze 2 strands in a test tube containing all complexes of up to 4 strands ([simple example](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-simple.ipynb)). 
-
-     
-
-- [Advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-analysis/tube-analysis-advanced.ipynb)
-
-### Design examples
-Design the the sequences for one or more test tube ensembles (or one or more complex ensembles). These are the [all-purpose sequence design tools](design.md).
-
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-hcr.ipynb) 
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/multitube-design/multitube-design-dicer.ipynb)
-- [Converting NUPACK 3 input files into NUPACK 4 scripts](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/nupack3)
-
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-simple.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-advanced.ipynb)
-- [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/tube-design/tube-design-stickman.ipynb)
-
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-simple.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-advanced.ipynb)
-- [stickfigure](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-design/complex-design-stickman.ipynb)
-
-
-### Utilities examples: 
-Analyze or design a single complex ensemble. These are [quick tools](utilities.md) applicable when your ensemble is a single complex.
-
-- [simple](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-simple.ipynb)
-- [advanced](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/complex-analysis/complex-analysis-advanced.ipynb)
 
 
 ## Installation requirements
