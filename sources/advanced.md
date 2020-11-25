@@ -56,97 +56,19 @@ print(repr(s)) # --> <Domain a>
 !!! note
     In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
 
-## Design of multiple orthogonal systems
+## Design orthogonal reaction pathways
+[Reaction pathways](definitions.md#reaction-pathways) can be designed by specifying [target test tubes](definitions.md#target-test-tubes) and formulating a [constrained multi-tube design problem](defintions.md#constrained-multi-tube-design-problem). Following the target test tube specification of [@Wolfe17] (see Supplemenatary Section S2.2), for a reaction pathway with M elementary steps, to design N orthogonal systems, there are N*(M+1) elementary step tubes plus 1 global crosstalk tube. Below, we provide example design specifications and Jupyter notebooks for designing N orthogonal systems for 1-step and multi-step reaction pathways: 
 
-In this section we walk through a simplified multitube design for two Dicer scRNA systems as described in [@Hochrein13]. With the flexibility of Python, we can simply define a design for any number of orthogonal systems. First, we can initialize global parameters for the design:
+- **Multi-tube design (simple):**
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.tex))
+    - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-simple-ortho.ipynb)
+- **Multi-tube design (advanced):**
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-dicer.tex))
+    -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced-ortho.ipynb)
 
-```python
-# Specify source RNA for window constraints
-my_model = Model(material='rna', celsius=37) # set physical parameters
-crosstalkTargets = {} # empty crosstalk tube targets
-crosstalkExcludes = [] # empty crosstalk tube excludes
-tubes = [] # empty set of tubes
-systems = 2 #set number of systems
-```
-
-Next, we can iterate through each of the systems to define its components. We keep track of species to place in the crosstalk tube along the way.
-
-```python
-for i in range(systems):
-
-    # define domains
-    a = Domain('N6', name=['a', i])
-    c = Domain('N8', name=['c', i])
-    b = Domain('N4', name=['b', i])
-    w = Domain('N2', name=['w', i])
-    y = Domain('N4', name=['y', i])
-    x = Domain('N12',name=['x', i])
-    z = Domain('N3', name=['z', i])
-    s = Domain('N5', name=['s', i])
-
-    # define strands from domains
-    Cout_s   = TargetStrand([w, x, y, s], name=['Cout_s', i])
-    A_s      = TargetStrand([~c, ~b, ~a, ~z, ~y], name=['A_s', i])
-    A_toe_s  = TargetStrand([~c], name=['A_toe_s', i])
-    C_s      = TargetStrand([w, x, y, s, ~a, ~z, ~y, ~x, ~w], name=['C_s', i])
-    C_loop_s = TargetStrand([s, ~a, ~z], name=['C_loop_s', i])
-    B_s      = TargetStrand([x, y, z, a, b], name=['B_s', i])
-    Xs_s     = TargetStrand([a, b, c], name=['Xs_s', i])
-
-    # define complexes composed of one or more strands in a given order AND
-    # define target structures for each complex
-    C      = TargetComplex([C_s],       'D2 D12 D4( U5 U6 U3 )', name=['C', i])
-    B      = TargetComplex([B_s],       'U12 U4 U3 U6 U4', name=['B', i])
-    C_loop = TargetComplex([C_loop_s],  'U14', name=['C_loop', i])
-    A_B    = TargetComplex([A_s, B_s],  'U8 D4 D6 D3 D4(+ U12)', name=['A_B', i])
-    X      = TargetComplex([Xs_s],      'U18', name=['X', i])
-    X_A    = TargetComplex([Xs_s, A_s], 'D6 D4 D8(+) U3 U4', name=['X_A', i])
-    C_out  = TargetComplex([Cout_s],    'U23', name=['C_out', i])
-    B_C    = TargetComplex([B_s, C_s],  'D12 D4 D3 D6 (U4 + U2 U12 U4 U5) U2', name=['B_C', i])
-    A_toe  = TargetComplex([A_toe_s],   'U8', name=['A_toe', i])
-
-    # on-target tubes
-    Step_0 = TargetTube({C: 1e-08, X: 1e-08, A_B: 1e-08}, name=['Step_0', i],
-        off_targets=SetSpec(max_size=2, include=[[A_s], [B_s]], exclude=[X_A]))
-
-    Step_1 = TargetTube({X_A: 1e-08, B: 1e-08}, name=['Step_1', i],
-        off_targets=SetSpec(max_size=2, include=[X, A_B]))
-
-    Step_2 = TargetTube({B_C: 1e-08}, name=['Step_2', i],
-        off_targets=SetSpec(max_size=2, include=[B, C]))
-
-    # Crosstalk tube elements
-    crosstalkTargets.update({
-        A_B: 1e-08,
-        C: 1e-08,
-        X: 1e-08,
-        B: 1e-08,
-        C_out: 1e-08,
-        C_loop: 1e-08,
-        A_toe: 1e-08,
-    })
-
-    crosstalkExcludes += [X_A, B_C, [Xs_s, A_toe_s], [B_s, C_loop_s]]
-
-    # Add tubes
-    tubes += [Step_0, Step_1, Step_2]
-
-crosstalk = TargetTube(crosstalkTargets, name='crosstalk',
-    off_targets=SetSpec(max_size=2, exclude=crosstalkExcludes))
-tubes.append(crosstalk)
-```
-
-We can create a set of tubes and weight the crosstalk tube by the number of systems:
-
-```python
-weights = Weights(tubes)
-weights[crosstalk] *= systems
-```
-
-Finally, we can create a design containing all of the reaction pathway tubes:
-
-```python
-my_design = tube_design(tubes, model=my_model, defect_weights=weights)
-```
-
-The design may be run as described in the [design documentation](design.md#run-a-test-tube-design-job). See the example notebook `multisystem-design-dicer.ipynb` for a complete example.
+!!! Note
+    Note that target test tubes for N orthogonal systems can be concisely defined using a Python loop. 
+    
+    
+!!! Note
+    Sample $\LaTeX$ files are provided for the above multi-tube design specifications to assist with making new design specs in a standardized format.
