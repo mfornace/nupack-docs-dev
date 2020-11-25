@@ -31,6 +31,8 @@ Design the the sequences for one or more test tube ensembles (or one or more com
 - [advanced multi-tube design](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced.ipynb)
 - [advanced multi-tube design (orthogonal systems)](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced-ortho.ipynb)
 
+See also the design specifications for the [simple displacement design](https://github.com/Piercelab-Caltech/nupack-examples/raw/master/design-specs/design-spec-displacement.pdf) and [advanced dicer design](https://github.com/Piercelab-Caltech/nupack-examples/raw/master/design-specs/design-spec-dicer.pdf).
+
 ### Utilities examples:
 Analyze or design a single complex ensemble. These are [quick tools](utilities.md) applicable when your ensemble is a single complex.
 
