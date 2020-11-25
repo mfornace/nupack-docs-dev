@@ -26,23 +26,23 @@ ComplexSet.union([my_complexes, my_complexes2])
 
 ## Specifying a sequence
 
-A `Sequence` is specified by valid nucleotide letters, which can contain wildcards.  Run-length encoding may be used to specify repeats of a given nucleotide. For RNA, `'U'` is automatically replaced by `'T'` for printing purposes.
+A `Sequence` is specified by valid nucleotide letters, which can contain wildcards.  Run-length encoding may be used to specify repeats of a given nucleotide. `'U'` and `'T'`may be interchanged for printing purposes.
 
 ```python
-s1 = Sequence('AAAAATTTTT')
+s1 = Sequence('AAAAAUUUUU')
 s2 = Sequence('A5T5')
 s3 = Sequence('A5U5')
 
 s1 == s2 # --> True
 s1 == s3 # --> True
-s3 # --> Sequence('AAAAATTTTT')
+s3 # --> Sequence('AAAAAUUUUU')
 ```
 
 You can access the reverse complement of a `Sequence` using the following syntaxes:
 
 ```python
-s1.reverse_complement() # --> Sequence('TTTTTAAAAA')
-~s1 # --> Sequence('TTTTTAAAAA')
+s1.reverse_complement() # --> Sequence('UUUUUAAAAA')
+~s1 # --> Sequence('UUUUUAAAAA')
 ```
 
 The `~a` syntax is generally recommended for brevity. Thus `~a` corresponds to the usual complement specification `a*` (unfortunately, the latter is not valid Python).
@@ -140,8 +140,8 @@ print(repr(s)) # --> Domain('a', 'NNNNNN')
 A domain is a fixed-length sequence of nucleotides, primarily useful in a design context. It reflects a shared sequence that may appear multiple times in different strands. A domain may be created from a name and `Sequence` (or sequence string).
 
 ```python
-a = Domain('ATCGTAGCTA', name='a')
-b = Domain('ATATSSSKKN', name='b') # Wildcards are permitted
+a = Domain('AUCGUAGCUA', name='a')
+b = Domain('AUAUSSSKKN', name='b') # Wildcards are permitted
 ```
 
 You can access the reverse complement of a `Domain` as you would a `Sequence`, e.g. as `~a`. In design, the invariant is maintained that the currently specified sequence of `a` is reverse complement to that of `~a`.
@@ -149,14 +149,14 @@ You can access the reverse complement of a `Domain` as you would a `Sequence`, e
 You may access the sequence of a `Domain` by calling `str()` on it:
 
 ```python
-print(str(a)) # --> 'ATCGTAGCTA'
+print(str(a)) # --> 'AUCGUAGCUA'
 ```
 
 A domain only compares equal to another one if they have the same sequence and name:
 
 ```python
-a1 = Domain('ATCGTAGCTA', name='a1')
-a2 = Domain('ATCGTAGCTA', name='a2')
+a1 = Domain('AUCGUAGCUA', name='a1')
+a2 = Domain('AUCGUAGCUA', name='a2')
 
 a1 == a2 # --> False
 a1 == a1 # --> True
@@ -194,7 +194,7 @@ After queueing your desired computations, follow the directions in [Computation]
 **Example code:**
 
 ```python
-strands = RawComplex('AAAAT+TTT')
+strands = RawComplex('AAAAU+UUU')
 spec.pfunc(strands, max_size=3)
 ```
 

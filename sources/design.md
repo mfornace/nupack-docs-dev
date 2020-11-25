@@ -153,8 +153,16 @@ t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, name='t1',
 If desired, the on-target and off-target sets for a specified `TargetTube` can be queried as follows:
 
 ```python
-print(t1.on_targets)  # --> {<TargetComplex AB>: 1e-08}
-print(t1.off_targets) # --> {<TargetComplex [A]>, <TargetComplex [B]>}
+print(t1.on_targets)  # --> {<TargetComplex C1>: 1e-08, <TargetComplex C2>: 1e-08}
+print(t1.off_targets) # --> {<TargetComplex (Strand A+Strand A+Strand B)>, <TargetComplex (Strand B)>,
+                      # <TargetComplex (Strand A+Strand A)>, <TargetComplex (Strand C+Strand B+Strand B)>,
+                      # <TargetComplex (Strand A+Strand B+Strand B)>, <TargetComplex (Strand A+Strand C+Strand C)>,
+                      # <TargetComplex (Strand C)>, <TargetComplex (Strand C+Strand C+Strand C)>,
+                      # <TargetComplex (Strand A+Strand C+Strand B)>, <TargetComplex (Strand C+Strand C)>,
+                      # <TargetComplex (Strand A+Strand C)>, <TargetComplex (Strand A+Strand A+Strand C)>,
+                      # <TargetComplex (Strand A)>, <TargetComplex (Strand B+Strand B)>,
+                      # <TargetComplex (Strand A+Strand B)>, <TargetComplex (Strand A+Strand A+Strand A)>,
+                      # <TargetComplex (Strand C+Strand C+Strand B)>, <TargetComplex (Strand B+Strand B+Strand B+Strand B)>}
 ```
 
 
@@ -212,7 +220,7 @@ my_results[0]  # display results table for first design trial
 
 Output:
 
-> <img src="/figs/optimization-output.png" alt="Optimization output" title="Example optimization output" width="620" />
+> <img src="/figs/design/1-optimization.png" alt="Optimization output" title="Example optimization output" width="620" />
 
 Output table displays:
 
@@ -317,7 +325,7 @@ result[0]
 
 Output:
 
-> <img src="/figs/complex-design-output.png" alt="Complex design output" title="Example complex design output" width="350" />
+> <img src="/figs/design/2-complex.png" alt="Complex design output" title="Example complex design output" width="350" />
 
 A `complex_design` object supports the `launch()`, `run()`, and `evaluate()` methods just as for a `tube_design` object (see above).
 
@@ -829,7 +837,7 @@ weights
 
 Output:
 
-<img src="/figs/weights-output.png" alt="Weights output" title="Example weights output" width="300" />
+<img src="/figs/design/3-weights.png" alt="Weights output" title="Example weights output" width="300" />
 
 Alternatively, you can view an ASCII representation of the same data by using the `print` function:
 
@@ -840,15 +848,15 @@ print(weights)
 Output:
 
 ```
-Tube Complex Strand Domain  Weight
-  t1      AB      A     a1    5.00
-  t1      AB      A     a2    0.75
-  t1      AB      B      b    5.00
-  t2      AA      A     a1    0.50
-  t2      AA      A     a2    0.75
-  t2      AB      A     a1    2.00
-  t2      AB      A     a2    0.75
-  t2      AB      B      b    3.00
+Domain Strand Complex Tube  Weight
+    a1      A      AA   t2     1.0
+    a1      A      AB   t1    10.0
+    a1      A      AB   t2     4.0
+    a2      A      AA   t2     1.5
+    a2      A      AB   t1     1.5
+    a2      A      AB   t2     1.5
+     b      B      AB   t1    10.0
+     b      B      AB   t2     6.0
 ```
 
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.table`.
@@ -921,7 +929,7 @@ my_result
 ```
 Output:
 
-> <img src="/figs/design-output.png" alt="Design output" title="Example design output" width="600" />
+> <img src="/figs/design/4-output.png" alt="Design output" title="Example design output" width="600" />
 
 ### Textual display
 
@@ -936,32 +944,32 @@ Output:
 > ```
 > Domain results:
 > Domain              Sequence
->      a  CAGATAAGAACTGAGTAAGC
->     a*  GCTTACTCAGTTCTTATCTG
+>      a  GGGUGCAAAGGUAUGGGAGG
+>     a*  CCUCCCAUACCUUUGCACCC
 >
 > Strand results:
 > Strand              Sequence
->      A  CAGATAAGAACTGAGTAAGC
->      B  GCTTACTCAGTTCTTATCTG
+>      A  GGGUGCAAAGGUAUGGGAGG
+>      B  CCUCCCAUACCUUUGCACCC
 >
 > Objective function:
 >                Objective type   Value
->      Weighted ensemble defect  0.0104
->  Soft constraints: similarity 0.00833
->                         Total  0.0187
+>      Weighted ensemble defect 0.00771
+>  Soft constraints: similarity 0.00556
+>                         Total  0.0133
 >
-> Ensemble defect: 0.0104
+> Ensemble defect: 0.00771
 >
 > Complex Complex defect (nt) Normalized complex defect
->       C               0.415                    0.0104
+>       C               0.308                   0.00771
 >
 > On-target complex defects:
 >   Tube Tube defect (M) Normalized tube defect
->  tube1        4.15e-07                 0.0104
+>  tube1        3.08e-07                0.00771
 >
 > Tube defects:
 >   Tube On-target complex Structural defect (M) Concentration defect (M) Total defect (M)
->  tube1                 C              4.15e-07                 6.84e-13         4.15e-07
+>  tube1                 C              3.08e-07                 8.73e-16         3.08e-07
 >
 > On-target complex concentrations:
 >   Tube Complex Concentration (M) Target concentration (M)
@@ -991,7 +999,7 @@ my_result.to_analysis
 
 Output:
 
-> <img src="/figs/design-output-mapping.png" alt="Design output" title="Example design output" width="220" />
+> <img src="/figs/design/5-mapping.png" alt="Design output" title="Example design output" width="220" />
 
 ```python
 my_result.defects
@@ -999,7 +1007,7 @@ my_result.defects
 
 Output:
 
-> <img src="/figs/design-output-defects.png" alt="Design output" title="Example design output" width="600" />
+> <img src="/figs/design/6-defects.png" alt="Design output" title="Example design output" width="600" />
 
 ```python
 my_result.concentrations
@@ -1007,7 +1015,7 @@ my_result.concentrations
 
 Output:
 
-> <img src="/figs/design-output-concentrations.png" alt="Design output" title="Example design output" width="630" />
+> <img src="/figs/design/7-concentrations.png" alt="Design output" title="Example design output" width="630" />
 
 ```python
 my_result.analysis_result
@@ -1015,19 +1023,19 @@ my_result.analysis_result
 
 Output:
 
-> <img src="/figs/design-output-analysis.png" alt="Design output" title="Example design output" width="270" />
+> <img src="/figs/design/8-analysis.png" alt="Design output" title="Example design output" width="270" />
 
 You can query any field of the `DesignResult` using Python, for example:
 
 ```python
 # print various designed sequences
 print(my_result.to_analysis(tube1)) # --> Tube({A: 1e-06, B: 1e-06}, name='tube1')
-print(my_result.to_analysis(C))    # --> CCCCCAATAATGGGGTCTGG+CCAGACCCCATTATTGGGGG
-print(my_result.to_analysis(B))    # --> CCAGACCCCATTATTGGGGG
-print(my_result.to_analysis(a))    # --> CCCCCAATAATGGGGTCTGG
+print(my_result.to_analysis(C))    # --> GGGUGCAAAGGUAUGGGAGG+CCUCCCAUACCUUUGCACCC
+print(my_result.to_analysis(B))    # --> CCUCCCAUACCUUUGCACCC
+print(my_result.to_analysis(a))    # --> GGGUGCAAAGGUAUGGGAGG
 
 # print specific defect contributions
-print(my_result.defects.ensemble_defect) # 0.010181549966458123
+print(my_result.defects.ensemble_defect) # 0.007708701513018191
 print(my_result.defects.tubes)           # --> each tube
 print(my_result.defects.complexes)       # --> each on-target
 print(my_result.defects.tube_complexes)  # --> each on-target in each tube
@@ -1041,7 +1049,7 @@ Each subfield (`tubes`, `complexes`, `tube_complexes`) is a `pandas.DataFrame`s.
 The `evaluate()` method enables generation of a `DesignResult` object for a `tube_design` that has fully specified sequences (i.e., contains no [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes)), for example:
 
 ```python
-a = Domain('CAGATAAGAACTGAGTAAGC', name='a')
+a = Domain('CAGAUAAGAACUGAGUAAGC', name='a')
 A = TargetStrand([a], name='A')
 B = TargetStrand([~a], name='B')
 C = TargetComplex([A, B], '(20+)20', name='C')
@@ -1064,7 +1072,7 @@ my_evaluated_result
 
 Output:
 
-> <img src="/figs/evaluation-output.png" alt="Evaluation output" title="Example evaluation output" width="650" />
+> <img src="/figs/design/9-evaluation.png" alt="Evaluation output" title="Example evaluation output" width="650" />
 
 !!! Note
 

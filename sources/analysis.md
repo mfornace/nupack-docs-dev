@@ -16,9 +16,9 @@ NUPACK analysis algorithms enable simultaneous analysis of one or more test tube
 
 A `Strand` is a single RNA or DNA molecule specified as a sequence and a strand name (keyword `name`):
 ```python
-A = Strand('AGTCTAGGATTCGGCGTGGGTTAA', name='A') # name is required for strands
-B = Strand('TTAACCCACGCCGAATCCTAGACTCAAAGTAGTCTAGGATTCGGCGTG', name='B')
-C = Strand('AGTCTAGGATTCGGCGTGGGTTAACACGCCGAATCCTAGACTACTTTG', name='C')
+A = Strand('AGUCUAGGAUUCGGCGUGGGUUAA', name='A') # name is required for strands
+B = Strand('UUAACCCACGCCGAAUCCUAGACUCAAAGUAGUCUAGGAUUCGGCGUG', name='B')
+C = Strand('AGUCUAGGAUUCGGCGUGGGUUAACACGCCGAAUCCUAGACUACUUUG', name='C')
 ```
 
 A `Strand` sequence must contain only `'ACGTU'`. Two strands are treated as indistinguishable only if they have the same name and the same sequence.
@@ -94,12 +94,12 @@ If desired, the complexes in a specified `Tube` can be queried as follows:
 
 ```python
 print(t1.complexes) # --> {<Complex A>, <Complex B>}
-print(t2.complexes) # --> {<Complex [C+C+B]>, <Complex [B]>, <Complex [A+C+B]>,
-    # <Complex [C+C+C]>, <Complex [C]>, <Complex [A+A+B]>, <Complex [A+C]>,
-    # <Complex [B+B+B+B]>, <Complex [A+A]>, <Complex [A+B+B]>, <Complex [B+B]>,
-    # <Complex [A+B]>, <Complex [B+B+B]>, <Complex [A+B+C]>, <Complex [A+C+C]>,
-    # <Complex [A+A+A]>, <Complex [C+C]>, <Complex [A+A+C]>, <Complex [A+B+B+C]>,
-    # <Complex [C+B+B]>, <Complex [C+B]>}
+print(t2.complexes) # --> {<Complex (C+C+B)>, <Complex (B)>,
+    # <Complex (A+C+B)>, <Complex (C+C+C)>, <Complex (C)>, <Complex (A+A+B)>,
+    # <Complex (A+C)>, <Complex (B+B+B+B)>, <Complex (A+A)>, <Complex (A+B+B)>,
+    # <Complex (B+B)>, <Complex (A+B)>, <Complex (B+B+B)>, <Complex (A+B+C)>,
+    # <Complex (A+C+C)>, <Complex (A+A+A)>, <Complex (C+C)>, <Complex (A+A+C)>,
+    # <Complex ABBC>, <Complex (C+B+B)>, <Complex (C+B)>}
 ```
 
 !!! Note
@@ -113,8 +113,8 @@ The `tube_analysis` command calculates the [partition function](definitions.md#p
 
 ```python
 # specify strands
-a = Strand('CTGATCGAT', name='a')
-b = Strand('GATCGTAGTC', name='b')
+a = Strand('CUGAUCGAU', name='a')
+b = Strand('GAUCGUAGUC', name='b')
 
 # specify tubes
 t1 = Tube(strands={a: 1e-8, b: 1e-9}, complexes=SetSpec(max_size=3), name='t1')
@@ -131,7 +131,7 @@ tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 tube_results
 ```
 Output:
-> <img src="/figs/tube-analysis-output.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
+> <img src="/figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
 For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
@@ -152,7 +152,7 @@ tube_results2
 ```
 Output:
 
-> <img src="/figs/tube-analysis-output-2.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
+> <img src="/figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
 
 Note that `pairs` and `sample` results are too large to be included in the summary table. See below for [programmatic access](#programmatic-access) to these results.
 
@@ -197,8 +197,8 @@ for each complex in a `ComplexSet`:
 
 ```python
 # specify strands
-a = Strand('CTGATCGAT', name='a')
-b = Strand('GATCGTAGTC', name='b')
+a = Strand('CUGAUCGAU', name='a')
+b = Strand('GAUCGUAGUC', name='b')
 
 # specify complex set
 set1 = ComplexSet(strands=[a, b], complexes=SetSpec(max_size=3))
@@ -218,7 +218,7 @@ complex_results1
 
 Output:
 
-> <img src="/figs/complex-analysis-output.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
+> <img src="/figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
 
 
 
@@ -227,8 +227,8 @@ If desired, a `Tube` can be specified in place of a `ComplexSet`, in which case 
 
 ```python
 # specify strands
-a = Strand('CTGATCGAT', name='a')
-b = Strand('GATCGTAGTC', name='b')
+a = Strand('CUGAUCGAU', name='a')
+b = Strand('GAUCGUAGUC', name='b')
 
 # specify tube
 tube1 = Tube(strands={a:1e-8, b:1e-10}, complexes=SetSpec(max_size=3), name='tube1')
@@ -266,7 +266,7 @@ concentration_results2
 
 Output:
 
-> <img src="/figs/concentration-analysis-output.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
+> <img src="/figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
 
 ---
 
@@ -328,7 +328,7 @@ my_result
 
 Output:
 
-> <img src="/figs/tube-analysis-output-3.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
+> <img src="/figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
 
 ### Textual display
 
@@ -343,14 +343,14 @@ Output:
 > ```
 > Complex results:
 >   Complex      Pfunc dG (kcal/mol) MFE (kcal/mol)
-> 0   [a+b]  4.5255e+3        -5.188         -4.981
-> 1     [a]  1.0000e+0        -0.000          0.000
-> 2     [b]  1.0000e+0        -0.000          0.000
+> 0     (a)  1.0000e+0         0.000          0.000
+> 1     (b)  1.0000e+0         0.000          0.000
+> 2   (a+b)  4.5255e+3        -5.188         -4.981
 > Concentration results:
->   Complex    t1 (M)    t2 (M)
-> 0   [a+b] 8.207e-14 8.208e-16
-> 1     [a] 1.000e-06 1.000e-08
-> 2     [b] 9.999e-10 1.000e-09
+> Complex    t1 (M)   Complex    t2 (M)
+>     (a) 1.000e-06       (a) 1.000e-08
+>     (b) 9.999e-10       (b) 1.000e-09
+>   (a+b) 8.207e-14     (a+b) 8.208e-16
 > ```
 
 For convenience, you can print the identical ASCII result to a text file using the `save_text` function:
@@ -458,7 +458,7 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 
 Output:
 
-> <img src="/figs/pairs-output.png" alt="Pair probability output" title="Example pair probability output" width="400" />
+> <img src="/figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
 Note that some users may need to include `%matplotlib inline` at the top of their notebook for the plot to appear.
 
@@ -478,9 +478,9 @@ for my_complex, complex_result in my_result.complexes.items():
 Output:
 
 ```
-Expected number of unpaired nucleotides at equilibrium in complex [a+b] = 0.59
-Expected number of unpaired nucleotides at equilibrium in complex [a] = 3.00
-Expected number of unpaired nucleotides at equilibrium in complex [b] = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex (a+b) = 0.59
+Expected number of unpaired nucleotides at equilibrium in complex (a) = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex (b) = 3.00
 ```
 
 To collect a `dict` of MFEs for each complex:
@@ -494,7 +494,7 @@ print(my_mfes)
 Output:
 
 ```
-{'[a+b]': -4.981351375579834, '[a]': 0.0, '[b]': 0.0}
+{'(a+b)': -4.981351375579834, '(a)': 0.0, '(b)': 0.0}
 ```
 
 To print out the complex concentrations for a given tube:
@@ -507,9 +507,9 @@ for my_complex, conc in my_result.tubes[t1].complex_concentrations.items():
 Output:
 
 ```
-The equilibrium concentration of [a] is 1.00e-06 M
-The equilibrium concentration of [a+b] is 8.21e-14 M
-The equilibrium concentration of [b] is 1.00e-09 M
+The equilibrium concentration of (a+b) is 8.21e-14 M
+The equilibrium concentration of (a) is 1.00e-06 M
+The equilibrium concentration of (b) is 1.00e-09 M
 ```
 
 ---
@@ -534,9 +534,9 @@ for my_complex, conc in t1_result.complex_concentrations.items():
 Output:
 
 ```
-The equilibrium concentration of (a) is 1.00e-06 M
-The equilibrium concentration of (a+b) is 8.21e-14 M
-The equilibrium concentration of (b) is 1.00e-09 M
+The equilibrium concentration of (a+b) is 8.207e-14 M
+The equilibrium concentration of (a) is 1.000e-06 M
+The equilibrium concentration of (b) is 9.999e-10 M
 ```
 
 Test tube ensemble pair fractions may be printed as follows:
