@@ -57,7 +57,7 @@ print(repr(s)) # --> <Domain a>
     In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
 
 ## Design orthogonal reaction pathways
-[Reaction pathways](definitions.md#reaction-pathways) can be designed by specifying [target test tubes](definitions.md#target-test-tubes) and formulating a [constrained multi-tube design problem](defintions.md#constrained-multi-tube-design-problem). Following the target test tube specification of [@Wolfe17] (see Supplemenatary Section S2.2), for a reaction pathway with M elementary steps, to design N orthogonal systems, there are N*(M+1) elementary step tubes plus 1 global crosstalk tube. Below, we provide example design specifications and Jupyter notebooks for designing N orthogonal systems for 1-step and multi-step reaction pathways: 
+[Reaction pathways](definitions.md#reaction-pathways) can be designed by specifying [target test tubes](definitions.md#target-test-tubes) and formulating a [constrained multi-tube design problem](definitions.md#constrained-multi-tube-design-problem). Following the target test tube specification of [@Wolfe17] (see Supplemenatary Section S2.2), for a reaction pathway with M elementary steps, to design N orthogonal systems, there are N*(M+1) elementary step tubes plus 1 global crosstalk tube. Below, we provide example design specifications and Jupyter notebooks for designing N orthogonal systems for 1-step and multi-step reaction pathways:
 
 - **Multi-tube design (simple):**
     - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.tex))
@@ -67,8 +67,8 @@ print(repr(s)) # --> <Domain a>
     -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced-ortho.ipynb)
 
 !!! Note
-    Note that target test tubes for N orthogonal systems can be concisely defined using a Python loop. 
-    
-    
+    Note that target test tubes for N orthogonal systems can be concisely defined using a Python loop.
+
+
 !!! Note
     Sample $\LaTeX$ files are provided for the above multi-tube design specifications to assist with making new design specs in a standardized format.
