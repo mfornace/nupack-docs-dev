@@ -98,9 +98,7 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
     python -m pytest -v --pyargs nupack
     ```
 
-6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). If using Anaconda with a Mac, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. Click `Cell->Run All` to run the entire notebook.
-
-    Otherwise, you can launch a web-based Jupyter notebook browser from the command line:
+6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). You can launch a web-based Jupyter notebook browser from the command line:
 
     ```bash
     jupyter lab
