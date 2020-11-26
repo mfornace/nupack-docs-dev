@@ -805,7 +805,7 @@ weights[:, :, :, t2] = 2
 weights[:, :, AB, t1] = 5
 
 # weight on domain a2 in target strand A in all target complexes in all tubes
-weights[a2, A, :, :] = 0.75
+weights[a2, A] = 0.75
 
 # weight on domain a1 in all target strands in target complex AA in tube t2
 weights[a1, :, AA, t2] = 0.5
@@ -814,7 +814,7 @@ weights[a1, :, AA, t2] = 0.5
 weights[b, :, :, t2] = 3
 
 # global weight on the entire multi-tube ensemble defect
-weights[:,:,:,:] *=2
+weights[:] *=2
 ```
 
 !!! Note
@@ -853,20 +853,20 @@ Domain Strand Complex Tube  Weight
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.table`.
 
 !!! Note
-    For a [complex design job](design.md#run-a-complex-design-job), the `Weights` object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted: 
+    For a [complex design job](design.md#run-a-complex-design-job), the `Weights` object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted:
 
     ```python
     my_complexes = [AB, AA]
     complex_weights = Weights(my_complexes)
 
     # weight on domain a1 in all target strands and target complexes
-    complex_weights[a1] *= 2 
+    complex_weights[a1] *= 2
 
     # weight on target strand A in all target complexes
-    complex_weights[:, A] = 4   
+    complex_weights[:, A] = 4
 
     # weight on domain a2 in target strand A in target complex AA
-    complex_weights[a2, A, AA] = 0.75 
+    complex_weights[a2, A, AA] = 0.75
     ```
 
 ---
