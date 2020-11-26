@@ -123,18 +123,18 @@ NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (W
 
 1. Click the start menu and search for "Windows Features". Click on "Turn Windows features on or off". Check the "Windows Subsystem for Linux" icon
 
-> <img src="./figs/windows/winfeatures.PNG" alt="Windows features" title="Windows features" width="400" />
+> <img src="../figs/windows/winfeatures.PNG" alt="Windows features" title="Windows features" width="400" />
 
 2. Download Ubuntu from the Microsoft Store
 
-> <img src="./figs/windows/ubuntudl.PNG" alt="Windows store" title="Windows store" width="400" />
+> <img src="../figs/windows/ubuntudl.PNG" alt="Windows store" title="Windows store" width="400" />
 
 3. Open the Ubuntu app and set a username and password
-> <img src="./figs/windows/ubuntusetup2.PNG" alt="Ubuntu setup" title="Ubuntu setup" width="400" />
+> <img src="../figs/windows/ubuntusetup2.PNG" alt="Ubuntu setup" title="Ubuntu setup" width="400" />
 
 4. (Optional) Open the properties window and enable copy paste
 
-> <img src="./figs/windows/properties.PNG" alt="Ubuntu properties" title="Ubuntu properties" width="400" />
+> <img src="../figs/windows/properties.PNG" alt="Ubuntu properties" title="Ubuntu properties" width="400" />
 
 5. Install NUPACK as if using Linux using the following commands (type `y` when prompted):
 
