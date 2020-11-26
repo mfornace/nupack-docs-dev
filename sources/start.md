@@ -68,25 +68,32 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 1. Verify your Python installation (make sure you have Python 3.6 or newer):
 
     ```bash
-    python --version
+    python3 --version
     ```
 
     If this command does not run, troubleshoot your Python installation. You may not have your `$PATH` environment variable set correctly.
 
-    If you are not using Anaconda and you see a Python 2 version displayed, you can replace instances of `python` and `pip` with `python3` and `pip3` in these directions (respectively).
-
-2. Update your installation of `pip`, which is necessary on some systems:
+2. Update your installation of `pip` and install the optional dependencies. Run the following commands
 
     ```bash
-    pip install -U pip
+    python3 -m pip install -U pip
+    python3 -m pip install -U matplotlib jupyterlab
     ```
+
+    If you are using an Anaconda installation, it is preferred that you replace the above commands with:
+
+    ```bash
+    conda install --update-all pip matplotlib jupyterlab
+    ```
+
+    If this command does not run, troubleshoot your Anaconda installation. You may not have your `$PATH` environment variable set correctly.
 
 3. After [agreeing to the NUPACK license](http://www.nupack.org/downloads/register), download the NUPACK package (e.g., `nupack-4.0.0`) into your Downloads folder and make sure it is unzipped.
 
 4. Install the NUPACK 4 Python module by running the following command in your terminal (type `y` when prompted):
 
     ```bash
-    pip install -U nupack -f ~/Downloads/nupack-VERSION/package
+    python3 -m pip install -U nupack -f ~/Downloads/nupack-VERSION/package
     ```
 
     Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4.0.0`).
@@ -94,8 +101,8 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 5. Validate your NUPACK 4 installation by running the following commands:
 
     ```bash
-    pip install -U pytest
-    python -m pytest -v --pyargs nupack
+    python3 -m pip install -U pytest
+    python3 -m pytest -v --pyargs nupack
     ```
 
 6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). If using Anaconda with a Mac, launch the Anaconda-Navigator app from the Applications folder and use it to launch the Jupyter Notebook app; browse to open your notebook of choice. Click `Cell->Run All` to run the entire notebook.
