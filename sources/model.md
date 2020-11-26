@@ -141,70 +141,62 @@ Parameters from [@Mathews99] with terminal mismatch free energies in exterior lo
 
 
 ## Compute loop free energy
-
-<!-- Typically a `Model` will be used as an input to dynamic programming algorithms (see [Analysis](analysis.md) and [Design](design.md)).
-However, a `Model` also contains a few useful methods (below) to analyze individual secondary structures.
-
-First, one can calculate the free energy of a single loop defined by an ordered list of bounding sequences. To specify an exterior loop, specify `nick` as the zero-based index of the strand that follows the strand break:
- -->
-The `Model.loop_energy` method calculates the [loop free energy](definitions.md#loop-free-energies) in kcal/mol. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`:
+The `loop_energy` method operates on a `Model` object to calculate the [loop free energy](definitions.md#loop-free-energies) in kcal/mol. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. For example: 
 
 ``` python
-model = Model(material='RNA', ensemble='stacking')
+my_model = Model(material='RNA', ensemble='stacking')
 
 #Calculate the free energy of an unstructured strand
-dGloop2 = model.loop_energy(loop=['AAUU'], structure='....')
+dGloop2 = my_model.loop_energy(loop=['AAUU'], structure='....')
 print(dGloop2)
 # --> 0.0
 
 #Calculate the free energy of a hairpin loop
-dGloop3 = model.loop_energy(loop=['AACCCUU'], structure='(....)')
+dGloop3 = my_model.loop_energy(loop=['AACCCUU'], structure='(....)')
 print(dGloop3)
 # --> 5.15
 
 #Calculate the free energy of an exterior loop
-dGloop4 = model.loop_energy(loop=['AA+UU'], structure='((+))')
+dGloop4 = my_model.loop_energy(loop=['AA+UU'], structure='((+))')
 print(dGloop4)
 # --> -0.9
 
 #Calculate the free energy of a multiloop
-dGloop5 = model.loop_energy(loop=['AAU+ACU+AGU'], structure='(.(+).(+).)')
+dGloop5 = my_model.loop_energy(loop=['AAU+ACU+AGU'], structure='(.(+).(+).)')
 print(dGloop5)
 # --> 9.355
 ```
 
 ## Compute stacking state free energies
 
-`Model.stack_energies` calculates the [stacking state free energies](definitions.md#loop-free-energies) for the subensemble of stacking states in a single loop. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. The algorithm returns a list of stacking states and the free energy for each in kcal/mol:
+The `stack_energies` method operates on a `Model` object to calculate the [stacking state free energies](definitions.md#loop-free-energies) for the subensemble of stacking states in a single loop. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. The algorithm returns a list of stacking states and the free energy for each in kcal/mol.
 
-For a loop defined as a list of N sequences, a stacking state is specified as a string composed of one letter per sequence. For each sequence, the returned letter is:
+For a loop defined as a list of N snippets, a stacking state is specified as a string composed of one letter per snippet. For each snippet, the returned letter is:
 
-- `‘b’` if 1) the sequence is between coaxial stacking base pairs, or 2) both the 5' and 3' unpaired nucleotides are dangling on adjacent base pairs
-- `‘l’` if only the 5'-most unpaired base is dangling on its adjacent base pair
-- `‘r’` if only the 3'-most unpaired base is dangling on its adjacent base pair
-- `‘n’` if no bases in the sequence are engaged in dangle or coaxial stacking
+- `'s'` if the snippet contains only 2 nucleotides, each base-paired to a nucleotide in the adjacent snippet, with the two base pairs coaxially stacked on each other 
+- `'b'` if  both the 5' and 3' unpaired nucleotides are dangle stacking on adjacent base pairs
+- `'l'` if only the 5'-most unpaired base is dangle stacking on its adjacent base pair
+- `'r'` if only the 3'-most unpaired base is dangle stacking its adjacent base pair
+- `'n'` if no bases in the sequence are engaged in coaxial or dangle stacking
 
 ``` python
 # Calculate the dangle stacking state free energies for an exterior loop
-model.stack_energies('CA+UC', '.(+).')
+model.stack_energies(loop='CA+UC', structure='.(+).')
 # --> {'nl': -0.1, 'nn': 0.0, 'rl': -0.6, 'rn': -0.3}
-# --> {'.(+)<': -0.1, '.(+).': 0.0, '>(+)<': -0.6, '>(+).': -0.3}
 
 # Calculate the coaxial stacking state free energies for an exterior loop
-model.stack_energies('AA+U+U', structure='((+)+)')
+model.stack_energies(loop='AA+U+U', structure='((+)+)')
 # --> {'bnn': -0.9, 'nnn': 0.0}
-# --> {'[[+)+)': -0.9, '[[+)+)': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
-model.stack_energies('AU+AU+AU', structure='((+)(+))')
+model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
 # --> {'bnn': -1.1, 'nbn': -1.1, 'nnb': -1.1, 'nnn': 0.0}
-# --> {'[[+)(+))': -1.1, '((+][+))': -1.1, '((+)(+]]': -1.1, '((+)(+))': 0.0}
 ```
 
 For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
 
 ``` python
-model.stack_energies('AAAAU', structure='(...)')
+model.stack_energies(loop='AAAAU', structure='(...)')
 # --> {'n': 4.1}
 # --> {'(...)': 4.1}
 ```
