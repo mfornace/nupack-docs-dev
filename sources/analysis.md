@@ -131,7 +131,7 @@ tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 tube_results
 ```
 Output:
-> <img src="/figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
+> <img src="figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
 For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
@@ -152,7 +152,7 @@ tube_results2
 ```
 Output:
 
-> <img src="/figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
+> <img src="figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
 
 Note that `pairs` and `sample` results are too large to be included in the summary table. See below for [programmatic access](#programmatic-access) to these results.
 
@@ -218,7 +218,7 @@ complex_results1
 
 Output:
 
-> <img src="/figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
+> <img src="figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
 
 
 
@@ -266,7 +266,7 @@ concentration_results2
 
 Output:
 
-> <img src="/figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
+> <img src="figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
 
 ---
 
@@ -328,7 +328,7 @@ my_result
 
 Output:
 
-> <img src="/figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
+> <img src="figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
 
 ### Textual display
 
@@ -373,7 +373,7 @@ The information contained in these two fields depends on which type of analysis 
 - For [`complex_analysis`](#run-a-complex-analysis-job), only the `.complexes` field is non-empty.
 - For [`complex_concentrations`](#run-a-complex-concentration-job), only the `.tubes` field is non-empty.
 
-For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` identifier (or via the assigned or auto-generated name of a `Complex` or `Tube`) as described in the following two sections. 
+For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` identifier (or via the assigned or auto-generated name of a `Complex` or `Tube`) as described in the following two sections.
 
 
 ### Results for individual complexes
@@ -382,7 +382,7 @@ You can index into `AnalysisResult` object via a `Complex` identifier (or via th
 
 - `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
-- `pairs`: the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` object containing a `.to_array()` method for conversion to numpy as illustrated below).
+- `pairs`: the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairsMatrix` object containing a `.to_array()` method for conversion to numpy as illustrated below).
 - `sample`: a list of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures), each an instance of a `Structure` object.
 - `mfe`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
 - `subopt`: a list of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of its lowest-energy stacking state that falls within the energy gap.
@@ -424,7 +424,7 @@ Equilibrium pair probabilities:
 ```
 
 !!! Note
-    Note that a complex such as `(a+a)` that was auto-generated as part of the test tube ensemble (using `max_size=2`) does not have an identifier, but does have an auto-generated name that can be used to index an `AnalysisResult`: 
+    Note that a complex such as `(a+a)` that was auto-generated as part of the test tube ensemble (using `max_size=2`) does not have an identifier, but does have an auto-generated name that can be used to index an `AnalysisResult`:
 
     ```python
     aa_result = my_result['(a+a)']
@@ -466,7 +466,7 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 
 Output:
 
-> <img src="/figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
+> <img src="figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
 For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix via the `to_sparse()` method.
 
