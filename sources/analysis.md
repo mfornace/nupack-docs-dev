@@ -131,7 +131,7 @@ tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 tube_results
 ```
 Output:
-> <img src="/figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
+> <img src="figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
 For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
@@ -152,7 +152,7 @@ tube_results2
 ```
 Output:
 
-> <img src="/figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
+> <img src="figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
 
 Note that `pairs` and `sample` results are too large to be included in the summary table. See below for [programmatic access](#programmatic-access) to these results.
 
@@ -218,7 +218,7 @@ complex_results1
 
 Output:
 
-> <img src="/figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
+> <img src="figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
 
 
 
@@ -266,7 +266,7 @@ concentration_results2
 
 Output:
 
-> <img src="/figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
+> <img src="figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
 
 ---
 
@@ -328,7 +328,7 @@ my_result
 
 Output:
 
-> <img src="/figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
+> <img src="figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
 
 ### Textual display
 
@@ -466,7 +466,7 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 
 Output:
 
-> <img src="/figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
+> <img src="figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
 For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix via the `to_sparse()` method.
 
