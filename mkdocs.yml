@@ -1,0 +1,111 @@
+docs_dir: ./sources
+
+# pages:
+#   - Material: index.md
+#   - Getting started: model.md
+
+nav:
+- index.md
+- definitions.md
+- model.md
+- analysis.md
+- design.md
+- utilities.md
+- start.md
+- advanced.md
+# - License: license.md
+# - Analysis:
+#  - Complex Analysis: complex-analysis.md
+#  - Test Tube Analysis: tube-analysis.md
+#- Design:
+#  - Complex Design: complex-design.md
+#  - Test Tube Design: tube-design.md
+#- Getting Started:
+#- Installation: installation.md
+#  - Examples: examples.md
+#- Acknowledgments: acknowledgments.md
+#- References:
+#  - Installation: installation.md
+# - definitions.md
+# - model.md
+# - analysis.md
+# - design.md
+# - utilities.md
+# - started.md
+# - Sandbox: sandbox.md
+# - Sandbox2: sandbox3.md
+# - Markdown Examples:
+  # - Subsection 1: markdown.md
+  # - Subsection 2: markdown-sub.md
+#- Versions: versions.md
+# - Python API:
+#   - Model: api/model.md
+#   - Analysis: api/analysis.md
+#   - Design: api/design.md
+#   - Concentrations: api/concentration.md
+#   - Drawing: api/drawing.md
+#- Basics: basics.md
+#- License: license.md
+# - Other: other.md
+
+site_dir: _build/site
+site_name: NUPACK User Guide
+
+theme:
+  name: readthedocs
+  language: en
+
+#theme:
+#  name: material
+#  language: en
+#  custom_dir: overrides
+#  features:
+#  - instant
+
+  # logo: nupack-hairpin.svg
+  # - tabs
+
+  # palette:
+  #   primary: orange
+  #   accent: blue
+# theme:
+#   name: material
+#     primary: orange
+#     accent: orange
+#   language: en
+#   palette:
+
+plugins:
+  - search
+  # - pdf-export
+
+markdown_extensions:
+  # - markdown_include.include:
+  #     base_path: sources
+      # headingOffset: 1
+  - pymdownx.arithmatex
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed
+  - footnotes
+  - sane_lists
+  - smarty
+  - admonition
+  # - codehilite
+  # - abbr
+  - pymdownx.betterem:
+      smart_enable: all
+  - toc:
+      permalink: true
+      # toc_depth: 2
+  - mdx_bib:
+      bibtex_file: nupack.bib
+      order: unsorted
+
+extra_javascript:
+  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+
+
+extra_css:
+  - extra.css
+
