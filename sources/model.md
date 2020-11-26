@@ -141,7 +141,7 @@ Parameters from [@Mathews99] with terminal mismatch free energies in exterior lo
 
 
 ## Compute loop free energy
-The `loop_energy` method operates on a `Model` object to calculate the [loop free energy](definitions.md#loop-free-energies) in kcal/mol. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. For example: 
+The `loop_energy` method operates on a `Model` object to calculate the [loop free energy](definitions.md#loop-free-energies) in kcal/mol. The loop sequence is specified with keyword `loop` and the loop structure is specified with keyword `structure`. For example:
 
 ``` python
 my_model = Model(material='RNA', ensemble='stacking')
@@ -173,24 +173,30 @@ The `stack_energies` method operates on a `Model` object to calculate the [stack
 
 For a loop defined as a list of N snippets, a stacking state is specified as a string composed of one letter per snippet. For each snippet, the returned letter is:
 
-- `'s'` if the snippet contains only 2 nucleotides, each base-paired to a nucleotide in the adjacent snippet, with the two base pairs coaxially stacked on each other 
+- `'s'` if the snippet contains only 2 nucleotides, each base-paired to a nucleotide in the adjacent snippet, with the two base pairs coaxially stacked on each other
 - `'b'` if  both the 5' and 3' unpaired nucleotides are dangle stacking on adjacent base pairs
-- `'l'` if only the 5'-most unpaired base is dangle stacking on its adjacent base pair
-- `'r'` if only the 3'-most unpaired base is dangle stacking its adjacent base pair
+- `'5'` if only the 5'-most unpaired base is dangle stacking on its adjacent base pair
+- `'3'` if only the 3'-most unpaired base is dangle stacking its adjacent base pair
 - `'n'` if no bases in the sequence are engaged in coaxial or dangle stacking
+
+See the following figure for examples of multi and exterior loops annotated by the stacking state for each snippet:
+
+> <img src="../figs/stackingnotation.png" alt="Stacking notation" title="Stacking notation" width="600" />
+
+In Python, the `stack_energies` method returns a `dict` from stacking state strings to stacking state energies:
 
 ``` python
 # Calculate the dangle stacking state free energies for an exterior loop
 model.stack_energies(loop='CA+UC', structure='.(+).')
-# --> {'nl': -0.1, 'nn': 0.0, 'rl': -0.6, 'rn': -0.3}
+# --> {'n5': -0.1, 'nn': 0.0, '35': -0.6, '3n': -0.3}
 
 # Calculate the coaxial stacking state free energies for an exterior loop
 model.stack_energies(loop='AA+U+U', structure='((+)+)')
-# --> {'bnn': -0.9, 'nnn': 0.0}
+# --> {'snn': -0.9, 'nnn': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
 model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
-# --> {'bnn': -1.1, 'nbn': -1.1, 'nnb': -1.1, 'nnn': 0.0}
+# --> {'snn': -1.1, 'nsn': -1.1, 'nns': -1.1, 'nnn': 0.0}
 ```
 
 For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
@@ -198,5 +204,4 @@ For loops that are not multiloops or exterior loops, this function returns a sin
 ``` python
 model.stack_energies(loop='AAAAU', structure='(...)')
 # --> {'n': 4.1}
-# --> {'(...)': 4.1}
 ```
