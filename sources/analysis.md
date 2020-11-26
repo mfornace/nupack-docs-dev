@@ -308,9 +308,9 @@ Scalar results of NUPACK analysis jobs can be conveniently displayed as a table,
 ```python
 a = Strand('CCC', name='a')
 b = Strand('GGG', name='b')
-c = Complex([a, b])
+c = Complex([a, b], name='c')
 
-t1 = Tube({a: 1e-6, b: 1e-9}, complexes=SetSpec(include=[c]), name='t1')
+t1 = Tube({a: 1e-6, b: 1e-9}, complexes=SetSpec(max_size=2, include=[c]), name='t1')
 t2 = Tube({a: 1e-8, b: 1e-9}, complexes=SetSpec(include=[c]), name='t2')
 
 my_model = Model()
@@ -373,12 +373,12 @@ The information contained in these two fields depends on which type of analysis 
 - For [`complex_analysis`](#run-a-complex-analysis-job), only the `.complexes` field is non-empty.
 - For [`complex_concentrations`](#run-a-complex-concentration-job), only the `.tubes` field is non-empty.
 
-For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` as described in the following two sections. You may also index using just the name of the `Complex` or `Tube` instead.
+For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` identifier (or via the assigned or auto-generated name of a `Complex` or `Tube`) as described in the following two sections. 
 
 
 ### Results for individual complexes
 
-You can index into `AnalysisResult` object via either a `Complex` object or a complex name to get a `ComplexResult` object. This contains all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
+You can index into `AnalysisResult` object via a `Complex` identifier (or via the name of a `Complex`) to get a `ComplexResult` object containing all the complex ensemble quantities that were calculated in a `tube_analysis` or `complex_analysis` calculation. A `ComplexResult` contains the following fields (if a quantity was not computed, the field is set to `None`):
 
 - `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
@@ -394,10 +394,10 @@ You can index into `AnalysisResult` object via either a `Complex` object or a co
 
 ---
 
-For example, we can index the `AnalysisResult` object `my_result` with complex `c` to obtain a `ComplexResult` object `c_result` that enables printing of specific physical quantities for that complex:
+For example, we can index the `AnalysisResult` object `my_result` with complex `c` (or by its name `'c'`) to obtain a `ComplexResult` object `c_result` that enables printing of specific physical quantities for that complex:
 
 ```python
-c_result = my_result[c] # same as my_result['c']
+c_result = my_result[c] # equivalent to my_result['c']
 print('Physical quantities for complex c')
 print('Complex free energy: %.2f kcal/mol' % c_result.free_energy)
 print('Partition function: %.2e' % c_result.pfunc)
@@ -423,6 +423,14 @@ Equilibrium pair probabilities:
  [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]
 ```
 
+!!! Note
+    Note that a complex such as `(a+a)` that was auto-generated as part of the test tube ensemble (using `max_size=2`) does not have an identifier, but does have an auto-generated name that can be used to index an `AnalysisResult`: 
+
+    ```python
+    aa_result = my_result['(a+a)']
+    ```
+
+
 If desired, the MFE proxy structure can be represented as a [structure matrix](definitions.md#secondary-structure) of zeros and ones:
 
 ```python
@@ -442,7 +450,7 @@ MFE proxy structure:
  [1 0 0 0 0 0]]
 ```
 
-The equilibrium pair probability matrix is returned as a `PairMatrix`, which for most use-cases may be converted into a full `numpy` array via the `to_array()` method or to a sparse `scipy` matrix via the `to_sparse()` method. It can be easily displayed visually inside a Jupyter notebook using the `to_array()` method, for example:
+The equilibrium pair probability matrix is returned as a `PairsMatrix` object, which can be converted to a `numpy` array via the `to_array()` method for display in a Jupyter notebook:
 
 ```python
 import matplotlib.pyplot as plt
@@ -460,7 +468,11 @@ Output:
 
 > <img src="/figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
-Note that some users may need to include `%matplotlib inline` at the top of their notebook for the plot to appear.
+For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix via the `to_sparse()` method.
+
+
+!!! Note
+    Note that some users may need to include `%matplotlib inline` at the top of the Jupyter notebook for the pairs plot to appear.
 
 ---
 
@@ -518,7 +530,7 @@ The equilibrium concentration of (b) is 1.00e-09 M
 
 ### Results for individual test tubes
 
-You can index into an `AnalysisResult` object via either a `Tube` object or a tube name. This will return a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
+You can index into an `AnalysisResult` object via a `Tube` identifier (or via the name of a `Tube`) to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar (held as a `float`).
 - `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indices refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
@@ -526,7 +538,7 @@ You can index into an `AnalysisResult` object via either a `Tube` object or a tu
 Concentrations may be printed as follows:
 
 ```python
-t1_result = my_result[t1] # same as my_result['t1']
+t1_result = my_result[t1] # equivalent to my_result['t1']
 for my_complex, conc in t1_result.complex_concentrations.items():
     print('The equilibrium concentration of %s is %.3e M' % (my_complex.name, conc))
 ```

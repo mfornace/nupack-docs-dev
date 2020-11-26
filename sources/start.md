@@ -80,7 +80,7 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
     python3 -m pip install -U matplotlib jupyterlab
     ```
 
-    If you are using an Anaconda installation, it is preferred that you replace the above commands with:
+    Alternatively, if you are using Anaconda, replace the above commands with:
 
     ```bash
     conda install --update-all pip matplotlib jupyterlab
@@ -181,8 +181,10 @@ Directions:
 1. On a Mac/Linux system, navigate to the `source` directory within the NUPACK download:
 
 ```bash
-cd ~/Downloads/nupack-4/source
+cd ~/Downloads/nupack-VERSION/source
 ```
+
+Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4.0.0`).
 
 2. Build the included `vcpkg` submodule using:
 

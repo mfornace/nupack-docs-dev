@@ -315,7 +315,7 @@ The `complex_design` class enables specification of a [constrained multi-complex
 ```python
 my_model = Model()
 my_complexes = [C1, C2]
-my_design = complex_design(complexes=[C1, C2],
+my_design = complex_design(complexes=my_complexes,
     hard_constraints=[], soft_constraints=[],
     defect_weights=None, options=None, model=my_model)
 
@@ -792,10 +792,10 @@ weights = Weights(my_tubes) # All weights are initialized to 1
 The weights are initialized to 1, but can be customized to take any value in the interval $[0,\infty)$. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: Domain, TargetStrand, TargetComplex, TargetTube). For example:
 
 ```python
-# weight on domain a1
+# weight on domain a1 in all target strands, target complexes, and target tubes
 weights[a1] *= 2
 
-# weight on target strand A
+# weight on target strand A in all target conplexes and target tubes
 weights[:, A] = 4
 
 # weight on tube t2
@@ -816,18 +816,9 @@ weights[b, :, :, t2] = 3
 # global weight on the entire multi-tube ensemble defect
 weights[:,:,:,:] *=2
 ```
+
 !!! Note
     Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.
-
-In a complex design, a `Weights` object may be initialized for just a list of complexes. The fourth axis (tube) is then absent:
-
-```python
-complex_weights = Weights([AA, AB])
-
-complex_weights[a1] *= 2
-complex_weights[:, A] = 4
-complex_weights[a2, A, AA] = 0.75
-```
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 
@@ -860,6 +851,23 @@ Domain Strand Complex Tube  Weight
 ```
 
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.table`.
+
+!!! Note
+    For a [complex design job](design.md#run-a-complex-design-job), the `Weights` object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted: 
+
+    ```python
+    my_complexes = [AB, AA]
+    complex_weights = Weights(my_complexes)
+
+    # weight on domain a1 in all target strands and target complexes
+    complex_weights[a1] *= 2 
+
+    # weight on target strand A in all target complexes
+    complex_weights[:, A] = 4   
+
+    # weight on domain a2 in target strand A in target complex AA
+    complex_weights[a2, A, AA] = 0.75 
+    ```
 
 ---
 
