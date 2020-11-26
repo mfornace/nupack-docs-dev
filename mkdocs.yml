@@ -48,8 +48,10 @@ nav:
 #- License: license.md
 # - Other: other.md
 
-site_dir: _build/site
+  #site_dir: _build/site
 site_name: NUPACK User Guide
+repo_url: http://nupack.org/
+site_url: https://piercelab-caltech.github.io/nupack-docs/
 
 theme:
   name: readthedocs
