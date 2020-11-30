@@ -476,7 +476,7 @@ For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix 
 
 
 !!! Note
-    Note that some users may need to include `%matplotlib inline` at the top of the Jupyter notebook for the pairs plot to appear.
+    If you have not using an up-to-date version of Python3, you may need to include `%matplotlib inline` at the top of the Jupyter notebook for the pairs plot to appear.
 
 ---
 
