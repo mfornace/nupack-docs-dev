@@ -147,22 +147,22 @@ The `loop_energy` method operates on a `Model` object to calculate the [loop fre
 my_model = Model(material='RNA', ensemble='stacking')
 
 #Calculate the free energy of an unstructured strand
-dGloop2 = my_model.loop_energy(loop=['AAUU'], structure='....')
+dGloop2 = my_model.loop_energy(loop='AAUU', structure='....')
 print(dGloop2)
 # --> 0.0
 
 #Calculate the free energy of a hairpin loop
-dGloop3 = my_model.loop_energy(loop=['AACCCUU'], structure='(....)')
+dGloop3 = my_model.loop_energy(loop='AACCCUU', structure='(.....)')
 print(dGloop3)
 # --> 5.15
 
 #Calculate the free energy of an exterior loop
-dGloop4 = my_model.loop_energy(loop=['AA+UU'], structure='((+))')
+dGloop4 = my_model.loop_energy(loop='AA+UU', structure='((+))')
 print(dGloop4)
 # --> -0.9
 
 #Calculate the free energy of a multiloop
-dGloop5 = my_model.loop_energy(loop=['AAU+ACU+AGU'], structure='(.(+).(+).)')
+dGloop5 = my_model.loop_energy(loop='AAU+ACU+AGU', structure='(.(+).(+).)')
 print(dGloop5)
 # --> 9.355
 ```
@@ -187,21 +187,21 @@ For a specified multiloop or exterior loop sequence and structure, the `stack_en
 
 ```python
 # Calculate the dangle stacking state free energies for an exterior loop
-model.stack_energies(loop='CA+UC', structure='.(+).')
+my_model.stack_energies(loop='CA+UC', structure='.(+).')
 # --> {'n5': -0.1, 'nn': 0.0, '35': -0.6, '3n': -0.3}
 
 # Calculate the coaxial stacking state free energies for an exterior loop
-model.stack_energies(loop='AA+U+U', structure='((+)+)')
+my_model.stack_energies(loop='AA+U+U', structure='((+)+)')
 # --> {'snn': -0.9, 'nnn': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
-model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
+my_model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
 # --> {'snn': -1.1, 'nsn': -1.1, 'nns': -1.1, 'nnn': 0.0}
 ```
 
 For loops that are not multiloops or exterior loops, the loop free energy is returned with a string indicating that there is no stacking state. For example, for a hairpin loop:
 
 ```python
-model.stack_energies(loop='AAAAU', structure='(...)')
+my_model.stack_energies(loop='AAAAU', structure='(...)')
 # --> {'n': 4.1}
 ```

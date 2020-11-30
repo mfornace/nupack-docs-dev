@@ -321,7 +321,7 @@ For complex $j$ with target structure $s_j$, the dimensional complex ensemble de
                             \end{array}}
                             \overline P^{a, b}(\phi_j) S^{a,b}(s_j),
 \end{align}
-quantifies the equilibrium number of incorrectly paired nucleotides over the ensemble $\overline\Gamma(\phi_j)$ relative to $s_j$ [@dirks04,@zadeh11b]. Here, $\overline P(\phi_j)$ is the equilibrium base-pairing probability
+quantifies the equilibrium number of incorrectly paired nucleotides over the ensemble $\overline\Gamma(\phi_j)$ relative to $s_j$ [@Dirks04,@Zadeh11b]. Here, $\overline P(\phi_j)$ is the equilibrium base-pairing probability
 matrix and $S(s_j)$ is the [target structure matrix](definitions.md#secondary-structure) for $s_j$. The **normalized complex ensemble defect** is then denoted
 
 \begin{align}
