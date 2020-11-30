@@ -2,7 +2,7 @@
 
 ## Example Jupyter notebooks
 
-Here, we provide Jupyter notebooks for a variety of examples that that can be [downloaded](https://piercelab-caltech.github.io/nupack-docs/examples.zip) for interactive use.
+Here, we provide Jupyter notebooks for a variety of examples that can be [downloaded](https://piercelab-caltech.github.io/nupack-docs/examples.zip) for interactive use.
 
 
 ### Analysis examples
