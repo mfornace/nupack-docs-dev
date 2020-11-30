@@ -220,7 +220,7 @@ my_results[0]  # display results table for first design trial
 
 Output:
 
-> <img src="/figs/design/1-optimization.png" alt="Optimization output" title="Example optimization output" width="620" />
+> <img src="../figs/design/1-optimization.png" alt="Optimization output" title="Example optimization output" width="620" />
 
 Output table displays:
 
@@ -325,7 +325,7 @@ result[0]
 
 Output:
 
-> <img src="/figs/design/2-complex.png" alt="Complex design output" title="Example complex design output" width="350" />
+> <img src="../figs/design/2-complex.png" alt="Complex design output" title="Example complex design output" width="350" />
 
 A `complex_design` object supports the `launch()`, `run()`, and `evaluate()` methods just as for a `tube_design` object (see above).
 
@@ -805,7 +805,7 @@ weights[:, :, :, t2] = 2
 weights[:, :, AB, t1] = 5
 
 # weight on domain a2 in target strand A in all target complexes in all tubes
-weights[a2, A, :, :] = 0.75
+weights[a2, A] = 0.75
 
 # weight on domain a1 in all target strands in target complex AA in tube t2
 weights[a1, :, AA, t2] = 0.5
@@ -814,7 +814,7 @@ weights[a1, :, AA, t2] = 0.5
 weights[b, :, :, t2] = 3
 
 # global weight on the entire multi-tube ensemble defect
-weights[:,:,:,:] *=2
+weights[:] *=2
 ```
 
 !!! Note
@@ -828,7 +828,7 @@ weights
 
 Output:
 
-<img src="/figs/design/3-weights.png" alt="Weights output" title="Example weights output" width="300" />
+<img src="../figs/design/3-weights.png" alt="Weights output" title="Example weights output" width="300" />
 
 Alternatively, you can view an ASCII representation of the same data by using the `print` function:
 
@@ -853,20 +853,20 @@ Domain Strand Complex Tube  Weight
 For experienced Python users, a `Weights` object contains a `pandas.DataFrame` as a single member `.table`.
 
 !!! Note
-    For a [complex design job](design.md#run-a-complex-design-job), the `Weights` object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted: 
+    For a [complex design job](design.md#run-a-complex-design-job), the `Weights` object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted:
 
     ```python
     my_complexes = [AB, AA]
     complex_weights = Weights(my_complexes)
 
     # weight on domain a1 in all target strands and target complexes
-    complex_weights[a1] *= 2 
+    complex_weights[a1] *= 2
 
     # weight on target strand A in all target complexes
-    complex_weights[:, A] = 4   
+    complex_weights[:, A] = 4
 
     # weight on domain a2 in target strand A in target complex AA
-    complex_weights[a2, A, AA] = 0.75 
+    complex_weights[a2, A, AA] = 0.75
     ```
 
 ---
@@ -937,7 +937,7 @@ my_result
 ```
 Output:
 
-> <img src="/figs/design/4-output.png" alt="Design output" title="Example design output" width="600" />
+> <img src="../figs/design/4-output.png" alt="Design output" title="Example design output" width="600" />
 
 ### Textual display
 
@@ -1007,7 +1007,7 @@ my_result.to_analysis
 
 Output:
 
-> <img src="/figs/design/5-mapping.png" alt="Design output" title="Example design output" width="220" />
+> <img src="../figs/design/5-mapping.png" alt="Design output" title="Example design output" width="220" />
 
 ```python
 my_result.defects
@@ -1015,7 +1015,7 @@ my_result.defects
 
 Output:
 
-> <img src="/figs/design/6-defects.png" alt="Design output" title="Example design output" width="600" />
+> <img src="../figs/design/6-defects.png" alt="Design output" title="Example design output" width="600" />
 
 ```python
 my_result.concentrations
@@ -1023,7 +1023,7 @@ my_result.concentrations
 
 Output:
 
-> <img src="/figs/design/7-concentrations.png" alt="Design output" title="Example design output" width="630" />
+> <img src="../figs/design/7-concentrations.png" alt="Design output" title="Example design output" width="630" />
 
 ```python
 my_result.analysis_result
@@ -1031,7 +1031,7 @@ my_result.analysis_result
 
 Output:
 
-> <img src="/figs/design/8-analysis.png" alt="Design output" title="Example design output" width="270" />
+> <img src="../figs/design/8-analysis.png" alt="Design output" title="Example design output" width="270" />
 
 You can query any field of the `DesignResult` using Python, for example:
 
@@ -1080,7 +1080,7 @@ my_evaluated_result
 
 Output:
 
-> <img src="/figs/design/9-evaluation.png" alt="Evaluation output" title="Example evaluation output" width="650" />
+> <img src="../figs/design/9-evaluation.png" alt="Evaluation output" title="Example evaluation output" width="650" />
 
 !!! Note
 

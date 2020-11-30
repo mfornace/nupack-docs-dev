@@ -131,7 +131,7 @@ tube_results = tube_analysis(tubes=[t1, t2], model=model1)
 tube_results
 ```
 Output:
-> <img src="/figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
+> <img src="../figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" />
 
 For each complex in the ensemble, the [partition function](definitions.md#partition-function) and [complex free energy](definitions.md#complex-free-energy) (units of kcal/mol) are displayed. For each tube, the [equilibrium complex concentration](definitions.md#equilibrium-complex-concentration) of each complex in the tube is displayed (units of M).
 
@@ -152,7 +152,7 @@ tube_results2
 ```
 Output:
 
-> <img src="/figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
+> <img src="../figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" />
 
 Note that `pairs` and `sample` results are too large to be included in the summary table. See below for [programmatic access](#programmatic-access) to these results.
 
@@ -218,7 +218,7 @@ complex_results1
 
 Output:
 
-> <img src="/figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
+> <img src="../figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" />
 
 
 
@@ -266,7 +266,7 @@ concentration_results2
 
 Output:
 
-> <img src="/figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
+> <img src="../figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" />
 
 ---
 
@@ -306,8 +306,8 @@ The optional `options` keyword specifies options that modify the calculations pe
 Scalar results of NUPACK analysis jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube analysis job:
 
 ```python
-a = Strand('CCC', name='a')
-b = Strand('GGG', name='b')
+a = Strand('CCG', name='a')
+b = Strand('CGG', name='b')
 c = Complex([a, b], name='c')
 
 t1 = Tube({a: 1e-6, b: 1e-9}, complexes=SetSpec(max_size=2, include=[c]), name='t1')
@@ -328,7 +328,7 @@ my_result
 
 Output:
 
-> <img src="/figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
+> <img src="../figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" />
 
 ### Textual display
 
@@ -345,12 +345,16 @@ Output:
 >   Complex      Pfunc dG (kcal/mol) MFE (kcal/mol)
 > 0     (a)  1.0000e+0         0.000          0.000
 > 1     (b)  1.0000e+0         0.000          0.000
-> 2   (a+b)  4.5255e+3        -5.188         -4.981
+> 2       c  1.3519e+3        -4.443         -4.081
+> 3   (a+a)  1.8846e+1        -1.810         -1.972
+> 4   (b+b)  1.7435e+2        -3.181         -3.523
 > Concentration results:
 > Complex    t1 (M)   Complex    t2 (M)
 >     (a) 1.000e-06       (a) 1.000e-08
->     (b) 9.999e-10       (b) 1.000e-09
->   (a+b) 8.207e-14     (a+b) 8.208e-16
+>     (b) 1.000e-09       (b) 1.000e-09
+>   (a+a) 3.418e-13         c 2.452e-16
+>       c 2.452e-14
+>   (b+b) 3.162e-18
 > ```
 
 For convenience, you can print the identical ASCII result to a text file using the `save_text` function:
@@ -373,7 +377,7 @@ The information contained in these two fields depends on which type of analysis 
 - For [`complex_analysis`](#run-a-complex-analysis-job), only the `.complexes` field is non-empty.
 - For [`complex_concentrations`](#run-a-complex-concentration-job), only the `.tubes` field is non-empty.
 
-For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` identifier (or via the assigned or auto-generated name of a `Complex` or `Tube`) as described in the following two sections. 
+For convenience, you can index into an `AnalysisResult` via a `Complex` or `Tube` identifier (or via the assigned or auto-generated name of a `Complex` or `Tube`) as described in the following two sections.
 
 
 ### Results for individual complexes
@@ -382,7 +386,7 @@ You can index into `AnalysisResult` object via a `Complex` identifier (or via th
 
 - `pfunc`: the complex [partition function](definitions.md#partition-function) (held as a `decimal.Decimal`; convert to a `float` via `float(pf)` or calculate the logarithm via `float(pf.log())`).
 - `free_energy`: the [complex free energy](definitions.md#complex-free-energy) in kcal/mol (held as a `float`).
-- `pairs`: the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairMatrix` object containing a `.to_array()` method for conversion to numpy as illustrated below).
+- `pairs`: the matrix of [equilibrium base-pairing probabilities](definitions.md#equilibrium-base-pairing-probabilities) (held as a `PairsMatrix` object containing a `.to_array()` method for conversion to numpy as illustrated below).
 - `sample`: a list of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures), each an instance of a `Structure` object.
 - `mfe`: a list of [MFE proxy structures](definitions.md#mfe-proxy-structure). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of the MFE stacking state.
 - `subopt`: a list of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures). Each entry contains fields `.structure`, `.energy`, and `.stack_energy`. `.energy` is the free energy of the MFE proxy secondary structure, while `.stack_energy` is the free energy of its lowest-energy stacking state that falls within the energy gap.
@@ -410,21 +414,21 @@ Output:
 
 ```
 Physical quantities for complex c
-Complex free energy: -5.19 kcal/mol
-Partition function: 4.53e+03
+Complex free energy: -4.44 kcal/mol
+Partition function: 1.35e+03
 MFE proxy structure: (((+)))
-Free energy of MFE proxy structure: -4.98 kcal/mol
+Free energy of MFE proxy structure: -4.08 kcal/mol
 Equilibrium pair probabilities:
-[[0.1002 0.0000 0.0000 0.0007 0.1474 0.7518]
- [0.0000 0.0037 0.0000 0.1474 0.8307 0.0182]
- [0.0000 0.0000 0.1904 0.7910 0.0185 0.0001]
- [0.0007 0.1474 0.7910 0.0609 0.0000 0.0000]
- [0.1474 0.8307 0.0185 0.0000 0.0035 0.0000]
- [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]
+[[0.1000 0.0000 0.0000 0.0000 0.0061 0.8938]
+ [0.0000 0.0083 0.0000 0.0000 0.9873 0.0044]
+ [0.0000 0.0000 0.3839 0.6161 0.0000 0.0000]
+ [0.0000 0.0000 0.6161 0.3839 0.0000 0.0000]
+ [0.0061 0.9873 0.0000 0.0000 0.0066 0.0000]
+ [0.8938 0.0044 0.0000 0.0000 0.0000 0.1018]]
 ```
 
 !!! Note
-    Note that a complex such as `(a+a)` that was auto-generated as part of the test tube ensemble (using `max_size=2`) does not have an identifier, but does have an auto-generated name that can be used to index an `AnalysisResult`: 
+    Note that a complex such as `(a+a)` that was auto-generated as part of the test tube ensemble (using `max_size=2`) does not have an identifier, but does have an auto-generated name that can be used to index an `AnalysisResult`:
 
     ```python
     aa_result = my_result['(a+a)']
@@ -466,7 +470,7 @@ plt.savefig('my-figure.pdf') # optionally, save a PDF of your figure
 
 Output:
 
-> <img src="/figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
+> <img src="../figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
 For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix via the `to_sparse()` method.
 
@@ -490,9 +494,11 @@ for my_complex, complex_result in my_result.complexes.items():
 Output:
 
 ```
-Expected number of unpaired nucleotides at equilibrium in complex (a+b) = 0.59
-Expected number of unpaired nucleotides at equilibrium in complex (a) = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex c = 0.98
 Expected number of unpaired nucleotides at equilibrium in complex (b) = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex (a+a) = 2.70
+Expected number of unpaired nucleotides at equilibrium in complex (b+b) = 2.25
+Expected number of unpaired nucleotides at equilibrium in complex (a) = 3.00
 ```
 
 To collect a `dict` of MFEs for each complex:
@@ -506,7 +512,7 @@ print(my_mfes)
 Output:
 
 ```
-{'(a+b)': -4.981351375579834, '(a)': 0.0, '(b)': 0.0}
+{'c': -4.081351280212402, '(b)': 0.0, '(a+a)': -1.9719057083129883, '(b+b)': -3.5225014686584473, '(a)': 0.0}
 ```
 
 To print out the complex concentrations for a given tube:
@@ -519,9 +525,11 @@ for my_complex, conc in my_result.tubes[t1].complex_concentrations.items():
 Output:
 
 ```
-The equilibrium concentration of (a+b) is 8.21e-14 M
-The equilibrium concentration of (a) is 1.00e-06 M
+The equilibrium concentration of c is 2.45e-14 M
 The equilibrium concentration of (b) is 1.00e-09 M
+The equilibrium concentration of (a+a) is 3.42e-13 M
+The equilibrium concentration of (b+b) is 3.16e-18 M
+The equilibrium concentration of (a) is 1.00e-06 M
 ```
 
 ---
@@ -546,9 +554,11 @@ for my_complex, conc in t1_result.complex_concentrations.items():
 Output:
 
 ```
-The equilibrium concentration of (a+b) is 8.207e-14 M
+The equilibrium concentration of c is 2.452e-14 M
+The equilibrium concentration of (b) is 1.000e-09 M
+The equilibrium concentration of (a+a) is 3.418e-13 M
+The equilibrium concentration of (b+b) is 3.162e-18 M
 The equilibrium concentration of (a) is 1.000e-06 M
-The equilibrium concentration of (b) is 9.999e-10 M
 ```
 
 Test tube ensemble pair fractions may be printed as follows:
@@ -563,9 +573,9 @@ Output:
 [[1.0000 0.0000 0.0000 0.0000 0.0000 0.0000]
  [0.0000 1.0000 0.0000 0.0000 0.0000 0.0000]
  [0.0000 0.0000 1.0000 0.0000 0.0000 0.0000]
- [0.0000 0.0000 0.0001 0.9999 0.0000 0.0000]
- [0.0000 0.0001 0.0000 0.0000 0.9999 0.0000]
- [0.0001 0.0000 0.0000 0.0000 0.0000 0.9999]]
+ [0.0000 0.0000 0.0000 1.0000 0.0000 0.0000]
+ [0.0000 0.0000 0.0000 0.0000 1.0000 0.0000]
+ [0.0000 0.0000 0.0000 0.0000 0.0000 1.0000]]
 ```
 
 ### Saving a job summary

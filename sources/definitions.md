@@ -44,7 +44,7 @@ For example, $d_\textrm{seq}$(ACGU, SSWW) = 2. If $\phi_1$ and $\phi_2$ contain 
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a = \phi_2^a\\ 1: &\phi_1^a \neq \phi_2^a \end{array} \right.
 \end{align}
 
-For example, $d_\textrm{seq}$(ACGU, ACUU) = 1. 
+For example, $d_\textrm{seq}$(ACGU, ACUU) = 1.
 
 <hr>
 
@@ -67,7 +67,7 @@ Using DU+ notation, a duplex is represented by `D` and an unpaired region of len
 
 <!-- 4. **pair list notation**: A list of zero-based indices $p$ such that if $p_i = j$, bases $i$ and $j$ are paired, and if $p_i = i$, base $i$ is unpaired. Any secondary structure, including highly-nested pseudoknots, may be specified in this way. -->
 
-!!! Example  
+!!! Example
     <center>
 
     | Dot-parens-plus                       | RLE dot-parens-plus  | DU+ notation |
@@ -75,14 +75,14 @@ Using DU+ notation, a duplex is represented by `D` and an unpaired region of len
     | `((((((((((((..........))))))))))))`  |  `(12.10)12`         | `D12 U10`    |
     | `((((((((((((+))))))))))))..........` |  `(12+)12.10`        | `D12 + U10`  |
     | `((((((((((((+..........))))))))))))` |  `(12+.10)12`        |`D12 (+ U10)` |
-    
+
     </center>
 
     <p style="text-align:center;"><b>Table</b>: Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation.</p>
 
-!!! Example  
+!!! Example
     <p align="center">
-    <img src="/figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
+    <img src="../figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
     </p>
 
     <p style="text-align:center;"><b>Figure</b>: Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.</p>
@@ -94,7 +94,7 @@ In mathematical expressions, it is convenient to represent secondary structure $
 The **structure distance** between two secondary structures $s_1$ and $s_2$ of equal size ($|s_1|=|s_2|=N$) is the number of nucleotides in a different base-pairing state in the two structures:
 \begin{align}
 d_\textrm{struc}(s_1,s_2)=N-\sum_{1\le a\le N,~1\le b \le N} S_{a,b}(s_1)S_{a,b}(s_2)
-\end{align} 
+\end{align}
 
 <hr>
 
@@ -106,7 +106,7 @@ otherwise the structures are distinct [@Dirks07].
  -->
 
 <p align="center">
-<img src="/figs/complex.png" alt="Example complex" width="360"/>
+<img src="../figs/complex.png" alt="Example complex" width="360"/>
 </p>
 
 **Figure:** A complex of 3 strands with strand ordering $\pi$ = ABC.
@@ -125,7 +125,7 @@ For $L$ strands, there are $(L-1)!$ strand orderings if all strands are differen
 It is often convenient to define $\Psi$ to contain all complex species of up to $L_\mathrm{max}$ strands, although $\Psi$ can be defined to contain arbitrary complex species formed from the strand species in $\Psi^0$.
 
 <p align="center">
-<img src="/figs/tube.png" alt="Test tube" title="Example test tube" width="190" />
+<img src="../figs/tube.png" alt="Test tube" title="Example test tube" width="190" />
 </p>
 
 **Figure:** A test tube ensemble containing strain species $\Psi^0 = \{$A,B,C$\}$ interacting to form all complex species $\Psi$ of up to $L_{\rm max} = 3$ strands.
@@ -153,7 +153,7 @@ plus a sequence-dependent penalty: $\Delta G^\mathrm{terminalbp}_{a, b}$ for eac
 The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{a, b}$ over all closing base pairs $a\cdot b$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
 
 <p align="center">
-<img src="/figs/looptypes.png" alt="Loop Types" width="450"/>
+<img src="../figs/looptypes.png" alt="Loop Types" width="450"/>
 </p>
 
 **Figure:** Canonical loop types for a complex with strand ordering $\pi$ = ABC.
@@ -165,13 +165,13 @@ Within a multiloop or exterior loop, a base pair can
 form one **coaxial stack** with an adjacent base pair, or can form a **dangle stack** with at most two adjacent unpaired bases; unpaired bases can either form no stack, or can form a dangle stack with at most one adjacent base pair.
 
 <p align="center">
-<img src="/figs/multiloopstacking.png" alt="Coaxial and dangle stacking states for a multiloop" width="850"/>
+<img src="../figs/multiloopstacking.png" alt="Coaxial and dangle stacking states for a multiloop" width="850"/>
 </p>
 
 **Figure:** Coaxial and dangle stacking states for a multiloop.
 
 <p align="center">
-<img src="/figs/exteriorloopstacking.png" alt="Coaxial and dangle stacking states for two exterior loops" width="500"/>
+<img src="../figs/exteriorloopstacking.png" alt="Coaxial and dangle stacking states for two exterior loops" width="500"/>
 </p>
 
 **Figure:** Coaxial and dangle stacking states for two exterior loops.
@@ -463,7 +463,7 @@ We recommend using the multi-tube design ensemble instead of the multi-complex e
 
 !!! Example
     <p align="center">
-    <img src="/figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
+    <img src="../figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
     </p>
     **Figure: The advantages of test tube design over complex design.** **Top: Complex design.** Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube.
     **Bottom: Test tube design.** Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no
@@ -488,7 +488,7 @@ involving six on-pathway complexes (X, A$\cdot$ B, X$\cdot$ A, B, C, B$\cdot$ C)
 and numerous sequence domains (`a*` complementary to `a`, `b*` complementary to `b`, and so on).
 
 <p align="center">
-<img src="/figs/dicer-reaction-pathway.png" alt="Reaction pathway schematic." title="Reaction pathway schematic." width="680"/>
+<img src="../figs/dicer-reaction-pathway.png" alt="Reaction pathway schematic." title="Reaction pathway schematic." width="680"/>
 </p>
 
 **Figure: Reaction pathway schematic.** Conditional Dicer substrate formation via shape and sequence transduction with small conditional RNAs (scRNAs) [@Hochrein13].
@@ -546,7 +546,7 @@ Hence, these elementary step tubes design for full conversion of cognate reactan
 against local crosstalk between these same reactants.
 
 <p align="center">
-<img src="/figs/dicer-target-tubes.png" alt="Target test tubes." title="Target test tubes." width="680"/>
+<img src="../figs/dicer-target-tubes.png" alt="Target test tubes." title="Target test tubes." width="680"/>
 </p>
 
 **Figure: Target test tubes.**

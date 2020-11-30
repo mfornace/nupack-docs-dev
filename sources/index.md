@@ -17,7 +17,7 @@ NUPACK algorithms address two fundamental classes of problems:
 - **Sequence design:** given a set of desired equilibrium base-pairing properties, design the sequences of a set of DNA or RNA strands over a specified ensemble. Sequence design is performed subject to diverse user-specified sequence constraints including composition constraints, complementarity constraints, pattern prevention constraints, and biological constraints.
 
 <p align="center">
-<img src="/figs/NUPACK.png" alt="NUPACK Analysis and Design" title="NUPACK Analysis and Design" width="700"/>
+<img src="./figs/NUPACK.png" alt="NUPACK Analysis and Design" title="NUPACK Analysis and Design" width="700"/>
 </p>
 
 <p style="text-align:center;"><b>Figure</b>: Sequence analysis and design using NUPACK.</p>

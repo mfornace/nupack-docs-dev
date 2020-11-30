@@ -310,7 +310,7 @@ A `ComplexResult` is just a `namedtuple` of computed results for the given compl
 
 - `mfe`: a list of each [`Structure`](#structure-type) matching the minimum stacking state free energy.
 
-- `pairs`: a `PairMatrix` of shape (N, N) of the base pairing probabilities. `P[i, j]` is a `float` of the probability that bases of zero-based indices `i` and `j` are paired. The pair probabilities of an impossible complex are all set to 0.
+- `pairs`: a `PairsMatrix` of shape (N, N) of the base pairing probabilities. `P[i, j]` is a `float` of the probability that bases of zero-based indices `i` and `j` are paired. The pair probabilities of an impossible complex are all set to 0.
 
 - `sample`: a randomly ordered list of each [`Structure`](#structure-type) sampled from the equilibrium Boltzmann distribution. The structures yielded for an impossible complex are represented as pair lists with no base pairs.
 
