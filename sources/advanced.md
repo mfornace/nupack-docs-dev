@@ -28,7 +28,7 @@ config.cache = 8.0 # GB
 This flag may be set to `0.0` to disable caching if your hardware has very little memory.
 
 
-## Naming objects
+## Naming conventions
 
 Analysis objects of type `Strand`, `Complex`, `Tube` and design objects of type `Domain`, `TargetStrand`, `TargetComplex`, and `TargetTube` all accept a name specified using the `name` keyword. 
 
