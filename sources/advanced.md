@@ -28,33 +28,22 @@ config.cache = 8.0 # GB
 This flag may be set to `0.0` to disable caching if your hardware has very little memory.
 
 
-## Object naming
+## Naming objects
 
-Objects of type `Domain`, `Strand`, `TargetStrand`, `TargetComplex`, `Tube`, and `TargetTube` all accept a keyword argument of `name` to be specified by the user.
-
-!!!note "Note"
-    The name may specified as a `tuple` or `list` instead of a `str`, in which case a `'[]'` based string will be automatically generated. This is specifically useful for repeated definitions:
-
-    ```python
-    domains = [Domain('N6', name=['a', i]) for i in range(4)]
-    print([d.name for d in domains]) # --> ['a[0]', 'a[1]', 'a[2]', 'a[3]']
-    ```
-
-Note that for text formatting, the following behavior has been implemented on the following objects:
-
-- `str()` prints the value of the object
-- `repr()` prints a `<...>` expression similar to other standard python classes
-
-For example:
-
-```python
-s = Domain('N6', name='a')
-print(str(s)) # --> NNNNNN
-print(repr(s)) # --> <Domain a>
-```
+Analysis objects of type `Strand`, `Complex`, `Tube` and design objects of type `Domain`, `TargetStrand`, `TargetComplex`, and `TargetTube` all accept a name specified using the `name` keyword. 
 
 !!! note
-    In general, you should make every user-specified name unique. Uniqueness should hold across different classes of objects (`Domain`, `Strand`, etc.).
+    Within the context of a single calculation, every object name must be unique (e.g., each `Strand`, `Complex`, and `Tube` in an analysis calculation must have a unique name).
+
+The name may specified as a `tuple` or `list` instead of a `str`, in which case a `'[]'`-based string will be automatically generated. This convention is especially useful for repeated definitions:
+
+```python
+domains = [Domain('N6', name=['a', i]) for i in range(4)]
+print([d.name for d in domains]) # --> ['a[0]', 'a[1]', 'a[2]', 'a[3]']
+```
+
+See the examples below that make use of this convention to specify designs for orthogonal reaction pathways. 
+
 
 ## Design orthogonal reaction pathways
 [Reaction pathways](definitions.md#reaction-pathways) can be designed by specifying [target test tubes](definitions.md#target-test-tubes) and formulating a [constrained multi-tube design problem](definitions.md#constrained-multi-tube-design-problem). Following the target test tube specification of [@Wolfe17] (see Supplemenatary Section S2.2), for a reaction pathway with M elementary steps, to design N orthogonal systems, there are N*(M+1) elementary step tubes plus 1 global crosstalk tube. Below, we provide example design specifications and Jupyter notebooks for designing N orthogonal systems for 1-step and multi-step reaction pathways:
