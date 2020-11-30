@@ -188,20 +188,20 @@ For a specified multiloop or exterior loop sequence and structure, the `stack_en
 ```python
 # Calculate the dangle stacking state free energies for an exterior loop
 my_model.stack_energies(loop='CA+UC', structure='.(+).')
-# --> {'n5': -0.1, 'nn': 0.0, '35': -0.6, '3n': -0.3}
+# --> {'35': -0.15, '3n': 0.15, 'n5': 0.35, 'nn': 0.45}
 
 # Calculate the coaxial stacking state free energies for an exterior loop
 my_model.stack_energies(loop='AA+U+U', structure='((+)+)')
-# --> {'snn': -0.9, 'nnn': 0.0}
+# --> {'nnn': 0.9, 'snn': 0.0}
 
 # Calculate the coxial stacking state free energies for a multiloop
 my_model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
-# --> {'snn': -1.1, 'nsn': -1.1, 'nns': -1.1, 'nnn': 0.0}
+# --> {'nnn': 11.9725, 'nns': 10.8725, 'nsn': 10.8725, 'snn': 10.8725}
 ```
 
 For loops that are not multiloops or exterior loops, the loop free energy is returned with a string indicating that there is no stacking state. For example, for a hairpin loop:
 
 ```python
 my_model.stack_energies(loop='AAAAU', structure='(...)')
-# --> {'n': 4.1}
+# --> {'n': 5.85}
 ```
