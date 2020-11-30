@@ -442,7 +442,7 @@ c_result = my_result[c]
 print('MFE proxy structure:\n%s' % c_result.mfe[0].structure.matrix())
 ```
 
-Output
+Output:
 
 ```
 MFE proxy structure:
@@ -472,11 +472,11 @@ Output:
 
 > <img src="../figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" />
 
-For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix via the `to_sparse()` method.
-
-
 !!! Note
-    If you have not using an up-to-date version of Python3, you may need to include `%matplotlib inline` at the top of the Jupyter notebook for the pairs plot to appear.
+    If your installation of matplotlib is not up-to-date, you may need to include `%matplotlib inline` at the top of the Jupyter notebook for the pairs plot to appear in your notebook instead of in a separate window.
+    
+
+For some use cases, you may wish to convert a `PairsMatrix` to a `scipy` matrix via the `to_sparse()` method.
 
 ---
 
