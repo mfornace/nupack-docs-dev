@@ -174,16 +174,16 @@ The `stack_energies` method operates on a `Model` object to calculate the [stack
 For a loop defined as a list of N snippets, a stacking state is specified as a string composed of one letter per snippet. For each snippet, the returned letter is:
 
 - `'s'` if the snippet contains only 2 nucleotides, each base-paired to a nucleotide in the adjacent snippet, with the two base pairs coaxially stacked on each other
-- `'b'` if  both the 5' and 3' unpaired nucleotides are dangle stacking on adjacent base pairs
-- `'5'` if only the 5'-most unpaired base is dangle stacking on its adjacent base pair
-- `'3'` if only the 3'-most unpaired base is dangle stacking its adjacent base pair
-- `'n'` if no bases in the snippet are engaged in coaxial or dangle stacking
+- `'b'` if  both the 5$'$ and 3$'$ unpaired nucleotides are dangle stacking on adjacent base pairs
+- `'5'` if only the 5$'$-most unpaired base is dangle stacking on its adjacent base pair
+- `'3'` if only the 3$'$-most unpaired base is dangle stacking its adjacent base pair
+- `'n'` if none of the above apply (i.e., the snippet does not have a dangle at either the 5$'$ or 3$'$ end nor does it contain only 2 adjacent nucleotides participating in a coaxial stack) 
 
 For example, the following figures illustrate snippet annotations for coaxial and dangle stacking states in representative multiloops and exterior loops: 
 
 > <img src="../figs/stackingnotation.png" alt="Stacking notation" title="Stacking notation" width="600" />
 
-In Python, the `stack_energies` method returns a `dict` from stacking state strings to stacking state energies:
+For a specified multiloop or exterior loop sequence and structure, the `stack_energies` method returns a set of stacking state strings each with a corresponding stacking state free energy (kcal/mol):
 
 ``` python
 # Calculate the dangle stacking state free energies for an exterior loop
@@ -199,7 +199,7 @@ model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
 # --> {'snn': -1.1, 'nsn': -1.1, 'nns': -1.1, 'nnn': 0.0}
 ```
 
-For loops that are not multiloops or exterior loops, this function returns a single stacking state reflecting no stacks:
+For loops that are not multiloops or exterior loops, the loop free energy is returned with a string indicating that there is no stacking state. For example, for a hairpin loop: 
 
 ``` python
 model.stack_energies(loop='AAAAU', structure='(...)')
