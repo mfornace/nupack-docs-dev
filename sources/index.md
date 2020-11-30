@@ -124,12 +124,12 @@ For citation, please select from the list below as appropriate for your applicat
 **NUPACK Web Application**
 
 - Run jobs online at [nupack.org](http://www.nupack.org)
-	- J. N. Zadeh, C. D. Steenberg, J. S. Bois, B. R. Wolfe, M. B. Pierce, A. R. Khan, R. M. Dirks, N. A. Pierce. NUPACK: analysis and design of nucleic acid systems. [*J Comput Chem*](http://onlinelibrary.wiley.com/doi/10.1002/jcc.21596/abstract), 32:170–173, 2011. ([pdf](http://www.nupack.org/download- s/serve_public_file/jcc11a.pdf?type=pdf))
+	- J. N. Zadeh, C. D. Steenberg, J. S. Bois, B. R. Wolfe, M. B. Pierce, A. R. Khan, R. M. Dirks, N. A. Pierce. NUPACK: analysis and design of nucleic acid systems. [*J Comput Chem*](http://onlinelibrary.wiley.com/doi/10.1002/jcc.21596/abstract), 32:170–173, 2011. ([pdf](http://www.nupack.org/downloads/serve_public_file/jcc11a.pdf?type=pdf))
 
 **NUPACK Analysis Algorithms**
 
 - Complex analysis and test tube analysis
-	- M.E. Fornace, N.J. Porubsky, and N.A. Pierce (2020). A unified dynamic programming framework for the analysis of interacting nucleic acid strands: enhanced models, scalability, and speed. [*ACS Synth Biol*](https://pubs.acs.org/doi/abs/10.1021/acssynbio.9b00523), ???, 2020. ([???](???))
+	- M.E. Fornace, N.J. Porubsky, and N.A. Pierce (2020). A unified dynamic programming framework for the analysis of interacting nucleic acid strands: enhanced models, scalability, and speed. [*ACS Synth Biol*](https://pubs.acs.org/doi/abs/10.1021/acssynbio.9b00523), 9:2665-2678, 2020. ([pdf](http://www.nupack.org/downloads/serve_public_file/fornace20.pdf?type=pdf), [supp info](http://www.nupack.org/downloads/serve_public_file/fornace20_supp.pdf?type=pdf))
 	- R. M. Dirks, J. S. Bois, J. M. Schaeffer, E. Winfree, and N. A. Pierce. Thermodynamic analysis of interacting nucleic acid strands. [*SIAM Rev*](http://epubs.siam.org/doi/abs/10.1137/060651100), 49:65-88, 2007. ([pdf](http://www.nupack.org/downloads/serve_public_file/sirev07.pdf?type=pdf))
 
 - Pseudoknot analysis
@@ -139,16 +139,16 @@ For citation, please select from the list below as appropriate for your applicat
 **NUPACK Design Algorithms**
 
 - Multi-tube design
-	- B. R. Wolfe, N. J. Porubsky, J. N. Zadeh, R. M. Dirks, and N. A. Pierce. Constrained multistate sequence design for nucleic acid reaction pathway engineering. [*J Am Chem Soc*](http://pubs.acs.org/doi/abs/10.1021/jacs.6b12693), 139:3134-3144, 2017. ([pdf](), [supp info]())
+	- B. R. Wolfe, N. J. Porubsky, J. N. Zadeh, R. M. Dirks, and N. A. Pierce. Constrained multistate sequence design for nucleic acid reaction pathway engineering. [*J Am Chem Soc*](http://pubs.acs.org/doi/abs/10.1021/jacs.6b12693), 139:3134-3144, 2017. ([pdf](http://www.nupack.org/downloads/serve_public_file/wolfe17.pdf?type=pdf), [supp info](http://www.nupack.org/downloads/serve_public_file/wolfe17_supp.pdf?type=pdf))
 
 - Test tube design
-	- B. R. Wolfe and N. A. Pierce. Sequence design for a test tube of interacting nucleic acid strands. [*ACS Synth Biol*](http://pubs.acs.org/doi/abs/10.1021/sb5002196), 4:1086-1100, 2015. ([pdf](), [supp info](), [supp tests]())
+	- B. R. Wolfe and N. A. Pierce. Sequence design for a test tube of interacting nucleic acid strands. [*ACS Synth Biol*](http://pubs.acs.org/doi/abs/10.1021/sb5002196), 4:1086-1100, 2015. ([pdf](http://www.nupack.org/downloads/serve_public_file/sb5002196.pdf?type=pdf), [supp info](http://www.nupack.org/downloads/serve_public_file/sb5002196_si_001.pdf?type=pdf), [supp tests](http://www.nupack.org/downloads/serve_public_file/sb5002196_si_002.zip?type=zip))
 
 - Complex design
-	- J. N. Zadeh, B. R. Wolfe, and N. A. Pierce. Nucleic acid sequence design via efficient ensemble defect optimization. [*J Comput Chem*](http://onlinelibrary.wiley.com/doi/10.1002/jcc.21633/abstract), 32:439–452, 2011. ([pdf](), [supp info](), [supp tests]())
+	- J. N. Zadeh, B. R. Wolfe, and N. A. Pierce. Nucleic acid sequence design via efficient ensemble defect optimization. [*J Comput Chem*](http://onlinelibrary.wiley.com/doi/10.1002/jcc.21633/abstract), 32:439–452, 2011. ([pdf](http://www.nupack.org/downloads/serve_public_file/jcc11b.pdf?type=pdf), [supp info](http://www.nupack.org/downloads/serve_public_file/JCC_21633_sm_suppinfo.pdf?type=pdf), [supp tests](http://www.nupack.org/downloads/serve_public_file/JCC_21633_sm_supptests.zip?type=zip))
 
 - Design paradigms
-	- R. M. Dirks, M. Lin, E. Winfree, and N. A. Pierce. Paradigms for computational nucleic acid design. [*Nucl Acids Res*](https://academic.oup.com/nar/article/32/4/1392/1038453), 32:1392-1403, 2004. ([pdf](), [supp info](), [supp seqs]())
+	- R. M. Dirks, M. Lin, E. Winfree, and N. A. Pierce. Paradigms for computational nucleic acid design. [*Nucl Acids Res*](https://academic.oup.com/nar/article/32/4/1392/1038453), 32:1392-1403, 2004. ([pdf](http://www.nupack.org/downloads/serve_public_file/nar04.pdf?type=pdf), [supp info](http://www.nupack.org/downloads/serve_public_file/nar04_supp.pdf?type=pdf), [supp seqs](http://www.nupack.org/downloads/serve_public_file/nar04_sequences.tar.gz?type=zip))
 
 
 
