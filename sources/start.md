@@ -31,7 +31,7 @@ Design the the sequences for one or more test tube ensembles (or one or more com
 Sample $\LaTeX$ files are provided for the multi-tube design specifications to assist with making new design specs in a standardized format.
 
 
-### Utilities examples:
+### Utilities examples
 Analyze or design a single complex ensemble --- these are [quick tools](utilities.md) applicable when your ensemble is a single complex.
 
 - **Utilities:** [analyze or design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/utilities/utilities.ipynb)
