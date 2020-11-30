@@ -177,9 +177,9 @@ For a loop defined as a list of N snippets, a stacking state is specified as a s
 - `'b'` if  both the 5' and 3' unpaired nucleotides are dangle stacking on adjacent base pairs
 - `'5'` if only the 5'-most unpaired base is dangle stacking on its adjacent base pair
 - `'3'` if only the 3'-most unpaired base is dangle stacking its adjacent base pair
-- `'n'` if no bases in the sequence are engaged in coaxial or dangle stacking
+- `'n'` if no bases in the snippet are engaged in coaxial or dangle stacking
 
-See the following figure for examples of multi and exterior loops annotated by the stacking state for each snippet:
+For example, the following figures illustrate snippet annotations for coaxial and dangle stacking states in representative multiloops and exterior loops: 
 
 > <img src="../figs/stackingnotation.png" alt="Stacking notation" title="Stacking notation" width="600" />
 
