@@ -1,5 +1,5 @@
 [submodule "mdx_bib"]
-	path = mdx_bib
+	path = external/mdx_bib
 	url = https://github.com/darwindarak/mdx_bib
 [submodule "sources/examples"]
 	path = sources/examples
