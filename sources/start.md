@@ -97,14 +97,22 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 
     Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4.0.0`).
 
-5. Validate your NUPACK 4 installation by running the following commands:
+5. Check that the correct `nupack` version is now installed by running the following commmand: 
+
+    ```bash
+    python3 -m pip show nupack
+    ```
+    
+    If the version is not correct, go back to Step 4, double-check the folder name, and rerun the command.
+
+6. Validate your NUPACK 4 installation by running the following commands:
 
     ```bash
     python3 -m pip install -U pytest
     python3 -m pytest -v --pyargs nupack
     ```
 
-6. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). You can launch a web-based Jupyter notebook browser from the command line:
+7. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). You can launch a web-based Jupyter notebook browser from the command line:
 
     ```bash
     jupyter lab
