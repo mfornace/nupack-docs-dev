@@ -140,7 +140,7 @@ NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (W
 ```bash
 mkdir nupack-latest
 cd nupack-latest
-cp /mnt/c/Users/YourUserName/Downloads/nupack-latest.zip ./
+cp /mnt/c/Users/YOUR-USERNAME/Downloads/nupack-VERSION.zip ./
 sudo apt install unzip
 unzip nupack-latest.zip
 cd ..
@@ -159,7 +159,7 @@ pip install -U nupack -f ./nupack-VERSION/package
 jupyter lab
 ```
 
-Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4`).
+Make sure to replace `/YOUR-USERNAME/Downloads` above with the appropriate directory and `nupack-VERSION` with the correct version (e.g., `nupack-4.0.0`).
 
 6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-notebooks).
 
