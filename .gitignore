@@ -1,0 +1,5 @@
+.DS_Store
+site/
+_build/
+snippets/*
+!examples/*ipynb
