@@ -102,7 +102,7 @@ git remote add deploy https://github.com/Piercelab-Caltech/nupack-docs.git
 Then, each time, after your edits are finished:
 
 1. Within this branch (`docs`) commit the changes.
-2. To be safe, do `git submodule update --init`.
+2. To be safe, do `git pull && git submodule update --init`.
 3. Run `bash deploy.sh`.
 
 ## Other tips
