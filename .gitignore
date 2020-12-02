@@ -1,5 +1,6 @@
 .DS_Store
 site/
 _build/
+mdx-bib/mdx_bib.egg-info/
 snippets/*
 !examples/*ipynb
