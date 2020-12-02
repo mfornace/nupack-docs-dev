@@ -163,33 +163,7 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
 
 
 
-<!-- A **test tube** may contain an arbitrary number of strand species interacting to form an arbitrary number of complex species in a dilute solution. Let $\Psi^0$ denote the set of strand species that interact in a test tube to form the set of complex species $\Psi$. It is often convenient to define $\Psi$ to contain all complexes of up to some size $L_{\rm max}$.
 
-Each complex $j\in\Psi$ corresponds to a distinct strand ordering $\pi_j$ of $L$ strands for $L\in\{1,\dots,L_{\rm max}\}$. $L$ distinct strands can be ordered around a circle in $(L-1)!$ distinct ways (e.g., strands $A$, $B$, and $C$ can be ordered $ABC$ and $ACB$). If some of the $L$ strands are of the same species, there will be fewer than $(L-1)!$ distinct strand orderings (e.g., strands $A$, $A$, and $B$ can only be ordered $AAB$). For a given set of $L$ strands, each unpseudoknotted connected secondary structure is found in the structural ensemble, $\Gamma_j$, corresponding to exactly one strand ordering, $\pi_j$ (i.e., exactly one complex $j\in\Psi$) [@Dirks07].
-
- -->
-
-<!-- For sequence $\phi$ and secondary structure, $s$, the **free energy**, $\Delta G(\phi,s)$, is calculated using nearest-neighbor empirical parameters for RNA [@Serra95; @Mathews99; @Zuker03] in 1M Na$^+$ or for DNA [@SantaLucia98; @Zuker03] in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia04; @Koehler05]. The zero free energy reference state for all calculations is a system where all relevant strands are present with no base pairs [@Dirks07]. -->
-
-<!-- ### Outline -->
-
-<!-- See the following pages for help on installing and using NUPACK.
-
-1. The [Installation](installation.md) page describes how to install NUPACK 4.
-2. The [Conventions](basics.md) page describes the common conventions that NUPACK 4 uses.
-3. The [Model](model.md) page describes how to create a secondary structure free energy model.
-4. The [Analysis](analysis.md) page describes how to perform thermodynamic analysis.
-5. The [Design](design.md) page describes how to perform thermodynamic design. (currently the same as the example design page).
-
-The [Examples](examples.md) page links to example Jupyter notebooks that are bundled with NUPACK 4. You may also view these notebooks on [nbviewer](https://nbviewer.jupyter.org/github/mfornace/nupack-nbviewer/tree/master/) or [GitHub](https://github.com/mfornace/nupack-nbviewer/). (These notebooks are not hosted online yet, see files provided to you.) -->
-
-<!-- Finally, you may look through these main parts of the NUPACK Python API.
-
-1. [Model](api/model.md)
-2. [Analysis](api/analysis.md)
-3. [Design](api/design.md)
-4. [Concentrations](api/concentration.md)
-5. [Drawing](api/drawing.md) -->
 
 
 ## Versions
@@ -237,10 +211,9 @@ The [Examples](examples.md) page links to example Jupyter notebooks that are bun
     - New features:
 	    - unified dynamic programming framework [@Fornace20]
         - all-new code base
-        - Python module
+        - all-new NUPACK Python module
     - Commands:
-		- `energy`, `pfunc`, `prob`, `mfe`, `subopt`, `pairs`, `sample`, `count`, `complex-analysis`, `complex-concentrations`, `tube-analysis`, `complex-defect`, `complex-design`, `tube-defect`, `tube-design`
-		- Scripting is done in Python
+    	- Scripting is done in Python
         - Indices start at 0 (previous versions indexed starting at 1)
 	- Terminology and notation:
 	    - details in [@Fornace20]
