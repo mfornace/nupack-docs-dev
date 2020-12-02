@@ -2,5 +2,7 @@
 site/
 _build/
 mdx-bib/mdx_bib.egg-info/
+sources/examples.zip
+mdx-bib/__pycache__/
 snippets/*
 !examples/*ipynb
