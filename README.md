@@ -91,16 +91,19 @@ Normally this should just work, but if it shows any errors, you may need to run 
 git push
 ```
 
-### Deploying the documentation online (e.g. for the lab)
+### Deploying the documentation online
 
-After your edits are finished:
+Run this **once** in the current repository:
 
-1. Within this branch (`docs`) commit the changes
-2. Run `mkdocs gh-deploy -b build`.
-3. Assuming that's successful, run `git push` with your changes.
-4. Checkout the `master` branch.
-5. Run `bash update.sh`
-6. Assuming that's successful, run `git push`.
+```bash
+git remote add deploy https://github.com/Piercelab-Caltech/nupack-docs.git
+```
+
+Then, each time, after your edits are finished:
+
+1. Within this branch (`docs`) commit the changes.
+2. To be safe, do `git submodule update --init`.
+3. Run `bash deploy.sh`.
 
 ## Other tips
 
