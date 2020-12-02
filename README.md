@@ -43,9 +43,7 @@ pip install -U mkdocs pydoc-markdown pymdown-extensions mkdocs-material markdown
 Next, navigate to the top-level directory of this repository (`mkdocs.yml` should be visible if you run `ls`). Install the bibliography package like this:
 
 ```bash
-cd mdx_bib
-python setup.py install
-cd ..
+pip install mdx-bib
 ```
 
 The rest is pretty simple:
