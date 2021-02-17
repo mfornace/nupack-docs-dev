@@ -8,24 +8,24 @@ Here, we provide Jupyter notebooks for a variety of examples that can be [downlo
 ### Analysis examples
 Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles) --- these are the [all-purpose sequence analysis tools](analysis.md).
 
-- **Tube analysis:** [analyze a test tube ensemble](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/analysis/tube-analysis.ipynb)
-- **Multi-tube analysis:** [analyze a set of test tube ensembles](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/analysis/multi-tube-analysis.ipynb)
-- **Complex analysis:** [analyze a complex ensemble](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/analysis/complex-analysis.ipynb)
-- **Multi-complex analysis:** [analyze a set of complex ensembles](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/analysis/multi-complex-analysis.ipynb)
+- **Tube analysis:** [analyze a test tube ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/tube-analysis.ipynb)
+- **Multi-tube analysis:** [analyze a set of test tube ensembles](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/multi-tube-analysis.ipynb)
+- **Complex analysis:** [analyze a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/complex-analysis.ipynb)
+- **Multi-complex analysis:** [analyze a set of complex ensembles](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/multi-complex-analysis.ipynb)
 
 ### Design examples
 Design the the sequences for one or more test tube ensembles (or one or more complex ensembles) --- these are the [all-purpose sequence design tools](design.md).
 
-- **Tube design:** [design a test tube ensemble](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design/tube-design.ipynb)
+- **Tube design:** [design a test tube ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/tube-design.ipynb)
 - **Multi-tube design (simple):**
-    - [design specification](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design-specs/design-spec-displacement.tex))
-    - [design a one-step reaction pathway](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design/multi-tube-design-simple.ipynb)
-    - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design/multi-tube-design-simple-ortho.ipynb)
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.tex))
+    - [design a one-step reaction pathway](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple.ipynb)
+    - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple-ortho.ipynb)
 - **Multi-tube design (advanced):**
-    - [design specification](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design-specs/design-spec-dicer.tex))
-    - [design a multi-step reaction pathway](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design/multi-tube-design-advanced.ipynb)
-    -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design/multi-tube-design-advanced-ortho.ipynb)
-- **Complex design:** [design a complex ensemble](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/design/complex-design.ipynb)
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.tex))
+    - [design a multi-step reaction pathway](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced.ipynb)
+    -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced-ortho.ipynb)
+- **Complex design:** [design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/complex-design.ipynb)
 
 Sample $\LaTeX$ files are provided for the multi-tube design specifications to assist with making new design specs in a standardized format.
 
@@ -33,7 +33,7 @@ Sample $\LaTeX$ files are provided for the multi-tube design specifications to a
 ### Utilities examples
 Analyze or design a single complex ensemble --- these are [quick tools](utilities.md) applicable when your ensemble is a single complex.
 
-- **Utilities:** [analyze or design a complex ensemble](https://nbviewer.jupyter.org/urls/piercelab-caltech.github.io/nupack-docs/examples/utilities/utilities.ipynb)
+- **Utilities:** [analyze or design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/utilities/utilities.ipynb)
 
 !!! Note
 
@@ -97,12 +97,12 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 
     Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4.0.0`).
 
-5. Check that the correct `nupack` version is now installed by running the following commmand: 
+5. Check that the correct `nupack` version is now installed by running the following commmand:
 
     ```bash
     python3 -m pip show nupack
     ```
-    
+
     If the version is not correct, go back to Step 4, double-check the folder name, and rerun the command.
 
 6. Validate your NUPACK 4 installation by running the following commands:
