@@ -30,7 +30,7 @@ This flag may be set to `0.0` to disable caching if your hardware has very littl
 
 ## Naming conventions
 
-Analysis objects of type `Strand`, `Complex`, `Tube` and design objects of type `Domain`, `TargetStrand`, `TargetComplex`, and `TargetTube` all accept a name specified using the `name` keyword. 
+Analysis objects of type `Strand`, `Complex`, `Tube` and design objects of type `Domain`, `TargetStrand`, `TargetComplex`, and `TargetTube` all accept a name specified using the `name` keyword.
 
 !!! note
     Within the context of a single calculation, every object name must be unique (e.g., each `Strand`, `Complex`, and `Tube` in an analysis calculation must have a unique name).
@@ -42,18 +42,18 @@ domains = [Domain('N6', name=['a', i]) for i in range(4)]
 print([d.name for d in domains]) # --> ['a[0]', 'a[1]', 'a[2]', 'a[3]']
 ```
 
-See the examples below that make use of this convention to specify designs for orthogonal reaction pathways. 
+See the examples below that make use of this convention to specify designs for orthogonal reaction pathways.
 
 
 ## Design orthogonal reaction pathways
 [Reaction pathways](definitions.md#reaction-pathways) can be designed by specifying [target test tubes](definitions.md#target-test-tubes) and formulating a [constrained multi-tube design problem](definitions.md#constrained-multi-tube-design-problem). Following the target test tube specification of [@Wolfe17] (see Supplemenatary Section S2.2), for a reaction pathway with M elementary steps, to design N orthogonal systems, there are N*(M+1) elementary step tubes plus 1 global crosstalk tube. Below, we provide example design specifications and Jupyter notebooks for designing N orthogonal systems for 1-step and multi-step reaction pathways:
 
 - **Multi-tube design (simple):**
-    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-displacement.tex))
-    - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-simple-ortho.ipynb)
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.tex))
+    - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple-ortho.ipynb)
 - **Multi-tube design (advanced):**
-    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design-specs/design-spec-dicer.tex))
-    -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-examples/tree/master/design/multi-tube-design-advanced-ortho.ipynb)
+    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.tex))
+    -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced-ortho.ipynb)
 
 !!! Note
     Note that target test tubes for N orthogonal systems can be concisely defined using a Python loop.
