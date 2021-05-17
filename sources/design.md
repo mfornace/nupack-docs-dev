@@ -901,7 +901,7 @@ options = DesignOptions(
     Enable `wobble_mutations` (default `False`) so that the designer will consider sequences which may 1) yield wobble (`GU`) pairs in target structures and 2) contain wobble complements in domain reverse complements (e.g. `a` = `GGG`, `a*` = `UUU`).
 
 !!! Note
-    Set `max_time` to a positive number to manually control how long a design will take. Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using [checkpointing](design.md#launch-multiple-design-trials-in-the-background) as an alternative to optimize the tradeoff between design quality and CPU time.
+    Set `max_time` to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using [checkpointing](design.md#launch-multiple-design-trials-in-the-background) as an alternative to optimize the tradeoff between design quality and CPU time.
 
 !!! Note
     Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition.
