@@ -891,9 +891,17 @@ options = DesignOptions(
     f_passive=0.01,   # in interval (0,1)
     f_redecomp=0.03,  # in interval (0,1)
     f_refocus=0.03,   # in interval (0,1)
-    f_sparse=1e-05    # threshold pair probs for sparse storage in decomposition tree
+    f_sparse=1e-05    # threshold pair probs for sparse storage in decomposition tree,
+    wobble_mutations=False,
+    max_time=0,       # max design time in seconds (if nonzero)
 )
 ```
+
+!!! Note
+    Enable `wobble_mutations` (default `False`) so that the designer will consider sequences which may 1) yield wobble (`GU`) pairs in target structures and 2) contain wobble complements in domain reverse complements (e.g. `a` = `GGG`, `a*` = `UUU`).
+
+!!! Note
+    Set `max_time` to a positive number to manually control how long a design will take. Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using [checkpointing](design.md#launch-multiple-design-trials-in-the-background) as an alternative to optimize the tradeoff between design quality and CPU time.
 
 !!! Note
     Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition.
@@ -1106,9 +1114,10 @@ Output:
 
     soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
     hard = [Diversity(word=4, types=2, scope=[a])]
+    options = DesignOptions(wobble_mutations=True)
 
     wobble_design = tube_design([tube1], model=Model(material='rna'),
-        soft_constraints=soft, hard_constraints=hard, wobble_mutations=True)
+        soft_constraints=soft, hard_constraints=hard, options=options)
     wobble_result = wobble_design.evaluate()
     ```
 
