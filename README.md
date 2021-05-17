@@ -1,6 +1,7 @@
 
 # NUPACK web documentation
 
+
 ## Editing the documentation
 
 ### Editing the layout
