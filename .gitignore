@@ -4,5 +4,7 @@ _build/
 mdx-bib/mdx_bib.egg-info/
 sources/examples.zip
 mdx-bib/__pycache__/
+mdx-bib/build
+mdx-bib/dist
 snippets/*
 !examples/*ipynb
