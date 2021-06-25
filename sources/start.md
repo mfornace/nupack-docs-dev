@@ -120,6 +120,7 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 
     and browse to open your notebook of choice. Click `Run->Run All Cells` to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation.
 
+From version 4.0.0.27, the M1 Mac architecture is now natively supported by the distributed binaries. Contact <support@nupack.org> in the off chance that you are trying to run NUPACK on an unsupported architecture.
 
 ---
 
@@ -183,6 +184,8 @@ The following are required:
 - C++17 compliant compiler (Clang or AppleClang)
 - CMake
 
+On Mac, it is recommended to use the Clang provided by [Homebrew](https://brew.sh) as it is generally kept more up to date than Apple's builtin version. After installing Homebrew, install Clang via `brew install llvm`. Then add the flag `-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++` or `-DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++` to your cmake command (use the one corresponding to where `brew` installed binaries).
+
 Directions:
 
 1. On a Mac/Linux system, navigate to the `source` directory within the NUPACK download:
@@ -208,7 +211,7 @@ or if you are using a Mac and have not previously installed a C++ compiler, usin
 3. Next install the dependencies for NUPACK compilation using `vcpkg`:
 
 ```
-./external/vcpkg/vcpkg install armadillo tbb gecode \
+./external/vcpkg/vcpkg install armadillo tbb gecode libsimdpp \
     nlohmann-json jsoncpp tclap spdlog boost-context boost-graph boost-align boost-ublas \
     boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-coroutine2
 ```

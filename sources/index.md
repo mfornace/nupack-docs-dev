@@ -217,5 +217,12 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - Indices start at 0 (previous versions indexed starting at 1)
 	- Terminology and notation:
 	    - details in [@Fornace20]
-
+	- Revision notes:
+        - 4.0.0.20: Release of first public beta
+        - 4.0.0.21: Fix SSM display issue and wobble evaluation bug in design
+        - 4.0.0.23: Fix incorrect rounding of ensemble_size result
+        - 4.0.0.24: Fix diverging estimate of defects seen in design checkpoints
+        - 4.0.0.25: Fix concentration failure resulting from division by 0
+        - 4.0.0.26: Fix number of samples given for indistinguishable complexes
+        - 4.0.0.27: Add native support for Mac arm64 (M1) architectures
 
