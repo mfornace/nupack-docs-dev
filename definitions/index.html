@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://piercelab-caltech.github.io/nupack-docs/definitions/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Definitions - NUPACK 4.0 User Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Definitions";
+    var mkdocs_page_input_path = "definitions.md";
+    var mkdocs_page_url = "/nupack-docs/definitions/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Definitions</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#sequence">Sequence</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#degenerate-nucleotide-codes">Degenerate nucleotide codes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sequence-distance">Sequence distance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#secondary-structure">Secondary structure</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dot-parens-plus-notation">Dot-parens-plus notation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run-length-encoded-dot-parens-plus-notation">Run-length encoded dot-parens-plus notation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#du-notation">DU+ notation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#structure-matrix">Structure matrix</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#structure-distance">Structure distance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complex-ensemble">Complex ensemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#test-tube-ensemble">Test tube ensemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#free-energy-model">Free energy model</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#loop-free-energies">Loop free energies</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#coaxial-and-dangle-stacking">Coaxial and dangle stacking</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#symmetry-correction">Symmetry correction</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#physical-quantities">Physical quantities</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#partition-function">Partition function</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complex-free-energy">Complex free energy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#structure-free-energy">Structure free energy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#equilibrium-structure-probability">Equilibrium structure probability</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#boltzmann-sampled-structures">Boltzmann-sampled structures</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#equilibrium-base-pairing-probabilities">Equilibrium base-pairing probabilities</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mfe-proxy-structure">MFE proxy structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#suboptimal-proxy-structures">Suboptimal proxy structures</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complex-ensemble-defect">Complex ensemble defect</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complex-ensemble-size">Complex ensemble size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#equilibrium-complex-concentrations">Equilibrium complex concentrations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-tube-ensemble-pair-fractions">Test tube ensemble pair fractions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-tube-ensemble-defect">Test tube ensemble defect</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#design-formulation">Design formulation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#complex-design-vs-test-tube-design">Complex design vs test tube design</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reaction-pathways">Reaction pathways</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multi-tube-design-ensemble">Multi-tube design ensemble</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#target-test-tubes">Target test tubes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#design-objective-function">Design objective function</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#defect-weights">Defect weights</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard-constraints">Hard constraints</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#soft-constraints">Soft constraints</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#constrained-multi-tube-design-problem">Constrained multi-tube design problem</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../model/">Model Specification</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis Jobs</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../design/">Design Jobs</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../advanced/">Advanced</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">NUPACK 4.0 User Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Definitions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="definitions">Definitions<a class="headerlink" href="#definitions" title="Permanent link">&para;</a></h1>
+<h2 id="sequence">Sequence<a class="headerlink" href="#sequence" title="Permanent link">&para;</a></h2>
+<p>The <strong>sequence</strong>, <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>, of one or more interacting RNA strands is specified as a list of bases <span><span class="MathJax_Preview">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{U}\}</span><script type="math/tex">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{U}\}</script></span> for <span><span class="MathJax_Preview">a=1,\dots,|\phi|</span><script type="math/tex">a=1,\dots,|\phi|</script></span>. For DNA, <span><span class="MathJax_Preview">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}</span><script type="math/tex">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}</script></span>.
+Nucleic acid sequences are listed <span><span class="MathJax_Preview">5'</span><script type="math/tex">5'</script></span> to <span><span class="MathJax_Preview">3'</span><script type="math/tex">3'</script></span>.</p>
+<!-- Unlike NUPACK 3, NUPACK 4 uses zero-based indices exclusively. The first index of any sequence is 0, not 1. -->
+<p>Unlike NUPACK 3, bases in NUPACK 4 are indexed starting with 0 at the <span><span class="MathJax_Preview">5'</span><script type="math/tex">5'</script></span>-most base of the first strand and ending at the <span><span class="MathJax_Preview">3'</span><script type="math/tex">3'</script></span>-most base of the last strand.
+For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39. Valid bases are <code>A</code>, <code>C</code>, <code>G</code>, <code>T</code>, and <code>U</code>. For RNA calculations, <code>T</code> is automatically converted to <code>U</code>, and vice versa for DNA calculations.</p>
+<!--
+A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
+
+<h3 id="degenerate-nucleotide-codes">Degenerate nucleotide codes<a class="headerlink" href="#degenerate-nucleotide-codes" title="Permanent link">&para;</a></h3>
+<p>Sequence constraints can be specified using IUPAC <strong>degenerate nucleotide codes</strong>, which for RNA are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Nucleotides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td>A or C</td>
+</tr>
+<tr>
+<td>R</td>
+<td>A or G</td>
+</tr>
+<tr>
+<td>W</td>
+<td>A or U</td>
+</tr>
+<tr>
+<td>S</td>
+<td>C or G</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>C or U</td>
+</tr>
+<tr>
+<td>K</td>
+<td>G or U</td>
+</tr>
+<tr>
+<td>V</td>
+<td>A, C, or G</td>
+</tr>
+<tr>
+<td>H</td>
+<td>A, C, or U</td>
+</tr>
+<tr>
+<td>D</td>
+<td>A, G, or U</td>
+</tr>
+<tr>
+<td>B</td>
+<td>C, G, or U</td>
+</tr>
+<tr>
+<td>N</td>
+<td>A, C, G, or U</td>
+</tr>
+</tbody>
+</table>
+<p>For DNA, T replaces U.</p>
+<h3 id="sequence-distance">Sequence distance<a class="headerlink" href="#sequence-distance" title="Permanent link">&para;</a></h3>
+<p>The <strong>sequence distance</strong> between two sequences <span><span class="MathJax_Preview">\phi_1</span><script type="math/tex">\phi_1</script></span> and <span><span class="MathJax_Preview">\phi_2</span><script type="math/tex">\phi_2</script></span> of equal length (<span><span class="MathJax_Preview">|\phi_1|=|\phi_2|=N</span><script type="math/tex">|\phi_1|=|\phi_2|=N</script></span>) is the number of (possibly degenerate) nucleotide codes that are non-intersecting in the two sequences:</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &amp;\phi_1^a \cap \phi_2^a \neq \emptyset\\ 1: &amp;\phi_1^a \cap \phi_2^a = \emptyset\end{array} \right.
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a \cap \phi_2^a \neq \emptyset\\ 1: &\phi_1^a \cap \phi_2^a = \emptyset\end{array} \right.
+\end{align}</script>
+</div>
+<p>For example, <span><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(ACGU, SSWW) = 2. If <span><span class="MathJax_Preview">\phi_1</span><script type="math/tex">\phi_1</script></span> and <span><span class="MathJax_Preview">\phi_2</span><script type="math/tex">\phi_2</script></span> contain no degenerate nucleotide codes, this definition simplifies to the number of nucleotides that are different in the two sequences:</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &amp;\phi_1^a = \phi_2^a\\ 1: &amp;\phi_1^a \neq \phi_2^a \end{array} \right.
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a = \phi_2^a\\ 1: &\phi_1^a \neq \phi_2^a \end{array} \right.
+\end{align}</script>
+</div>
+<p>For example, <span><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(ACGU, ACUU) = 1.</p>
+<hr>
+
+<h2 id="secondary-structure">Secondary structure<a class="headerlink" href="#secondary-structure" title="Permanent link">&para;</a></h2>
+<p>A <strong>secondary structure</strong>, <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>, of one or more interacting RNA strands is defined by a set of base pairs, each a Watson&ndash;Crick pair [A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U or C<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G] or a wobble pair [G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U]). For DNA, the corresponding Watson&ndash;Crick pairs are A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T or C<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G and there are no wobble pairs.
+A <strong>polymer graph</strong> representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> around the circumference with a <em>nick</em> between each strand, and drawing straight lines connecting paired bases.
+A secondary structure is <strong>unpseudoknotted</strong> if there exists a strand ordering for which the polymer graph has no crossing lines, or <strong>pseudoknotted</strong> if all strand orderings contain crossing lines. In NUPACK 4, pseudoknots are excluded from the structural ensemble.
+A secondary structure is <strong>connected</strong> if no subset of the strands is free of the others. Secondary structures may be specified one of three ways for NUPACK calculations as described in the following three sections.</p>
+<h3 id="dot-parens-plus-notation">Dot-parens-plus notation<a class="headerlink" href="#dot-parens-plus-notation" title="Permanent link">&para;</a></h3>
+<p>Each unpaired base is represented by a dot, each base pair by matching parentheses, and each nick between strands by a plus [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>]. For example, <code>((...))</code> specifies that bases 0 and 1 are paired to bases 6 and 5, respectively, while bases 2, 3, and 4 are unpaired. <code>((+...))</code> specifies that bases 0 and 1 of strand 0 are paired to bases 4 and 3 of strand 1.</p>
+<h3 id="run-length-encoded-dot-parens-plus-notation">Run-length encoded dot-parens-plus notation<a class="headerlink" href="#run-length-encoded-dot-parens-plus-notation" title="Permanent link">&para;</a></h3>
+<p>As a shorthand for dot-parens-plus, any sequence of consecutive characters in dot-parens-plus may be replaced by the character followed by a number. For instance, <code>(((((+...........)))))</code>  may be written as <code>(5+.11)5</code>.</p>
+<h3 id="du-notation">DU+ notation<a class="headerlink" href="#du-notation" title="Permanent link">&para;</a></h3>
+<p>Using DU+ notation, a duplex is represented by <code>D</code> and an unpaired region of length nucleotides is represented by <code>U</code> [<a class="citation" href="#ref-Zadeh10c" id="cite-Zadeh10c">Zadeh10c</a>]. Each duplex is followed immediately by the substructure (specified in DU+ notation) that is &lsquo;enclosed&rsquo; by the duplex. If this substructure includes more than one element, parentheses are used to denote scope. A nick between strands is specified by a &lsquo;+&rsquo;. See the table below for examples.</p>
+<!-- 4. **pair list notation**: A list of zero-based indices $p$ such that if $p_i = j$, bases $i$ and $j$ are paired, and if $p_i = i$, base $i$ is unpaired. Any secondary structure, including highly-nested pseudoknots, may be specified in this way. -->
+
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Dot-parens-plus</th>
+<th>RLE dot-parens-plus</th>
+<th>DU+ notation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>((((((((((((..........))))))))))))</code></td>
+<td><code>(12.10)12</code></td>
+<td><code>D12 U10</code></td>
+</tr>
+<tr>
+<td><code>((((((((((((+))))))))))))..........</code></td>
+<td><code>(12+)12.10</code></td>
+<td><code>D12 + U10</code></td>
+</tr>
+<tr>
+<td><code>((((((((((((+..........))))))))))))</code></td>
+<td><code>(12+.10)12</code></td>
+<td><code>D12 (+ U10)</code></td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p><p style="text-align:center;"><b>Table</b>: Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation.</p></p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><p align="center">
+<img src="../figs/structure.png" alt="Secondary structure" title="Example secondary structure" width="650" />
+</p></p>
+<p><p style="text-align:center;"><b>Figure</b>: Comparison of dot-parens-plus, run-length-encoded dot-parens-plus, and DU+ notation.</p></p>
+</div>
+<h3 id="structure-matrix">Structure matrix<a class="headerlink" href="#structure-matrix" title="Permanent link">&para;</a></h3>
+<p>In mathematical expressions, it is convenient to represent secondary structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> using a <strong>structure matrix</strong> <span><span class="MathJax_Preview">S(s)</span><script type="math/tex">S(s)</script></span> with entries <span><span class="MathJax_Preview">S^{a,b}(s) = 1</span><script type="math/tex">S^{a,b}(s) = 1</script></span> if structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> contains base pair <span><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span> and <span><span class="MathJax_Preview">S^{a,b}(s) = 0</span><script type="math/tex">S^{a,b}(s) = 0</script></span> otherwise. Abusing notation, the entry <span><span class="MathJax_Preview">S^{a,a}(s) = 1</span><script type="math/tex">S^{a,a}(s) = 1</script></span> if base <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> is unpaired in structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> and <span><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span> otherwise. Hence, <span><span class="MathJax_Preview">S(s)</span><script type="math/tex">S(s)</script></span> is a symmetric matrix with row and column sums of 1.</p>
+<h3 id="structure-distance">Structure distance<a class="headerlink" href="#structure-distance" title="Permanent link">&para;</a></h3>
+<p>The <strong>structure distance</strong> between two secondary structures <span><span class="MathJax_Preview">s_1</span><script type="math/tex">s_1</script></span> and <span><span class="MathJax_Preview">s_2</span><script type="math/tex">s_2</script></span> of equal size (<span><span class="MathJax_Preview">|s_1|=|s_2|=N</span><script type="math/tex">|s_1|=|s_2|=N</script></span>) is the number of nucleotides in a different base-pairing state in the two structures:
+\begin{align}
+d_\textrm{struc}(s_1,s_2)=N-\sum_{1\le a\le N,~1\le b \le N} S_{a,b}(s_1)S_{a,b}(s_2)
+\end{align}</p>
+<hr>
+
+<h2 id="complex-ensemble">Complex ensemble<a class="headerlink" href="#complex-ensemble" title="Permanent link">&para;</a></h2>
+<p>Consider a complex of <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> distinct strands (e.g., each with a unique identifier in <span><span class="MathJax_Preview">\{1,\dots,L\}</span><script type="math/tex">\{1,\dots,L\}</script></span>) corresponding to strand ordering <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span>. The <strong>complex ensemble</strong> <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span> contains all connected polymer graphs with no crossing lines for sequence <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span> and strand ordering <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> (i.e., all unpseudoknotted secondary structures) [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]. (We dispense with our prior convention [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>,<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>,<a class="citation" href="#ref-Zadeh11b" id="cite-Zadeh11b">Zadeh11b</a>] of calling this entity an &lsquo;&rsquo;ordered complex&rsquo;&lsquo;.) As a matter of algorithmic necessity, all of the dynamic programs in NUPACK operate on complex ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span> treating all strands as distinct. However, in the laboratory, strands with the same sequence are typically indistinguishable with respect to experimental observables. For comparison to experimental data, physical quantities calculated over ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span> are post-processed
+to obtain the corresponding quantities calculated over <strong>complex ensemble</strong> <span><span class="MathJax_Preview">\Gamma(\phi)</span><script type="math/tex">\Gamma(\phi)</script></span> in which strands with the same sequence are treated as indistinguishable [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]. The ensemble <span><span class="MathJax_Preview">\Gamma(\phi)\subseteq\overline\Gamma(\phi)</span><script type="math/tex">\Gamma(\phi)\subseteq\overline\Gamma(\phi)</script></span> is a maximal subset of distinct secondary structures for strand ordering <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span>. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases;
+otherwise the structures are distinct [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>].</p>
+<!-- A **complex** of $L$ interacting strands with strand ordering, $\pi$, has a **structural ensemble** containing all connected polymer graphs with no crossing lines [@Dirks07]. (We dispense with our prior convention [@Dirks07; @Zadeh11a; @Zadeh11b] of calling this entity an **ordered complex**.)
+ -->
+
+<p align="center">
+<img src="../figs/complex.png" alt="Example complex" width="360"/>
+</p>
+
+<p><strong>Figure:</strong> A complex of 3 strands with strand ordering <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> = ABC.</p>
+<!-- If a complex contains multiple strands with the same sequence, subtleties arise in the definition of the structural ensemble and in the calculation of experimental observables [@Dirks07,@Fornace20]. Let $\overline\Gamma(\phi)$ denote the structural ensemble in which each strand is treated as distinct (i.e., each strand has a unique identifier in $\{1,\dots,L\}$) and let $\Gamma(\phi)$ denote the ensemble in which strands with the same sequence are treated as indistinguishable. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases; otherwise the structures are distinct [@Dirks07]. The ensemble $\Gamma(\phi)\subseteq\overline\Gamma(\phi)$ is a maximal subset of distinct secondary structures for strand ordering $\pi$.
+
+Consider a complex of $L$ distinct strands (e.g., each with a unique identifier in $\{1,\dots,L\}$) corresponding to strand ordering $\pi$. The **complex ensemble** $\overline\Gamma(\phi)$ contains all connected polymer graphs with no crossing lines for sequence $\phi$ and strand ordering $\pi$ (i.e., all unpseudoknotted secondary structures) [@Dirks07]. (We dispense with our prior convention [\cite{@Dirks07,@Zadeh11a,@Zadeh11b] of calling this entity an **ordered complex**.) -->
+<hr>
+<h2 id="test-tube-ensemble">Test tube ensemble<a class="headerlink" href="#test-tube-ensemble" title="Permanent link">&para;</a></h2>
+<p>A <strong>test tube ensemble</strong> is a dilute solution containing a set of strand species, <span><span class="MathJax_Preview">\Psi^0</span><script type="math/tex">\Psi^0</script></span>, introduced at user-specified concentrations, that interact to form a set of complex species, <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>, each corresponding to a different strand ordering treating strands with the same sequence as indistinguishable [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>,<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>].
+For <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> strands, there are <span><span class="MathJax_Preview">(L-1)!</span><script type="math/tex">(L-1)!</script></span> strand orderings if all strands are different species (e.g., complexes <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> = ABC and <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> = ACB for <span><span class="MathJax_Preview">L=3</span><script type="math/tex">L=3</script></span> and strands A, B, C), but fewer than <span><span class="MathJax_Preview">(L-1)!</span><script type="math/tex">(L-1)!</script></span> strand orderings if some strands are of the same species (e.g., complex <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> = AAA for <span><span class="MathJax_Preview">L=3</span><script type="math/tex">L=3</script></span> with three A strands). By the Representation Theorem [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>], a secondary structure in the complex ensemble for one strand ordering does not appear in the complex ensemble for any other strand ordering, averting redundancy.
+It is often convenient to define <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span> to contain all complex species of up to <span><span class="MathJax_Preview">L_\mathrm{max}</span><script type="math/tex">L_\mathrm{max}</script></span> strands, although <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span> can be defined to contain arbitrary complex species formed from the strand species in <span><span class="MathJax_Preview">\Psi^0</span><script type="math/tex">\Psi^0</script></span>.</p>
+<p align="center">
+<img src="../figs/tube.png" alt="Test tube" title="Example test tube" width="190" />
+</p>
+
+<p><strong>Figure:</strong> A test tube ensemble containing strain species <span><span class="MathJax_Preview">\Psi^0 = \{</span><script type="math/tex">\Psi^0 = \{</script></span>A,B,C<span><span class="MathJax_Preview">\}</span><script type="math/tex">\}</script></span> interacting to form all complex species <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span> of up to <span><span class="MathJax_Preview">L_{\rm max} = 3</span><script type="math/tex">L_{\rm max} = 3</script></span> strands.</p>
+<h2 id="free-energy-model">Free energy model<a class="headerlink" href="#free-energy-model" title="Permanent link">&para;</a></h2>
+<p>For each (unpseudoknotted connected) secondary structure <span><span class="MathJax_Preview">s\in\overline{\Gamma}(\phi)</span><script type="math/tex">s\in\overline{\Gamma}(\phi)</script></span>, the free energy,
+<span><span class="MathJax_Preview">\overline{\Delta G}(\phi,s)</span><script type="math/tex">\overline{\Delta G}(\phi,s)</script></span>, is estimated as the sum of the empirically determined free energies of the
+constituent loops [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] plus a strand association penalty [<a class="citation" href="#ref-Bloomfield00" id="cite-Bloomfield00">Bloomfield00</a>], <span><span class="MathJax_Preview">\Delta
+G^\textrm{assoc}</span><script type="math/tex">\Delta
+G^\textrm{assoc}</script></span>, applied <span><span class="MathJax_Preview">L-1</span><script type="math/tex">L-1</script></span> times for a
+complex of <span><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> strands:
+\begin{align}
+\overline{\Delta G}(\phi,s) = (L-1)\,\Delta G^\textrm{assoc}\, + \sum_{\mathrm{loop} \in s} \Delta G(\mathrm{loop}). \label{eq:dGbar}
+\end{align}</p>
+<h3 id="loop-free-energies">Loop free energies<a class="headerlink" href="#loop-free-energies" title="Permanent link">&para;</a></h3>
+<p>The loop free energy, <span><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span>, is modeled for the different loop types as follows:</p>
+<ul>
+<li>A <strong>hairpin loop</strong> is closed by a single base-pair <span><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>. The loop free energy, <span><span class="MathJax_Preview">\Delta G^\mathrm{hairpin}_{a,b}</span><script type="math/tex">\Delta G^\mathrm{hairpin}_{a,b}</script></span>, depends on sequence and loop size.</li>
+<li>An <strong>interior loop</strong> is closed by two base pairs (<span><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span> and <span><span class="MathJax_Preview">d\cdot e</span><script type="math/tex">d\cdot e</script></span> with <span><span class="MathJax_Preview">a&lt;d&lt;e&lt;b</span><script type="math/tex">a<d<e<b</script></span>). The loop free energy, <span><span class="MathJax_Preview">\Delta G^\mathrm{interior}_{a,d,e,b}</span><script type="math/tex">\Delta G^\mathrm{interior}_{a,d,e,b}</script></span> depends on sequence, loop size, and loop asymmetry. <strong>Bulge loops</strong> (where either <span><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> or <span><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) and <strong>stacked pairs</strong> (where both <span><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> and <span><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) are treated as special cases of interior loops.</li>
+<li>A <strong>multiloop</strong> is closed by three or more base pairs.
+The loop free energy is modeled as the sum of three sequence-independent penalties:
+<span><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{init}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{init}</script></span> for formation of a multiloop, <span><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{bp}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{bp}</script></span> for each closing base pair, <span><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{nt}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{nt}</script></span> for each unpaired nucleotide inside the multiloop,
+plus a sequence-dependent penalty: <span><span class="MathJax_Preview">\Delta G^\mathrm{terminalbp}_{a, b}</span><script type="math/tex">\Delta G^\mathrm{terminalbp}_{a, b}</script></span> for each closing pair <span><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>.</li>
+<li>An <strong>exterior loop</strong> contains a nick between strands and any number of closing base pairs.
+The exterior loop free energy is the sum of <span><span class="MathJax_Preview">\Delta G^\mathrm{terminalbp}_{a, b}</span><script type="math/tex">\Delta G^\mathrm{terminalbp}_{a, b}</script></span> over all closing base pairs <span><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>].</li>
+</ul>
+<p><p align="center">
+<img src="../figs/looptypes.png" alt="Loop Types" width="450"/>
+</p></p>
+<p><strong>Figure:</strong> Canonical loop types for a complex with strand ordering <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> = ABC.</p>
+<h3 id="coaxial-and-dangle-stacking">Coaxial and dangle stacking<a class="headerlink" href="#coaxial-and-dangle-stacking" title="Permanent link">&para;</a></h3>
+<p>Within a multiloop or an exterior loop, there is a subensemble of coaxial stacking states between adjacent closing base pairs and dangle stacking states between
+closing base pairs and adjacent unpaired bases.
+Within a multiloop or exterior loop, a base pair can
+form one <strong>coaxial stack</strong> with an adjacent base pair, or can form a <strong>dangle stack</strong> with at most two adjacent unpaired bases; unpaired bases can either form no stack, or can form a dangle stack with at most one adjacent base pair.</p>
+<p align="center">
+<img src="../figs/multiloopstacking.png" alt="Coaxial and dangle stacking states for a multiloop" width="850"/>
+</p>
+
+<p><strong>Figure:</strong> Coaxial and dangle stacking states for a multiloop.</p>
+<p align="center">
+<img src="../figs/exteriorloopstacking.png" alt="Coaxial and dangle stacking states for two exterior loops" width="500"/>
+</p>
+
+<p><strong>Figure:</strong> Coaxial and dangle stacking states for two exterior loops.</p>
+<p>For a given multiloop or exterior loop, the energetic contributions of all possible coaxial and dangle stacking states are enumerated so as to calculate the free energy:
+\begin{align}
+\Delta G^\mathrm{stacking} = - k T \log \sum_{\omega\in\mathrm{loop}} \prod_\mathrm{x\in\omega} e^{-\Delta G_x/k T}\label{eq:stack}
+\end{align}
+where <span><span class="MathJax_Preview">\omega</span><script type="math/tex">\omega</script></span> indexes the possible stacking states within the loop and <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> indexes the individual stacks (coaxial or dangle) within a stacking state.
+The free energy of a multiloop or exterior loop is augmented by the corresponding <span><span class="MathJax_Preview">\Delta G^\mathrm{stacking}</span><script type="math/tex">\Delta G^\mathrm{stacking}</script></span> bonus.
+Hence, a secondary structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> continues to be defined as a set of base pairs, and the stacking states within a given multiloop or exterior loop are treated as a structural subensemble that contributes in a Boltzmann-weighted fashion to the free energy model for the loop.
+Let <span><span class="MathJax_Preview">s^\shortparallel\in s</span><script type="math/tex">s^\shortparallel\in s</script></span> denote a stacking state of the paired and unpaired bases in <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>. We may equivalently define the free energy of secondary structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> in terms of the <strong>stacking state
+free energies</strong>
+\begin{align}
+\overline{\Delta G}(\phi,s^\shortparallel)
+\end{align}
+for all stacking states <span><span class="MathJax_Preview">s^\shortparallel\in s</span><script type="math/tex">s^\shortparallel\in s</script></span>:
+\begin{align}
+\overline{\Delta G}(\phi,s) = -kT \log \sum_{s^\shortparallel\in s}e^{-\overline{\Delta G}(\phi,s^\shortparallel)/kT} \label{eq:stacksum}
+\end{align}
+Let <span><span class="MathJax_Preview">\overline\Gamma^\shortparallel(\phi)</span><script type="math/tex">\overline\Gamma^\shortparallel(\phi)</script></span> denote the ensemble of stacking states corresponding to the complex ensemble of secondary structures <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span>.</p>
+<h3 id="symmetry-correction">Symmetry correction<a class="headerlink" href="#symmetry-correction" title="Permanent link">&para;</a></h3>
+<p>For a secondary structure <span><span class="MathJax_Preview">s\in\Gamma(\phi)</span><script type="math/tex">s\in\Gamma(\phi)</script></span> with an <span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>-fold rotational symmetry there is in <span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>-fold reduction in distinguishable conformational space, so the free energy <span><span class="MathJax_Preview">\overline{\Delta G}(\phi,s)</span><script type="math/tex">\overline{\Delta G}(\phi,s)</script></span> must be adjusted [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>] by a symmetry correction:
+\begin{align}
+\Delta G(\phi,s)
+&amp;=   \overline{\Delta G}(\phi,s) + \Delta G^\mathrm{sym}(\phi,s). \label{eq:dGcorrected}
+\end{align}
+where
+\begin{align}
+\Delta G^\mathrm{sym}(\phi,s) = kT\log R(\phi,s). \label{eq:dGsym}
+\end{align}
+Because the symmetry factor <span><span class="MathJax_Preview">R(\phi,s)</span><script type="math/tex">R(\phi,s)</script></span> is a global property of each secondary structure <span><span class="MathJax_Preview">s\in\Gamma(\phi)</span><script type="math/tex">s\in\Gamma(\phi)</script></span>, it is not suitable for use with dynamic programs that treat multiple subproblems simultaneously without access to global structural information. As a result, dynamic programs operate on ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span> using physical model <span><span class="MathJax_Preview">\overline{\Delta G}(\phi,s)</span><script type="math/tex">\overline{\Delta G}(\phi,s)</script></span> and then the Distinguishability Correction Theorem [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>] enables exact conversion of physical quantities to ensemble <span><span class="MathJax_Preview">\Gamma(\phi)</span><script type="math/tex">\Gamma(\phi)</script></span> using physical model <span><span class="MathJax_Preview">\Delta G(\phi,s)</span><script type="math/tex">\Delta G(\phi,s)</script></span>.
+Interestingly, ensembles <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span> and <span><span class="MathJax_Preview">\Gamma(\phi)</span><script type="math/tex">\Gamma(\phi)</script></span> both have utility when examining the physical properties of a complex as they provide related but different perspectives,
+akin to complementary thought experiments [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>].</p>
+<!-- ### Free Energy Parameters
+For RNA, we employ temperature-dependent parameters [@Serra95,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10]
+including coaxial [@Mathews99,@Turner10] and dangle [@Serra95,@Zuker03,@Turner10] parameters
+in 1M Na$^+$. For DNA,
+we employ temperature-dependent parameters [@Santalucia98,@Zuker03,@Santalucia04]
+including coaxial [@Peyret00] and dangle [@Bommarito00,@Zuker03] parameters
+in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@Santalucia98,@Peyret00,@Santalucia04]. See [@Fornace20] for details.
+ -->
+
+<h2 id="physical-quantities">Physical quantities<a class="headerlink" href="#physical-quantities" title="Permanent link">&para;</a></h2>
+<p>Consider a <a href="./#test-tube-ensemble">test tube ensemble</a> containing an arbitrary set of strand species <span><span class="MathJax_Preview">\Psi^0</span><script type="math/tex">\Psi^0</script></span>
+interacting to form an arbitrary set of complex species <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>. Let <span><span class="MathJax_Preview">j\in\Psi</span><script type="math/tex">j\in\Psi</script></span> denote a complex with sequence <span><span class="MathJax_Preview">\phi_j</span><script type="math/tex">\phi_j</script></span> and <a href="./#complex-ensemble">complex ensembles</a>
+<span><span class="MathJax_Preview">\overline\Gamma(\phi_j)</span><script type="math/tex">\overline\Gamma(\phi_j)</script></span> (treating all strands as distinct) and <span><span class="MathJax_Preview">\Gamma(\phi_j)</span><script type="math/tex">\Gamma(\phi_j)</script></span> (treating strands with the same seqeuence as indistinguishable).
+NUPACK calculates [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>,<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>] a number of physical quantities over these ensembles.</p>
+<h3 id="partition-function">Partition function<a class="headerlink" href="#partition-function" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the partition function evaluated over ensemble <span><span class="MathJax_Preview">\Gamma(\phi_j)</span><script type="math/tex">\Gamma(\phi_j)</script></span> treating
+strands with the same sequence as indistinguishable is denoted</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}.
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}.
+\end{align}</script>
+</div>
+<h3 id="complex-free-energy">Complex free energy<a class="headerlink" href="#complex-free-energy" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the corresponding complex free energy is
+\begin{align}
+\Delta G(\phi_j) \equiv -kT \log(Q(\phi_j)).
+\end{align}</p>
+<h3 id="structure-free-energy">Structure free energy<a class="headerlink" href="#structure-free-energy" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the secondary structure free energy treating strands with the same sequence as indistinguishable is denoted
+\begin{align}
+\Delta G(\phi_j,s).
+\end{align}
+If the physical model includes <a href="..#coaxial-and-dangle-stacking">coaxial and dangle stacking</a>, the structure free energy will include stacking contributions <span><span class="MathJax_Preview">\Delta G^\textrm{stacking}</span><script type="math/tex">\Delta G^\textrm{stacking}</script></span>. If the secondary structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> has a rotational symmetry, the structure free energy will include the <a href="..#symmetry-correction">symmetry correction</a> <span><span class="MathJax_Preview">\Delta G^\textrm{sym}(\phi_j,s)</span><script type="math/tex">\Delta G^\textrm{sym}(\phi_j,s)</script></span>.</p>
+<h3 id="equilibrium-structure-probability">Equilibrium structure probability<a class="headerlink" href="#equilibrium-structure-probability" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the equilibrium structure probability of any secondary structure <span><span class="MathJax_Preview">s\in\Gamma(\phi_j)</span><script type="math/tex">s\in\Gamma(\phi_j)</script></span> treating
+strands with the same sequence as indistinguishable is denoted
+\begin{align}
+p(\phi_j,s)= e^{-\Delta G(\phi_j,s)/kT}/Q(\phi_j).
+\end{align}</p>
+<h3 id="boltzmann-sampled-structures">Boltzmann-sampled structures<a class="headerlink" href="#boltzmann-sampled-structures" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, a set of <span><span class="MathJax_Preview">J</span><script type="math/tex">J</script></span> secondary structures Boltzmann-sampled from ensemble <span><span class="MathJax_Preview">\Gamma(\phi_j)</span><script type="math/tex">\Gamma(\phi_j)</script></span> treating strands with the same sequence as indistinguishable is denoted</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\Gamma_\mathrm{sample}(\phi,J) \in \Gamma(\phi)
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\Gamma_\mathrm{sample}(\phi,J) \in \Gamma(\phi)
+\end{align}</script>
+</div>
+<h3 id="equilibrium-base-pairing-probabilities">Equilibrium base-pairing probabilities<a class="headerlink" href="#equilibrium-base-pairing-probabilities" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the base-pairing probability matrix <span><span class="MathJax_Preview">\overline P(\phi_j)</span><script type="math/tex">\overline P(\phi_j)</script></span> has entries <span><span class="MathJax_Preview">\overline P^{a,b}(\phi_j)\in[0,1]</span><script type="math/tex">\overline P^{a,b}(\phi_j)\in[0,1]</script></span> corresponding to the probability</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\overline P^{a,b}(\phi_j) = \sum_{s\in\overline\Gamma(\phi_j)}\overline p(\phi,s)S^{a,b}(s)
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\overline P^{a,b}(\phi_j) = \sum_{s\in\overline\Gamma(\phi_j)}\overline p(\phi,s)S^{a,b}(s)
+\end{align}</script>
+</div>
+<p>that base pair <span><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span> forms at equilibrium within ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi_j)</span><script type="math/tex">\overline\Gamma(\phi_j)</script></span>, treating all strands as distinct.
+ Here, <span><span class="MathJax_Preview">S(s)</span><script type="math/tex">S(s)</script></span> is the <a href="./#secondary-structure">structure matrix</a> and <span><span class="MathJax_Preview">\overline p(s)</span><script type="math/tex">\overline p(s)</script></span> the equilibrium probability of structure <span><span class="MathJax_Preview">s\in\overline\Gamma(\phi_j)</span><script type="math/tex">s\in\overline\Gamma(\phi_j)</script></span>, treating all strands as distinct. Abusing notation, the entry <span><span class="MathJax_Preview">\overline P^{i,i}(\phi) \in [0,1]</span><script type="math/tex">\overline P^{i,i}(\phi) \in [0,1]</script></span> denotes the equilibrium probability that base <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> is unpaired over ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span>. Hence <span><span class="MathJax_Preview">\overline P(\phi)</span><script type="math/tex">\overline P(\phi)</script></span> is symmetric matrix with row and column sums of 1.</p>
+<h3 id="mfe-proxy-structure">MFE proxy structure<a class="headerlink" href="#mfe-proxy-structure" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the free energy of the minimum free energy (MFE) stacking state
+<span><span class="MathJax_Preview">s_\mathrm{MFE}^\shortparallel(\phi) \in\overline\Gamma^\shortparallel(\phi)</span><script type="math/tex">s_\mathrm{MFE}^\shortparallel(\phi) \in\overline\Gamma^\shortparallel(\phi)</script></span>
+treating all strands as distinct is denoted</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\overline{\Delta G}(\phi_j,s^\shortparallel_{\rm MFE}) \equiv \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi_j)} \overline{\Delta G}(\phi_j,s^\shortparallel).
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\overline{\Delta G}(\phi_j,s^\shortparallel_{\rm MFE}) \equiv \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi_j)} \overline{\Delta G}(\phi_j,s^\shortparallel).
+\end{align}</script>
+</div>
+<p>The corresponding MFE proxy structure is</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+s_\mathrm{MFE'} \equiv \{s\in\overline\Gamma(\phi_j) | s^\shortparallel_\mathrm{MFE}\!\in\! s, s^\shortparallel_\mathrm{MFE}(\phi_j) = \arg \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi_j)} \overline{\Delta G}(\phi_j,s^\shortparallel)\},
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+s_\mathrm{MFE'} \equiv \{s\in\overline\Gamma(\phi_j) | s^\shortparallel_\mathrm{MFE}\!\in\! s, s^\shortparallel_\mathrm{MFE}(\phi_j) = \arg \min_{s^\shortparallel\in\overline\Gamma^\shortparallel(\phi_j)} \overline{\Delta G}(\phi_j,s^\shortparallel)\},
+\end{align}</script>
+</div>
+<p>defined as the secondary structure containing the MFE stacking state within its subensemble.
+The free energy of the MFE proxy structure is
+\begin{align}
+\overline{\Delta G}(\phi,s_\mathrm{MFE&rsquo;}).
+\end{align}
+There may be more than one MFE stacking state, each corresponding to the same or different MFE proxy structures.</p>
+<h3 id="suboptimal-proxy-structures">Suboptimal proxy structures<a class="headerlink" href="#suboptimal-proxy-structures" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the set of suboptimal proxy secondary structures with stacking states within a specified <span><span class="MathJax_Preview">\Delta G_\mathrm{gap}\ge 0</span><script type="math/tex">\Delta G_\mathrm{gap}\ge 0</script></span> of the MFE stacking state is denoted</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\overline\Gamma_{\rm subopt}(\phi_j,\Delta G_{\rm gap}) = \{s\in\overline\Gamma(\phi_j) | s^\shortparallel\!\in\! s, \overline{\Delta G}(\phi_j,s^\shortparallel) \le \overline{\Delta G}(\phi_j,s^\shortparallel_{\rm MFE}) + \Delta G_{\rm gap}\}.
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\overline\Gamma_{\rm subopt}(\phi_j,\Delta G_{\rm gap}) = \{s\in\overline\Gamma(\phi_j) | s^\shortparallel\!\in\! s, \overline{\Delta G}(\phi_j,s^\shortparallel) \le \overline{\Delta G}(\phi_j,s^\shortparallel_{\rm MFE}) + \Delta G_{\rm gap}\}.
+\end{align}</script>
+</div>
+<h3 id="complex-ensemble-defect">Complex ensemble defect<a class="headerlink" href="#complex-ensemble-defect" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> with target structure <span><span class="MathJax_Preview">s_j</span><script type="math/tex">s_j</script></span>, the dimensional complex ensemble defect
+\begin{align}
+    n(\phi_j,s_j)   &amp; = |\phi_j| - \sum_{\begin{array}{c}
+                            1 \leq a \leq |\phi_j|,\
+                            1 \leq b \leq |\phi_j|
+                            \end{array}}
+                            \overline P^{a, b}(\phi_j) S^{a,b}(s_j),
+\end{align}
+quantifies the equilibrium number of incorrectly paired nucleotides over the ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi_j)</span><script type="math/tex">\overline\Gamma(\phi_j)</script></span> relative to <span><span class="MathJax_Preview">s_j</span><script type="math/tex">s_j</script></span> [<a class="citation" href="#ref-Dirks04" id="cite-Dirks04">Dirks04</a>,<a class="citation" href="#ref-Zadeh11b" id="cite-Zadeh11b">Zadeh11b</a>]. Here, <span><span class="MathJax_Preview">\overline P(\phi_j)</span><script type="math/tex">\overline P(\phi_j)</script></span> is the equilibrium base-pairing probability
+matrix and <span><span class="MathJax_Preview">S(s_j)</span><script type="math/tex">S(s_j)</script></span> is the <a href="./#secondary-structure">target structure matrix</a> for <span><span class="MathJax_Preview">s_j</span><script type="math/tex">s_j</script></span>. The <strong>normalized complex ensemble defect</strong> is then denoted</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+{\mathcal N}_j \equiv n(\phi_j,s_j)/|\phi_j| ~~~\in (0,1)
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+{\mathcal N}_j \equiv n(\phi_j,s_j)/|\phi_j| ~~~\in (0,1)
+\end{align}</script>
+</div>
+<p>representing the equilibrium fraction of incorrectly paired nucleotides evaluated over the ensemble of complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> relative to target structure <span><span class="MathJax_Preview">s_j</span><script type="math/tex">s_j</script></span>.</p>
+<p>For a set of complexes <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>, the normalized complex ensemble defect can be generalized to a <strong>multi-complex ensemble defect</strong>
+\begin{align}
+{{\mathcal N}} ~\equiv ~\frac{1}{|\Psi|}\sum_{j\in\Psi} {\mathcal N_j} ~~~\in(0,1)
+\end{align}
+quantifying the average equilibrium fraction of incorrectly paired nucleotides over the complexes <span><span class="MathJax_Preview">j\in\Psi</span><script type="math/tex">j\in\Psi</script></span>.
+As <span><span class="MathJax_Preview">{\mathcal N}_j</span><script type="math/tex">{\mathcal N}_j</script></span> approaches zero, the complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> is dominated by its target structure, <span><span class="MathJax_Preview">s_{j}</span><script type="math/tex">s_{j}</script></span>.</p>
+<h3 id="complex-ensemble-size">Complex ensemble size<a class="headerlink" href="#complex-ensemble-size" title="Permanent link">&para;</a></h3>
+<p>For complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the number of secondary structures in the complex ensemble, treating all strands as distinct, is denoted:
+\begin{align}
+|\overline\Gamma(\phi_j)|.
+\end{align}
+The corresponding number of stacking states is denoted
+\begin{align}
+|\overline\Gamma^\shortparallel(\phi_j)|.
+\end{align}</p>
+<h3 id="equilibrium-complex-concentrations">Equilibrium complex concentrations<a class="headerlink" href="#equilibrium-complex-concentrations" title="Permanent link">&para;</a></h3>
+<p>For the set of complexes <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span> in the test tube ensemble, the set of equilibrium complex concentrations is denoted</p>
+<p>\begin{align}
+x_\Psi \equiv x_j~~~~~~ \forall j\in\Psi,
+\end{align}
+These concentrations are the unique solution to the strictly convex optimization problem [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]:</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+&amp; \min_{x_{\Psi}} \sum_{j\in\Psi} x_j(\log x_j - \log Q_j - 1) \\[6pt]
+&amp; \mathrm{subject~to~~~~} \sum_{j \in \Psi}A_{i,c} \,x_j = x_i^0 ~~~~~~ \forall i\in\Psi^0,
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+& \min_{x_{\Psi}} \sum_{j\in\Psi} x_j(\log x_j - \log Q_j - 1) \\[6pt]
+& \mathrm{subject~to~~~~} \sum_{j \in \Psi}A_{i,c} \,x_j = x_i^0 ~~~~~~ \forall i\in\Psi^0,
+\end{align}</script>
+</div>
+<p>expressed in terms of the previously calculated set of partition functions <span><span class="MathJax_Preview">Q_\Psi</span><script type="math/tex">Q_\Psi</script></span>.
+Here, the constraints impose conservation of mass: <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> is the stoichiometry matrix such that <span><span class="MathJax_Preview">A_{i,j}</span><script type="math/tex">A_{i,j}</script></span>
+is the number of strands of type <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> in complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>,
+and <span><span class="MathJax_Preview">x^0_i</span><script type="math/tex">x^0_i</script></span> is the total concentration of strand <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> present in the test tube. Based on dimensional analysis [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>], the convex optimization problem is formulated in terms of mole fractions, but for convenience, NUPACK accepts molar strand concentrations <span><span class="MathJax_Preview">[i]^0 = x_i^0 \rho_\mathrm{H_2O}</span><script type="math/tex">[i]^0 = x_i^0 \rho_\mathrm{H_2O}</script></span> as inputs and returns molar complex concentrations
+<span><span class="MathJax_Preview">[j] = x_j\rho_\mathrm{H_2O}</span><script type="math/tex">[j] = x_j\rho_\mathrm{H_2O}</script></span> as outputs, where <span><span class="MathJax_Preview">\rho_\mathrm{H_2O}</span><script type="math/tex">\rho_\mathrm{H_2O}</script></span> is the molarity of water.
+Hence, the user specifies the set of molar strand concentrations <span><span class="MathJax_Preview">[i]^0~~\forall i\in\Psi^0</span><script type="math/tex">[i]^0~~\forall i\in\Psi^0</script></span>
+and NUPACK calculates the set of molar complex concentrations <span><span class="MathJax_Preview">[j]~~ \forall j\in\Psi</span><script type="math/tex">[j]~~ \forall j\in\Psi</script></span>.</p>
+<h3 id="test-tube-ensemble-pair-fractions">Test tube ensemble pair fractions<a class="headerlink" href="#test-tube-ensemble-pair-fractions" title="Permanent link">&para;</a></h3>
+<p>For the test tube ensemble, the ensemble pair fraction</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+f_A(a_A\cdot b_B)
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+f_A(a_A\cdot b_B)
+\end{align}</script>
+</div>
+<p>denotes the fraction of A strands that form base pair <span><span class="MathJax_Preview">a_A\cdot b_B</span><script type="math/tex">a_A\cdot b_B</script></span>. Correspondingly,</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+f_B(a_A\cdot b_B)
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+f_B(a_A\cdot b_B)
+\end{align}</script>
+</div>
+<p>denotes the fraction of B strands that form base pair <span><span class="MathJax_Preview">a_A\cdot b_B</span><script type="math/tex">a_A\cdot b_B</script></span>.
+These base-pairing observables depend on the set of equilibrium concentrations <span><span class="MathJax_Preview">x_\Psi</span><script type="math/tex">x_\Psi</script></span> and the set of base-pairing probability matrices <span><span class="MathJax_Preview">\overline P_\Psi</span><script type="math/tex">\overline P_\Psi</script></span>. The number of distinct bases in the test tube is:</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+N_{\rm distinct}\equiv \sum_{i=1}^{|\Psi^0|} N_i
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+N_{\rm distinct}\equiv \sum_{i=1}^{|\Psi^0|} N_i
+\end{align}</script>
+</div>
+<p>representing the total number of bases in all <span><span class="MathJax_Preview">|\Psi^0|</span><script type="math/tex">|\Psi^0|</script></span> strand species. Numbering the distinct bases from 1 to <span><span class="MathJax_Preview">N_{\rm distinct}</span><script type="math/tex">N_{\rm distinct}</script></span>, the ensemble pair fractions, <span><span class="MathJax_Preview">f_A(a_A\cdot b_B)</span><script type="math/tex">f_A(a_A\cdot b_B)</script></span>, are then stored as an (asymmetric) <span><span class="MathJax_Preview">N_{\rm distinct}\times N_{\rm distinct}</span><script type="math/tex">N_{\rm distinct}\times N_{\rm distinct}</script></span> matrix. Abusing notation, the entry <span><span class="MathJax_Preview">f_A^{a_A,a_A} \in [0,1]</span><script type="math/tex">f_A^{a_A,a_A} \in [0,1]</script></span> denotes the equilibrium fraction of base <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> on strand <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> that is unpaired in the test tube ensemble. Hence, the matrix of test tube ensemble pair fractions is asymmetric with row and column sums of 1.</p>
+<h3 id="test-tube-ensemble-defect">Test tube ensemble defect<a class="headerlink" href="#test-tube-ensemble-defect" title="Permanent link">&para;</a></h3>
+<p>Consider test tube <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span> containing a
+set of desired <strong>on-target complexes</strong>, <span><span class="MathJax_Preview">\Psi_h^{\rm on}</span><script type="math/tex">\Psi_h^{\rm on}</script></span>,
+and a set of undesired <strong>off-target complexes</strong>, <span><span class="MathJax_Preview">\Psi_h^{\rm off}</span><script type="math/tex">\Psi_h^{\rm off}</script></span>. The set of complexes in the test tube is then:</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\Psi_h = \Psi_h^{\rm on} \cup \Psi_h^{\rm off}.
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\Psi_h = \Psi_h^{\rm on} \cup \Psi_h^{\rm off}.
+\end{align}</script>
+</div>
+<p>Let each on-target complex, <span><span class="MathJax_Preview">j\in\Psi_h^{\rm on}</span><script type="math/tex">j\in\Psi_h^{\rm on}</script></span>, have a target secondary structure,
+<span><span class="MathJax_Preview">s_j</span><script type="math/tex">s_j</script></span>, and a target concentration, <span><span class="MathJax_Preview">y_{h,j}</span><script type="math/tex">y_{h,j}</script></span>. Let each off-target complex, <span><span class="MathJax_Preview">j\in\Psi_h^{\rm off}</span><script type="math/tex">j\in\Psi_h^{\rm off}</script></span>, have a vanishing target concentration (<span><span class="MathJax_Preview">y_{h,j} = 0</span><script type="math/tex">y_{h,j} = 0</script></span>)
+and no target structure (<span><span class="MathJax_Preview">s_j = \emptyset</span><script type="math/tex">s_j = \emptyset</script></span>). The dimensional test tube ensemble defect,</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+C(\phi_{\Psi_h}, s_{\Psi_h}, y_{h,\Psi_h}) = \sum_{j\in\Psi^{\rm on}_h} \Bigl[ n(\phi_{j},s_{j})\min (x_{h,j},y_{h,j}) + |\phi_{j}|\max(y_{h,j}-x_{h,j},0)\Bigr]
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+C(\phi_{\Psi_h}, s_{\Psi_h}, y_{h,\Psi_h}) = \sum_{j\in\Psi^{\rm on}_h} \Bigl[ n(\phi_{j},s_{j})\min (x_{h,j},y_{h,j}) + |\phi_{j}|\max(y_{h,j}-x_{h,j},0)\Bigr]
+\end{align}</script>
+</div>
+<p>quantifies the equilibrium concentration of incorrectly paired nucleotides over the ensemble of test tube <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span> [<a class="citation" href="#ref-Wolfe15" id="cite-Wolfe15">Wolfe15</a>]. Here, <span><span class="MathJax_Preview">x_{h,j}</span><script type="math/tex">x_{h,j}</script></span> is the equilibrium concentration of complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>
+in tube <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span>.
+For each on-target complex, <span><span class="MathJax_Preview">j\in\Psi^{\rm on}_h</span><script type="math/tex">j\in\Psi^{\rm on}_h</script></span>, the first term in the sum represents the <strong>structural defect</strong>,
+quantifying the concentration of nucleotides that are in an incorrect base-pairing state
+within the ensemble of complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, and the second term in the sum represents the <strong>concentration defect</strong>,
+quantifying the concentration
+of nucleotides that are in an incorrect base-pairing state because
+there is a deficiency in the concentration of complex <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>. For each off-target complex, <span><span class="MathJax_Preview">j\in\Psi^{\rm off}_h</span><script type="math/tex">j\in\Psi^{\rm off}_h</script></span>,
+the structural and concentration defects are identically zero, since <span><span class="MathJax_Preview">y_{h,j}=0</span><script type="math/tex">y_{h,j}=0</script></span>.
+This does not mean that the defects associated with off-targets are ignored.
+By conservation of mass, non-zero off-target concentrations imply
+deficiencies in on-target concentrations, and these concentration defects are quantified by the equation above [<a class="citation" href="#ref-Wolfe15" id="cite-Wolfe15">Wolfe15</a>].
+The <strong>normalized test tube ensemble defect</strong> is then denoted</p>
+<p>\begin{align}
+{\mathcal M}_h\equiv C_h/y^{\rm nt}_h \in (0,1)
+\end{align}
+representing the equilibrium fraction of incorrectly paired nucleotides in tube <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span>.
+Here,</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+y^{\rm nt}_h \equiv \sum_{j\in\Psi^{\rm on}_h} |\phi_j|y_{h,j}
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+y^{\rm nt}_h \equiv \sum_{j\in\Psi^{\rm on}_h} |\phi_j|y_{h,j}
+\end{align}</script>
+</div>
+<p>is the total concentration of nucleotides in tube <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span>.
+As <span><span class="MathJax_Preview">{\mathcal M}_h</span><script type="math/tex">{\mathcal M}_h</script></span> approaches zero, each on-target complex, <span><span class="MathJax_Preview">j\in \Psi^{\rm on}_h</span><script type="math/tex">j\in \Psi^{\rm on}_h</script></span>, approaches its
+target concentration, <span><span class="MathJax_Preview">y_{h,j}</span><script type="math/tex">y_{h,j}</script></span>, and is dominated by its target structure, <span><span class="MathJax_Preview">s_{j}</span><script type="math/tex">s_{j}</script></span>, and
+each off-target complex, <span><span class="MathJax_Preview">j\in\Psi^{\rm off}_h</span><script type="math/tex">j\in\Psi^{\rm off}_h</script></span>, forms with vanishing target concentration.</p>
+<p>For a set of test tubes <span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>, the test tube ensemble defect can be generalized to a <strong>multi-tube ensemble defect</strong></p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+   {\mathcal M} \equiv \frac{1}{\lvert \Omega \rvert} \sum_{h \in \Omega} {\mathcal M}_h ~~~\in (0,1)
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+   {\mathcal M} \equiv \frac{1}{\lvert \Omega \rvert} \sum_{h \in \Omega} {\mathcal M}_h ~~~\in (0,1)
+\end{align}</script>
+</div>
+<p>quantifying the average equilibrium fraction of incorrectly paired nucleotides over the test tubes <span><span class="MathJax_Preview">h\in\Omega</span><script type="math/tex">h\in\Omega</script></span>.</p>
+<h2 id="design-formulation">Design formulation<a class="headerlink" href="#design-formulation" title="Permanent link">&para;</a></h2>
+<p>NUPACK provides a framework for designing the sequences of multiple nucleic acid strands intended to hybridize in solution via a prescribed reaction pathway.
+Sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Each target test tube contains a set of desired on-target complexes,
+each with a target secondary structure and target concentration, and a set of undesired
+off-target complexes, each with vanishing target concentration. Design quality is quantified by the <a href="test-tube-ensemble-defect">multi-tube ensemble defect</a>, <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span>, representing the average equilibrium fraction of incorrectly paired
+nucleotides evaluated over the design ensemble
+[<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>]. Optimization of the sequences so as to reduce <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> below a user-specified stop condition implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. Sequence design is performed subject to both <a href="./#hard-constraints">hard constraints</a> (including composition constraints and biological constraints) and <a href="./#soft-constraints">soft constraints</a> (including sequence symmetry minimization and toehold free energy equalization).</p>
+<h3 id="complex-design-vs-test-tube-design">Complex design vs test tube design<a class="headerlink" href="#complex-design-vs-test-tube-design" title="Permanent link">&para;</a></h3>
+<p>We recommend using the multi-tube design ensemble instead of the multi-complex ensemble because test tube design provides significant advantages over complex design [<a class="citation" href="#ref-Wolfe15" id="cite-Wolfe15">Wolfe15</a>,<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>].</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><p align="center">
+<img src="../figs/complex-vs-tube-design.png" alt="Benefits of test tube design over complex design" width="700"/>
+</p>
+<strong>Figure: The advantages of test tube design over complex design.</strong> <strong>Top: Complex design.</strong> Sequence design formulated in the context of a complex (left) ensures that at equilibrium the target structure dominates the structural ensemble of the complex (center). Unfortunately, subsequent test tube analysis reveals that the desired on-target complex occurs at negligible concentration relative to other undesired off-target complexes (right). With complex design, neither the concentration of the desired on-target complex, nor the concentrations of undesired off-target complexes are considered. As a result, sequences that are successfully optimized to predominantly adopt a target secondary structure in the context of an on-target complex, may nonetheless fail to ensure that this complex forms at appreciable concentration when the strands are introduced into a test tube.
+<strong>Bottom: Test tube design.</strong> Sequence design formulated in the context of a test tube (left) ensures that at equilibrium the desired on-target complex is dominated by its target structure and forms at approximately its target concentration, and that undesired off-target complexes form at negligible concentrations (center).    Subsequent test tube analysis (right) provides no
+new information and no unpleasant surprises since the design and analysis ensembles are identical.</p>
+</div>
+<p>Note that the multi-tube ensemble encompases the complex ensemble, test tube ensemble, and multi-complex ensemble as subsidiary special cases [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>].</p>
+<h3 id="reaction-pathways">Reaction pathways<a class="headerlink" href="#reaction-pathways" title="Permanent link">&para;</a></h3>
+<p>Consider a set of nucleic acid molecules intended to execute a prescribed hybridization cascade [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>].
+For example, the reaction pathway below
+describes scRNAs that upon binding to input X,
+perform shape and sequence transduction to form a Dicer substrate
+targeting an independent output Y for silencing [<a class="citation" href="#ref-Hochrein13" id="cite-Hochrein13">Hochrein13</a>].
+A <strong>reaction pathway</strong> specifies the <strong>elementary steps</strong> (each a self-assembly or disassembly operation
+in which complexes form or break) by which the molecules are intended to interact,
+the desired secondary structure for
+each on-pathway complex,
+and the complementarity relationships between sequence domains in the molecules.
+In the reaction pathway below
+there are two elementary steps (Step 1: X + A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> B <span><span class="MathJax_Preview">\rightarrow</span><script type="math/tex">\rightarrow</script></span> X<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> A + B, Step 2: B + C <span><span class="MathJax_Preview">\rightarrow</span><script type="math/tex">\rightarrow</script></span> B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> C)
+involving six on-pathway complexes (X, A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> B, X<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> A, B, C, B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> C)
+and numerous sequence domains (<code>a*</code> complementary to <code>a</code>, <code>b*</code> complementary to <code>b</code>, and so on).</p>
+<p align="center">
+<img src="../figs/dicer-reaction-pathway.png" alt="Reaction pathway schematic." title="Reaction pathway schematic." width="680"/>
+</p>
+
+<p><strong>Figure: Reaction pathway schematic.</strong> Conditional Dicer substrate formation via shape and sequence transduction with small conditional RNAs (scRNAs) [<a class="citation" href="#ref-Hochrein13" id="cite-Hochrein13">Hochrein13</a>].
+scRNA A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B detects input X (comprising sequence <code>a-b-c</code>), leading to production of Dicer substrate B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>C (targeting independent sequence <code>w-x-y-z</code>).
+Step 1: X displaces A from B via toehold-mediated 3-way branch migration and spontaneous dissociation.
+Step 2: B assembles with C via loop/toehold nucleation and 3-way branch migration to form Dicer substrate B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>C. See [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>] for additional reaction pathway case studies.</p>
+<p>In addition to specifying a set of desired on-pathway
+elementary steps, each reaction pathway also implicitly
+specifies a much larger set of off-pathway interactions,
+corresponding to undesired <strong>crosstalk</strong> between components within the pathway
+or with components from other unrelated reaction pathways.
+To perform sequence design for reaction pathway engineering,
+we formulate a multistate optimization problem to
+explicitly design for on-pathway elementary steps (a positive design paradigm) and against
+off-pathway crosstalk (a negative design paradigm) [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>].</p>
+<h3 id="multi-tube-design-ensemble">Multi-tube design ensemble<a class="headerlink" href="#multi-tube-design-ensemble" title="Permanent link">&para;</a></h3>
+<p>A multi-tube design problem is specified as a set of <strong>target test tubes</strong>,
+<span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span> [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>].
+Each tube, <span><span class="MathJax_Preview">h \in \Omega</span><script type="math/tex">h \in \Omega</script></span>, contains a set of desired <strong>on-target
+complexes</strong>, <span><span class="MathJax_Preview">\Psi_h^{\rm on}</span><script type="math/tex">\Psi_h^{\rm on}</script></span>,
+and a set of undesired <strong>off-target complexes</strong>, <span><span class="MathJax_Preview">\Psi_h^{\rm off}</span><script type="math/tex">\Psi_h^{\rm off}</script></span>.
+For each on-target complex, <span><span class="MathJax_Preview">j\in\Psi_h^{\rm on}</span><script type="math/tex">j\in\Psi_h^{\rm on}</script></span>,
+the user specifies a target secondary structure, <span><span class="MathJax_Preview">s_{j}</span><script type="math/tex">s_{j}</script></span>, and a target concentration, <span><span class="MathJax_Preview">y_{h, j}</span><script type="math/tex">y_{h, j}</script></span>.
+For each off-target complex, <span><span class="MathJax_Preview">j\in\Psi_h^{\rm off}</span><script type="math/tex">j\in\Psi_h^{\rm off}</script></span>,
+the target concentration is vanishing (<span><span class="MathJax_Preview">y_{h,j}=0</span><script type="math/tex">y_{h,j}=0</script></span>) and there is no target structure <span><span class="MathJax_Preview">(s_{j}=\emptyset)</span><script type="math/tex">(s_{j}=\emptyset)</script></span>.
+The
+set of complexes in tube <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span> is then <span><span class="MathJax_Preview">\Psi_h \equiv \Psi^{\rm on}_h \cup \Psi^{\rm off}_h</span><script type="math/tex">\Psi_h \equiv \Psi^{\rm on}_h \cup \Psi^{\rm off}_h</script></span>
+and the set of all complexes in multistate test tube ensemble <span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span> is
+<span><span class="MathJax_Preview">\Psi \equiv \cup_{h\in\Omega} \Psi_h</span><script type="math/tex">\Psi \equiv \cup_{h\in\Omega} \Psi_h</script></span>. Let
+\begin{align}
+\phi_{\Psi} \equiv \phi_j ~~~\forall j\in \Psi
+\end{align}
+denote the set of sequences for the complexes in <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>.</p>
+<p>Consider specification of the multistate test tube ensemble, <span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>, for the design of
+<span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> orthogonal systems for a reaction pathway of <span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span> elementary steps.
+One <strong>elementary step tube</strong> is specified for each step <span><span class="MathJax_Preview">m=0,\dots,M</span><script type="math/tex">m=0,\dots,M</script></span> for each system <span><span class="MathJax_Preview">n=1,\dots,N</span><script type="math/tex">n=1,\dots,N</script></span>
+(treating formation of the initial reactants as a precursor ``Step 0&rsquo;&lsquo;). Additionally,
+a single <strong>global crosstalk tube</strong> is specified to minimize off-pathway interactions between the reactive species generated during
+all elementary steps of all systems. The total
+number of target test tubes is then <span><span class="MathJax_Preview">|\Omega| = N*(M+1) + 1</span><script type="math/tex">|\Omega| = N*(M+1) + 1</script></span>.</p>
+<h3 id="target-test-tubes">Target test tubes<a class="headerlink" href="#target-test-tubes" title="Permanent link">&para;</a></h3>
+<p>The figure below depicts target test tubes for the reaction pathway depicted above.
+There are three elementary step tubes, each containing on-target complexes corresponding to the
+products of the corresponding step: the Reactants tube (Step 0) contains on-targets X, A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B, and C;
+the Step 1 tube contains on-targets X<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>A and B;
+the Step 2 tube contains on-target B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>C.
+Each elementary step tube contains a set of on-target complexes (each with a target secondary structure and
+target concentration), corresponding to the on-pathway hybridization products for a given step, and a set of undesired off-target complexes (each with vanishing target concentration), corresponding to on-pathway reactants and off-pathway hybridization crosstalk for a given step.
+Hence, these elementary step tubes design for full conversion of cognate reactants into cognate products and
+against local crosstalk between these same reactants.</p>
+<p align="center">
+<img src="../figs/dicer-target-tubes.png" alt="Target test tubes." title="Target test tubes." width="680"/>
+</p>
+
+<p><strong>Figure: Target test tubes.</strong>
+<strong>Left: Elementary step tubes.</strong> Reactants tube (Step 0):  target X and scRNAs A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B and C. Step 1 tube: X<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>A and B.
+Step 2 tube: Dicer substrate B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>C. Each target test tube contains the depicted on-target
+complexes corresponding to the on-pathway products for a given step
+(each with the depicted target secondary structure and a target concentration of 10 nM)
+as well as off-target complexes (not depicted) corresponding to on-pathway reactants and off-pathway
+crosstalk for a given step. To design <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> orthogonal systems, there are three elementary step tubes for each system <span><span class="MathJax_Preview">n=1,\dots,N</span><script type="math/tex">n=1,\dots,N</script></span>.
+<strong>Right: Global crosstalk tube.</strong> Contains the depicted on-target complexes corresponding to reactive species
+generated during Steps 0, 1, 2 as well as off-target complexes (not depicted)
+corresponding to off-pathway interactions between these reactive species. To design <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> orthogonal systems, the global crosstalk
+tube contains a set of on-targets and off-targets for each system <span><span class="MathJax_Preview">n=1,\dots,N</span><script type="math/tex">n=1,\dots,N</script></span>.</p>
+<p>To simultaneously design <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> orthogonal systems,
+three elementary step tubes of the type shown above (left) are specified for each system.
+Furthermore, to design against off-pathway interactions within and between systems, a single
+global crosstalk tube is specified (right). In the global crosstalk tube, the on-target complexes correspond
+to all reactive species generated during all elementary steps (<span><span class="MathJax_Preview">m=0,1,2</span><script type="math/tex">m=0,1,2</script></span>) for all systems (<span><span class="MathJax_Preview">n=1,\dots,N</span><script type="math/tex">n=1,\dots,N</script></span>);
+the off-target complexes correspond to non-cognate interactions between these reactive species (see Supplementary Section S2.2 of [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>]
+for details on defining reactive species for a given reaction pathway).
+Crucially, the global crosstalk tube ensemble omits the cognate products that the reactive species are intended to form (they appear as
+neither on-targets nor off-targets).
+Hence, all reactive species in the global crosstalk tube are forced to either perform no reaction (remaining as desired on-targets)
+or undergo a crosstalk reaction (forming undesired off-targets), providing the basis for minimization of global crosstalk during sequence optimization.
+To design 8 orthogonal systems for this reaction pathway, the
+total number of target test tubes is then <span><span class="MathJax_Preview">|\Omega| = 8*3 + 1 = 25</span><script type="math/tex">|\Omega| = 8*3 + 1 = 25</script></span>. See [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>] Supplementary Information Section S2.2 for a general description of how to specify target test tubes for a given reaction pathway, as well as a number of illustrative case studies.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that each target test tube isolates a different subset of the system components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble. For example, the Step 1 tube simultaneously optimizes for high-yield production of unstructured intermediate B and against appreciable formation of off-target dimer B<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B, promoting rapid nucleation of the unstructured toehold in B with the loop of hairpin C during the next step of the reaction pathway.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that for a tube containing a given set of system components, the cognate products of their interactions can be excluded from the ensemble (appearing as neither on-targets nor off-targets), enabling optimization for high-yield well-structured reactants and against crosstalk. For example, the Reactants tube excludes the cognate product of Step 1 from the ensemble in order to optimize formation of initial reactants X, A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B, and C and discourage competing crosstalk interactions  (e.g., X<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>X, A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>A, X<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>C).</p>
+</div>
+<h3 id="design-objective-function">Design objective function<a class="headerlink" href="#design-objective-function" title="Permanent link">&para;</a></h3>
+<p>The design objective function is the <a href="./#test-tube-ensemble-defect">multi-tube ensemble defect</a> [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>],</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\mathcal{M}\in[0,1],
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\mathcal{M}\in[0,1],
+\end{align}</script>
+</div>
+<p>representing the average equilibrium fraction of incorrectly paired nucleotides over the multitube ensemble, <span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>.</p>
+<h3 id="defect-weights">Defect weights<a class="headerlink" href="#defect-weights" title="Permanent link">&para;</a></h3>
+<p>To prioritize or de-prioritize design quality for a portion of the design ensemble, the defect-weighted objective function, <span><span class="MathJax_Preview">\mathcal{M}_\mathcal{W}</span><script type="math/tex">\mathcal{M}_\mathcal{W}</script></span>, incorporates user-specified defect weights for any tube, complex, strand, or domain.
+With the default value of unity for all weights, <span><span class="MathJax_Preview">\mathcal{M}_\mathcal{W}</span><script type="math/tex">\mathcal{M}_\mathcal{W}</script></span> is simply the <a href="./#test-tube-ensemble-defect">multi-tube ensemble defect</a>, <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span>.
+With custom defect weights in the range <span><span class="MathJax_Preview">[0,\infty)</span><script type="math/tex">[0,\infty)</script></span>, the physical meaning of
+the objective function is distorted in the service of adjusting design priorities. Increasing the weight for a tube, complex, strand or domain will lead to a corresponding increase in the allocation of effort to designing this entity, typically leading to a corresponding reduction in the defect contribution of the entity. Likewise, decreasing the weight for a tube, complex, strand or domain will lead to a corresponding decrease in the allocation of effort to designing this entity, typically leading to a corresponding increase in the defect contribution of the entity.</p>
+<h3 id="hard-constraints">Hard constraints<a class="headerlink" href="#hard-constraints" title="Permanent link">&para;</a></h3>
+<p>Sequence design can be performed subject to <strong>hard constraints</strong> that prohibit sequences violating the constraints.
+The following types of hard sequence constraints can be imposed [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>]:</p>
+<ul>
+<li>
+<p><strong>Assignment Constraint:</strong> Nucleotide <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> is constrained to have a specified sequence
+(e.g., <code>A</code>, <code>C</code>, <code>G</code>, <code>U</code> or any of the <a href="./#degenerate-nucleotide-codes">degenerate nucleotide codes</a>. To specify an assignment constraint, <a href="../design/#specify-a-domain">specify a domain</a>.</p>
+</li>
+<li>
+<p><strong>Match Constraint:</strong> Two nucleotides <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> and <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> are constrained to be identical
+(e.g., if a strand species appears in more than one on-target complex, corresponding nucleotides are constrained to have
+the same sequence in all complexes).</p>
+</li>
+<li>
+<p><strong>Complementarity Constraint:</strong> Two  nucleotides <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> and <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> are constrained to be Watson&ndash;Crick complements, or optionally for RNA, to be Watson-Crick or wobble complements.</p>
+</li>
+<li>
+<p><strong>Similarity Constraint:</strong> Consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> are constrained to be similar to a specified sequence of length <span><span class="MathJax_Preview">n=b-a+1</span><script type="math/tex">n=b-a+1</script></span> to a specified degree (e.g., a desired <code>GC</code> content can be achieved by constraining the fraction of &lsquo;S&rsquo; nucleotides to fall in the range <span><span class="MathJax_Preview">[f^{\rm min}, f^{\rm max}]</span><script type="math/tex">[f^{\rm min}, f^{\rm max}]</script></span>).</p>
+</li>
+<li>
+<p><strong>Library Constraint:</strong> Consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> are constrained to be selected from a specified library of <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> sequences of length <span><span class="MathJax_Preview">n=b-a+1</span><script type="math/tex">n=b-a+1</script></span> (e.g.,
+a library of toehold sequences or a library of codons).</p>
+</li>
+<li>
+<p><strong>Window Constraint:</strong> Consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> are constrained to be a subsequence of a specified source sequence of length <span><span class="MathJax_Preview">n\ge b-a+1</span><script type="math/tex">n\ge b-a+1</script></span>
+(e.g., the source sequence is an mRNA), or more generally, a subsequence of one of multiple specified source sequences.</p>
+</li>
+<li>
+<p><strong>Pattern Prevention Constraint:</strong> Consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> are constrained <em>not</em> to contain a specified subsequence of length <span><span class="MathJax_Preview">n\le b-a+1</span><script type="math/tex">n\le b-a+1</script></span> (e.g., prevention of <code>GGGG</code>,
+which is prone to forming <code>G</code>-quadruplexes that are not accounted for in nearest-neighbor free energy models).</p>
+</li>
+<li>
+<p><strong>Diversity Constraint:</strong> Consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> are constrained to have a specified degree of sequence diversity (e.g., every subsequence of length 4 should have at least 2 nucleotide types).</p>
+</li>
+</ul>
+<p>Let <span><span class="MathJax_Preview">\mathcal R</span><script type="math/tex">\mathcal R</script></span> denote the user-specified set of hard constraints for a design problem.</p>
+<h3 id="soft-constraints">Soft constraints<a class="headerlink" href="#soft-constraints" title="Permanent link">&para;</a></h3>
+<p>As an alternative to hard constraints that prohibit constraint violations, <strong>soft constraints</strong> define auxiliary objective functions that penalize suboptimal sequences during the design process [<a class="citation" href="#ref-Porubsky20" id="cite-Porubsky20">Porubsky20</a>]:
+\begin{align}
+w_k f_k(\phi_\Psi)
+\end{align}
+Here, <span><span class="MathJax_Preview">f_k(\phi_\Psi)\in[0,1]</span><script type="math/tex">f_k(\phi_\Psi)\in[0,1]</script></span> is the penalty function for soft constraint <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> and <span><span class="MathJax_Preview">w_k\in [0,\infty)</span><script type="math/tex">w_k\in [0,\infty)</script></span> (default: 1) is the corresponding user-specified weight.
+ Soft constraints can reduce design cost relative to the corresponding hard constraint by making it easier for the optimization process to identify candidate sequence mutations. Soft constraints can also increase flexibility by enabling specification of new design goals (e.g., designing a set of toeholds to have comparable binding strength) for which there is no hard constraint analog.
+The following types of soft constraints can be imposed:</p>
+<ul>
+<li>
+<p><strong>Similarity:</strong> Penalize consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> if they fail to be similar to a specified sequence of length <span><span class="MathJax_Preview">n=b-a+1</span><script type="math/tex">n=b-a+1</script></span> to a specified degree (e.g.,
+to drive the fraction of nucleotides matching an mRNA sequence to fall in the range <span><span class="MathJax_Preview">[f^{\rm min}, f^{\rm max}]</span><script type="math/tex">[f^{\rm min}, f^{\rm max}]</script></span>).</p>
+</li>
+<li>
+<p><strong>Pattern prevention:</strong> Penalize consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> if they contain a specified subsequence of length <span><span class="MathJax_Preview">n\le b-a+1</span><script type="math/tex">n\le b-a+1</script></span> (e.g., to discourage use of <code>GGGG</code>,
+which is prone to forming <code>G</code>-quadruplexes that are not accounted for in nearest-neighbor free energy models).</p>
+</li>
+<li>
+<p><strong>Sequence symmetry minimization:</strong> Penalize consecutive nucleotides <span><span class="MathJax_Preview">a,\dots,b</span><script type="math/tex">a,\dots,b</script></span> of a specified <em>word length</em>, <span><span class="MathJax_Preview">L_w</span><script type="math/tex">L_w</script></span>, if [<a class="citation" href="#ref-Seeman82" id="cite-Seeman82">Seeman82</a>]: 1) a word appears in more than one location in the design
+(unless sequence domains are explicitly constrained to be identical), 2) a word and its reverse complement both appear in the design but they are specified in a target structure not to form a duplex,
+3) a word that appears in the design is self-complementary. Sequence symmetry minimization is a negative design heuristic [<a class="citation" href="#ref-Dirks04" id="cite-Dirks04">Dirks04</a>] that destabilizes formation of off-target structures by ensuring they cannot form without mismatches in any subsequence of the word length.</p>
+</li>
+<li>
+<p><strong>Energy match:</strong> Consider a set of duplexes (e.g., toeholds and toehold complements) that are intended to have <a href="./#structure-free-energy">structure free energies</a> that match each other or a specified reference free energy. This soft constraint will penalize duplexes to the extent they deviate from the desired structure free energy.</p>
+</li>
+</ul>
+<p>Let <span><span class="MathJax_Preview">\mathcal S</span><script type="math/tex">\mathcal S</script></span> denote the user-specified set of soft constraints for a design problem.</p>
+<h3 id="constrained-multi-tube-design-problem">Constrained multi-tube design problem<a class="headerlink" href="#constrained-multi-tube-design-problem" title="Permanent link">&para;</a></h3>
+<p>To design a set of sequences, <span><span class="MathJax_Preview">\Phi_\Psi</span><script type="math/tex">\Phi_\Psi</script></span>, for a <a href="./#multi-tube-design-ensemble">multi-tube ensemble</a>, <span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>, subject to user-specified <a href="./#hard-constraints">hard constraints</a> <span><span class="MathJax_Preview">\mathcal{R}</span><script type="math/tex">\mathcal{R}</script></span> and <a href="./#soft-constraints">soft constraints</a> <span><span class="MathJax_Preview">\mathcal{S}</span><script type="math/tex">\mathcal{S}</script></span>,
+the constrained multi-tube design problem is:</p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\min_{\phi_\Psi}\left[\mathcal{M}_{\mathcal{W}} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] ~~~~\mathrm{subject~to} ~~~~\mathcal{R},
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\min_{\phi_\Psi}\left[\mathcal{M}_{\mathcal{W}} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] ~~~~\mathrm{subject~to} ~~~~\mathcal{R},
+\end{align}</script>
+</div>
+<p>where <span><span class="MathJax_Preview">\mathcal{M}_\mathcal{W}</span><script type="math/tex">\mathcal{M}_\mathcal{W}</script></span> is the <a href="./#test-tube-ensemble-defect">multi-tube ensemble defect</a> including user-specified <a href="./#defect-weights">defect weights</a> <span><span class="MathJax_Preview">\mathcal{W}</span><script type="math/tex">\mathcal{W}</script></span>.
+The sequence design algorithm seeks to iteratively reduce the <strong>augmented objective function</strong> (weighted ensemble defect plus weighted soft constraints) below the <strong>stop condition</strong></p>
+<div>
+<div class="MathJax_Preview">\begin{align}
+\left[\mathcal{M}_{\mathcal{W}} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] \le f_\textrm{stop}
+\end{align}</div>
+<script type="math/tex; mode=display">\begin{align}
+\left[\mathcal{M}_{\mathcal{W}} ~~~+~~~\sum_{k\in\mathcal{S}} w_kf_k(\phi_\Psi)\right] \le f_\textrm{stop}
+\end{align}</script>
+</div>
+<p>for user-specified <span><span class="MathJax_Preview">f_\textrm{stop} \in (0,1)</span><script type="math/tex">f_\textrm{stop} \in (0,1)</script></span>
+while satisfying the hard constraints in <span><span class="MathJax_Preview">\mathcal{R}</span><script type="math/tex">\mathcal{R}</script></span>.</p>
+<!--
+!!! warning
+    markdown issue won't let me put $\mathcal{M}_\mathcal{W}$ in the above formula: seems to be causing italicization instead of subscript -->
+
+<div class="references">
+<table>
+<tbody>
+<tr id="ref-Zadeh11a">
+<td>Zadeh11a</td>
+<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and Design of Nucleic Acid Systems</i>. J. Comput. Chem., <b>32</b>, (2011)</p></td>
+</tr>
+<tr id="ref-Zadeh10c">
+<td>Zadeh10c</td>
+<td><p>Zadeh J.N.: <i>Algorithms for Nucleic Acid Sequence Design</i>. (2010)</p></td>
+</tr>
+<tr id="ref-Dirks07">
+<td>Dirks07</td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic Analysis of Interacting Nucleic Acid Strands</i>. SIAM Rev., <b>49</b>, (2007)</p></td>
+</tr>
+<tr id="ref-Zadeh11b">
+<td>Zadeh11b</td>
+<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic Acid Sequence Design via Efficient Ensemble Defect Optimization</i>. J. Comput. Chem., <b>32</b>, (2011)</p></td>
+</tr>
+<tr id="ref-Fornace20">
+<td>Fornace20</td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A Unified Dynamic Programming Framework for the Analysis of Interacting Nucleic Acid Strands: Enhanced Models, Scalability, and Speed</i>. ACS Synth. Biol., (2020)</p></td>
+</tr>
+<tr id="ref-Santalucia98">
+<td>Santalucia98</td>
+<td><p>SantaLucia J.: <i>A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics</i>. Proc. Natl. Acad. Sci. USA, <b>95</b>, (1998)</p></td>
+</tr>
+<tr id="ref-Xia98">
+<td>Xia98</td>
+<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>Thermodynamic Parameters for an Expanded Nearest-Neighbor Model for Formation of RNA Duplexes with Watson-Crick Base Pairs</i>. Biochemistry, <b>37</b>, (1998)</p></td>
+</tr>
+<tr id="ref-Mathews99">
+<td>Mathews99</td>
+<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded Sequence Dependence of Thermodynamic Parameters Improves Prediction of RNA Secondary Structure</i>. J. Mol. Biol., <b>288</b>, (1999)</p></td>
+</tr>
+<tr id="ref-Zuker03">
+<td>Zuker03</td>
+<td><p>Zuker M.: <i>Mfold Web Server for Nucleic Acid Folding and Hybridization Prediction</i>. Nucleic Acids Res., <b>31</b>, (2003)</p></td>
+</tr>
+<tr id="ref-Lu06">
+<td>Lu06</td>
+<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A Set of Nearest Neighbor Parameters for Predicting the Enthalpy Change of RNA Secondary Structure Formation</i>. Nucleic acids research, <b>34</b>, (2006)</p></td>
+</tr>
+<tr id="ref-Turner10">
+<td>Turner10</td>
+<td><p>Turner D.H., Mathews D.H.: <i>NNDB: The Nearest Neighbor Parameter Database for Predicting Stability of Nucleic Acid Secondary Structure</i>. Nucleic Acids Res., <b>38</b>, (2010)</p></td>
+</tr>
+<tr id="ref-Bloomfield00">
+<td>Bloomfield00</td>
+<td><p>Bloomfield V., Crothers D., Tinoco I.: <i>Nucleic Acids: Structures, Properties, and Functions</i>. (2000)</p></td>
+</tr>
+<tr id="ref-Serra95">
+<td>Serra95</td>
+<td><p>Serra M.J., Turner D.H.: <i>Predicting Thermodynamic Properties of RNA</i>. Methods Enzymol., <b>259</b>, (1995)</p></td>
+</tr>
+<tr id="ref-Santalucia04">
+<td>Santalucia04</td>
+<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct., <b>33</b>, (2004)</p></td>
+</tr>
+<tr id="ref-Peyret00">
+<td>Peyret00</td>
+<td><p>Peyret N.: <i>Prediction of Nucleic Acid Hybridization: Parameters and Algorithms</i>. (2000)</p></td>
+</tr>
+<tr id="ref-Bommarito00">
+<td>Bommarito00</td>
+<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic Parameters for DNA Sequences with Dangling Ends</i>. Nucleic Acids Res., <b>28</b>, (2000)</p></td>
+</tr>
+<tr id="ref-Dirks04">
+<td>Dirks04</td>
+<td><p>Dirks R.M., Lin M., Winfree E., Pierce N.A.: <i>Paradigms for Computational Nucleic Acid Design</i>. Nucleic Acids Res., <b>32</b>, (2004)</p></td>
+</tr>
+<tr id="ref-Wolfe15">
+<td>Wolfe15</td>
+<td><p>Wolfe B.R., Pierce N.A.: <i>Nucleic Acid Sequence Design for a Test Tube of Interacting Nucleic Acid Strands</i>. ACS Synth. Biol., <b>4</b>, (2015)</p></td>
+</tr>
+<tr id="ref-Wolfe17">
+<td>Wolfe17</td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained Multistate Sequence Design for Nucleic Acid Reaction Pathway Engineering</i>. J Am. Chem. Soc., <b>139</b>, (2017)</p></td>
+</tr>
+<tr id="ref-Hochrein13">
+<td>Hochrein13</td>
+<td><p>Hochrein L.M., Schwarzkopf M., Shahgholi M., Yin P., Pierce N.A.: <i>Conditional Dicer Substrate Formation via Shape and Sequence Transduction with Small Conditional RNAs</i>. J. Am. Chem. Soc., <b>135</b>, (2013)</p></td>
+</tr>
+<tr id="ref-Porubsky20">
+<td>Porubsky20</td>
+<td><p>Porubsky N.J.: <i>Enhanced Algorithms for Analysis and Design of Nucleic Acid Reaction Pathways. PhD Thesis. California Institute of Technology</i>. (2020)</p></td>
+</tr>
+<tr id="ref-Seeman82">
+<td>Seeman82</td>
+<td><p>Seeman N.C.: <i>Nucleic Acid Junctions and Lattices</i>. J Theor Biol, <b>99</b>, (1982)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../model/" class="btn btn-neutral float-right" title="Model Specification">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../model/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

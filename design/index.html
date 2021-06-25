@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://piercelab-caltech.github.io/nupack-docs/design/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Design Jobs - NUPACK 4.0 User Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Design Jobs";
+    var mkdocs_page_input_path = "design.md";
+    var mkdocs_page_url = "/nupack-docs/design/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../definitions/">Definitions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../model/">Model Specification</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis Jobs</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Design Jobs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-domain">Specify a domain</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-target-strand">Specify a target strand</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-target-complex">Specify a target complex</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-target-tube">Specify a target tube</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-a-test-tube-design-job">Run a test tube design job</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#run-design-trials-in-the-foreground">Run design trials in the foreground</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#launch-design-trials-in-the-background">Launch design trials in the background</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-a-complex-design-job">Run a complex design job</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-hard-constraints">Specify hard constraints</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#match">Match</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complementarity">Complementarity</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#similarity">Similarity</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#window">Window</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#library">Library</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pattern-prevention">Pattern Prevention</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#diversity">Diversity</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-soft-constraints">Specify soft constraints</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#similarity_1">Similarity</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pattern-prevention_1">Pattern prevention</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sequence-symmetry">Sequence symmetry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#energy-match">Energy match</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-defect-weights">Specify defect weights</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#job-options">Job options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#job-results">Job results</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tabular-display">Tabular display</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#textual-display">Textual display</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#programmatic-access">Programmatic access</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#evaluate-a-design">Evaluate a design</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#evaluate-a-design-using-a-different-model-soft-constraints-defect-weights-andor-domains">Evaluate a design using a different model, soft constraints, defect weights, and/or domains</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#analyze-additional-physical-quantities-for-a-designed-ensemble">Analyze additional physical quantities for a designed ensemble</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#analyze-a-designed-ensemble-using-different-strand-concentrations">Analyze a designed ensemble using different strand concentrations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#save-a-job-summary">Save a job summary</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#save-and-reload-job-results">Save and reload job results</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../advanced/">Advanced</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">NUPACK 4.0 User Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Design Jobs</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="design-jobs">Design Jobs<a class="headerlink" href="#design-jobs" title="Permanent link">&para;</a></h1>
+<p>To enable <strong>reaction pathway engineering</strong> of dynamic hybridization cascades (e.g., shape and sequence transduction using small conditional RNAs [<a class="citation" href="#ref-Hochrein13" id="cite-Hochrein13">Hochrein13</a>,<a class="citation" href="#ref-HanewichHollatz19" id="cite-HanewichHollatz19">HanewichHollatz19</a>]) or large-scale <strong>structural engineering including pseudoknots</strong> (e.g., RNA origamis [<a class="citation" href="#ref-Geary14" id="cite-Geary14">Geary14</a>]), NUPACK sequence design operates on multistate ensembles:</p>
+<ul>
+<li><strong>Multi-complex ensemble:</strong> the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.</li>
+<li><strong>Multi-tube ensemble:</strong> the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.</li>
+</ul>
+<p>We <a href="../definitions/#complex-design-vs-test-tube-design">recommend</a> using the <a href="../definitions/#multi-tube-design">multi-tube design ensemble</a> as it captures concentration and crosstalk effects that are critical in most experimental settings.</p>
+<p>For reaction pathway engineering, sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve <em>kinetic design</em> of a test tube ensemble by performing <em>equilibrium optimization</em> of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
+For large-scale structural engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.</p>
+<p>In a <a href="../definitions/#multi-tube-design-ensemble">multi-tube design ensemble</a>, each target test tube contains a set of desired &ldquo;on-target&rdquo; complexes, each with a target
+secondary structure and target concentration, and a set of undesired &ldquo;off-target&rdquo; complexes, each with vanishing target concentration. Optimization of the <a href="../definitions/#test-tube-ensemble-defect">multi-tube ensemble defect</a>
+implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. <a href="../definitions/#defect-weights">Defect weights</a> can be specified to prioritize or de-priotize design quality for different portions of the design ensemble. Sequence design is performed subject to user-specified <a href="../definitions/#hard-constraints">hard constraints</a> (e.g., sequence constraints imposed by the reaction pathway or biological sequences) and <a href="../definitions/#soft-constraints">soft constraints</a> (e.g., design a set of toeholds to have comparable binding strength).</p>
+<hr />
+<h2 id="specify-a-domain">Specify a domain<a class="headerlink" href="#specify-a-domain" title="Permanent link">&para;</a></h2>
+<p>A <code>domain</code> is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> using <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a>) and a domain name (keyword <code>name</code>). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;AAAA&#39;</span><span class="p">,</span>       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span>         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;NNNNNNNNNN&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span>        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;RRRRRNNNNN&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;R5N5&#39;</span><span class="p">,</span>       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span>        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>The reverse complement of domain <code>a</code> is denoted <code>~a</code>. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U wobble pairs for RNA if wobble mutations are permitted (see <a href="./#job-options">Job Options</a>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain <code>a</code> as <code>a*</code> because that would not be valid Python syntax.</p>
+</div>
+<hr />
+<h2 id="specify-a-target-strand">Specify a target strand<a class="headerlink" href="#specify-a-target-strand" title="Permanent link">&para;</a></h2>
+<p>A <code>TargetStrand</code> is a single RNA or DNA molecule specified as a sequence (specified 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> in terms of previously defined domains) and a target strand name (keyword <code>name</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="o">~</span><span class="n">e</span><span class="p">],</span>   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>  <span class="c1"># ~e denotes the reverse complement of e</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">e</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">f</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand D&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Additional fields and methods are available for a <code>TargetStrand</code> object:</p>
+<ul>
+<li><code>.domains</code>: a tuple of the domains comprising the strand</li>
+<li><code>.ndomains()</code>: the number of domains in the strand</li>
+<li><code>.nt()</code>: the number of nucleotides in the strand</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">A</span><span class="o">.</span><span class="n">domains</span>    <span class="c1"># --&gt; (&lt;Domain a&gt;, &lt;Domain b&gt;, &lt;Domain g&gt;)</span>
+<span class="n">A</span><span class="o">.</span><span class="n">ndomains</span><span class="p">()</span> <span class="c1"># --&gt; 3</span>
+<span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span>       <span class="c1"># --&gt; 18</span>
+</code></pre></div>
+<p>The reverse complement of a <code>TargetStrand</code> maybe analogous obtained, for example, as <code>~A</code>.</p>
+<hr />
+<h2 id="specify-a-target-complex">Specify a target complex<a class="headerlink" href="#specify-a-target-complex" title="Permanent link">&para;</a></h2>
+<p>A <code>TargetComplex</code> is an on- and/or off-target complex specified as an ordered list of strands (i.e., an ordering of strands around a circle in a <a href="../definitions/#secondary-structure">polymer graph</a>) and a complex name (keyword <code>name</code>). If the complex is to be used as an on-target complex in at least one target test tube, it is specified with an on-target <a href="../definitions/#secondary-structure">secondary structure</a> (specified in dot-parens-plus, run-length encoded dot-parens-plus, or DU+ notation):</p>
+<!-- ```python
+# dot-parens-plus notation
+c1 = TargetComplex([A], structure='........(........)', name='c1')
+
+# run-length-encoded dot-parens-plus notation
+c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2')
+# DU+ notation
+c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
+``` -->
+
+<div class="highlight"><pre><span></span><code><span class="c1"># dot-parens-plus notation</span>
+<span class="n">C1</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;........((((((((((+))))))))))((((((((((+))))))))))..............&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="c1"># run-length encoded dot-parens-plus notation</span>
+<span class="n">C2</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10.14&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+
+<span class="c1"># DU+ notation</span>
+<span class="n">C3</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">D</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="s1">&#39;D30 +&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">)</span>
+<span class="n">C4</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;D10(D10 + D10 +)&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+<span class="n">C5</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;D8(U12 +) D10(+) U10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C5&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The target structure will be used in all target test tubes in which a complex appears as an on-target complex and will be ignored in those target test tubes where a complex appears as an off-target complex.</p>
+</div>
+<p>Additional fields and methods are available for a <code>TargetComplex</code> object:</p>
+<ul>
+<li><code>.strands</code>: a tuple of the strands</li>
+<li><code>.nstrands()</code>: the number of strands in the complex</li>
+<li><code>.nt()</code>: the number of nucleotides in the complex</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">C1</span><span class="o">.</span><span class="n">strands</span>    <span class="c1"># --&gt; (&lt;TargetStrand Strand A&gt;, &lt;TargetStrand Strand B&gt;, &lt;TargetStrand Strand C&gt;)</span>
+<span class="n">C1</span><span class="o">.</span><span class="n">nstrands</span><span class="p">()</span> <span class="c1"># --&gt; 3</span>
+<span class="n">C1</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span>       <span class="c1"># --&gt; 62</span>
+</code></pre></div>
+<p>In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword <code>bonus</code> can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># destabilize C6 by 1 kcal/mol</span>
+<span class="n">C6</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10.14&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C6&#39;</span><span class="p">,</span> <span class="n">bonus</span><span class="o">=+</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># stabilize C7 by 10 kcal/mol</span>
+<span class="n">C7</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10.14&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C7&#39;</span><span class="p">,</span> <span class="n">bonus</span><span class="o">=-</span><span class="mf">10.0</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that a bonus applied to the <a href="../definitions/#complex-free-energy">complex free energy</a> is equivalent to applying the bonus to every <a href="../definitions/#structure-free-energy">structure free energy</a> in the complex ensemble. As a result, the bonus alters the <a href="../definitions/#equilibrium-complex-concentrations">equilibrium complex concentration</a> within the <a href="../definitions/#test-tube-ensemble">test tube ensemble</a>, but does not alter the <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a> within the <a href="../definitions/#complex-ensemble">complex ensemble</a>.</p>
+</div>
+<hr />
+<h2 id="specify-a-target-tube">Specify a target tube<a class="headerlink" href="#specify-a-target-tube" title="Permanent link">&para;</a></h2>
+<p>A <code>TargetTube</code> is specified as a tube name (keyword <code>name</code>) and a set of on-target complexes each with a target concentration (keyword <code>on_targets</code>; units of <code>M</code>). Off-target complexes (keyword <code>off_targets</code>: defaults to none) can be specified using <code>SetSpec()</code> in any of three ways:</p>
+<ul>
+<li>Combinatorially using keyword <code>max_size</code> to automatically generate the set of all complexes up to a specified number of strands (default: <code>max_size=1</code>).</li>
+<li>Using keyword <code>include</code> to include an explicitly specified set of complexes (default: <code>None</code>).</li>
+<li>Using keyword <code>exclude</code> to exclude an explicitly specified set of complexes (default: <code>None</code>).</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">t1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">(</span><span class="n">on_targets</span><span class="o">=</span><span class="p">{</span><span class="n">C1</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">C2</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">,</span>
+    <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[[</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">]],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="n">C4</span><span class="p">]))</span>
+</code></pre></div>
+<p>If desired, the on-target and off-target sets for a specified <code>TargetTube</code> can be queried as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">on_targets</span><span class="p">)</span>  <span class="c1"># --&gt; {&lt;TargetComplex C1&gt;: 1e-08, &lt;TargetComplex C2&gt;: 1e-08}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">off_targets</span><span class="p">)</span> <span class="c1"># --&gt; {&lt;TargetComplex (Strand A+Strand A+Strand B)&gt;, &lt;TargetComplex (Strand B)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand A+Strand A)&gt;, &lt;TargetComplex (Strand C+Strand B+Strand B)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand A+Strand B+Strand B)&gt;, &lt;TargetComplex (Strand A+Strand C+Strand C)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand C)&gt;, &lt;TargetComplex (Strand C+Strand C+Strand C)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand A+Strand C+Strand B)&gt;, &lt;TargetComplex (Strand C+Strand C)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand A+Strand C)&gt;, &lt;TargetComplex (Strand A+Strand A+Strand C)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand A)&gt;, &lt;TargetComplex (Strand B+Strand B)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand A+Strand B)&gt;, &lt;TargetComplex (Strand A+Strand A+Strand A)&gt;,</span>
+                      <span class="c1"># &lt;TargetComplex (Strand C+Strand C+Strand B)&gt;, &lt;TargetComplex (Strand B+Strand B+Strand B+Strand B)&gt;}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that <code>include</code> and <code>exclude</code> accept both target complex identifiers (e.g., <code>C4</code>) and strand orderings (e.g., <code>[B, B, B, B]</code>).</p>
+<p>Note that for an off-target specified using a target complex identifier (e.g., <code>C4</code>), the target structure is ignored since by definition, there is no target structure for an off-target complex.</p>
+<p>Note that any complex included as an on-target complex will not be included as an off-target complex when processing <code>max_size</code> and <code>include</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that used together, <code>max_size</code> and <code>exclude</code> provide a powerful combination for specifying <a href="../definitions/#target-test-tubes">target test tubes</a>. With <code>max_size</code> it is possible to specify a large set of off-target complexes formed from a set of system components. With <code>exclude</code> it is further possible to remove from this large set all of the cognate products that should form between these system components (so they appear as neither on-targets nor off-targets in the tube ensemble). For example, with this approach, the reactive species in a global crosstalk tube can be forced to either perform no reaction (remaining as desired on-targets) or to undergo a crosstalk reaction (forming undesired off-targets), enabling minimization of global crosstalk during sequence optimization.</p>
+<p>An ensemble that excludes cognate reaction products can never be studied in the lab but provides a important framework for computational sequence optimization.</p>
+</div>
+<h2 id="run-a-test-tube-design-job">Run a test tube design job<a class="headerlink" href="#run-a-test-tube-design-job" title="Permanent link">&para;</a></h2>
+<p>The <code>tube_design</code> class performs <a href="../definitions/#constrained-multitube-design-problem">constrained multi-tube design</a> for a specified set of target test tubes (keyword <code>tubes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">my_tubes</span> <span class="o">=</span> <span class="p">[</span><span class="n">t1</span><span class="p">]</span>
+<span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="n">my_tubes</span><span class="p">,</span>
+    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
+</code></pre></div>
+<p>A <code>tube_design</code> object supports two methods for performing sequence design:</p>
+<ul>
+<li><code>run()</code>: <a href="./#run-a-single-design-trial-in-the-foreground">run multiple independent design trials in the foreground</a>.</li>
+<li><code>launch()</code>: <a href="./#launch-multiple-design-trials-in-the-background">launch multiple independent design trials in the background</a> and save design progress to checkpoint files.</li>
+</ul>
+<p>Either method can be used to restart from a previous design result (keyword <code>restart</code>). See below for examples using <code>run()</code> and <code>launch()</code> for the above <code>tube_design</code> job.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>run()</code> is a blocking command that is convenient when you want to run a single quick design trial and wait for the results.<code>launch()</code> is a non-blocking command that offers the preferred mode of operation for large design jobs, enabling you to run long design trials in the background with built-in checkpointing.</p>
+</div>
+<hr />
+<h3 id="run-design-trials-in-the-foreground">Run design trials in the foreground<a class="headerlink" href="#run-design-trials-in-the-foreground" title="Permanent link">&para;</a></h3>
+<p>Once a test tube design has been specified using <code>tube_design</code>, use <code>run()</code> to run a specified number of independent design trials (keyword <code>trials</code>) in parallel in the foreground and return a list of <code>DesignResult</code> objects:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_results</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># run 2 independent design trials</span>
+</code></pre></div>
+<p>A <code>DesignResult</code> object can be viewed as a table in a Jupyter notebook, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># display results table for first design trial</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/1-optimization.png" alt="Optimization output" title="Example optimization output" width="620" /></p>
+</blockquote>
+<p>Output table displays:</p>
+<ul>
+<li>Designed sequences for each domain and strand.</li>
+<li>Objective function components (weighted ensemble defect and weighted soft constraints (if applicable)).</li>
+<li>Ensemble defect (unweighted).</li>
+<li>Complex defect for each on-target in the ensemble (unweighted).</li>
+<li>Tube defect for each tube in the ensemble (unweighted).</li>
+<li>Structural defect, concentration defect, and total defect for each on-target complex in each tube (unweighted).</li>
+<li>Concentation and target concentration for each on-target complex in each tube.</li>
+<li>Significant off-target complex concentrations in each tube (those off-targets with concentration <span><span class="MathJax_Preview">\ge</span><script type="math/tex">\ge</script></span> 1% the maximum complex concentration in the tube).</li>
+</ul>
+<p>The keyword <code>restart</code> may be included to run a design by providing a list of <code>DesignResult</code> objects from a previous design job:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">new_results</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">restart</span><span class="o">=</span><span class="n">my_results</span><span class="p">)</span>
+</code></pre></div>
+An error will be thrown if <code>trials</code> and <code>restart</code> specify different numbers of design trials and <code>DesignResult</code> objects.</p>
+<h3 id="launch-design-trials-in-the-background">Launch design trials in the background<a class="headerlink" href="#launch-design-trials-in-the-background" title="Permanent link">&para;</a></h3>
+<p>Once a test tube design has been specified using <code>tube_design</code>, use <code>launch()</code> to start a specified number of independent design trials (keyword <code>trials</code>) in parallel in the background. Intermediate results will be saved to a directory specified with keyword <code>checkpoint</code> at a regular interval specified with keyword <code>interval</code> (in seconds, default 600):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># start 2 independent design trials</span>
+<span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+</code></pre></div>
+<p>Whereas <code>run()</code> returns a list of <code>DesignResult</code> objects representing completed design trials, <code>launch()</code> returns a list of trial monitors. The design trials will continue in the background.</p>
+<p>To examine current results based on the latest checkpoint file for each trial, use the <code>current_results()</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_current_results</span> <span class="o">=</span> <span class="n">my_jobs</span><span class="o">.</span><span class="n">current_results</span><span class="p">()</span>
+</code></pre></div>
+<p>which returns a list with an entry for each trial that is either a <code>DesignResult</code> object (if a checkpoint file or final result is available) or <code>None</code> (otherwise). As illustrated above, a <code>DesignResult</code> object can be viewed as a table in a Jupyter notebook. For example if a checkpoint is available for the first trial, a table is generated by typing:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_current_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># display results table for first design trial</span>
+</code></pre></div>
+<p>If only final results are of interest, use the <code>final_results()</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_final_results</span> <span class="o">=</span> <span class="n">my_jobs</span><span class="o">.</span><span class="n">final_results</span><span class="p">()</span>
+</code></pre></div>
+<p>which returns a list with an entry for each trial that is either a <code>DesignResult</code> object (if a final result is available) or <code>None</code> (otherwise).</p>
+<p>To lock up the interface and wait for all trials to finish, use the <code>wait()</code> method to return a list of <code>DesignResult</code> objects:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_final_results</span> <span class="o">=</span> <span class="n">my_jobs</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</code></pre></div>
+<p>To stop all trials, use the <code>stop()</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_jobs</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</code></pre></div>
+<p>To restart designs from previous results, use the <code>restart</code> keyword, providing either a list of <code>DesignResult</code> objects from a previous design, or a directory name containing checkpoint files:</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># restart from a list of DesignResult objects</span>
+<span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;new_checkpoints&#39;</span><span class="p">,</span>
+    <span class="n">restart</span><span class="o">=</span><span class="n">my_current_results</span><span class="p">)</span>
+
+<span class="c1"># restart from a checkpoint directory</span>
+<span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;new_checkpoints&#39;</span><span class="p">,</span>
+    <span class="n">restart</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">)</span>
+</code></pre></div>
+An error will be returned if <code>trials</code> and <code>restart</code> specify different numbers of design trials and <code>DesignResult</code> objects. However, if no results exist in the supplied <code>restart</code> directory, the design will be started afresh without any error messages. Hence, you can create a rerunnable design by supplying the same directory to <code>checkpoint</code> and <code>restart</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">,</span>
+    <span class="n">restart</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="run-a-complex-design-job">Run a complex design job<a class="headerlink" href="#run-a-complex-design-job" title="Permanent link">&para;</a></h2>
+<p>The <code>complex_design</code> class enables specification of a <a href="../definitions/#constrained-multi-complex-design">constrained multi-complex design</a> for a specified set of target complexes (keyword <code>complexes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">my_complexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">]</span>
+<span class="n">my_design</span> <span class="o">=</span> <span class="n">complex_design</span><span class="p">(</span><span class="n">complexes</span><span class="o">=</span><span class="n">my_complexes</span><span class="p">,</span>
+    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># run 2 independent design trials in the foreground</span>
+<span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/2-complex.png" alt="Complex design output" title="Example complex design output" width="350" /></p>
+</blockquote>
+<p>A <code>complex_design</code> object supports the <code>launch()</code>, <code>run()</code>, and <code>evaluate()</code> methods just as for a <code>tube_design</code> object (see above).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that a <code>complex_design</code> job is equivalent to a <code>tube_design</code> job with each on-target complex placed in a separate test tube containing no off-target complexes. For this reason, we strongly <a href="../definitions/#complex-design-vs-test-tube-design">recommend</a> use of test tube design formulations over complex design formulations so that off-target complexes are present in the design ensemble and the design algorithm can actively design against their formation.</p>
+</div>
+<hr />
+<h2 id="specify-hard-constraints">Specify hard constraints<a class="headerlink" href="#specify-hard-constraints" title="Permanent link">&para;</a></h2>
+<p><a href="../definitions/#hard-constraints">Hard constraints</a> for a design job are specified as a list, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># specify domains</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+
+<span class="c1"># source sequence for window constraint</span>
+<span class="n">gfp</span> <span class="o">=</span> <span class="s1">&#39;auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag&#39;</span>
+
+<span class="c1"># define list of hard constraints</span>
+<span class="n">my_hard_constraints</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Match</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">]),</span>
+    <span class="n">Match</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="p">],</span> <span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">a</span><span class="p">]),</span>
+    <span class="n">Complementarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Similarity</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="s1">&#39;S5&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]),</span> <span class="c1"># GC content</span>
+    <span class="n">Library</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">catalog</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;CTAC&#39;</span><span class="p">,</span> <span class="s1">&#39;TAAT&#39;</span><span class="p">]]),</span>
+    <span class="n">Window</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">]),</span>
+    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;G5&#39;</span><span class="p">,</span> <span class="s1">&#39;U5&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">A</span><span class="p">),</span>
+    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">]),</span>
+    <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="p">]</span>
+
+<span class="c1">#two ways to add another constraint to the constraint set</span>
+<span class="n">my_hard_constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">Complementarity</span><span class="p">([</span><span class="n">e</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+<span class="n">my_hard_constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Complementarity</span><span class="p">([</span><span class="n">e</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the specification of a domain using <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a> (as in the example above) is an implicit hard sequence constraint.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that NUPACK will return an error if a design specification contains a fixed sequence that violates a hard constraint</p>
+</div>
+<p>See below for information about how to specify each type of hard constraint.</p>
+<hr />
+<h3 id="match">Match<a class="headerlink" href="#match" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">match constraint</a> forces equal-length concatenations of one or more domains to be identical. A <code>Match</code> hard constraint is specified as follows:</p>
+<ul>
+<li>a first list of domains for concatenation; alternatively, a target strand may be specified</li>
+<li>a second list of domains for concatenation; alternatively, a target strand may be specified</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+
+<span class="n">match1</span> <span class="o">=</span> <span class="n">Match</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">e</span><span class="p">])</span>  <span class="c1"># ~e is the reverse complement of e</span>
+<span class="n">match2</span> <span class="o">=</span> <span class="n">Match</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+
+<span class="c1"># specifying target strand A is equivalent to specifying list of domains [a, b]</span>
+<span class="n">match3</span> <span class="o">=</span> <span class="n">Match</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Constraints that expect a list of domains for concatenation will alternatively accept a target strand.</p>
+</div>
+<hr />
+<h3 id="complementarity">Complementarity<a class="headerlink" href="#complementarity" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">complementarity constraint</a> forces a concatenation of one list of domains to be the reverse complement of an equal-length concatenation of another list of domains. A <code>Complementarity</code> hard constraint is specified as:</p>
+<ul>
+<li>a first list of domains for concatenation; alternatively, a target strand may be specified</li>
+<li>a second list of domains for concatenation; alternatively, a target strand may be specified</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">comp1</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+
+<span class="c1"># specifying target strand A is equivalent to specifying list of domains [a, b]</span>
+<span class="n">comp2</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned a complementarity constraint.</p>
+</div>
+<p>By default, complementary sequences are required to have Watson-Crick base-pairing (A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U or C<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G for RNA, A<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T or C<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G for DNA). To permit wobble mutations for RNA (G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U) globally throughout a design, use the <code>wobble_mutations</code> <a href="./#job-options">job option</a>. Alternatively, wobble mutations can be allowed for individual complementarity constraints (keyword <code>wobble_mutations</code>, default: <code>False</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">comp2</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>It is also possible to force base pairs to be wobble pairs:</p>
+<div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">comp3</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">([</span><span class="n">f</span><span class="p">],</span> <span class="p">[</span><span class="n">g</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="similarity">Similarity<a class="headerlink" href="#similarity" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">similarity constraint</a> forces a concatentation of domains to match a reference sequence of the same length to within a specified fractional range. A <code>Similarity</code> hard constraint is specified as:</p>
+<ul>
+<li>a list of domains to be concatenated; alternatively a target strand may be specified</li>
+<li>a reference sequence of the same length as the concatenated domains</li>
+<li>a fractional range, <span><span class="MathJax_Preview">[l, u]</span><script type="math/tex">[l, u]</script></span>, where <span><span class="MathJax_Preview">0 \leq l &lt; u \leq 1</span><script type="math/tex">0 \leq l < u \leq 1</script></span></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+
+<span class="c1"># similarity constraint for a concatenation of domains</span>
+<span class="n">sim1</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S5K35&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+
+<span class="c1"># similarity constraint for a target strand</span>
+<span class="n">sim2</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="s1">&#39;S30K10&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span> <span class="c1"># for a strand</span>
+
+<span class="c1"># use similarity constraint to enforce 45-55% GC content</span>
+<span class="n">sim3</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S30&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">])</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A similarity constraint can be used to constrain sequence composition (e.g., 45-55% GC content as in the example above).</p>
+</div>
+<hr />
+<h3 id="window">Window<a class="headerlink" href="#window" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">window constraint</a> forces a concatenation of domains to have a sequence that is a subsequence of a source sequence. More generally, a window can be drawn from any of multiple source sequences. A <code>Window</code> hard constraint is specified as:</p>
+<ul>
+<li>Define one or more source sequences as strings.</li>
+<li>Specify a list of domains for concatenation; alternatively, specify a target strand</li>
+<li>Specify a list of sources from which the window should be selected</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+
+<span class="n">gfp</span> <span class="o">=</span> <span class="s1">&#39;AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACGGCCACAAGUUCAGCGUGUCCGGCGAGGGCGAGGGCGAUGCCACCUACGGCAAGCUGACCCUGAAGUUCAUCUGCACCACCGGCAAGCUGCCCGUGCCCUGGCCCACCCUCGUGACCACCCUGACCUACGGCGUGCAGUGCUUCAGCCGCUACCCCGACCACAUGAAGCAGCACGACUUCUUCAAGUCCGCCAUGCCCGAAGGCUACGUCCAGGAGCGCACCAUCUUCUUCAAGGACGACGGCAACUACAAG&#39;</span>
+
+<span class="n">rfp</span> <span class="o">=</span> <span class="s1">&#39;CCUGCAGGACGGCGAGUUCAUCUACAAGGUGAAGCUGCGCGGCACCAACUUCCCCUCCGACGGCCCCGUAAUGCAGAAGAAGACCAUGGGCUGGGAGGCCUCCUCCGAGCGGAUGUACCCCGAGGACGGCGCCCUGAAGGGCGAGAUCAAGCAGAGGCUGAAGCUGAAGGACGGCGGCCACUACGACGCUGAGGUCAAGACCACCUACAAGGCCAAGAAGCCCGUGCAGCUGCCCGGCGCCUACAACGUCAACAUCAAGUUGGACAUCACCUCCCACAACGAGGACUACACCAUCGUGGAACAGUACGAACGCGCCGAGGGCCGCCACUCCACCGGCGGCAUGGACGAGCUGUACAAGUAA&#39;</span>
+
+<span class="c1"># constrain window to be drawn from a source</span>
+<span class="n">window1</span> <span class="o">=</span> <span class="n">Window</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">])</span>
+
+<span class="c1"># window constraint for a target strand</span>
+<span class="n">window2</span> <span class="o">=</span> <span class="n">Window</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">])</span>
+
+<span class="c1"># constrain window to be drawn from more either of two sources</span>
+<span class="n">window3</span> <span class="o">=</span> <span class="n">Window</span><span class="p">([</span><span class="o">~</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">],</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">,</span> <span class="n">rfp</span><span class="p">])</span>
+</code></pre></div>
+<hr />
+<h3 id="library">Library<a class="headerlink" href="#library" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">library constraint</a> forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A <code>Library</code> hard constraint is specified as:</p>
+<ul>
+<li>Define one or more libraries of alternative sequences of uniform length.</li>
+<li>Specify a list of domains for concatentation; alternatively, specify a target strand</li>
+<li>Specify a list of libraries for concatenation</li>
+</ul>
+<p>The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements).</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N3&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N3&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+
+<span class="c1"># define a library of sequences</span>
+<span class="n">toeholds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CAGUGG&#39;</span><span class="p">,</span> <span class="s1">&#39;AGCUCG&#39;</span><span class="p">,</span> <span class="s1">&#39;CAGGGC&#39;</span><span class="p">]</span>
+
+<span class="c1"># define a library of codons for each amino acid</span>
+<span class="n">aaI</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AUU&#39;</span><span class="p">,</span> <span class="s1">&#39;AUC&#39;</span><span class="p">,</span> <span class="s1">&#39;AUA&#39;</span><span class="p">]</span>
+<span class="n">aaL</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CUU&#39;</span><span class="p">,</span> <span class="s1">&#39;CUC&#39;</span><span class="p">,</span> <span class="s1">&#39;CUA&#39;</span><span class="p">,</span> <span class="s1">&#39;CUG&#39;</span><span class="p">,</span> <span class="s1">&#39;UUA&#39;</span><span class="p">,</span> <span class="s1">&#39;UUG&#39;</span><span class="p">]</span>
+<span class="n">aaV</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GUU&#39;</span><span class="p">,</span> <span class="s1">&#39;GUC&#39;</span><span class="p">,</span> <span class="s1">&#39;GUA&#39;</span><span class="p">,</span> <span class="s1">&#39;GUG&#39;</span><span class="p">]</span>
+<span class="n">aaF</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UUU&#39;</span><span class="p">,</span> <span class="s1">&#39;UUC&#39;</span><span class="p">]</span>
+<span class="n">aaM</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AUG&#39;</span><span class="p">]</span>
+<span class="n">aaC</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UGU&#39;</span><span class="p">,</span> <span class="s1">&#39;UGC&#39;</span><span class="p">]</span>
+<span class="n">aaA</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GCU&#39;</span><span class="p">,</span> <span class="s1">&#39;GCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GCA&#39;</span><span class="p">,</span> <span class="s1">&#39;GCG&#39;</span><span class="p">]</span>
+<span class="n">aaG</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GGU&#39;</span><span class="p">,</span> <span class="s1">&#39;GGC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGA&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">]</span>
+<span class="n">aaP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CCU&#39;</span><span class="p">,</span> <span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;CCA&#39;</span><span class="p">,</span> <span class="s1">&#39;CCG&#39;</span><span class="p">]</span>
+<span class="n">aaT</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ACU&#39;</span><span class="p">,</span> <span class="s1">&#39;ACC&#39;</span><span class="p">,</span> <span class="s1">&#39;ACA&#39;</span><span class="p">,</span> <span class="s1">&#39;ACG&#39;</span><span class="p">]</span>
+<span class="n">aaS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UCU&#39;</span><span class="p">,</span> <span class="s1">&#39;UCC&#39;</span><span class="p">,</span> <span class="s1">&#39;UCA&#39;</span><span class="p">,</span> <span class="s1">&#39;UCG&#39;</span><span class="p">,</span> <span class="s1">&#39;AGU&#39;</span><span class="p">,</span> <span class="s1">&#39;AGC&#39;</span><span class="p">]</span>
+<span class="n">aaY</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UAU&#39;</span><span class="p">,</span> <span class="s1">&#39;UAC&#39;</span><span class="p">]</span>
+<span class="n">aaW</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UGG&#39;</span><span class="p">]</span>
+<span class="n">aaQ</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CAA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAG&#39;</span><span class="p">]</span>
+<span class="n">aaN</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAU&#39;</span><span class="p">,</span> <span class="s1">&#39;AAC&#39;</span><span class="p">]</span>
+<span class="n">aaH</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CAU&#39;</span><span class="p">,</span> <span class="s1">&#39;CAC&#39;</span><span class="p">]</span>
+<span class="n">aaE</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GAA&#39;</span><span class="p">,</span> <span class="s1">&#39;GAG&#39;</span><span class="p">]</span>
+<span class="n">aaD</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GAU&#39;</span><span class="p">,</span> <span class="s1">&#39;GAC&#39;</span><span class="p">]</span>
+<span class="n">aaK</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAA&#39;</span><span class="p">,</span> <span class="s1">&#39;AAG&#39;</span><span class="p">]</span>
+<span class="n">aaR</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CGU&#39;</span><span class="p">,</span> <span class="s1">&#39;CGC&#39;</span><span class="p">,</span> <span class="s1">&#39;CGA&#39;</span><span class="p">,</span> <span class="s1">&#39;CGG&#39;</span><span class="p">,</span> <span class="s1">&#39;AGA&#39;</span><span class="p">,</span> <span class="s1">&#39;AGG&#39;</span><span class="p">]</span>
+<span class="n">aaSTOP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UAA&#39;</span><span class="p">,</span> <span class="s1">&#39;UAG&#39;</span><span class="p">,</span> <span class="s1">&#39;UGA&#39;</span><span class="p">]</span>
+
+<span class="c1"># domain a is drawn from a toehold library</span>
+<span class="n">lib1</span> <span class="o">=</span> <span class="n">Library</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="p">[</span><span class="n">toeholds</span><span class="p">])</span>
+
+<span class="c1"># target strand A is drawn from a toehold library</span>
+<span class="n">lib1</span> <span class="o">=</span> <span class="n">Library</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">toeholds</span><span class="p">])</span>
+
+<span class="c1"># concatenation [b, c] is drawn from a concatenation of 4 codon libraries</span>
+<span class="n">lib2</span> <span class="o">=</span> <span class="n">Library</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="p">[</span><span class="n">aaI</span><span class="p">,</span> <span class="n">aaM</span><span class="p">,</span> <span class="n">aaC</span><span class="p">,</span> <span class="n">aaG</span><span class="p">])</span>
+</code></pre></div>
+<hr />
+<h3 id="pattern-prevention">Pattern Prevention<a class="headerlink" href="#pattern-prevention" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">pattern prevention constraint</a> prevents a list of patterns from appearing globally or in a concatenated list of domains. A <code>Pattern</code> hard constraint is specified as:</p>
+<ul>
+<li>a list of patterns to be prevented</li>
+<li>optionally a list of domains for concatenation (keyword <code>scope</code>) where the patterns should be prevented; alternatively, a target strand may be specified</li>
+<li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="c1"># pattern prevention for concatenation [a, b]</span>
+<span class="n">pattern1</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+
+<span class="c1"># pattern prevention for target strand B</span>
+<span class="n">pattern2</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">B</span><span class="p">)</span>
+
+<span class="c1"># global pattern prevention</span>
+<span class="n">pattern3</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">])</span>
+</code></pre></div>
+<hr />
+<h3 id="diversity">Diversity<a class="headerlink" href="#diversity" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#hard-constraints">diversity constraint</a> forces every word of a specified length to contain a specified degree of sequence diversity, either globally or for a concatenated list of domains. A <code>Diversity</code> hard constraint is specified as:</p>
+<ul>
+<li>the word length in nucleotides (keyword <code>word</code>)</li>
+<li>the minimum number of nucleotide types that must appear in every window (keyword <code>types</code>)</li>
+<li>optionally a list of domains for concatenation (keyword <code>scope</code>) where the diversity should be imposed; alternatively, a target strand may be specified</li>
+<li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A+A&#39;</span><span class="p">)</span>
+
+<span class="c1"># global constraints</span>
+<span class="n">div1</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">div2</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># local constraint on concatenation [a, b]</span>
+<span class="n">div3</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+
+<span class="c1"># local constraint on target strand A</span>
+<span class="n">div4</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">A</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY.</p>
+<p>We recommend diversity constraints over pattern prevention constraints because they make it more efficient to solve the constraint satisfaction problem that identifies a new validate candidate mutation at every step during sequence optimization.</p>
+<p>The global constraints <code>div1</code> and <code>div2</code> reproduce the global pattern prevention constraint <code>pattern3</code>.</p>
+</div>
+<hr />
+<h2 id="specify-soft-constraints">Specify soft constraints<a class="headerlink" href="#specify-soft-constraints" title="Permanent link">&para;</a></h2>
+<p><a href="../definitions/#soft-constraints">Soft constraints</a> for a design job are specified as a list, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># define soft for soft constraints</span>
+<span class="n">my_soft_constraints</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">a</span><span class="p">),</span>
+    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;G5&#39;</span><span class="p">,</span> <span class="s1">&#39;U5&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">A</span><span class="p">),</span> <span class="c1"># default weight 1</span>
+    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">Similarity</span><span class="p">([</span><span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S12&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.15</span><span class="p">),</span>
+    <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]),</span> <span class="c1"># min energy diff to median</span>
+    <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">energy_ref</span><span class="o">=-</span><span class="mi">17</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1"># energy diff to reference</span>
+<span class="p">]</span>
+</code></pre></div>
+<hr />
+<h3 id="similarity_1">Similarity<a class="headerlink" href="#similarity_1" title="Permanent link">&para;</a></h3>
+<p>Similarity soft constraints are specified in nearly the same way as similarity hard constraints.
+The primary difference is that a weight can be supplied to control the relative design effort spent on the soft constraint.</p>
+<p>A <a href="../definitions/#soft-constraints">similarity constraint</a> penalizes a concatentation of domains if it does not match a reference sequence of the same length to within a specified fractional range. A <code>Similarity</code> soft constraint is specified as:</p>
+<ul>
+<li>a list of domains to be concatenated; alternatively a target strand may be specified</li>
+<li>a reference sequence of the same length as the concatenated domains</li>
+<li>a fractional range, <span><span class="MathJax_Preview">[l, u]</span><script type="math/tex">[l, u]</script></span>, where <span><span class="MathJax_Preview">0 \leq l &lt; u \leq 1</span><script type="math/tex">0 \leq l < u \leq 1</script></span></li>
+<li>an optional weight <span><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+
+<span class="c1"># similarity constraint for a concatenation of domains</span>
+<span class="n">sim1</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S5K35&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+
+<span class="c1"># similarity constraint for a target strand</span>
+<span class="n">sim2</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="s1">&#39;S30K10&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span> <span class="c1"># for a strand</span>
+
+<span class="c1"># use similarity constraint to enforce 45-55% GC content</span>
+<span class="n">sim3</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S30&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="pattern-prevention_1">Pattern prevention<a class="headerlink" href="#pattern-prevention_1" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#soft-constraints">pattern prevention constraint</a> penalizes a list of patterns from appearing globally or in a concatenated list of domains. A <code>Pattern</code> soft constraint is specified as:</p>
+<ul>
+<li>a list of patterns to be prevented</li>
+<li>optionally a list of domains for concatenation (keyword <code>scope</code>) where the patterns should be prevented; alternatively, a target strand may be specified</li>
+<li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
+<li>an optional weight <span><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="c1"># pattern prevention for concatenation [a, b]</span>
+<span class="n">pattern1</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="c1"># pattern prevention for target strand B</span>
+<span class="n">pattern2</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">B</span><span class="p">)</span>
+
+<span class="c1"># global pattern prevention</span>
+<span class="n">pattern3</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="sequence-symmetry">Sequence symmetry<a class="headerlink" href="#sequence-symmetry" title="Permanent link">&para;</a></h3>
+<p>A <a href="../definitions/#soft.constraints">sequence symmetry constraint</a> penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An <code>SSM</code> soft constraint is specified as:</p>
+<ul>
+<li>the word length in nucleotides (keyword <code>word</code>)</li>
+<li>optionally a list of on-target complexes (keyword <code>scope</code>) where the constraint should apply</li>
+<li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
+<li>an optional weight <span><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">],</span> <span class="s2">&quot;(10.4)10&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="s2">&quot;D24 +&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+
+<span class="c1"># multiple SSM constraints with different word lengths applied to the same complexes</span>
+<span class="n">ssm1</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="n">ssm2</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">ssm3</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+
+<span class="c1">#global SSM constraint applies to all on-target complexes in the design</span>
+<span class="n">ssm4</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Multiple SSM constraints with different window sizes can be specified for a given complex (see example above).</p>
+</div>
+<hr />
+<h3 id="energy-match">Energy match<a class="headerlink" href="#energy-match" title="Permanent link">&para;</a></h3>
+<p>An <a href="../definitions/#soft-constraints">energy match constraint</a> penalizes a set of duplexes if their <a href="../definitions/#structure-free-energy">structure free energies</a> deviate from the median value, or alternatively deviate from a specified reference free energy. An <code>EnergyMatch</code> soft constraint is specified as:</p>
+<ul>
+<li>a list of domains, each to be evaluated as a duplex with its reverse complement</li>
+<li>an optional reference free energy in kcal/mol (keyword <code>energy_ref</code>)</li>
+<li>an optional weight <span><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+
+<span class="c1"># match each duplex free energy to the median value</span>
+<span class="n">diff1</span> <span class="o">=</span> <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">])</span>
+
+<span class="c1"># match each duplex free energy to the specified reference free energy</span>
+<span class="n">diff2</span> <span class="o">=</span> <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">],</span> <span class="n">energy_ref</span><span class="o">=-</span><span class="mi">17</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An energy match constraint can be used to design a set of toeholds of comparable strength.</p>
+</div>
+<hr />
+<h2 id="specify-defect-weights">Specify defect weights<a class="headerlink" href="#specify-defect-weights" title="Permanent link">&para;</a></h2>
+<p><a href="../definitions/#defect-weights">Defect weights</a> can be specified to reprioritize design effort at any subset of levels (tube, complex, strand, domain) within design ensemble. A <code>Weights</code> object is created for the set of <code>TargetTube</code> objects to be designed:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a1</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a1&#39;</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a2&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="n">AB</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AB&#39;</span><span class="p">)</span>
+<span class="n">AA</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AA&#39;</span><span class="p">)</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">AB</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">AA</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="n">AB</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">)</span>
+
+<span class="n">my_tubes</span> <span class="o">=</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">]</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="n">my_tubes</span><span class="p">)</span> <span class="c1"># All weights are initialized to 1</span>
+</code></pre></div>
+<p>The weights are initialized to 1, but can be customized to take any value in the interval <span><span class="MathJax_Preview">[0,\infty)</span><script type="math/tex">[0,\infty)</script></span>. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: Domain, TargetStrand, TargetComplex, TargetTube). For example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># weight on domain a1 in all target strands, target complexes, and target tubes</span>
+<span class="n">weights</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
+
+<span class="c1"># weight on target strand A in all target conplexes and target tubes</span>
+<span class="n">weights</span><span class="p">[:,</span> <span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># weight on tube t2</span>
+<span class="n">weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">t2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># weight on target complex AB in tube t1</span>
+<span class="n">weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">AB</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># weight on domain a2 in target strand A in all target complexes in all tubes</span>
+<span class="n">weights</span><span class="p">[</span><span class="n">a2</span><span class="p">,</span> <span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
+
+<span class="c1"># weight on domain a1 in all target strands in target complex AA in tube t2</span>
+<span class="n">weights</span><span class="p">[</span><span class="n">a1</span><span class="p">,</span> <span class="p">:,</span> <span class="n">AA</span><span class="p">,</span> <span class="n">t2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># weight on domain b in all target strands and target complexes in tube t2</span>
+<span class="n">weights</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">t2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># global weight on the entire multi-tube ensemble defect</span>
+<span class="n">weights</span><span class="p">[:]</span> <span class="o">*=</span><span class="mi">2</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that <a href="../definitions/#multi-tube-ensemble-defect">multi-tube ensemble defect</a> <span><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> varies between 0 and 1 so that specifying an increasing number of soft constraints in the <a href="../definitions/#constrained-multi-tube-design">augmented objective function</a> will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect <span><span class="MathJax_Preview">\mathcal{M_W}</span><script type="math/tex">\mathcal{M_W}</script></span> (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.</p>
+</div>
+<p>A <code>Weights</code> object may be displayed as a table in a Jupyter notebook, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">weights</span>
+</code></pre></div>
+<p>Output:</p>
+<p><img src="../figs/design/3-weights.png" alt="Weights output" title="Example weights output" width="300" /></p>
+<p>Alternatively, you can view an ASCII representation of the same data by using the <code>print</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>Domain Strand Complex Tube  Weight
+    a1      A      AA   t2     1.0
+    a1      A      AB   t1    10.0
+    a1      A      AB   t2     4.0
+    a2      A      AA   t2     1.5
+    a2      A      AB   t1     1.5
+    a2      A      AB   t2     1.5
+     b      B      AB   t1    10.0
+     b      B      AB   t2     6.0
+</code></pre></div>
+<p>For experienced Python users, a <code>Weights</code> object contains a <code>pandas.DataFrame</code> as a single member <code>.table</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a <a href="./#run-a-complex-design-job">complex design job</a>, the <code>Weights</code> object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_complexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">AB</span><span class="p">,</span> <span class="n">AA</span><span class="p">]</span>
+<span class="n">complex_weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="n">my_complexes</span><span class="p">)</span>
+
+<span class="c1"># weight on domain a1 in all target strands and target complexes</span>
+<span class="n">complex_weights</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
+
+<span class="c1"># weight on target strand A in all target complexes</span>
+<span class="n">complex_weights</span><span class="p">[:,</span> <span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># weight on domain a2 in target strand A in target complex AA</span>
+<span class="n">complex_weights</span><span class="p">[</span><span class="n">a2</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">AA</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
+</code></pre></div>
+</div>
+<hr />
+<h2 id="job-options">Job options<a class="headerlink" href="#job-options" title="Permanent link">&para;</a></h2>
+<p>Specify any non-default job options (defaults shown below):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># algorithm parameters (see Supp Info of [@Wolfe17] for details)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">DesignOptions</span><span class="p">(</span>
+    <span class="n">f_stop</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>      <span class="c1"># stop condition for sequence optimization</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>           <span class="c1"># random seed if 0; specified seed otherwise (reproducible trial)</span>
+    <span class="n">H_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>        <span class="c1"># default: 2 for RNA, 3 for DNA and custom</span>
+    <span class="n">N_split</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">f_split</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>     <span class="c1"># in interal (0,1)</span>
+    <span class="n">f_stringent</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="c1"># in interval (0,1)</span>
+    <span class="n">dG_clamp</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span>     <span class="c1"># kcal/mol</span>
+    <span class="n">M_bad</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">M_reseed</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">M_reopt</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">f_passive</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
+    <span class="n">f_redecomp</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>  <span class="c1"># in interval (0,1)</span>
+    <span class="n">f_refocus</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
+    <span class="n">f_sparse</span><span class="o">=</span><span class="mf">1e-05</span>    <span class="c1"># threshold pair probs for sparse storage in decomposition tree,</span>
+    <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">max_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>       <span class="c1"># max design time in seconds (if nonzero)</span>
+<span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Enable <code>wobble_mutations</code> (default <code>False</code>) so that the designer will consider sequences which may 1) yield wobble (<code>GU</code>) pairs in target structures and 2) contain wobble complements in domain reverse complements (e.g. <code>a</code> = <code>GGG</code>, <code>a*</code> = <code>UUU</code>).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Set <code>max_time</code> to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using <a href="./#launch-multiple-design-trials-in-the-background">checkpointing</a> as an alternative to optimize the tradeoff between design quality and CPU time.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Change <code>f_stop</code> to adjust the <a href="../definitions/#constrained-multi-tube-design-problem">stop condition</a> for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">options</span> <span class="o">=</span> <span class="n">DesignOptions</span><span class="p">(</span>
+    <span class="n">f_stop</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="job-results">Job results<a class="headerlink" href="#job-results" title="Permanent link">&para;</a></h2>
+<p>The results of NUPACK design jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube design job:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+
+<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
+<span class="n">hard</span> <span class="o">=</span> <span class="p">[</span><span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">])]</span>
+
+<span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(),</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span> <span class="n">hard_constraints</span><span class="o">=</span><span class="n">hard</span><span class="p">)</span>
+<span class="n">my_result</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<hr />
+<h3 id="tabular-display">Tabular display<a class="headerlink" href="#tabular-display" title="Permanent link">&para;</a></h3>
+<p>You can display a summary table of results in a Jupyter notebook, for example:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">my_result</span>
+</code></pre></div>
+Output:</p>
+<blockquote>
+<p><img src="../figs/design/4-output.png" alt="Design output" title="Example design output" width="600" /></p>
+</blockquote>
+<h3 id="textual-display">Textual display<a class="headerlink" href="#textual-display" title="Permanent link">&para;</a></h3>
+<p>You can view an ASCII representation of the same data by using the <code>print</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="p">)</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<div class="highlight"><pre><span></span><code>Domain results:
+Domain              Sequence
+     a  GGGUGCAAAGGUAUGGGAGG
+    a*  CCUCCCAUACCUUUGCACCC
+
+Strand results:
+Strand              Sequence
+     A  GGGUGCAAAGGUAUGGGAGG
+     B  CCUCCCAUACCUUUGCACCC
+
+Objective function:
+               Objective type   Value
+     Weighted ensemble defect 0.00771
+ Soft constraints: similarity 0.00556
+                        Total  0.0133
+
+Ensemble defect: 0.00771
+
+Complex Complex defect (nt) Normalized complex defect
+      C               0.308                   0.00771
+
+On-target complex defects:
+  Tube Tube defect (M) Normalized tube defect
+ tube1        3.08e-07                0.00771
+
+Tube defects:
+  Tube On-target complex Structural defect (M) Concentration defect (M) Total defect (M)
+ tube1                 C              3.08e-07                 8.73e-16         3.08e-07
+
+On-target complex concentrations:
+  Tube Complex Concentration (M) Target concentration (M)
+ tube1       C          1.00e-06                 1.00e-06
+
+Significant off-target complex concentrations (&gt;= 1% max complex concentration in tube):
+  Tube Complex Concentration (M)
+ tube1       -                 -
+</code></pre></div>
+</blockquote>
+<hr />
+<h3 id="programmatic-access">Programmatic access<a class="headerlink" href="#programmatic-access" title="Permanent link">&para;</a></h3>
+<p>A <code>DesignResult</code> object allows programmatic access via several fields:</p>
+<ul>
+<li><code>.to_analysis</code>: a mapping from an object to be designed (<code>Domain</code>, <code>TargetStrand</code>, <code>TargetComplex</code>, <code>TargetTube</code>) specified in terms of <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a> to the corresponding object containing the designed sequences (<code>Domain</code>, <code>Strand</code>, <code>Complex</code>, <code>Tube</code>). These objects are useful for re-analyzing designed sequences in different experimental conditions (with the exception of <code>Domain</code> which is not used for analysis jobs).</li>
+<li><code>.defects</code>: ensemble defects at all levels within the design ensemble (each as a <code>pandas.DataFrame</code>).</li>
+<li><code>.concentrations</code>: concentration information for on-target complex and significant off-target complexes.</li>
+<li><code>.analysis_result</code>: an <code>AnalysisResult</code> for thermodynamic results computed on the designed ensemble.</li>
+</ul>
+<p>Fields may be displayed individually, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/5-mapping.png" alt="Design output" title="Example design output" width="220" /></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/6-defects.png" alt="Design output" title="Example design output" width="600" /></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">concentrations</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/7-concentrations.png" alt="Design output" title="Example design output" width="630" /></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">analysis_result</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/8-analysis.png" alt="Design output" title="Example design output" width="270" /></p>
+</blockquote>
+<p>You can query any field of the <code>DesignResult</code> using Python, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># print various designed sequences</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">tube1</span><span class="p">))</span> <span class="c1"># --&gt; Tube({A: 1e-06, B: 1e-06}, name=&#39;tube1&#39;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">C</span><span class="p">))</span>    <span class="c1"># --&gt; GGGUGCAAAGGUAUGGGAGG+CCUCCCAUACCUUUGCACCC</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>    <span class="c1"># --&gt; CCUCCCAUACCUUUGCACCC</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>    <span class="c1"># --&gt; GGGUGCAAAGGUAUGGGAGG</span>
+
+<span class="c1"># print specific defect contributions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">ensemble_defect</span><span class="p">)</span> <span class="c1"># 0.007708701513018191</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">tubes</span><span class="p">)</span>           <span class="c1"># --&gt; each tube</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">complexes</span><span class="p">)</span>       <span class="c1"># --&gt; each on-target</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">tube_complexes</span><span class="p">)</span>  <span class="c1"># --&gt; each on-target in each tube</span>
+</code></pre></div>
+<p>Each subfield (<code>tubes</code>, <code>complexes</code>, <code>tube_complexes</code>) is a <code>pandas.DataFrame</code>s. For convenience, these tables contain Python objects and the corresponding object name (e.g., <code>tube</code> object and corresponding <code>tube_name</code> string).</p>
+<h3 id="evaluate-a-design">Evaluate a design<a class="headerlink" href="#evaluate-a-design" title="Permanent link">&para;</a></h3>
+<p>The <code>evaluate()</code> method enables generation of a <code>DesignResult</code> object for a <code>tube_design</code> that has fully specified sequences (i.e., contains no <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a>), for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;CAGAUAAGAACUGAGUAAGC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+
+<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
+<span class="n">hard</span> <span class="o">=</span> <span class="p">[</span><span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">])]</span>
+
+<span class="n">my_evaluated_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(),</span>
+    <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span> <span class="n">hard_constraints</span><span class="o">=</span><span class="n">hard</span><span class="p">)</span>
+<span class="n">my_evaluated_result</span> <span class="o">=</span> <span class="n">my_evaluated_design</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+</code></pre></div>
+<p>An exception will be raised if any domain contains nucleotides other than <code>ACGTU</code>, or if the hard constraints are incompatible with the given domains. Just as for any <code>DesignResult</code> object, a convenient results table can be displayed in a Jupyter notebook:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_evaluated_result</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/design/9-evaluation.png" alt="Evaluation output" title="Example evaluation output" width="650" /></p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Consider using the <code>evaluate()</code> method on an RNA design that was performed with <code>wobble_mutations</code> enabled and that uses both domain <code>a</code> and the reverse complement domain <code>~a</code> in the specification of the design ensemble. Then the definition of the reverse complement domain <code>~a</code> is not fully defined since a G in domain <code>a</code> could be paired to either a C or a U in the final designed version of <code>~a</code>. This ambiguity can be overcome by manually defining <code>~a</code> using the <code>complement</code> keyword:</p>
+<div class="highlight"><pre><span></span><code><span class="n">h</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;GGGG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">h</span><span class="p">)</span> <span class="c1"># --&gt; CCCC</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;GGGG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">complement</span><span class="o">=</span><span class="s1">&#39;CUUC&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">i</span><span class="p">)</span> <span class="c1"># --&gt; CUUC</span>
+</code></pre></div>
+<p>The <code>evaluate()</code> method will raise an exception if <code>wobble_mutations</code> are active and a reverse complement domain has not been manually defined. The following example demonstrates use of the <code>complement</code> keyword to enable evaluation of a design performed with <code>wobble_mutations</code> enabled:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;CAGAUAAGAACUGAGUAAGC&#39;</span><span class="p">,</span> <span class="n">complement</span><span class="o">=</span><span class="s1">&#39;GCUUAUUCAGUUCUUAUCUG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+
+<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
+<span class="n">hard</span> <span class="o">=</span> <span class="p">[</span><span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">])]</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">DesignOptions</span><span class="p">(</span><span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">wobble_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;rna&#39;</span><span class="p">),</span>
+    <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span> <span class="n">hard_constraints</span><span class="o">=</span><span class="n">hard</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+<span class="n">wobble_result</span> <span class="o">=</span> <span class="n">wobble_design</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<h3 id="evaluate-a-design-using-a-different-model-soft-constraints-defect-weights-andor-domains">Evaluate a design using a different model, soft constraints, defect weights, and/or domains<a class="headerlink" href="#evaluate-a-design-using-a-different-model-soft-constraints-defect-weights-andor-domains" title="Permanent link">&para;</a></h3>
+<p>A <code>DesignResult</code> object can be evaluated using modified domains, a different free energy model, different soft constraints, and/or different defect weights using the <code>evaluate_with</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+
+<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
+
+<span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(),</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">)</span>
+<span class="n">my_result</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Evaluate the result with a different model</span>
+<span class="n">new_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">celsius</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">new_model</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the result with a different model and soft constraints</span>
+<span class="n">new_soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;G20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)]</span>
+<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">new_model</span><span class="p">,</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="n">new_soft</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the result with different defect weights</span>
+<span class="n">new_weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">([</span><span class="n">tube1</span><span class="p">])</span>
+<span class="n">new_weights</span><span class="p">[:,</span> <span class="n">A</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">10</span>
+<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">defect_weights</span><span class="o">=</span><span class="n">new_weights</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the result with a different model and domains</span>
+<span class="n">new_domains</span> <span class="o">=</span> <span class="p">[</span><span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;CAGAUAAGAACUGAGUAAGC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)]</span>
+<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="n">new_domains</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">new_model</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="analyze-additional-physical-quantities-for-a-designed-ensemble">Analyze additional physical quantities for a designed ensemble<a class="headerlink" href="#analyze-additional-physical-quantities-for-a-designed-ensemble" title="Permanent link">&para;</a></h3>
+<p>To analyze additional physical quantities for a designed ensemble (e.g., the MFE structure of each designed on-target complex), use the
+<code>to_analysis()</code> method to make a version of the design ensemble containing designed sequences and then run a <a href="../analysis/#run-a-test-tube-analysis-job">test tube analysis job</a> or <a href="../analysis/#run-a-complex-analysis-job">complex analysis job</a> as desired. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Tube object based on TargetTube with designed sequences</span>
+<span class="n">t1_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">tube1</span><span class="p">)</span>
+
+<span class="c1"># Calculate the MFE structure for each on-target complex in the design ensemble</span>
+<span class="n">tube_results</span> <span class="o">=</span> <span class="n">complex_analysis</span><span class="p">(</span><span class="n">t1_designed</span><span class="p">,</span> <span class="n">compute</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mfe&#39;</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="analyze-a-designed-ensemble-using-different-strand-concentrations">Analyze a designed ensemble using different strand concentrations<a class="headerlink" href="#analyze-a-designed-ensemble-using-different-strand-concentrations" title="Permanent link">&para;</a></h3>
+<p>To re-analyze designed sequences using strand concentrations that differ from those in the design ensemble, use the
+<code>to_analysis()</code> method to make a version of the design ensemble containing designed sequences, and
+use the <code>analysis_result</code> field to supply an <code>AnalysisResult</code> object to run a <a href="../analysis/#run-a-complex-concentrations-job">complex concentrations job</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">t1_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">tube1</span><span class="p">)</span> <span class="c1"># Tube object based on TargetTube with designed sequences</span>
+<span class="n">strandA_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">strandB_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="n">my_analysis_result</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">analysis_result</span>
+
+<span class="c1"># Re-compute complex concentrations for a different set of strand concentrations</span>
+<span class="n">conc_results</span> <span class="o">=</span> <span class="n">complex_concentrations</span><span class="p">(</span><span class="n">t1_designed</span><span class="p">,</span> <span class="n">my_analysis_result</span><span class="p">,</span>
+    <span class="n">concentrations</span><span class="o">=</span><span class="p">{</span><span class="n">strandA_designed</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">strandB_designed</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">})</span>
+</code></pre></div>
+<hr />
+<h3 id="save-a-job-summary">Save a job summary<a class="headerlink" href="#save-a-job-summary" title="Permanent link">&para;</a></h3>
+<p>To save a textual job summary using the <code>save_text</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save_text</span><span class="p">(</span><span class="s1">&#39;my-result.txt&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="save-and-reload-job-results">Save and reload job results<a class="headerlink" href="#save-and-reload-job-results" title="Permanent link">&para;</a></h3>
+<p>Save a <code>DesignResult</code> as a binary file using the <code>save</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my-result.o&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>to enable reloading during a future session using the <code>load</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span> <span class="o">=</span> <span class="n">DesignResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my-result.o&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>This functionality uses Python&rsquo;s built-in <code>pickle</code> module.</p>
+<hr />
+<div class="references">
+<table>
+<tbody>
+<tr id="ref-Hochrein13">
+<td>Hochrein13</td>
+<td><p>Hochrein L.M., Schwarzkopf M., Shahgholi M., Yin P., Pierce N.A.: <i>Conditional Dicer Substrate Formation via Shape and Sequence Transduction with Small Conditional RNAs</i>. J. Am. Chem. Soc., <b>135</b>, (2013)</p></td>
+</tr>
+<tr id="ref-HanewichHollatz19">
+<td>HanewichHollatz19</td>
+<td><p>Hanewich-Hollatz M.H., Chen Z., Hochrein L.M., Huang J., Pierce N.A.: <i>Conditional Guide RNAs: Programmable Conditional Regulation of CRISPR/cas Function in Bacterial and Mammalian Cells via Dynamic RNA Nanotechnology</i>. ACS central science, <b>5</b>, (2019)</p></td>
+</tr>
+<tr id="ref-Geary14">
+<td>Geary14</td>
+<td><p>Geary C., Rothemund P.W., Andersen E.S.: <i>A Single-Stranded Architecture for Cotranscriptional Folding of {{RNA}} Nanostructures</i>. Science, <b>345</b>, (2014)</p></td>
+</tr>
+<tr id="ref-Wolfe17">
+<td>Wolfe17</td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained Multistate Sequence Design for Nucleic Acid Reaction Pathway Engineering</i>. J Am. Chem. Soc., <b>139</b>, (2017)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../utilities/" class="btn btn-neutral float-right" title="Utilities Jobs">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../analysis/" class="btn btn-neutral" title="Analysis Jobs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../analysis/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../utilities/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
