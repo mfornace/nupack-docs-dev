@@ -231,9 +231,10 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 
 You may add custom compilation options as flags to the `cmake` command if desired. Some examples might be:
 
-- Add `-DCMAKE_CXX_COMPILER=clang++` to use the `clang++` compiler. As noted above, compilers besides `clang` are not generally supported.
+- Add `-DCMAKE_CXX_COMPILER=clang++` to use the `clang++` compiler. **As noted above, compilers besides `clang` are not generally supported.**
 - Add `-DREBIND_PYTHON=/usr/local/bin/python3` to build for a specific Python executable (by default, the `python` in the user's `$PATH` is used).
 - Add `-DCMAKE_CXX_FLAGS="<custom compile options>"` to add custom C++ compilation flags.
+- Add `-DCMAKE_POSITION_INDEPENDENT_CODE=ON` in the offchance you run into a compilation error asking you to recompile with `-fPIC`.
 
 6. Build the C++ code:
 
