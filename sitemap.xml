@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/</loc>
+         <loc>https://docs.nupack.org/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/advanced/</loc>
+         <loc>https://docs.nupack.org/advanced/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/analysis/</loc>
+         <loc>https://docs.nupack.org/analysis/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/definitions/</loc>
+         <loc>https://docs.nupack.org/definitions/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/design/</loc>
+         <loc>https://docs.nupack.org/design/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/model/</loc>
+         <loc>https://docs.nupack.org/model/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/other/</loc>
+         <loc>https://docs.nupack.org/other/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/start/</loc>
+         <loc>https://docs.nupack.org/start/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://piercelab-caltech.github.io/nupack-docs/utilities/</loc>
+         <loc>https://docs.nupack.org/utilities/</loc>
          <lastmod>2021-07-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
