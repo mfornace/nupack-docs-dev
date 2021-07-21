@@ -51,7 +51,7 @@ nav:
   #site_dir: _build/site
 site_name: NUPACK 4.0 User Guide
 repo_url: http://nupack.org/
-site_url: https://piercelab-caltech.github.io/nupack-docs/
+site_url: https://docs.nupack.org
 
 theme:
   name: readthedocs
