@@ -335,9 +335,10 @@ jupyter lab
 </code></pre></div>
 <p>You may add custom compilation options as flags to the <code>cmake</code> command if desired. Some examples might be:</p>
 <ul>
-<li>Add <code>-DCMAKE_CXX_COMPILER=clang++</code> to use the <code>clang++</code> compiler. As noted above, compilers besides <code>clang</code> are not generally supported.</li>
+<li>Add <code>-DCMAKE_CXX_COMPILER=clang++</code> to use the <code>clang++</code> compiler. <strong>As noted above, compilers besides <code>clang</code> are not generally supported.</strong></li>
 <li>Add <code>-DREBIND_PYTHON=/usr/local/bin/python3</code> to build for a specific Python executable (by default, the <code>python</code> in the user&rsquo;s <code>$PATH</code> is used).</li>
 <li>Add <code>-DCMAKE_CXX_FLAGS="&lt;custom compile options&gt;"</code> to add custom C++ compilation flags.</li>
+<li>Add <code>-DCMAKE_POSITION_INDEPENDENT_CODE=ON</code> in the offchance you run into a compilation error asking you to recompile with <code>-fPIC</code>.</li>
 </ul>
 <ol start="6">
 <li>Build the C++ code:</li>
