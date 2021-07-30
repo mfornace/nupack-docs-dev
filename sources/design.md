@@ -873,10 +873,9 @@ For experienced Python users, a `Weights` object contains a `pandas.DataFrame` a
 
 ## Job options
 
-Specify any non-default job options (defaults shown below):
+Specify any non-default job options (See Supp Info of [@Wolfe17] for details). Defaults are shown below:
 
 ```python
-# algorithm parameters (see Supp Info of [@Wolfe17] for details)
 options = DesignOptions(
     f_stop=0.02,      # stop condition for sequence optimization
     seed=0,           # random seed if 0; specified seed otherwise (reproducible trial)
