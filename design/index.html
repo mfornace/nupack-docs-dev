@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../extra.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -185,6 +184,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -884,8 +884,8 @@ The primary difference is that a weight can be supplied to control the relative 
     <span class="n">f_passive</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
     <span class="n">f_redecomp</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>  <span class="c1"># in interval (0,1)</span>
     <span class="n">f_refocus</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
-    <span class="n">f_sparse</span><span class="o">=</span><span class="mf">1e-05</span>    <span class="c1"># threshold pair probs for sparse storage in decomposition tree,</span>
-    <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">f_sparse</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span>   <span class="c1"># threshold pair probs for sparse storage in decomposition tree</span>
+    <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># allow wobble pairs in user-assigned domain complements (e.g. between a and a*/~a)</span>
     <span class="n">max_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>       <span class="c1"># max design time in seconds (if nonzero)</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1193,17 +1193,18 @@ use the <code>analysis_result</code> field to supply an <code>AnalysisResult</co
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../analysis/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../utilities/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../analysis/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../utilities/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
       <script src="../search/main.js" defer></script>
