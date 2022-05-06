@@ -890,8 +890,8 @@ options = DesignOptions(
     f_passive=0.01,   # in interval (0,1)
     f_redecomp=0.03,  # in interval (0,1)
     f_refocus=0.03,   # in interval (0,1)
-    f_sparse=1e-05    # threshold pair probs for sparse storage in decomposition tree,
-    wobble_mutations=False,
+    f_sparse=1e-05,   # threshold pair probs for sparse storage in decomposition tree
+    wobble_mutations=False, # allow wobble pairs in user-assigned domain complements (e.g. between a and a*/~a)
     max_time=0,       # max design time in seconds (if nonzero)
 )
 ```
