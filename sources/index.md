@@ -225,4 +225,5 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.0.25: Fix concentration failure resulting from division by 0
         - 4.0.0.26: Fix number of samples given for indistinguishable complexes
         - 4.0.0.27: Add native support for Mac arm64 (M1) architectures
+        - 4.0.0.28: Add native support for Linux arch64 architecture, support Python 3.10, fix similarity soft constraint when specifying multiple domains
 
