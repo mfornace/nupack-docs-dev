@@ -64,6 +64,9 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 
 ## Mac/Linux installation
 
+!!! Warning
+    Note that for new Macs using an M1 or M2 (arm64) architecture, you must make sure to use a *native* Python distribution. Separate downloads for the [Anaconda](https://www.anaconda.com/products/distribution) or [miniconda](https://docs.conda.io/en/latest/miniconda.html#macos-installers) distributions are available -- make sure to choose the distributions labeled "M1". Importing NUPACK will only function correctly using a native Python distribution.
+
 1. Verify your Python installation (make sure you have Python 3.6 or newer):
 
     ```bash
