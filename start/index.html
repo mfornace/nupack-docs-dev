@@ -191,7 +191,10 @@
 <h2 id="maclinux-installation">Mac/Linux installation<a class="headerlink" href="#maclinux-installation" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Note that for new Macs using an M1 or M2 (arm64) architecture, you must make sure to use a <em>native</em> Python distribution. Separate downloads for the <a href="https://www.anaconda.com/products/distribution">Anaconda</a> or <a href="https://docs.conda.io/en/latest/miniconda.html#macos-installers">miniconda</a> distributions are available &ndash; make sure to choose the distributions labeled &ldquo;M1&rdquo;. Importing NUPACK will only function correctly using a native Python distribution.</p>
+<p>Note that for new Macs using an M1 or M2 (arm64) architecture, you must make sure to use a <em>native</em> Python distribution. Separate downloads for the <a href="https://www.anaconda.com/products/distribution">Anaconda</a> or <a href="https://docs.conda.io/en/latest/miniconda.html#macos-installers">miniconda</a> distributions are available &ndash; make sure to choose the distributions labeled &ldquo;M1&rdquo;. Importing NUPACK will only function correctly using a native Python distribution. You may use the command 
+<div class="highlight"><pre><span></span><code>python3 -c &quot;import platform; print(platform.machine())&quot;
+</code></pre></div>
+to see your installed architecture; this should be <code>arm64</code> when using an M-series Mac.</p>
 </div>
 <ol>
 <li>
