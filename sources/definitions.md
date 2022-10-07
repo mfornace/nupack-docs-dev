@@ -524,7 +524,10 @@ $\Psi \equiv \cup_{h\in\Omega} \Psi_h$. Let
 \begin{align}
 \phi_{\Psi} \equiv \phi_j ~~~\forall j\in \Psi
 \end{align}
-denote the set of sequences for the complexes in $\Psi$.
+denote the set of sequences for the complexes in $\Psi$. 
+
+!!!Warning 
+    Note that each on-target complex has exactly one target secondary structure.
 
 Consider specification of the multistate test tube ensemble, $\Omega$, for the design of
 $N$ orthogonal systems for a reaction pathway of $M$ elementary steps.
