@@ -371,7 +371,7 @@ $[j] = x_j\rho_\mathrm{H_2O}$ as outputs, where $\rho_\mathrm{H_2O}$ is the mola
 Hence, the user specifies the set of molar strand concentrations $[i]^0~~\forall i\in\Psi^0$
 and NUPACK calculates the set of molar complex concentrations $[j]~~ \forall j\in\Psi$.
 
-### Test tube unpaired bases
+### Test tube fraction of bases unpaired 
 The equilibrium fraction of bases that are unpaired in the test tube, taking into account the equilibrium concentration and pair probatility matrix for each complex in the test tube ensemble. 
 
 ### Test tube ensemble pair fractions
