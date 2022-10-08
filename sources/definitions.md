@@ -371,6 +371,9 @@ $[j] = x_j\rho_\mathrm{H_2O}$ as outputs, where $\rho_\mathrm{H_2O}$ is the mola
 Hence, the user specifies the set of molar strand concentrations $[i]^0~~\forall i\in\Psi^0$
 and NUPACK calculates the set of molar complex concentrations $[j]~~ \forall j\in\Psi$.
 
+### Test tube unpaired bases
+The equilibrium fraction of bases that are unpaired in the test tube, taking into account the equilibrium concentration and pair probatility matrix for each complex in the test tube ensemble. 
+
 ### Test tube ensemble pair fractions
 For the test tube ensemble, the ensemble pair fraction
 
@@ -392,8 +395,6 @@ N_{\rm distinct}\equiv \sum_{i=1}^{|\Psi^0|} N_i
 \end{align}
 
 representing the total number of bases in all $|\Psi^0|$ strand species. Numbering the distinct bases from 1 to $N_{\rm distinct}$, the ensemble pair fractions, $f_A(a_A\cdot b_B)$, are then stored as an (asymmetric) $N_{\rm distinct}\times N_{\rm distinct}$ matrix. Abusing notation, the entry $f_A^{a_A,a_A} \in [0,1]$ denotes the equilibrium fraction of base $a$ on strand $A$ that is unpaired in the test tube ensemble. Hence, the matrix of test tube ensemble pair fractions is asymmetric with row and column sums of 1.
-
-
 
 ### Test tube ensemble defect
 Consider test tube $h$ containing a

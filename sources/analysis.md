@@ -541,6 +541,7 @@ The equilibrium concentration of (a) is 1.00e-06 M
 You can index into an `AnalysisResult` object via a `Tube` identifier (or via the name of a `Tube`) to get a `TubeResult` object containing all the tube ensemble quantities that were calculated in a `tube_analysis` or `complex_concentrations` calculation. This class contains the following fields:
 
 - `complex_concentrations`: a `dict` from `Complex` to its [equilibrium concentration](definitions.md#equilibrium-complex-concentrations) in molar (held as a `float`).
+- `unpaired_bases`: a `float` in $[0,1]$ denoting the equilibrium fraction of nucleotides that are unpaired in the test tube ensemble. 
 - `ensemble_pair_fractions`: a square matrix of [test tube ensemble pair fractions](definitions.md#test-tube-ensemble-pair-fractions). Row and column indices refer to the concatenated base index formed by concatenating the strands of the input `Tube` (in order). This field is `None` if  pair probabilities were not calculated (i.e., if option `pairs` was not specified for the `tube_analysis` or `complex_analysis` job).
 
 Concentrations may be printed as follows:
