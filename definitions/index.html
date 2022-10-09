@@ -114,6 +114,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#equilibrium-complex-concentrations">Equilibrium complex concentrations</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-tube-fraction-of-bases-unpaired">Test tube fraction of bases unpaired</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#test-tube-ensemble-pair-fractions">Test tube ensemble pair fractions</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#test-tube-ensemble-defect">Test tube ensemble defect</a>
@@ -607,6 +609,8 @@ and <span><span class="MathJax_Preview">x^0_i</span><script type="math/tex">x^0_
 <span><span class="MathJax_Preview">[j] = x_j\rho_\mathrm{H_2O}</span><script type="math/tex">[j] = x_j\rho_\mathrm{H_2O}</script></span> as outputs, where <span><span class="MathJax_Preview">\rho_\mathrm{H_2O}</span><script type="math/tex">\rho_\mathrm{H_2O}</script></span> is the molarity of water.
 Hence, the user specifies the set of molar strand concentrations <span><span class="MathJax_Preview">[i]^0~~\forall i\in\Psi^0</span><script type="math/tex">[i]^0~~\forall i\in\Psi^0</script></span>
 and NUPACK calculates the set of molar complex concentrations <span><span class="MathJax_Preview">[j]~~ \forall j\in\Psi</span><script type="math/tex">[j]~~ \forall j\in\Psi</script></span>.</p>
+<h3 id="test-tube-fraction-of-bases-unpaired">Test tube fraction of bases unpaired<a class="headerlink" href="#test-tube-fraction-of-bases-unpaired" title="Permanent link">&para;</a></h3>
+<p>The equilibrium fraction of bases that are unpaired in the test tube, taking into account the equilibrium concentration and pair probatility matrix for each complex in the test tube ensemble. </p>
 <h3 id="test-tube-ensemble-pair-fractions">Test tube ensemble pair fractions<a class="headerlink" href="#test-tube-ensemble-pair-fractions" title="Permanent link">&para;</a></h3>
 <p>For the test tube ensemble, the ensemble pair fraction</p>
 <div>
@@ -768,7 +772,11 @@ and the set of all complexes in multistate test tube ensemble <span><span class=
 \begin{align}
 \phi_{\Psi} \equiv \phi_j ~~~\forall j\in \Psi
 \end{align}
-denote the set of sequences for the complexes in <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>.</p>
+denote the set of sequences for the complexes in <span><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span>. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that each on-target complex has exactly one target secondary structure.</p>
+</div>
 <p>Consider specification of the multistate test tube ensemble, <span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>, for the design of
 <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span> orthogonal systems for a reaction pathway of <span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span> elementary steps.
 One <strong>elementary step tube</strong> is specified for each step <span><span class="MathJax_Preview">m=0,\dots,M</span><script type="math/tex">m=0,\dots,M</script></span> for each system <span><span class="MathJax_Preview">n=1,\dots,N</span><script type="math/tex">n=1,\dots,N</script></span>
