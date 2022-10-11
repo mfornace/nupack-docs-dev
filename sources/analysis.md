@@ -297,7 +297,7 @@ The optional `options` keyword specifies options that modify the calculations pe
 
 - `'subopt_gap': g` can be used in conjunction with `'subopt'` to specify the (non-negative) free energy gap in kcal/mol (default `'subopt_gap': 0`).
 
-To run NUPACK analysis using more than one CPU core, see the section on parallelism [here](advanced.md#parallelism).
+By default, NUPACK analysis jobs run in [parallel](advanced.md#parallelism).
 
 ---
 

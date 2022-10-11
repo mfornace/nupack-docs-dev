@@ -911,7 +911,7 @@ options = DesignOptions(
 )
 ```
 
-To run NUPACK design using more than one CPU core, see the section on parallelism [here](advanced.md#parallelism).
+By default, NUPACK design jobs run in [parallel](advanced.md#parallelism).
 
 ---
 
