@@ -227,3 +227,4 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.0.27: Add native support for Mac arm64 (M1) architectures
         - 4.0.0.28: Add native support for Linux arch64 architecture, support Python 3.10, fix similarity soft constraint when specifying multiple domains
         - 4.0.1.0: Add `fraction_unpaired_bases` functionality, revise implementation of parallelism and cache usage, improve input validation
+        - 4.0.1.1: Enable [parallelism](advanced.md#parallelism) by default, add the `threads` setting, and set design to only use up to `N` threads on a machine with `N` cores
