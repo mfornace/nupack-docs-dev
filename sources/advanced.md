@@ -2,14 +2,14 @@
 
 ## Parallelism
 
-By default, NUPACK 4 uses a single CPU core for each [analysis job](analysis.md#analysis-jobs), [design trial](design.md#design-jobs), or [utilities job](utilities.md#utilities-jobs). For example, a call to `tube_analysis` will use 1 core, whereas a call to `tube_design` with `trials=4` will use 4 cores (up to the number of logical cores on the machine). Additional parallelism may be enabled using the `config.parallelism` flag (default `False`):
+By default, NUPACK 4 uses a single CPU core for each [analysis job](analysis.md#analysis-jobs), [design trial](design.md#design-jobs), or [utilities job](utilities.md#utilities-jobs). For example, a call to `tube_analysis` will use 1 core, whereas a call to `tube_design` with `trials=4` will use 4 cores (up to the number of logical cores on the machine). Parallelism may be further controlled using the `config.threads` setting (default `0` as of 4.0.1.1; previously `1`):
 
 ```python
 from nupack import *
-config.parallelism = True
+config.threads = 1
 ```
 
-If this flag is set to `True`, then NUPACK jobs will be permitted to use all available cores on your machine. This type of parallelism enables:
+This setting denotes the maximum number of threads that *all* NUPACK thermodynamic analysis routines can use concurrently within a single Python process. As a special case, if `config.threads` is set to `0`, then NUPACK jobs will be permitted to use all available cores on your machine. This type of parallelism enables:
 
 - **Block-level parallelism**. Subcomplex blocks in the dynamic program will be calculated in parallel (e.g., triangular blocks `A`, `B`, `C`, and rectangular blocks `AB`, `BC`, and `ABC` for complex `ABC`; see Figure 8 of [@Fornace20]). This mode of parallelism will be enabled for all complexes in a multi-tube ensemble.
 

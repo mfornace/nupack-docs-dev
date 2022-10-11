@@ -3,7 +3,7 @@
 # Utilities Jobs
 
 Utilities commands analyze or design a single complex ensemble. For each command, the strand ordering of the complex is specified using keyword `strands` and the [physical model](model.md#model-specification) is specified using keyword `model`.
-For commands that require a structure (e.g., calculation of the equilibrium structure probability using `prob`), the structure is specified using the keyword `structure`.
+For commands that require a structure (e.g., calculation of the equilibrium structure probability using `prob`), the structure is specified using the keyword `structure`. To run NUPACK utilities using more than one CPU core, see the section on parallelism [here](advanced.md#parallelism).
 
 To initialize a model for the following examples, run the following code:
 
