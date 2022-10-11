@@ -142,7 +142,7 @@
               
                 <h1 id="utilities-jobs">Utilities Jobs<a class="headerlink" href="#utilities-jobs" title="Permanent link">&para;</a></h1>
 <p>Utilities commands analyze or design a single complex ensemble. For each command, the strand ordering of the complex is specified using keyword <code>strands</code> and the <a href="../model/#model-specification">physical model</a> is specified using keyword <code>model</code>.
-For commands that require a structure (e.g., calculation of the equilibrium structure probability using <code>prob</code>), the structure is specified using the keyword <code>structure</code>.</p>
+For commands that require a structure (e.g., calculation of the equilibrium structure probability using <code>prob</code>), the structure is specified using the keyword <code>structure</code>. By default, NUPACK utilities jobs run in <a href="../advanced/#parallelism">parallel</a>.</p>
 <p>To initialize a model for the following examples, run the following code:</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;RNA&#39;</span><span class="p">)</span>
 </code></pre></div>

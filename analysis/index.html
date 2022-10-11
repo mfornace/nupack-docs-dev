@@ -388,10 +388,8 @@ for each complex in a <code>ComplexSet</code>:</p>
 <li>
 <p><code>'subopt_gap': g</code> can be used in conjunction with <code>'subopt'</code> to specify the (non-negative) free energy gap in kcal/mol (default <code>'subopt_gap': 0</code>).</p>
 </li>
-<li>
-<p><code>'threads': t</code> can be used to explicity assign the total number of threads used in computation (default <code>'threads': 0</code>, which uses the number of CPUs present if <code>config.parallelism</code> is set to <code>True</code>, else 1)</p>
-</li>
 </ul>
+<p>By default, NUPACK analysis jobs run in <a href="../advanced/#parallelism">parallel</a>.</p>
 <hr />
 <h2 id="job-results">Job results<a class="headerlink" href="#job-results" title="Permanent link">&para;</a></h2>
 <p>Scalar results of NUPACK analysis jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube analysis job:</p>
