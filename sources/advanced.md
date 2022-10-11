@@ -13,7 +13,7 @@ This setting denotes the maximum number of threads that *all* NUPACK calculation
 
 - **Block-level parallelism**. Subcomplex blocks in the dynamic program will be calculated in parallel (e.g., triangular blocks `A`, `B`, `C`, and rectangular blocks `AB`, `BC`, and `ABC` for complex `ABC`; see Figure 8 of [@Fornace20]). This mode of parallelism will be enabled for all complexes in a multi-tube ensemble.
 
-- **Element-level parallelism**. Subsequence elements will be calculated in parallel within a subcomplex block. This mode of parallelism will only be employed for subcomplex blocks containing at least 128 nt.
+- **Element-level parallelism**. Subsequence elements will be calculated in parallel within a subcomplex block. This mode of parallelism will only be employed for subcomplex blocks containing at least 100 nt.
 
 An additional level of parallelism is enabled when running multiple independent design trials. For example, `tube_design` with `trials=4` and `config.threads == 1` will use `min(4,N)` threads. Hence, for design jobs, it is recommended that the value of `config.threads` be left at the default value of `0` or else be set to be no smaller than `min(trials,N)`. 
 
