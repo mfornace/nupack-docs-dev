@@ -1,9 +1,14 @@
+# This script is modified from  https://github.com/darwindarak/mdx_bib
+__author__           = "Darwin Dwarkananda"
+__maintainer__       = "Dilawar Singh"
+__email__            = "dilawars@ncbs.res.in"
+
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.treeprocessors import Treeprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.inlinepatterns import Pattern
-from markdown.util import etree
+from xml.etree import ElementTree as etree
 
 from pybtex.database.input import bibtex
 
@@ -15,15 +20,15 @@ CITE_RE    = re.compile(r'@(\w+)')
 DEF_RE     = re.compile(r'\A {0,3}\[@(\w+)\]:\s*(.*)')
 INDENT_RE  = re.compile(r'\A\t| {4}(.*)')
 
-CITATION_RE = r'@(\w+)'
+CITATION_RE = r'@(\w+)'          
 
 class Bibliography(object):
-    """ Keep track of document references and citations for exporting """
+    """ Keep track of document references and citations for exporting """ 
 
     def __init__(self, extension, bibtex_file, order):
         self.extension = extension
         self.order = order
-
+        
         self.citations = OrderedDict()
         self.references = dict()
 
@@ -64,10 +69,10 @@ class Bibliography(object):
 
         reference = "<p>%s: <i>%s</i>."%(authors, title)
         if journal:
-            reference += " %s,"%journal
+            reference += " %s."%journal
             if volume:
                 reference += " <b>%s</b>,"%volume
-
+            
         reference += " (%s)</p>"%year
 
         return reference
@@ -101,7 +106,7 @@ class Bibliography(object):
 
 class CitationsPreprocessor(Preprocessor):
     """ Gather reference definitions and citation keys """
-
+    
     def __init__(self, bibliography):
         self.bib = bibliography
 
@@ -141,7 +146,7 @@ class CitationsPreprocessor(Preprocessor):
             i += 1
 
         return linesOut
-
+    
 class CitationsPattern(Pattern):
     """ Handles converting citations keys into links """
 
@@ -160,18 +165,18 @@ class CitationsPattern(Pattern):
 
             return a
         else:
-           return None
-
+           return None 
+    
 class CitationsTreeprocessor(Treeprocessor):
     """ Add a bibliography/reference section to the end of the document """
 
     def __init__(self, bibliography):
         self.bib = bibliography
-
+        
     def run(self, root):
         citations = self.bib.makeBibliography(root)
         root.append(citations)
-
+    
 class CitationsExtension(Extension):
 
     def __init__(self, *args, **kwargs):
@@ -189,16 +194,15 @@ class CitationsExtension(Extension):
             self.getConfig('bibtex_file'),
             self.getConfig('order'),
         )
-
-    def extendMarkdown(self, md, md_globals):
+                        
+    def extendMarkdown(self, md, md_globals=None):
         md.registerExtension(self)
         self.parser = md.parser
         self.md = md
 
-        md.preprocessors.register(CitationsPreprocessor(self.bib), "mdx_bib", 175)
-        # md.preprocessors.add("mdx_bib",  CitationsPreprocessor(self.bib), "<reference")
-        md.inlinePatterns.add("mdx_bib", CitationsPattern(CITATION_RE, self.bib), "<reference")
-        md.treeprocessors.add("mdx_bib", CitationsTreeprocessor(self.bib), "_begin")
+        md.preprocessors.register(CitationsPreprocessor(self.bib), "<reference", 1000)
+        md.inlinePatterns.register(CitationsPattern(CITATION_RE, self.bib), "<reference", 1000)
+        md.treeprocessors.register(CitationsTreeprocessor(self.bib), "_begin", 1000)
 
 def makeExtension(*args, **kwargs):
     return CitationsExtension(*args, **kwargs)
