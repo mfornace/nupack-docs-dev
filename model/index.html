@@ -1,62 +1,56 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="canonical" href="https://docs.nupack.org/model/">
-  <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Model Specification - NUPACK 4.0 User Guide</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
-
-  <link rel="stylesheet" href="../css/theme.css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
-  <link href="../extra.css" rel="stylesheet" />
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Model Specification";
-    var mkdocs_page_input_path = "model.md";
-    var mkdocs_page_url = "/model/";
-  </script>
-  
-  <script src="../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.nupack.org/model/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Model Specification - NUPACK 4.0 User Guide</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Model Specification";
+        var mkdocs_page_input_path = "model.md";
+        var mkdocs_page_url = "/model/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide</a>
-        <div role="search">
+          <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide
+        </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../definitions/">Definitions</a>
-                    </li>
-                </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Model Specification</a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../definitions/">Definitions</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Model Specification</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#specify-a-physical-model">Specify a physical model</a>
     </li>
@@ -79,60 +73,50 @@
     <li class="toctree-l2"><a class="reference internal" href="#compute-stacking-state-free-energies">Compute stacking state free energies</a>
     </li>
     </ul>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis Jobs</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../design/">Design Jobs</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../advanced/">Advanced</a>
-                    </li>
-                </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../design/">Design Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../advanced/">Advanced</a>
+                </li>
+              </ul>
       </div>
     </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">NUPACK 4.0 User Guide</a>
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">NUPACK 4.0 User Guide</a>
+        
       </nav>
-
-      
       <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>Model Specification</li>
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Model Specification</li>
     <li class="wy-breadcrumbs-aside">
-      
     </li>
   </ul>
-  
   <hr/>
 </div>
 
-          <div role="main">
-            <div class="section">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
                 <h1 id="model-specification">Model Specification<a class="headerlink" href="#model-specification" title="Permanent link">&para;</a></h1>
 <hr>
@@ -152,24 +136,24 @@
 <ul>
 <li>
 <p><code>rna06</code> (shorthand: <code>rna</code>)
-Based on [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] and [<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] with additional parameters [<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
+Based on [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] and [<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] with additional parameters [<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
 </li>
 <li>
 <p><code>rna95</code>
-Based on [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
+Based on [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
 </li>
 <li>
 <p><code>dna04</code> (shorthand: <code>dna</code>)
 Based on [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>] and [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
 including coaxial stacking [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>] and dangle stacking [<a class="citation" href="#ref-Bommarito00" id="cite-Bommarito00">Bommarito00</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
-in user-specified concentrations of Na<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
+in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
 </li>
 <li>
 <p><code>custom-parameters</code>
-Custom parameters provided in a JSON file (e.g., <code>custom-parameters.json</code>) using the same format as the provided parameter files. Provide <span><span class="MathJax_Preview">\Delta G_{37}(\mathrm{loop})</span><script type="math/tex">\Delta G_{37}(\mathrm{loop})</script></span> and <span><span class="MathJax_Preview">\Delta H(\mathrm{loop})</span><script type="math/tex">\Delta H(\mathrm{loop})</script></span> values to allow calculations at different temperatures or only <span><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span> values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify <code>material = 'custom-parameters'</code>) or specify the full path to the file (<code>material = 'path/to/my/custom-parameters.json'</code>).</p>
+Custom parameters provided in a JSON file (e.g., <code>custom-parameters.json</code>) using the same format as the provided parameter files. Provide <span class="arithmatex"><span class="MathJax_Preview">\Delta G_{37}(\mathrm{loop})</span><script type="math/tex">\Delta G_{37}(\mathrm{loop})</script></span> and <span class="arithmatex"><span class="MathJax_Preview">\Delta H(\mathrm{loop})</span><script type="math/tex">\Delta H(\mathrm{loop})</script></span> values to allow calculations at different temperatures or only <span class="arithmatex"><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span> values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify <code>material = 'custom-parameters'</code>) or specify the full path to the file (<code>material = 'path/to/my/custom-parameters.json'</code>).</p>
 </li>
 </ul>
-<p>Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (<code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> <code>C</code> and <code>A</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA). Note that for DNA, <code>G</code> and <code>T</code> form a mismatch and not a wobble pair [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
+<p>Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> <code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA). Note that for DNA, <code>G</code> and <code>T</code> form a mismatch and not a wobble pair [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
 <p>DNA/RNA hybrids are not allowed.</p>
 <hr>
 
@@ -178,11 +162,11 @@ Custom parameters provided in a JSON file (e.g., <code>custom-parameters.json</c
 <ul>
 <li>
 <p><code>stacking</code>
-Complex ensemble with coaxial and dangle stacking (ensemble <span><span class="MathJax_Preview">\overline\Gamma^\shortparallel(\phi)</span><script type="math/tex">\overline\Gamma^\shortparallel(\phi)</script></span>).</p>
+Complex ensemble with coaxial and dangle stacking (ensemble <span class="arithmatex"><span class="MathJax_Preview">\overline\Gamma^\shortparallel(\phi)</span><script type="math/tex">\overline\Gamma^\shortparallel(\phi)</script></span>).</p>
 </li>
 <li>
 <p><code>nostacking</code>
-Complex ensemble without coaxial and dangle stacking (ensemble <span><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span>).</p>
+Complex ensemble without coaxial and dangle stacking (ensemble <span class="arithmatex"><span class="MathJax_Preview">\overline\Gamma(\phi)</span><script type="math/tex">\overline\Gamma(\phi)</script></span>).</p>
 </li>
 </ul>
 <hr>
@@ -190,22 +174,22 @@ Complex ensemble without coaxial and dangle stacking (ensemble <span><span class
 <h3 id="temperature">Temperature<a class="headerlink" href="#temperature" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>celsius</code>
-Temperature is specified in <span><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C using the keyword <code>celsius</code> (default: <code>celsius=37</code>).</li>
+Temperature is specified in <span class="arithmatex"><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C using the keyword <code>celsius</code> (default: <code>celsius=37</code>).</li>
 <li><code>kelvin</code>
 Alternatively, the temperature can be specified in K using the keyword <code>kelvin</code>.</li>
 </ul>
 <hr>
 
 <h3 id="salt">Salt<a class="headerlink" href="#salt" title="Permanent link">&para;</a></h3>
-<p>The default salt conditions for RNA and DNA parameter sets are <span><span class="MathJax_Preview">[\mathrm{Na}^+] = 1 {\rm M}</span><script type="math/tex">[\mathrm{Na}^+] = 1 {\rm M}</script></span>; these are the only salt conditions for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.</p>
+<p>The default salt conditions for RNA and DNA parameter sets are <span class="arithmatex"><span class="MathJax_Preview">[\mathrm{Na}^+] = 1 {\rm M}</span><script type="math/tex">[\mathrm{Na}^+] = 1 {\rm M}</script></span>; these are the only salt conditions for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.</p>
 <ul>
 <li>
 <p><code>sodium</code>
-Based on [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, <span><span class="MathJax_Preview">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</span><script type="math/tex">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</script></span>, is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword <code>sodium</code>.</p>
+Based on [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, <span class="arithmatex"><span class="MathJax_Preview">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</span><script type="math/tex">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</script></span>, is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword <code>sodium</code>.</p>
 </li>
 <li>
 <p><code>magnesium</code>
-Based on [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>] the concentration of (divalent) magnesium ions, <span><span class="MathJax_Preview">[{\rm Mg}^{++}]</span><script type="math/tex">[{\rm Mg}^{++}]</script></span>, is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword <code>magnesium</code>.</p>
+Based on [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>] the concentration of (divalent) magnesium ions, <span class="arithmatex"><span class="MathJax_Preview">[{\rm Mg}^{++}]</span><script type="math/tex">[{\rm Mg}^{++}]</script></span>, is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword <code>magnesium</code>.</p>
 </li>
 </ul>
 <hr>
@@ -223,13 +207,13 @@ In the historical ensembles, a duplex terminated by a wobble pair is forbidden.
 <div class="admonition example">
 <p class="admonition-title">Examples</p>
 <ul>
-<li>Define a model for DNA calculations at 23 <span><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C in <span><span class="MathJax_Preview">[{\rm Na}^{+}]= 0.5</span><script type="math/tex">[{\rm Na}^{+}]= 0.5</script></span> M and <span><span class="MathJax_Preview">[{\rm Mg}^{++}]= 0.01</span><script type="math/tex">[{\rm Mg}^{++}]= 0.01</script></span> M:</li>
+<li>Define a model for DNA calculations at 23 <span class="arithmatex"><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C in <span class="arithmatex"><span class="MathJax_Preview">[{\rm Na}^{+}]= 0.5</span><script type="math/tex">[{\rm Na}^{+}]= 0.5</script></span> M and <span class="arithmatex"><span class="MathJax_Preview">[{\rm Mg}^{++}]= 0.01</span><script type="math/tex">[{\rm Mg}^{++}]= 0.01</script></span> M:</li>
 </ul>
 <p><div class="highlight"><pre><span></span><code><span class="n">model2</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;dna&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span> <span class="n">sodium</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">magnesium</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 </code></pre></div>
 Note that <code>ensemble</code> is unspecified so it defaults to <code>ensemble='stacking'</code>.</p>
 <ul>
-<li>Define a model using custom parameters at 45 <span><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C without coaxial and dangle stacking:</li>
+<li>Define a model using custom parameters at 45 <span class="arithmatex"><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C without coaxial and dangle stacking:</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="n">model3</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;path/to/my/custom-parameters.json&#39;</span><span class="p">,</span>
     <span class="n">ensemble</span><span class="o">=</span><span class="s1">&#39;nostacking&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
@@ -251,7 +235,7 @@ Some dangle stacking and no coaxial stacking (dangles <code>some</code> option f
 All dangle stacking and no coaxial stacking (dangles <code>all</code> option for NUPACK 3). A dangle energy is incorporated for each unpaired base flanking a duplex (a base flanking two duplexes contributes both possible dangle energies).</p>
 </li>
 </ul>
-<p>For these historical ensembles, base pairs are either Watson-Crick pairs (<code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA). Note that for the historical ensembles, <code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> is classified as a DNA wobble pair and not as a mismatch. The historical ensembles prohibit a wobble pair (<code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> or <code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code>) as a terminal base pair in an exterior loop or a multiloop. As a result, an attempt to evaluate a free energy for a sequence <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span> and secondary structure <span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> that place a wobble pair as a terminal base pair in an exterior loop or multiloop will return <span><span class="MathJax_Preview">\overline{\Delta G}(\phi,s)=\Delta G(\phi,s) = \infty</span><script type="math/tex">\overline{\Delta G}(\phi,s)=\Delta G(\phi,s) = \infty</script></span>. These historical ensembles can be used for calculations in combination with the following historical DNA and RNA parameter sets:</p>
+<p>For these historical ensembles, base pairs are either Watson-Crick pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA). Note that for the historical ensembles, <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> is classified as a DNA wobble pair and not as a mismatch. The historical ensembles prohibit a wobble pair (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> or <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code>) as a terminal base pair in an exterior loop or a multiloop. As a result, an attempt to evaluate a free energy for a sequence <span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span> and secondary structure <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> that place a wobble pair as a terminal base pair in an exterior loop or multiloop will return <span class="arithmatex"><span class="MathJax_Preview">\overline{\Delta G}(\phi,s)=\Delta G(\phi,s) = \infty</span><script type="math/tex">\overline{\Delta G}(\phi,s)=\Delta G(\phi,s) = \infty</script></span>. These historical ensembles can be used for calculations in combination with the following historical DNA and RNA parameter sets:</p>
 <ul>
 <li>
 <p><code>rna95-nupack3</code>
@@ -259,11 +243,11 @@ Same as <code>rna95</code> except that terminal mismatch free energies in exteri
 </li>
 <li>
 <p><code>dna04-nupack3</code>
-Same as <code>dna04</code> except that G<span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T was treated as a wobble pair (analogous to a <code>G</code><span><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> RNA wobble pair) instead of classifying <code>G</code> and <code>T</code> as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in <code>dna04</code>, as terminal mismatch parameters are not public for DNA [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
+Same as <code>dna04</code> except that G<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T was treated as a wobble pair (analogous to a <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> RNA wobble pair) instead of classifying <code>G</code> and <code>T</code> as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in <code>dna04</code>, as terminal mismatch parameters are not public for DNA [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
 </li>
 <li>
 <p><code>rna99-nupack3</code>
-Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] with terminal mismatch free energies in exterior loops and multiloops replaced by two dangle stacking free energies. Parameters are provided only for 37 <span><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C.</p>
+Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] with terminal mismatch free energies in exterior loops and multiloops replaced by two dangle stacking free energies. Parameters are provided only for 37 <span class="arithmatex"><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C.</p>
 </li>
 </ul>
 <h2 id="compute-loop-free-energy">Compute loop free energy<a class="headerlink" href="#compute-loop-free-energy" title="Permanent link">&para;</a></h2>
@@ -295,10 +279,10 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 <p>For a loop defined as a list of N snippets, a stacking state is specified as a string composed of one letter per snippet. For each snippet, the returned letter is:</p>
 <ul>
 <li><code>'s'</code> if the snippet contains only 2 nucleotides, each base-paired to a nucleotide in the adjacent snippet, with the two base pairs coaxially stacked on each other</li>
-<li><code>'b'</code> if  both the 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> and 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> unpaired nucleotides are dangle stacking on adjacent base pairs</li>
-<li><code>'5'</code> if only the 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>-most unpaired base is dangle stacking on its adjacent base pair</li>
-<li><code>'3'</code> if only the 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>-most unpaired base is dangle stacking its adjacent base pair</li>
-<li><code>'n'</code> if none of the above apply (i.e., the snippet does not have a dangle at either the 5<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> or 3<span><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> end nor does it contain only 2 adjacent nucleotides participating in a coaxial stack)</li>
+<li><code>'b'</code> if  both the 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> and 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> unpaired nucleotides are dangle stacking on adjacent base pairs</li>
+<li><code>'5'</code> if only the 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>-most unpaired base is dangle stacking on its adjacent base pair</li>
+<li><code>'3'</code> if only the 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>-most unpaired base is dangle stacking its adjacent base pair</li>
+<li><code>'n'</code> if none of the above apply (i.e., the snippet does not have a dangle at either the 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> or 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> end nor does it contain only 2 adjacent nucleotides participating in a coaxial stack)</li>
 </ul>
 <p>For example, the following figures illustrate snippet annotations for coaxial and dangle stacking states in representative multiloops and exterior loops:</p>
 <blockquote>
@@ -321,85 +305,24 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 <div class="highlight"><pre><span></span><code><span class="n">my_model</span><span class="o">.</span><span class="n">stack_energies</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AAAAU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(...)&#39;</span><span class="p">)</span>
 <span class="c1"># --&gt; {&#39;n&#39;: 5.85}</span>
 </code></pre></div>
-<div class="references">
-<table>
-<tbody>
-<tr id="ref-Mathews99">
-<td>Mathews99</td>
-<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded Sequence Dependence of Thermodynamic Parameters Improves Prediction of RNA Secondary Structure</i>. J. Mol. Biol., <b>288</b>, (1999)</p></td>
-</tr>
-<tr id="ref-Lu06">
-<td>Lu06</td>
-<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A Set of Nearest Neighbor Parameters for Predicting the Enthalpy Change of RNA Secondary Structure Formation</i>. Nucleic acids research, <b>34</b>, (2006)</p></td>
-</tr>
-<tr id="ref-Xia98">
-<td>Xia98</td>
-<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>Thermodynamic Parameters for an Expanded Nearest-Neighbor Model for Formation of RNA Duplexes with Watson-Crick Base Pairs</i>. Biochemistry, <b>37</b>, (1998)</p></td>
-</tr>
-<tr id="ref-Zuker03">
-<td>Zuker03</td>
-<td><p>Zuker M.: <i>Mfold Web Server for Nucleic Acid Folding and Hybridization Prediction</i>. Nucleic Acids Res., <b>31</b>, (2003)</p></td>
-</tr>
-<tr id="ref-Turner10">
-<td>Turner10</td>
-<td><p>Turner D.H., Mathews D.H.: <i>NNDB: The Nearest Neighbor Parameter Database for Predicting Stability of Nucleic Acid Secondary Structure</i>. Nucleic Acids Res., <b>38</b>, (2010)</p></td>
-</tr>
-<tr id="ref-Serra95">
-<td>Serra95</td>
-<td><p>Serra M.J., Turner D.H.: <i>Predicting Thermodynamic Properties of RNA</i>. Methods Enzymol., <b>259</b>, (1995)</p></td>
-</tr>
-<tr id="ref-Santalucia98">
-<td>Santalucia98</td>
-<td><p>SantaLucia J.: <i>A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics</i>. Proc. Natl. Acad. Sci. USA, <b>95</b>, (1998)</p></td>
-</tr>
-<tr id="ref-Santalucia04">
-<td>Santalucia04</td>
-<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct., <b>33</b>, (2004)</p></td>
-</tr>
-<tr id="ref-Peyret00">
-<td>Peyret00</td>
-<td><p>Peyret N.: <i>Prediction of Nucleic Acid Hybridization: Parameters and Algorithms</i>. (2000)</p></td>
-</tr>
-<tr id="ref-Bommarito00">
-<td>Bommarito00</td>
-<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic Parameters for DNA Sequences with Dangling Ends</i>. Nucleic Acids Res., <b>28</b>, (2000)</p></td>
-</tr>
-<tr id="ref-SantaLucia04">
-<td>SantaLucia04</td>
-<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct., <b>33</b>, (2004)</p></td>
-</tr>
-<tr id="ref-Koehler05">
-<td>Koehler05</td>
-<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic Properties of DNA Sequences: Characteristic Values for the Human Genome</i>. Bioinformatics, <b>21</b>, (2005)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="references"><table><tbody><tr id="ref-Mathews99"><td>Mathews99</td><td>&lt;p&gt;Mathews D.H., Sabina J., Zuker M., Turner D.H.: &lt;i&gt;Expanded Sequence Dependence of Thermodynamic Parameters Improves Prediction of RNA Secondary Structure&lt;/i&gt;. J. Mol. Biol.. &lt;b&gt;288&lt;/b&gt;, (1999)&lt;/p&gt;</td></tr><tr id="ref-Lu06"><td>Lu06</td><td>&lt;p&gt;Lu Z.J., Turner D.H., Mathews D.H.: &lt;i&gt;A Set of Nearest Neighbor Parameters for Predicting the Enthalpy Change of RNA Secondary Structure Formation&lt;/i&gt;. Nucleic acids research. &lt;b&gt;34&lt;/b&gt;, (2006)&lt;/p&gt;</td></tr><tr id="ref-Xia98"><td>Xia98</td><td>&lt;p&gt;Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: &lt;i&gt;Thermodynamic Parameters for an Expanded Nearest-Neighbor Model for Formation of RNA Duplexes with Watson-Crick Base Pairs&lt;/i&gt;. Biochemistry. &lt;b&gt;37&lt;/b&gt;, (1998)&lt;/p&gt;</td></tr><tr id="ref-Zuker03"><td>Zuker03</td><td>&lt;p&gt;Zuker M.: &lt;i&gt;Mfold Web Server for Nucleic Acid Folding and Hybridization Prediction&lt;/i&gt;. Nucleic Acids Res.. &lt;b&gt;31&lt;/b&gt;, (2003)&lt;/p&gt;</td></tr><tr id="ref-Turner10"><td>Turner10</td><td>&lt;p&gt;Turner D.H., Mathews D.H.: &lt;i&gt;NNDB: The Nearest Neighbor Parameter Database for Predicting Stability of Nucleic Acid Secondary Structure&lt;/i&gt;. Nucleic Acids Res.. &lt;b&gt;38&lt;/b&gt;, (2010)&lt;/p&gt;</td></tr><tr id="ref-Serra95"><td>Serra95</td><td>&lt;p&gt;Serra M.J., Turner D.H.: &lt;i&gt;Predicting Thermodynamic Properties of RNA&lt;/i&gt;. Methods Enzymol.. &lt;b&gt;259&lt;/b&gt;, (1995)&lt;/p&gt;</td></tr><tr id="ref-Santalucia98"><td>Santalucia98</td><td>&lt;p&gt;SantaLucia J.: &lt;i&gt;A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics&lt;/i&gt;. Proc. Natl. Acad. Sci. USA. &lt;b&gt;95&lt;/b&gt;, (1998)&lt;/p&gt;</td></tr><tr id="ref-Santalucia04"><td>Santalucia04</td><td>&lt;p&gt;SantaLucia J., Hicks D.: &lt;i&gt;The thermodynamics of DNA structural motifs&lt;/i&gt;. Annu. Rev. Biophys. Biomol. Struct.. &lt;b&gt;33&lt;/b&gt;, (2004)&lt;/p&gt;</td></tr><tr id="ref-Peyret00"><td>Peyret00</td><td>&lt;p&gt;Peyret N.: &lt;i&gt;Prediction of Nucleic Acid Hybridization: Parameters and Algorithms&lt;/i&gt;. (2000)&lt;/p&gt;</td></tr><tr id="ref-Bommarito00"><td>Bommarito00</td><td>&lt;p&gt;Bommarito S., Peyret N., SantaLucia J.: &lt;i&gt;Thermodynamic Parameters for DNA Sequences with Dangling Ends&lt;/i&gt;. Nucleic Acids Res.. &lt;b&gt;28&lt;/b&gt;, (2000)&lt;/p&gt;</td></tr><tr id="ref-SantaLucia04"><td>SantaLucia04</td><td>&lt;p&gt;SantaLucia J., Hicks D.: &lt;i&gt;The thermodynamics of DNA structural motifs&lt;/i&gt;. Annu. Rev. Biophys. Biomol. Struct.. &lt;b&gt;33&lt;/b&gt;, (2004)&lt;/p&gt;</td></tr><tr id="ref-Koehler05"><td>Koehler05</td><td>&lt;p&gt;Koehler R.T., Peyret N.: &lt;i&gt;Thermodynamic Properties of DNA Sequences: Characteristic Values for the Human Genome&lt;/i&gt;. Bioinformatics. &lt;b&gt;21&lt;/b&gt;, (2005)&lt;/p&gt;</td></tr></tbody></table></div>
               
             </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../definitions/" class="btn btn-neutral float-left" title="Definitions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../analysis/" class="btn btn-neutral float-right" title="Analysis Jobs">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../definitions/" class="btn btn-neutral" title="Definitions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-    
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+          
         </div>
       </div>
 
@@ -407,7 +330,7 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 
   </div>
 
-  <div class="rst-versions" role="note" aria-label="versions">
+  <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     

@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.nupack.org/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/advanced/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/analysis/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/definitions/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/design/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/model/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/start/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.nupack.org/utilities/</loc>
-         <lastmod>2022-10-11</lastmod>
+         <lastmod>2022-10-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
