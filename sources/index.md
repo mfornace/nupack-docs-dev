@@ -230,4 +230,6 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.1.1: Enable [parallelism](advanced.md#parallelism) by default, add the `threads` setting, and set design to only use up to `N` threads on a machine with `N` cores
         - 4.0.1.2: Remove support for Python 3.6, fix several bugs in 4.0.1 to do with parallel submission of designs, reloading designs, and other minor user interface problems
         - 4.0.1.3: Fix unbounded growth in memory cache, optimize parallelism in design further, minor interface improvements
+        - 4.0.1.4: Fix concentration equilibration initial guess which occasionally caused lack of convergence
+        - 4.0.1.5: Fix large memory usage in analysis jobs containing many complexes, improve cache constraint
 
