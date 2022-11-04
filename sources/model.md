@@ -57,6 +57,12 @@ NUPACK 4 algorithms perform calculations on the following complex ensembles spec
 - `stacking`
 Complex ensemble with coaxial and dangle stacking (ensemble $\overline\Gamma^\shortparallel(\phi)$).
 
+- `dangle-stacking`
+Complex ensemble with dangle stacking.
+
+- `coaxial-stacking`
+Complex ensemble with coaxial stacking.
+
 - `nostacking`
 Complex ensemble without coaxial and dangle stacking (ensemble $\overline\Gamma(\phi)$).
 
