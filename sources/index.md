@@ -237,3 +237,4 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.1.4: Fix concentration equilibration initial guess which occasionally caused lack of convergence
         - 4.0.1.5: Fix large memory usage in analysis jobs containing many complexes, improve cache constraint
         - 4.0.1.6: Fix missing `nt()` method in Domain class
+        - 4.0.1.7: Fix memory leak in Python when running many analyses sequentially
