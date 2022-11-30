@@ -100,20 +100,20 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Overview</li>
+    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Overview</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
   <hr/>
 </div>
-
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
                 <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
 <h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">&para;</a></h2>
 <p>NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences more broadly. Much of this software can be conveniently run using the NUPACK web application at <a href="http://www.nupack.org">nupack.org</a> [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>]. This User Guide provides documentation for the NUPACK Python module.</p>
-<p>When finishing a project that has benefited from NUPACK calculations, please remember to <a href=".#citation">cite</a> the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
+<p>When finishing a project that has benefited from NUPACK calculations, please remember to <a href="./#citation">cite</a> the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
 <p>— The NUPACK Team</p>
 <hr>
 
@@ -368,6 +368,7 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
 <li>4.0.1.4: Fix concentration equilibration initial guess which occasionally caused lack of convergence</li>
 <li>4.0.1.5: Fix large memory usage in analysis jobs containing many complexes, improve cache constraint</li>
 <li>4.0.1.6: Fix missing <code>nt()</code> method in Domain class</li>
+<li>4.0.1.7: Fix memory leak in Python when running many analyses sequentially</li>
 </ul>
 </li>
 </ul>
@@ -450,6 +451,6 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
 </html>
 
 <!--
-MkDocs version : 1.3.0
-Build Date UTC : 2022-11-07 17:02:19.912013+00:00
+MkDocs version : 1.4.2
+Build Date UTC : 2022-11-30 20:31:29.083573+00:00
 -->
