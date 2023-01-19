@@ -170,7 +170,7 @@
 <li>matplotlib</li>
 <li>jupyterlab</li>
 </ul>
-<p>NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10. Alternatively, NUPACK may be compiled from source on Mac/Linux.</p>
+<p>NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on Mac/Linux.</p>
 <p>An easy way to install all of these dependencies is by installing <a href="https://www.anaconda.com/distribution/">Anaconda</a>.</p>
 <h2 id="maclinux-installation">Mac/Linux installation<a class="headerlink" href="#maclinux-installation" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
@@ -183,17 +183,17 @@ to see your installed architecture; this should be <code>arm64</code> when using
 <ol>
 <li>
 <p>Verify your Python installation (make sure you have Python 3.6 or newer):</p>
-<div class="highlight"><pre><span></span><code>python3 --version
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>--version
 </code></pre></div>
 <p>If this command does not run, troubleshoot your Python installation. You may not have your <code>$PATH</code> environment variable set correctly.</p>
 </li>
 <li>
 <p>Update your installation of <code>pip</code> and install the optional dependencies. Run the following commands</p>
-<div class="highlight"><pre><span></span><code>python3 -m pip install -U pip
-python3 -m pip install -U matplotlib jupyterlab
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>matplotlib<span class="w"> </span>jupyterlab
 </code></pre></div>
 <p>Alternatively, if you are using Anaconda, replace the above commands with:</p>
-<div class="highlight"><pre><span></span><code>conda install --update-all pip matplotlib jupyterlab
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>--update-all<span class="w"> </span>pip<span class="w"> </span>matplotlib<span class="w"> </span>jupyterlab
 </code></pre></div>
 <p>If this command does not run, troubleshoot your Anaconda installation. You may not have your <code>$PATH</code> environment variable set correctly.</p>
 </li>
@@ -202,33 +202,32 @@ python3 -m pip install -U matplotlib jupyterlab
 </li>
 <li>
 <p>Install the NUPACK 4 Python module by running the following command in your terminal (type <code>y</code> when prompted):</p>
-<div class="highlight"><pre><span></span><code>python3 -m pip install -U nupack -f ~/Downloads/nupack-VERSION/package
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>nupack<span class="w"> </span>-f<span class="w"> </span>~/Downloads/nupack-VERSION/package
 </code></pre></div>
 <p>Make sure to replace <code>nupack-VERSION</code> with the correct folder name (e.g., <code>nupack-4.0.0</code>).</p>
 </li>
 <li>
 <p>Check that the correct <code>nupack</code> version is now installed by running the following commmand:</p>
-<div class="highlight"><pre><span></span><code>python3 -m pip show nupack
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>nupack
 </code></pre></div>
 <p>If the version is not correct, go back to Step 4, double-check the folder name, and rerun the command.</p>
 </li>
 <li>
 <p>Validate your NUPACK 4 installation by running the following commands:</p>
-<div class="highlight"><pre><span></span><code>python3 -m pip install -U pytest
-python3 -m pytest -v --pyargs nupack
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pytest
+python3<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-v<span class="w"> </span>--pyargs<span class="w"> </span>nupack
 </code></pre></div>
 </li>
 <li>
 <p>You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for <a href="./#example-notebooks">example notebooks</a>). You can launch a web-based Jupyter notebook browser from the command line:</p>
-<div class="highlight"><pre><span></span><code>jupyter lab
+<div class="highlight"><pre><span></span><code>jupyter<span class="w"> </span>lab
 </code></pre></div>
 <p>and browse to open your notebook of choice. Click <code>Run-&gt;Run All Cells</code> to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn&rsquo;t work, troubleshoot your Jupyter installation.</p>
 </li>
 </ol>
-<p>From version 4.0.0.27, the M1 Mac architecture is now natively supported by the distributed binaries. Contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a> in the off chance that you are trying to run NUPACK on an unsupported architecture.</p>
 <hr />
 <h2 id="windows-installation">Windows installation<a class="headerlink" href="#windows-installation" title="Permanent link">&para;</a></h2>
-<p>NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).</p>
+<p>NUPACK may be installed on Windows 10/11 using the Windows Subsystem for Linux 2 (WSL2).</p>
 <ol>
 <li>Click the start menu and search for &ldquo;Windows Features&rdquo;. Click on &ldquo;Turn Windows features on or off&rdquo;. Check the &ldquo;Windows Subsystem for Linux&rdquo; icon</li>
 </ol>
@@ -258,25 +257,25 @@ python3 -m pytest -v --pyargs nupack
 <ol start="5">
 <li>Install NUPACK as if using Linux using the following commands (type <code>y</code> when prompted):</li>
 </ol>
-<div class="highlight"><pre><span></span><code>mkdir nupack-latest
-<span class="nb">cd</span> nupack-latest
-cp /mnt/c/Users/YOUR-USERNAME/Downloads/nupack-VERSION.zip ./
-sudo apt install unzip
-unzip nupack-latest.zip
-<span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>nupack-latest
+<span class="nb">cd</span><span class="w"> </span>nupack-latest
+cp<span class="w"> </span>/mnt/c/Users/YOUR-USERNAME/Downloads/nupack-VERSION.zip<span class="w"> </span>./
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>unzip
+unzip<span class="w"> </span>nupack-latest.zip
+<span class="nb">cd</span><span class="w"> </span>..
 
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-/bin/bash Miniconda3-latest-Linux-x86_64.sh -b
-miniconda3/bin/conda update -n base -c defaults conda
-rm Miniconda3-latest-Linux-x86_64.sh
+wget<span class="w"> </span>https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+/bin/bash<span class="w"> </span>Miniconda3-latest-Linux-x86_64.sh<span class="w"> </span>-b
+miniconda3/bin/conda<span class="w"> </span>update<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>defaults<span class="w"> </span>conda
+rm<span class="w"> </span>Miniconda3-latest-Linux-x86_64.sh
 
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/miniconda3/bin:<span class="nv">$PATH</span>
-<span class="nb">echo</span> <span class="s1">&#39;export PATH=$HOME/miniconda3/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/miniconda3/bin:<span class="nv">$PATH</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=$HOME/miniconda3/bin:$PATH&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
 
-conda install numpy scipy pip matplotlib pandas jupyterlab
-pip install -U nupack -f ./nupack-VERSION/package
+conda<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>pip<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>jupyterlab
+pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>nupack<span class="w"> </span>-f<span class="w"> </span>./nupack-VERSION/package
 
-jupyter lab
+jupyter<span class="w"> </span>lab
 </code></pre></div>
 <p>Make sure to replace <code>/YOUR-USERNAME/Downloads</code> above with the appropriate directory and <code>nupack-VERSION</code> with the correct version (e.g., <code>nupack-4.0.0</code>).</p>
 <ol start="6">
@@ -295,7 +294,7 @@ jupyter lab
 <ol>
 <li>On a Mac/Linux system, navigate to the <code>source</code> directory within the NUPACK download:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ~/Downloads/nupack-VERSION/source
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/nupack-VERSION/source
 </code></pre></div>
 <p>Make sure to replace <code>nupack-VERSION</code> with the correct folder name (e.g., <code>nupack-4.0.0</code>).</p>
 <ol start="2">
@@ -304,7 +303,7 @@ jupyter lab
 <div class="highlight"><pre><span></span><code>./external/vcpkg/bootstrap-vcpkg.sh
 </code></pre></div>
 <p>or if you are using a Mac and have not previously installed a C++ compiler, using the following flags:</p>
-<div class="highlight"><pre><span></span><code>./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang
+<div class="highlight"><pre><span></span><code>./external/vcpkg/bootstrap-vcpkg.sh<span class="w"> </span>--useSystemBinaries<span class="w"> </span>--allowAppleClang
 </code></pre></div>
 <ol start="3">
 <li>Next install the dependencies for NUPACK compilation using <code>vcpkg</code>:</li>
@@ -316,13 +315,13 @@ jupyter lab
 <ol start="4">
 <li>Make a build directory and navigate into it:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>mkdir build
-<span class="nb">cd</span> build
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
 </code></pre></div>
 <ol start="5">
 <li>Run the CMake configuration:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>cmake .. -DCMAKE_BUILD_TYPE<span class="o">=</span>Release
+<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </code></pre></div>
 <p>You may add custom compilation options as flags to the <code>cmake</code> command if desired. Some examples might be:</p>
 <ul>
@@ -334,12 +333,12 @@ jupyter lab
 <ol start="6">
 <li>Build the C++ code:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>cmake --build . --target nupack-python
+<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>--build<span class="w"> </span>.<span class="w"> </span>--target<span class="w"> </span>nupack-python
 </code></pre></div>
 <ol start="7">
 <li>Install the NUPACK Python module:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>pip3 install .
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>.
 </code></pre></div>
 <div class="references"></div>
               
