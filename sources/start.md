@@ -58,7 +58,7 @@ The following packages are recommended to facilitate interactive usage:
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10. Alternatively, NUPACK may be compiled from source on Mac/Linux.
+NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on Mac/Linux.
 
 An easy way to install all of these dependencies is by installing [Anaconda](https://www.anaconda.com/distribution/).
 
@@ -127,14 +127,12 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
 
     and browse to open your notebook of choice. Click `Run->Run All Cells` to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn't work, troubleshoot your Jupyter installation.
 
-From version 4.0.0.27, the M1 Mac architecture is now natively supported by the distributed binaries. Contact <support@nupack.org> in the off chance that you are trying to run NUPACK on an unsupported architecture.
-
 ---
 
 
 ## Windows installation
 
-NUPACK may be installed on Windows 10 using the Windows Subsystem for Linux 2 (WSL2).
+NUPACK may be installed on Windows 10/11 using the Windows Subsystem for Linux 2 (WSL2).
 
 1. Click the start menu and search for "Windows Features". Click on "Turn Windows features on or off". Check the "Windows Subsystem for Linux" icon
 
