@@ -216,9 +216,9 @@ or if you are using a Mac and have not previously installed a C++ compiler, usin
 3. Next install the dependencies for NUPACK compilation using `vcpkg`:
 
 ```
-./external/vcpkg/vcpkg install armadillo tbb gecode libsimdpp \
-    nlohmann-json jsoncpp tclap spdlog boost-context boost-graph boost-align boost-ublas \
-    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-coroutine2
+./external/vcpkg/vcpkg install gecode armadillo tbb nlohmann-json jsoncpp taskflow protobuf \
+    tclap spdlog fmt boost-context boost-graph boost-align boost-coroutine2 boost-algorithm libsimdpp magic-enum  \
+    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-ublas boost-exception yaml-cpp boost-algorithm
 ```
 
 4. Make a build directory and navigate into it:
