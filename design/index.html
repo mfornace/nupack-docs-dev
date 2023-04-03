@@ -967,7 +967,7 @@ Significant off-target complex concentrations (&gt;= 1% max complex concentratio
 <li><code>.defects</code>: ensemble defects at all levels within the design ensemble (each as a <code>pandas.DataFrame</code>).</li>
 <li><code>.concentrations</code>: concentration information for on-target complex and significant off-target complexes.</li>
 <li><code>.analysis_result</code>: an <code>AnalysisResult</code> for thermodynamic results computed on the designed ensemble.</li>
-<li><code>.domains</code>: a dict from your input domains to their designed equivalents. You can easily retrieve the designed sequences as a simple <code>dict</code> via a usage like <code>{k.name: str(v) for k, v in my_result.domains.items()}</code>.</li>
+<li><code>.domains</code>: a <code>dict</code> from your input domains to their designed equivalents. You can easily retrieve the designed sequences as a simple <code>dict</code> via a usage like <code>{k.name: str(v) for k, v in my_result.domains.items()}</code>.</li>
 </ul>
 <p>Fields may be displayed individually, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span>
