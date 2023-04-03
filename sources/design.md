@@ -1006,7 +1006,7 @@ A `DesignResult` object allows programmatic access via several fields:
 - `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
 - `.analysis_result`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
-- `.domains`: a dict from your input domains to their designed equivalents. You can easily retrieve the designed sequences as a simple `dict` via a usage like `{k.name: str(v) for k, v in my_result.domains.items()}`.
+- `.domains`: a `dict` from your input domains to their designed equivalents. You can easily retrieve the designed sequences as a simple `dict` via a usage like `{k.name: str(v) for k, v in my_result.domains.items()}`.
 
 Fields may be displayed individually, for example:
 
