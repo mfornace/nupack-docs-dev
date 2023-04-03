@@ -230,7 +230,7 @@ Output table displays:
 - Complex defect for each on-target in the ensemble (unweighted).
 - Tube defect for each tube in the ensemble (unweighted).
 - Structural defect, concentration defect, and total defect for each on-target complex in each tube (unweighted).
-- Concentation and target concentration for each on-target complex in each tube.
+- Concentration and target concentration for each on-target complex in each tube.
 - Significant off-target complex concentrations in each tube (those off-targets with concentration $\ge$ 1% the maximum complex concentration in the tube).
 
 
@@ -1006,6 +1006,7 @@ A `DesignResult` object allows programmatic access via several fields:
 - `.defects`: ensemble defects at all levels within the design ensemble (each as a `pandas.DataFrame`).
 - `.concentrations`: concentration information for on-target complex and significant off-target complexes.
 - `.analysis_result`: an `AnalysisResult` for thermodynamic results computed on the designed ensemble.
+- `.domains`: a dict from your input domains to their designed equivalents. You can easily retrieve the designed sequences as a simple `dict` via a usage like `{k.name: str(v) for k, v in my_result.domains.items()}`.
 
 Fields may be displayed individually, for example:
 
