@@ -48,7 +48,7 @@ Analyze or design a single complex ensemble --- these are [quick tools](utilitie
 
 NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required:
 
-- Python 3.7-3.10
+- Python 3.7-3.11
 - numpy
 - scipy
 - pandas
