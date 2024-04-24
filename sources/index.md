@@ -239,3 +239,5 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.1.6: Fix missing `nt()` method in Domain class
         - 4.0.1.7: Fix memory leak in Python when running many analyses sequentially
         - 4.0.1.8: Add support for Python 3.11
+        - 4.0.1.9: Add support for Python 3.12 and fix rare issue in concentration convergence
+
