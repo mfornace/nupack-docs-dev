@@ -4,7 +4,7 @@
 
 NUPACK 4 is a C++ library distributed as a Python package for portability and ease of use. Before installing NUPACK, you must have Python 3 and a few common packages installed on your computer. Note that Python 2 is not currently supported. The specific Python package requirements for NUPACK 4 are:
 
-- Python 3.6+
+- Python 3.8-3.12
 - numpy
 - scipy
 
@@ -16,7 +16,7 @@ For full visualization capabilities, the following packages are recommended:
 
 ## Installing NUPACK via the Anaconda Python package
 
-The easiest way to install NUPACK is to install [Anaconda](https://www.anaconda.com/distribution/), which comes with many Python packages preinstalled. Alternatively, you can install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for a smaller installation size. Make sure the distribution you use contains Python 3.6 or newer.
+The easiest way to install NUPACK is to install [Anaconda](https://www.anaconda.com/distribution/), which comes with many Python packages preinstalled. Alternatively, you can install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for a smaller installation size. Make sure the distribution you use contains Python 3.8 or newer.
 
 Next, open a new window in your terminal. It is often helpful to update your installation of Anaconda by running the following terminal commands:
 

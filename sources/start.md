@@ -48,7 +48,7 @@ Analyze or design a single complex ensemble --- these are [quick tools](utilitie
 
 NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required:
 
-- Python 3.7-3.11
+- Python 3.8-3.12
 - numpy
 - scipy
 - pandas
@@ -71,7 +71,7 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
     ```
     to see your installed architecture; this should be `arm64` when using an M-series Mac.
 
-1. Verify your Python installation (make sure you have Python 3.6 or newer):
+1. Verify your Python installation (make sure you have Python 3.8 or newer):
 
     ```bash
     python3 --version
