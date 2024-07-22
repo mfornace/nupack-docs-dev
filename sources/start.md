@@ -201,34 +201,14 @@ cd ~/Downloads/nupack-VERSION/source
 
 Make sure to replace `nupack-VERSION` with the correct folder name (e.g., `nupack-4.0.0`).
 
-2. Build the included `vcpkg` submodule using:
-
-```bash
-./external/vcpkg/bootstrap-vcpkg.sh
-```
-
-or if you are using a Mac and have not previously installed a C++ compiler, using the following flags:
-
-```bash
-./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang
-```
-
-3. Next install the dependencies for NUPACK compilation using `vcpkg`:
-
-```
-./external/vcpkg/vcpkg install gecode armadillo tbb nlohmann-json jsoncpp taskflow protobuf \
-    tclap spdlog fmt boost-context boost-graph boost-align boost-coroutine2 boost-algorithm libsimdpp magic-enum  \
-    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-ublas boost-exception yaml-cpp boost-algorithm
-```
-
-4. Make a build directory and navigate into it:
+2. Make a build directory and navigate into it:
 
 ```bash
 mkdir build
 cd build
 ```
 
-5. Run the CMake configuration:
+3. Run the CMake configuration:
 
 ```bash
 cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -241,14 +221,16 @@ You may add custom compilation options as flags to the `cmake` command if desire
 - Add `-DCMAKE_CXX_FLAGS="<custom compile options>"` to add custom C++ compilation flags.
 - Add `-DCMAKE_POSITION_INDEPENDENT_CODE=ON` in the offchance you run into a compilation error asking you to recompile with `-fPIC`.
 
-6. Build the C++ code:
+4. Build the C++ code:
 
 ```bash
 cmake --build . --target nupack-python
 ```
 
-7. Install the NUPACK Python module:
+5. Install the NUPACK Python module:
 
 ```bash
 pip3 install .
 ```
+
+If you are on a Mac and experience an error within the `vcpkg` submodule, it may help to run the command `./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang` between steps 1 and 2.
