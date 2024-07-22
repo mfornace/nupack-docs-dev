@@ -297,27 +297,12 @@ jupyter<span class="w"> </span>lab
 </code></pre></div>
 <p>Make sure to replace <code>nupack-VERSION</code> with the correct folder name (e.g., <code>nupack-4.0.0</code>).</p>
 <ol start="2">
-<li>Build the included <code>vcpkg</code> submodule using:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>./external/vcpkg/bootstrap-vcpkg.sh
-</code></pre></div>
-<p>or if you are using a Mac and have not previously installed a C++ compiler, using the following flags:</p>
-<div class="highlight"><pre><span></span><code>./external/vcpkg/bootstrap-vcpkg.sh<span class="w"> </span>--useSystemBinaries<span class="w"> </span>--allowAppleClang
-</code></pre></div>
-<ol start="3">
-<li>Next install the dependencies for NUPACK compilation using <code>vcpkg</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>./external/vcpkg/vcpkg install gecode armadillo tbb nlohmann-json jsoncpp taskflow protobuf \
-    tclap spdlog fmt boost-context boost-graph boost-align boost-coroutine2 boost-algorithm libsimdpp magic-enum  \
-    boost-variant boost-thread boost-sort boost-geometry boost-odeint boost-ublas boost-exception yaml-cpp boost-algorithm
-</code></pre></div>
-<ol start="4">
 <li>Make a build directory and navigate into it:</li>
 </ol>
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>build
 <span class="nb">cd</span><span class="w"> </span>build
 </code></pre></div>
-<ol start="5">
+<ol start="3">
 <li>Run the CMake configuration:</li>
 </ol>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
@@ -329,16 +314,17 @@ jupyter<span class="w"> </span>lab
 <li>Add <code>-DCMAKE_CXX_FLAGS="&lt;custom compile options&gt;"</code> to add custom C++ compilation flags.</li>
 <li>Add <code>-DCMAKE_POSITION_INDEPENDENT_CODE=ON</code> in the offchance you run into a compilation error asking you to recompile with <code>-fPIC</code>.</li>
 </ul>
-<ol start="6">
+<ol start="4">
 <li>Build the C++ code:</li>
 </ol>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>--build<span class="w"> </span>.<span class="w"> </span>--target<span class="w"> </span>nupack-python
 </code></pre></div>
-<ol start="7">
+<ol start="5">
 <li>Install the NUPACK Python module:</li>
 </ol>
 <div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>.
 </code></pre></div>
+<p>If you are on a Mac and experience an error within the <code>vcpkg</code> submodule, it may help to run the command <code>./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang</code> between steps 1 and 2.</p>
 <div class="references"></div>
               
             </div>
