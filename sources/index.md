@@ -242,4 +242,5 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.1.9: Add support for Python 3.12 and fix rare issue in equilibrium concentration convergence
         - 4.0.1.10: Fix issue when specifying mixtures of sequences containing U and T and provide binaries with more conservative instruction sets for Linux
         - 4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible
+        - 4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names
 
