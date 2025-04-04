@@ -48,7 +48,7 @@ Analyze or design a single complex ensemble --- these are [quick tools](utilitie
 
 NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required:
 
-- Python 3.8-3.12
+- Python 3.8-3.13
 - numpy
 - scipy
 - pandas
@@ -58,11 +58,11 @@ The following packages are recommended to facilitate interactive usage:
 - matplotlib
 - jupyterlab
 
-NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on Mac/Linux.
+NUPACK 4 Python packages can be installed for macOS/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on macOS/Linux.
 
 An easy way to install all of these dependencies is by installing [Anaconda](https://www.anaconda.com/distribution/).
 
-## Mac/Linux installation
+## macOS/Linux installation
 
 !!! Warning
     Note that for new Macs using an M1 or M2 (arm64) architecture, you must make sure to use a *native* Python distribution. Separate downloads for the [Anaconda](https://www.anaconda.com/products/distribution) or [miniconda](https://docs.conda.io/en/latest/miniconda.html#macos-installers) distributions are available -- make sure to choose the distributions labeled "M1". Importing NUPACK will only function correctly using a native Python distribution. You may use the command 
@@ -182,18 +182,18 @@ Make sure to replace `/YOUR-USERNAME/Downloads` above with the appropriate direc
 
 ## Source installation
 
-For Mac/Linux users, installation of binaries via `pip` is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.
+For macOS/Linux users, installation of binaries via `pip` is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.
 
 The following are required:
 
-- C++17 compliant compiler (Clang or AppleClang)
-- CMake
+- C++17 compliant compiler (Clang or AppleClang); note that we do not support GCC or Intel compilers
+- CMake (> 3.10)
 
-On Mac, it is recommended to use the Clang provided by [Homebrew](https://brew.sh) as it is generally kept more up to date than Apple's builtin version. After installing Homebrew, install Clang via `brew install llvm`. Then add the flag `-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++` or `-DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++` to your cmake command (use the one corresponding to where `brew` installed binaries).
+On macOS, it is recommended to use the Clang provided by [Homebrew](https://brew.sh) as it is generally kept more up to date than Apple's builtin version. After installing Homebrew, install Clang via `brew install llvm`. Then add the flag `-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++` or `-DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++` to your cmake command (use the one corresponding to where `brew` installed binaries).
 
 Directions:
 
-1. On a Mac/Linux system, navigate to the `source` directory within the NUPACK download:
+1. On a macOS/Linux system, navigate to the `source` directory within the NUPACK download:
 
 ```bash
 cd ~/Downloads/nupack-VERSION/source
@@ -233,4 +233,6 @@ cmake --build . --target nupack-python
 pip3 install .
 ```
 
-If you are on a Mac and experience an error within the `vcpkg` submodule, it may help to run the command `./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang` between steps 1 and 2.
+Troubleshooting:
+- If you are on a Mac and experience an error within the `vcpkg` submodule, it may help to run the command `./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang` between steps 1 and 2.
+- If you are using CMake 4.0 or newer and experience a CMake related error, set the environment variable `export CMAKE_POLICY_VERSION_MINIMUM=3.5` and try again. Otherwise, install and use a CMake of version < 4.0.
