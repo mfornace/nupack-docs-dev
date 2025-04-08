@@ -246,7 +246,7 @@ For complex $j$, the secondary structure free energy treating strands with the s
 \begin{align}
 \Delta G(\phi_j,s).
 \end{align}
-If the physical model includes [coaxial and dangle stacking](index.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](index.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi_j,s)$.
+If the physical model includes [coaxial and dangle stacking](definitions.md#coaxial-and-dangle-stacking), the structure free energy will include stacking contributions $\Delta G^\textrm{stacking}$. If the secondary structure $s$ has a rotational symmetry, the structure free energy will include the [symmetry correction](definitions.md#symmetry-correction) $\Delta G^\textrm{sym}(\phi_j,s)$.
 
 
 ### Equilibrium structure probability
@@ -455,7 +455,7 @@ quantifying the average equilibrium fraction of incorrectly paired nucleotides o
 NUPACK provides a framework for designing the sequences of multiple nucleic acid strands intended to hybridize in solution via a prescribed reaction pathway.
 Sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Each target test tube contains a set of desired on-target complexes,
 each with a target secondary structure and target concentration, and a set of undesired
-off-target complexes, each with vanishing target concentration. Design quality is quantified by the [multi-tube ensemble defect](test-tube-ensemble-defect), $\mathcal{M}$, representing the average equilibrium fraction of incorrectly paired
+off-target complexes, each with vanishing target concentration. Design quality is quantified by the [multi-tube ensemble defect](definitions.md#test-tube-ensemble-defect), $\mathcal{M}$, representing the average equilibrium fraction of incorrectly paired
 nucleotides evaluated over the design ensemble
 [@Wolfe17]. Optimization of the sequences so as to reduce $\mathcal{M}$ below a user-specified stop condition implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. Sequence design is performed subject to both [hard constraints](definitions.md#hard-constraints) (including composition constraints and biological constraints) and [soft constraints](definitions.md#soft-constraints) (including sequence symmetry minimization and toehold free energy equalization).
 

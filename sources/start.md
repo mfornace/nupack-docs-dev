@@ -119,7 +119,7 @@ An easy way to install all of these dependencies is by installing [Anaconda](htt
     python3 -m pytest -v --pyargs nupack
     ```
 
-7. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-notebooks)). You can launch a web-based Jupyter notebook browser from the command line:
+7. You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for [example notebooks](start.md#example-jupyter-notebooks)). You can launch a web-based Jupyter notebook browser from the command line:
 
     ```bash
     jupyter lab
@@ -175,7 +175,7 @@ jupyter lab
 
 Make sure to replace `/YOUR-USERNAME/Downloads` above with the appropriate directory and `nupack-VERSION` with the correct version (e.g., `nupack-4.0.0`).
 
-6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-notebooks).
+6. Use your web browser to open localhost:8888 and use Jupyter Lab to open an [example notebook](start.md#example-jupyter-notebooks).
 
 
 ---

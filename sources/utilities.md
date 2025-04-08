@@ -146,7 +146,7 @@ print(num_stack)
 ---
 
 ## Design a sequence
-`des` performs complex design to generate a sequence intended to adopt a target secondary structure at equilibrium within the ensemble of the complex. The strand ordering of the complex can be specified using IUPAC [degenerate nucleotide codes](definitions.md#IUPAC-degenerate-nucleotide-codes) to incorporate any sequence constraints (the strand ordering can be omitted if there are no sequence constraints). The target structure is specified using keyword `structure`:
+`des` performs complex design to generate a sequence intended to adopt a target secondary structure at equilibrium within the ensemble of the complex. The strand ordering of the complex can be specified using IUPAC [degenerate nucleotide codes](definitions.md#degenerate-nucleotide-codes) to incorporate any sequence constraints (the strand ordering can be omitted if there are no sequence constraints). The target structure is specified using keyword `structure`:
 
 
 ```python

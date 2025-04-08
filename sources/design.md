@@ -181,7 +181,7 @@ print(t1.off_targets) # --> {<TargetComplex (Strand A+Strand A+Strand B)>, <Targ
 
 ## Run a test tube design job
 
-The `tube_design` class performs [constrained multi-tube design](definitions.md#constrained-multitube-design-problem) for a specified set of target test tubes (keyword `tubes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
+The `tube_design` class performs [constrained multi-tube design](definitions.md#constrained-multi-tube-design-problem) for a specified set of target test tubes (keyword `tubes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
 
 
 ```python
@@ -194,8 +194,8 @@ my_design = tube_design(tubes=my_tubes,
 
 A `tube_design` object supports two methods for performing sequence design:
 
-- `run()`: [run multiple independent design trials in the foreground](design.md#run-a-single-design-trial-in-the-foreground).
-- `launch()`: [launch multiple independent design trials in the background](design.md#launch-multiple-design-trials-in-the-background) and save design progress to checkpoint files.
+- `run()`: [run multiple independent design trials in the foreground](design.md#run-design-trials-in-the-foreground).
+- `launch()`: [launch multiple independent design trials in the background](design.md#launch-design-trials-in-the-background) and save design progress to checkpoint files.
 
 Either method can be used to restart from a previous design result (keyword `restart`). See below for examples using `run()` and `launch()` for the above `tube_design` job.
 
@@ -309,7 +309,7 @@ my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
 
 ## Run a complex design job
 
-The `complex_design` class enables specification of a [constrained multi-complex design](definitions.md#constrained-multi-complex-design) for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
+The `complex_design` class enables specification of a [constrained multi-complex design](definitions.md#constrained-multi-complex-design-problem) for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
 
 
 ```python
@@ -709,7 +709,7 @@ pattern3 = Pattern(['A4', 'C4', 'G4', 'U4',
 
 ### Sequence symmetry
 
-A [sequence symmetry constraint](definitions.md#soft.constraints) penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An `SSM` soft constraint is specified as:
+A [sequence symmetry constraint](definitions.md#soft-constraints) penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An `SSM` soft constraint is specified as:
 
 - the word length in nucleotides (keyword `word`)
 - optionally a list of on-target complexes (keyword `scope`) where the constraint should apply
@@ -818,7 +818,7 @@ weights[:] *=2
 ```
 
 !!! Note
-    Note that [multi-tube ensemble defect](definitions.md#multi-tube-ensemble-defect) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.
+    Note that [multi-tube ensemble defect](definitions.md#design-objective-function) $\mathcal{M}$ varies between 0 and 1 so that specifying an increasing number of soft constraints in the [augmented objective function](definitions.md#constrained-multi-tube-design-problem) will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect $\mathcal{M_W}$ (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.
 
 A `Weights` object may be displayed as a table in a Jupyter notebook, for example:
 
@@ -900,7 +900,7 @@ options = DesignOptions(
     Enable `wobble_mutations` (default `False`) so that the designer will consider sequences which may 1) yield wobble (`GU`) pairs in target structures and 2) contain wobble complements in domain reverse complements (e.g. `a` = `GGG`, `a*` = `UUU`).
 
 !!! Note
-    Set `max_time` to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using [checkpointing](design.md#launch-multiple-design-trials-in-the-background) as an alternative to optimize the tradeoff between design quality and CPU time.
+    Set `max_time` to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using [checkpointing](design.md#launch-design-trials-in-the-background) as an alternative to optimize the tradeoff between design quality and CPU time.
 
 !!! Note
     Change `f_stop` to adjust the [stop condition](definitions.md#constrained-multi-tube-design-problem) for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition.
