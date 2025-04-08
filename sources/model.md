@@ -29,13 +29,19 @@ The valid options for each property are described below.
 
 NUPACK 4 algorithms use the following temperature-dependent RNA and DNA free energy parameter sets specified by the keyword `material` (default: `material='rna'`):
 
-- `rna06` (shorthand: `rna`)
+- `rna` Shorthand for `rna06`.
+
+- `rna06`
 Based on [@Mathews99] and [@Lu06] with additional parameters [@Xia98,@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in 1M Na$^+$.
 
 - `rna95`
 Based on [@Serra95] with additional parameters [@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in 1M Na$^+$.
 
-- `dna04` (shorthand: `dna`)
+- `dna` Shorthand for `dna04.2`.
+
+- `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@Santalucia04], internal asymmetry values [@Santalucia04], and terminal mismatch values [@Turner10,@Mittal24].
+
+- `dna04.1`
 Based on [@Santalucia98] and [@Santalucia04] with additional parameters [@Zuker03]
 including coaxial stacking [@Peyret00] and dangle stacking [@Bommarito00,@Zuker03]
 in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@Santalucia98,@Peyret00,@Santalucia04].
