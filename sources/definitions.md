@@ -133,7 +133,7 @@ It is often convenient to define $\Psi$ to contain all complex species of up to 
 ## Free energy model
 For each (unpseudoknotted connected) secondary structure $s\in\overline{\Gamma}(\phi)$, the free energy,
 $\overline{\Delta G}(\phi,s)$, is estimated as the sum of the empirically determined free energies of the
-constituent loops [@Santalucia98,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10] plus a strand association penalty [@Bloomfield00], $\Delta
+constituent loops [@SantaLucia98,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10] plus a strand association penalty [@Bloomfield00], $\Delta
 G^\textrm{assoc}$, applied $L-1$ times for a
 complex of $L$ strands:
 \begin{align}
@@ -215,9 +215,9 @@ akin to complementary thought experiments [@Fornace20].
 For RNA, we employ temperature-dependent parameters [@Serra95,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10]
 including coaxial [@Mathews99,@Turner10] and dangle [@Serra95,@Zuker03,@Turner10] parameters
 in 1M Na$^+$. For DNA,
-we employ temperature-dependent parameters [@Santalucia98,@Zuker03,@Santalucia04]
+we employ temperature-dependent parameters [@SantaLucia98,@Zuker03,@SantaLucia04]
 including coaxial [@Peyret00] and dangle [@Bommarito00,@Zuker03] parameters
-in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@Santalucia98,@Peyret00,@Santalucia04]. See [@Fornace20] for details.
+in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04]. See [@Fornace20] for details.
  -->
 
 ## Physical quantities

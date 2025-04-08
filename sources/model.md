@@ -39,17 +39,18 @@ Based on [@Serra95] with additional parameters [@Zuker03] including coaxial stac
 
 - `dna` Shorthand for `dna04.2`.
 
-- `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@Santalucia04], internal asymmetry values [@Santalucia04], and terminal mismatch values [@Turner10,@Mittal24].
+- `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@SantaLucia04], internal asymmetry values [@SantaLucia04], and terminal mismatch values [@Turner10,@Mittal24];
+in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
 
 - `dna04.1`
-Based on [@Santalucia98] and [@Santalucia04] with additional parameters [@Zuker03]
+Based on [@SantaLucia98] and [@SantaLucia04] with additional parameters [@Zuker03]
 including coaxial stacking [@Peyret00] and dangle stacking [@Bommarito00,@Zuker03]
-in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@Santalucia98,@Peyret00,@Santalucia04].
+in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
 
 - `custom-parameters`
 Custom parameters provided in a JSON file (e.g., `custom-parameters.json`) using the same format as the provided parameter files. Provide $\Delta G_{37}(\mathrm{loop})$ and $\Delta H(\mathrm{loop})$ values to allow calculations at different temperatures or only $\Delta G(\mathrm{loop})$ values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify `material = 'custom-parameters'`) or specify the full path to the file (`material = 'path/to/my/custom-parameters.json'`).
 
-Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (`G`$\cdot$ `C` and `A`$\cdot$`U` for RNA; `G`$\cdot$`C` and `A`$\cdot$`T` for DNA) or wobble pairs (`G`$\cdot$`U` for RNA). Note that for DNA, `G` and `T` form a mismatch and not a wobble pair [@Santalucia04].
+Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (`G`$\cdot$ `C` and `A`$\cdot$`U` for RNA; `G`$\cdot$`C` and `A`$\cdot$`T` for DNA) or wobble pairs (`G`$\cdot$`U` for RNA). Note that for DNA, `G` and `T` form a mismatch and not a wobble pair [@SantaLucia04].
 
 DNA/RNA hybrids are not allowed.
 
@@ -90,7 +91,7 @@ Alternatively, the temperature can be specified in K using the keyword `kelvin`.
 The default salt conditions for RNA and DNA parameter sets are $[\mathrm{Na}^+] = 1 {\rm M}$; these are the only salt conditions for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.
 
 - `sodium`
-Based on [@Santalucia98,@SantaLucia04] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, $[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]$, is specified in units of molar (default: 1.0, range: \[0.05,1.1\]) using the keyword `sodium`.
+Based on [@SantaLucia98,@SantaLucia04] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, $[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]$, is specified in units of molar (default: 1.0, range: \[0.05,1.1\]) using the keyword `sodium`.
 
 - `magnesium`
 Based on [@Peyret00,@Koehler05] the concentration of (divalent) magnesium ions, $[{\rm Mg}^{++}]$, is specified in units of molar (default: 0.0, range: \[0.0,0.2\]) using the keyword `magnesium`.
@@ -146,7 +147,7 @@ For these historical ensembles, base pairs are either Watson-Crick pairs (`G`$\c
 Same as `rna95` except that terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies.
 
 - `dna04-nupack3`
-Same as `dna04` except that G$\cdot$T was treated as a wobble pair (analogous to a `G`$\cdot$`U` RNA wobble pair) instead of classifying `G` and `T` as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in `dna04`, as terminal mismatch parameters are not public for DNA [@Santalucia04].
+Same as `dna04` except that G$\cdot$T was treated as a wobble pair (analogous to a `G`$\cdot$`U` RNA wobble pair) instead of classifying `G` and `T` as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in `dna04`, as terminal mismatch parameters are not public for DNA [@SantaLucia04].
 
 - `rna99-nupack3`
 Parameters from [@Mathews99] with terminal mismatch free energies in exterior loops and multiloops replaced by two dangle stacking free energies. Parameters are provided only for 37 $^\circ$C.
