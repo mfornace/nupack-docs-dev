@@ -305,7 +305,7 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 <p>An ensemble that excludes cognate reaction products can never be studied in the lab but provides a important framework for computational sequence optimization.</p>
 </div>
 <h2 id="run-a-test-tube-design-job">Run a test tube design job<a class="headerlink" href="#run-a-test-tube-design-job" title="Permanent link">&para;</a></h2>
-<p>The <code>tube_design</code> class performs <a href="../definitions/#constrained-multitube-design-problem">constrained multi-tube design</a> for a specified set of target test tubes (keyword <code>tubes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
+<p>The <code>tube_design</code> class performs <a href="../definitions/#constrained-multi-tube-design-problem">constrained multi-tube design</a> for a specified set of target test tubes (keyword <code>tubes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
 <span class="n">my_tubes</span> <span class="o">=</span> <span class="p">[</span><span class="n">t1</span><span class="p">]</span>
 <span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="n">my_tubes</span><span class="p">,</span>
@@ -314,8 +314,8 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 </code></pre></div>
 <p>A <code>tube_design</code> object supports two methods for performing sequence design:</p>
 <ul>
-<li><code>run()</code>: <a href="./#run-a-single-design-trial-in-the-foreground">run multiple independent design trials in the foreground</a>.</li>
-<li><code>launch()</code>: <a href="./#launch-multiple-design-trials-in-the-background">launch multiple independent design trials in the background</a> and save design progress to checkpoint files.</li>
+<li><code>run()</code>: <a href="./#run-design-trials-in-the-foreground">run multiple independent design trials in the foreground</a>.</li>
+<li><code>launch()</code>: <a href="./#launch-design-trials-in-the-background">launch multiple independent design trials in the background</a> and save design progress to checkpoint files.</li>
 </ul>
 <p>Either method can be used to restart from a previous design result (keyword <code>restart</code>). See below for examples using <code>run()</code> and <code>launch()</code> for the above <code>tube_design</code> job.</p>
 <div class="admonition note">
@@ -386,7 +386,7 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 </code></pre></div>
 <hr />
 <h2 id="run-a-complex-design-job">Run a complex design job<a class="headerlink" href="#run-a-complex-design-job" title="Permanent link">&para;</a></h2>
-<p>The <code>complex_design</code> class enables specification of a <a href="../definitions/#constrained-multi-complex-design">constrained multi-complex design</a> for a specified set of target complexes (keyword <code>complexes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
+<p>The <code>complex_design</code> class enables specification of a <a href="../definitions/#constrained-multi-complex-design-problem">constrained multi-complex design</a> for a specified set of target complexes (keyword <code>complexes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
 <span class="n">my_complexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">]</span>
 <span class="n">my_design</span> <span class="o">=</span> <span class="n">complex_design</span><span class="p">(</span><span class="n">complexes</span><span class="o">=</span><span class="n">my_complexes</span><span class="p">,</span>
@@ -716,7 +716,7 @@ The primary difference is that a weight can be supplied to control the relative 
 </code></pre></div>
 <hr />
 <h3 id="sequence-symmetry">Sequence symmetry<a class="headerlink" href="#sequence-symmetry" title="Permanent link">&para;</a></h3>
-<p>A <a href="../definitions/#soft.constraints">sequence symmetry constraint</a> penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An <code>SSM</code> soft constraint is specified as:</p>
+<p>A <a href="../definitions/#soft-constraints">sequence symmetry constraint</a> penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An <code>SSM</code> soft constraint is specified as:</p>
 <ul>
 <li>the word length in nucleotides (keyword <code>word</code>)</li>
 <li>optionally a list of on-target complexes (keyword <code>scope</code>) where the constraint should apply</li>
@@ -812,7 +812,7 @@ The primary difference is that a weight can be supplied to control the relative 
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note that <a href="../definitions/#multi-tube-ensemble-defect">multi-tube ensemble defect</a> <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> varies between 0 and 1 so that specifying an increasing number of soft constraints in the <a href="../definitions/#constrained-multi-tube-design">augmented objective function</a> will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M_W}</span><script type="math/tex">\mathcal{M_W}</script></span> (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.</p>
+<p>Note that <a href="../definitions/#design-objective-function">multi-tube ensemble defect</a> <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> varies between 0 and 1 so that specifying an increasing number of soft constraints in the <a href="../definitions/#constrained-multi-tube-design-problem">augmented objective function</a> will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M_W}</span><script type="math/tex">\mathcal{M_W}</script></span> (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.</p>
 </div>
 <p>A <code>Weights</code> object may be displayed as a table in a Jupyter notebook, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">weights</span>
@@ -878,7 +878,7 @@ The primary difference is that a weight can be supplied to control the relative 
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Set <code>max_time</code> to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using <a href="./#launch-multiple-design-trials-in-the-background">checkpointing</a> as an alternative to optimize the tradeoff between design quality and CPU time.</p>
+<p>Set <code>max_time</code> to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using <a href="./#launch-design-trials-in-the-background">checkpointing</a> as an alternative to optimize the tradeoff between design quality and CPU time.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1128,7 +1128,7 @@ use the <code>analysis_result</code> field to supply an <code>AnalysisResult</co
 <tbody>
 <tr id="ref-Hochrein13">
 <td>Hochrein13</td>
-<td><p>Hochrein L.M., Schwarzkopf M., Shahgholi M., Yin P., Pierce N.A.: <i>Conditional Dicer Substrate Formation via Shape and Sequence Transduction with Small Conditional RNAs</i>. J. Am. Chem. Soc.. <b>135</b>, (2013)</p></td>
+<td><p>Hochrein L.M., Schwarzkopf M., Shahgholi M., Yin P., Pierce N.A.: <i>Conditional dicer substrate formation via shape and sequence transduction with small conditional RNAs</i>. J. Am. Chem. Soc.. <b>135</b>, (2013)</p></td>
 </tr>
 <tr id="ref-HanewichHollatz19">
 <td>HanewichHollatz19</td>
@@ -1136,11 +1136,11 @@ use the <code>analysis_result</code> field to supply an <code>AnalysisResult</co
 </tr>
 <tr id="ref-Geary14">
 <td>Geary14</td>
-<td><p>Geary C., Rothemund P.W., Andersen E.S.: <i>A Single-Stranded Architecture for Cotranscriptional Folding of {{RNA}} Nanostructures</i>. Science. <b>345</b>, (2014)</p></td>
+<td><p>Geary C., Rothemund P.W., Andersen E.S.: <i>A single stranded architecture for cotranscriptional folding of rna nanostructures</i>. Science. <b>345</b>, (2014)</p></td>
 </tr>
 <tr id="ref-Wolfe17">
 <td>Wolfe17</td>
-<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained Multistate Sequence Design for Nucleic Acid Reaction Pathway Engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained multistate sequence design for nucleic acid reaction pathway engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
 </tr>
 </tbody>
 </table>

@@ -79,7 +79,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#installation-requirements">Installation requirements</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#maclinux-installation">Mac/Linux installation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#macoslinux-installation">macOS/Linux installation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#windows-installation">Windows installation</a>
     </li>
@@ -159,7 +159,7 @@
 <h2 id="installation-requirements">Installation requirements<a class="headerlink" href="#installation-requirements" title="Permanent link">&para;</a></h2>
 <p>NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required:</p>
 <ul>
-<li>Python 3.8-3.12</li>
+<li>Python 3.8-3.13</li>
 <li>numpy</li>
 <li>scipy</li>
 <li>pandas</li>
@@ -169,9 +169,9 @@
 <li>matplotlib</li>
 <li>jupyterlab</li>
 </ul>
-<p>NUPACK 4 Python packages can be installed for Mac/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on Mac/Linux.</p>
+<p>NUPACK 4 Python packages can be installed for macOS/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on macOS/Linux.</p>
 <p>An easy way to install all of these dependencies is by installing <a href="https://www.anaconda.com/distribution/">Anaconda</a>.</p>
-<h2 id="maclinux-installation">Mac/Linux installation<a class="headerlink" href="#maclinux-installation" title="Permanent link">&para;</a></h2>
+<h2 id="macoslinux-installation">macOS/Linux installation<a class="headerlink" href="#macoslinux-installation" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Note that for new Macs using an M1 or M2 (arm64) architecture, you must make sure to use a <em>native</em> Python distribution. Separate downloads for the <a href="https://www.anaconda.com/products/distribution">Anaconda</a> or <a href="https://docs.conda.io/en/latest/miniconda.html#macos-installers">miniconda</a> distributions are available &ndash; make sure to choose the distributions labeled &ldquo;M1&rdquo;. Importing NUPACK will only function correctly using a native Python distribution. You may use the command 
@@ -218,7 +218,7 @@ python3<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> 
 </code></pre></div>
 </li>
 <li>
-<p>You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for <a href="./#example-notebooks">example notebooks</a>). You can launch a web-based Jupyter notebook browser from the command line:</p>
+<p>You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for <a href="./#example-jupyter-notebooks">example notebooks</a>). You can launch a web-based Jupyter notebook browser from the command line:</p>
 <div class="highlight"><pre><span></span><code>jupyter<span class="w"> </span>lab
 </code></pre></div>
 <p>and browse to open your notebook of choice. Click <code>Run-&gt;Run All Cells</code> to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn&rsquo;t work, troubleshoot your Jupyter installation.</p>
@@ -278,20 +278,20 @@ jupyter<span class="w"> </span>lab
 </code></pre></div>
 <p>Make sure to replace <code>/YOUR-USERNAME/Downloads</code> above with the appropriate directory and <code>nupack-VERSION</code> with the correct version (e.g., <code>nupack-4.0.0</code>).</p>
 <ol start="6">
-<li>Use your web browser to open localhost:8888 and use Jupyter Lab to open an <a href="./#example-notebooks">example notebook</a>.</li>
+<li>Use your web browser to open localhost:8888 and use Jupyter Lab to open an <a href="./#example-jupyter-notebooks">example notebook</a>.</li>
 </ol>
 <hr />
 <h2 id="source-installation">Source installation<a class="headerlink" href="#source-installation" title="Permanent link">&para;</a></h2>
-<p>For Mac/Linux users, installation of binaries via <code>pip</code> is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.</p>
+<p>For macOS/Linux users, installation of binaries via <code>pip</code> is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.</p>
 <p>The following are required:</p>
 <ul>
-<li>C++17 compliant compiler (Clang or AppleClang)</li>
-<li>CMake</li>
+<li>C++17 compliant compiler (Clang or AppleClang); note that we do not support GCC or Intel compilers</li>
+<li>CMake (&gt; 3.10)</li>
 </ul>
-<p>On Mac, it is recommended to use the Clang provided by <a href="https://brew.sh">Homebrew</a> as it is generally kept more up to date than Apple&rsquo;s builtin version. After installing Homebrew, install Clang via <code>brew install llvm</code>. Then add the flag <code>-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++</code> or <code>-DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++</code> to your cmake command (use the one corresponding to where <code>brew</code> installed binaries).</p>
+<p>On macOS, it is recommended to use the Clang provided by <a href="https://brew.sh">Homebrew</a> as it is generally kept more up to date than Apple&rsquo;s builtin version. After installing Homebrew, install Clang via <code>brew install llvm</code>. Then add the flag <code>-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++</code> or <code>-DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++</code> to your cmake command (use the one corresponding to where <code>brew</code> installed binaries).</p>
 <p>Directions:</p>
 <ol>
-<li>On a Mac/Linux system, navigate to the <code>source</code> directory within the NUPACK download:</li>
+<li>On a macOS/Linux system, navigate to the <code>source</code> directory within the NUPACK download:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/nupack-VERSION/source
 </code></pre></div>
@@ -324,7 +324,9 @@ jupyter<span class="w"> </span>lab
 </ol>
 <div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>.
 </code></pre></div>
-<p>If you are on a Mac and experience an error within the <code>vcpkg</code> submodule, it may help to run the command <code>./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang</code> between steps 1 and 2.</p>
+<p>Troubleshooting:
+- If you are on a Mac and experience an error within the <code>vcpkg</code> submodule, it may help to run the command <code>./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang</code> between steps 1 and 2.
+- If you are using CMake 4.0 or newer and experience a CMake related error, set the environment variable <code>export CMAKE_POLICY_VERSION_MINIMUM=3.5</code> and try again. Otherwise, install and use a CMake of version &lt; 4.0.</p>
 <div class="references"></div>
               
             </div>

@@ -234,7 +234,7 @@ Output:</p>
 <blockquote>
 <p><img src="../figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" /></p>
 </blockquote>
-<p>For each complex in the ensemble, the <a href="../definitions/#partition-function">partition function</a> and <a href="../definitions/#complex-free-energy">complex free energy</a> (units of kcal/mol) are displayed. For each tube, the <a href="../definitions/#equilibrium-complex-concentration">equilibrium complex concentration</a> of each complex in the tube is displayed (units of M).</p>
+<p>For each complex in the ensemble, the <a href="../definitions/#partition-function">partition function</a> and <a href="../definitions/#complex-free-energy">complex free energy</a> (units of kcal/mol) are displayed. For each tube, the <a href="../definitions/#equilibrium-complex-concentrations">equilibrium complex concentration</a> of each complex in the tube is displayed (units of M).</p>
 <hr />
 <p>Optionally, additional quantities are calculated for each complex in the specified tubes (see <a href="./#job-options">Job Options</a>). For example, additionally calculate <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a>, the <a href="../definitions/#mfe-proxy-structure">MFE proxy structure(s)</a>, 100 <a href="../definitions/#boltzmann-sampled-structures">Boltzmann-sampled structures</a>, and the <a href="../definitions/#complex-ensemble-size">ensemble size</a> for each complex in the tube:</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
@@ -342,7 +342,7 @@ for each complex in a <code>ComplexSet</code>:</p>
 <p><code>'pfunc'</code>: calculate the <a href="../definitions/#partition-function">partition function</a>.</p>
 </li>
 <li>
-<p><code>'pairs'</code>: calculate the matrix of <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a>. If <code>'pairs'</code> is specified, <code>tube_analysis</code> or <code>complex_concentrations</code> will further calculate the matrix of <a href="../definitions/#ensemble-pair-fractions">test tube ensemble pair fractions</a>. See the <code>sparsity_fraction</code> and <code>sparsity_threshold</code> options below.</p>
+<p><code>'pairs'</code>: calculate the matrix of <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a>. If <code>'pairs'</code> is specified, <code>tube_analysis</code> or <code>complex_concentrations</code> will further calculate the matrix of <a href="../definitions/#test-tube-ensemble-pair-fractions">test tube ensemble pair fractions</a>. See the <code>sparsity_fraction</code> and <code>sparsity_threshold</code> options below.</p>
 </li>
 <li>
 <p><code>'sample'</code>: calculate a set of <a href="../definitions/#boltzmann-sampled-structures">Boltzmann-sampled structures</a> from the complex ensemble. See option <code>num_sample</code> below.</p>
@@ -429,9 +429,9 @@ Complex    t1 (M)   Complex    t2 (M)
 </ul>
 <p>The information contained in these two fields depends on which type of analysis calculation was performed:</p>
 <ul>
-<li>For <a href="#run-a-tube-analysis-job"><code>tube_analysis</code></a>, the <code>.tubes</code> and <code>.complexes</code> fields are both non-empty.</li>
+<li>For <a href="#run-a-test-tube-analysis-job"><code>tube_analysis</code></a>, the <code>.tubes</code> and <code>.complexes</code> fields are both non-empty.</li>
 <li>For <a href="#run-a-complex-analysis-job"><code>complex_analysis</code></a>, only the <code>.complexes</code> field is non-empty.</li>
-<li>For <a href="#run-a-complex-concentration-job"><code>complex_concentrations</code></a>, only the <code>.tubes</code> field is non-empty.</li>
+<li>For <a href="#run-a-complex-concentrations-job"><code>complex_concentrations</code></a>, only the <code>.tubes</code> field is non-empty.</li>
 </ul>
 <p>For convenience, you can index into an <code>AnalysisResult</code> via a <code>Complex</code> or <code>Tube</code> identifier (or via the assigned or auto-generated name of a <code>Complex</code> or <code>Tube</code>) as described in the following two sections.</p>
 <h3 id="results-for-individual-complexes">Results for individual complexes<a class="headerlink" href="#results-for-individual-complexes" title="Permanent link">&para;</a></h3>
@@ -595,11 +595,11 @@ The equilibrium concentration of (a) is 1.000e-06 M
 <tbody>
 <tr id="ref-Dirks07">
 <td>Dirks07</td>
-<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic Analysis of Interacting Nucleic Acid Strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic analysis of interacting nucleic acid strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
 </tr>
 <tr id="ref-Fornace20">
 <td>Fornace20</td>
-<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A Unified Dynamic Programming Framework for the Analysis of Interacting Nucleic Acid Strands: Enhanced Models, Scalability, and Speed</i>. ACS Synth. Biol.. (2020)</p></td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol.. (2020)</p></td>
 </tr>
 </tbody>
 </table>

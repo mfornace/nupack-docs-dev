@@ -365,7 +365,7 @@ It is often convenient to define <span class="arithmatex"><span class="MathJax_P
 <h2 id="free-energy-model">Free energy model<a class="headerlink" href="#free-energy-model" title="Permanent link">&para;</a></h2>
 <p>For each (unpseudoknotted connected) secondary structure <span class="arithmatex"><span class="MathJax_Preview">s\in\overline{\Gamma}(\phi)</span><script type="math/tex">s\in\overline{\Gamma}(\phi)</script></span>, the free energy,
 <span class="arithmatex"><span class="MathJax_Preview">\overline{\Delta G}(\phi,s)</span><script type="math/tex">\overline{\Delta G}(\phi,s)</script></span>, is estimated as the sum of the empirically determined free energies of the
-constituent loops [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] plus a strand association penalty [<a class="citation" href="#ref-Bloomfield00" id="cite-Bloomfield00">Bloomfield00</a>], <span class="arithmatex"><span class="MathJax_Preview">\Delta
+constituent loops [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] plus a strand association penalty [<a class="citation" href="#ref-Bloomfield00" id="cite-Bloomfield00">Bloomfield00</a>], <span class="arithmatex"><span class="MathJax_Preview">\Delta
 G^\textrm{assoc}</span><script type="math/tex">\Delta
 G^\textrm{assoc}</script></span>, applied <span class="arithmatex"><span class="MathJax_Preview">L-1</span><script type="math/tex">L-1</script></span> times for a
 complex of <span class="arithmatex"><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span> strands:
@@ -437,9 +437,9 @@ akin to complementary thought experiments [<a class="citation" href="#ref-Fornac
 For RNA, we employ temperature-dependent parameters [@Serra95,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10]
 including coaxial [@Mathews99,@Turner10] and dangle [@Serra95,@Zuker03,@Turner10] parameters
 in 1M Na$^+$. For DNA,
-we employ temperature-dependent parameters [@Santalucia98,@Zuker03,@Santalucia04]
+we employ temperature-dependent parameters [@SantaLucia98,@Zuker03,@SantaLucia04]
 including coaxial [@Peyret00] and dangle [@Bommarito00,@Zuker03] parameters
-in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@Santalucia98,@Peyret00,@Santalucia04]. See [@Fornace20] for details.
+in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04]. See [@Fornace20] for details.
  -->
 
 <h2 id="physical-quantities">Physical quantities<a class="headerlink" href="#physical-quantities" title="Permanent link">&para;</a></h2>
@@ -468,7 +468,7 @@ Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}.
 \begin{align}
 \Delta G(\phi_j,s).
 \end{align}
-If the physical model includes <a href="../#coaxial-and-dangle-stacking">coaxial and dangle stacking</a>, the structure free energy will include stacking contributions <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\textrm{stacking}</span><script type="math/tex">\Delta G^\textrm{stacking}</script></span>. If the secondary structure <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> has a rotational symmetry, the structure free energy will include the <a href="../#symmetry-correction">symmetry correction</a> <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\textrm{sym}(\phi_j,s)</span><script type="math/tex">\Delta G^\textrm{sym}(\phi_j,s)</script></span>.</p>
+If the physical model includes <a href="./#coaxial-and-dangle-stacking">coaxial and dangle stacking</a>, the structure free energy will include stacking contributions <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\textrm{stacking}</span><script type="math/tex">\Delta G^\textrm{stacking}</script></span>. If the secondary structure <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> has a rotational symmetry, the structure free energy will include the <a href="./#symmetry-correction">symmetry correction</a> <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\textrm{sym}(\phi_j,s)</span><script type="math/tex">\Delta G^\textrm{sym}(\phi_j,s)</script></span>.</p>
 <h3 id="equilibrium-structure-probability">Equilibrium structure probability<a class="headerlink" href="#equilibrium-structure-probability" title="Permanent link">&para;</a></h3>
 <p>For complex <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>, the equilibrium structure probability of any secondary structure <span class="arithmatex"><span class="MathJax_Preview">s\in\Gamma(\phi_j)</span><script type="math/tex">s\in\Gamma(\phi_j)</script></span> treating
 strands with the same sequence as indistinguishable is denoted
@@ -691,7 +691,7 @@ each off-target complex, <span class="arithmatex"><span class="MathJax_Preview">
 <p>NUPACK provides a framework for designing the sequences of multiple nucleic acid strands intended to hybridize in solution via a prescribed reaction pathway.
 Sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Each target test tube contains a set of desired on-target complexes,
 each with a target secondary structure and target concentration, and a set of undesired
-off-target complexes, each with vanishing target concentration. Design quality is quantified by the <a href="test-tube-ensemble-defect">multi-tube ensemble defect</a>, <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span>, representing the average equilibrium fraction of incorrectly paired
+off-target complexes, each with vanishing target concentration. Design quality is quantified by the <a href="./#test-tube-ensemble-defect">multi-tube ensemble defect</a>, <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span>, representing the average equilibrium fraction of incorrectly paired
 nucleotides evaluated over the design ensemble
 [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>]. Optimization of the sequences so as to reduce <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> below a user-specified stop condition implements both a positive design paradigm, explicitly designing for on-pathway elementary steps, and a negative design paradigm, explicitly designing against off-pathway crosstalk. Sequence design is performed subject to both <a href="./#hard-constraints">hard constraints</a> (including composition constraints and biological constraints) and <a href="./#soft-constraints">soft constraints</a> (including sequence symmetry minimization and toehold free energy equalization).</p>
 <h3 id="complex-design-vs-test-tube-design">Complex design vs test tube design<a class="headerlink" href="#complex-design-vs-test-tube-design" title="Permanent link">&para;</a></h3>
@@ -924,47 +924,47 @@ while satisfying the hard constraints in <span class="arithmatex"><span class="M
 <tbody>
 <tr id="ref-Zadeh11a">
 <td>Zadeh11a</td>
-<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and Design of Nucleic Acid Systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
 </tr>
 <tr id="ref-Zadeh10c">
 <td>Zadeh10c</td>
-<td><p>Zadeh J.N.: <i>Algorithms for Nucleic Acid Sequence Design</i>. (2010)</p></td>
+<td><p>Zadeh J.N.: <i>Algorithms for nucleic acid sequence design</i>. (2010)</p></td>
 </tr>
 <tr id="ref-Dirks07">
 <td>Dirks07</td>
-<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic Analysis of Interacting Nucleic Acid Strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic analysis of interacting nucleic acid strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
 </tr>
 <tr id="ref-Zadeh11b">
 <td>Zadeh11b</td>
-<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic Acid Sequence Design via Efficient Ensemble Defect Optimization</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design via efficient ensemble defect optimization</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
 </tr>
 <tr id="ref-Fornace20">
 <td>Fornace20</td>
-<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A Unified Dynamic Programming Framework for the Analysis of Interacting Nucleic Acid Strands: Enhanced Models, Scalability, and Speed</i>. ACS Synth. Biol.. (2020)</p></td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol.. (2020)</p></td>
 </tr>
-<tr id="ref-Santalucia98">
-<td>Santalucia98</td>
-<td><p>SantaLucia J.: <i>A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
+<tr id="ref-SantaLucia98">
+<td>SantaLucia98</td>
+<td><p>SantaLucia J.: <i>A unified view of polymer, dumbbell, and oligonucleotide DNA nearest-neighbor thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Xia98">
 <td>Xia98</td>
-<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>Thermodynamic Parameters for an Expanded Nearest-Neighbor Model for Formation of RNA Duplexes with Watson-Crick Base Pairs</i>. Biochemistry. <b>37</b>, (1998)</p></td>
+<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>thermodynamic parameters for an expanded nearest-neighbor model for formation of RNA duplexes with Watson-Crick base pairs</i>. Biochemistry. <b>37</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Mathews99">
 <td>Mathews99</td>
-<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded Sequence Dependence of Thermodynamic Parameters Improves Prediction of RNA Secondary Structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
+<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
 </tr>
 <tr id="ref-Zuker03">
 <td>Zuker03</td>
-<td><p>Zuker M.: <i>Mfold Web Server for Nucleic Acid Folding and Hybridization Prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
+<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
 </tr>
 <tr id="ref-Lu06">
 <td>Lu06</td>
-<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A Set of Nearest Neighbor Parameters for Predicting the Enthalpy Change of RNA Secondary Structure Formation</i>. Nucleic acids research. <b>34</b>, (2006)</p></td>
+<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A set of nearest neighbor parameters for predicting the enthalpy change of RNA secondary structure formation</i>. Nucleic acids research. <b>34</b>, (2006)</p></td>
 </tr>
 <tr id="ref-Turner10">
 <td>Turner10</td>
-<td><p>Turner D.H., Mathews D.H.: <i>NNDB: The Nearest Neighbor Parameter Database for Predicting Stability of Nucleic Acid Secondary Structure</i>. Nucleic Acids Res.. <b>38</b>, (2010)</p></td>
+<td><p>Turner D.H., Mathews D.H.: <i>NNDB: the nearest neighbor parameter database for predicting stability of nucleic acid secondary structure</i>. Nucleic Acids Res.. <b>38</b>, (2010)</p></td>
 </tr>
 <tr id="ref-Bloomfield00">
 <td>Bloomfield00</td>
@@ -972,19 +972,19 @@ while satisfying the hard constraints in <span class="arithmatex"><span class="M
 </tr>
 <tr id="ref-Serra95">
 <td>Serra95</td>
-<td><p>Serra M.J., Turner D.H.: <i>Predicting Thermodynamic Properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
+<td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
 </tr>
-<tr id="ref-Santalucia04">
-<td>Santalucia04</td>
+<tr id="ref-SantaLucia04">
+<td>SantaLucia04</td>
 <td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
 </tr>
 <tr id="ref-Peyret00">
 <td>Peyret00</td>
-<td><p>Peyret N.: <i>Prediction of Nucleic Acid Hybridization: Parameters and Algorithms</i>. (2000)</p></td>
+<td><p>Peyret N.: <i>Prediction of nucleic acid hybridization: Parameters and algorithms</i>. (2000)</p></td>
 </tr>
 <tr id="ref-Bommarito00">
 <td>Bommarito00</td>
-<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic Parameters for DNA Sequences with Dangling Ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
+<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic parameters for DNA sequences with dangling ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
 </tr>
 <tr id="ref-Dirks04">
 <td>Dirks04</td>
@@ -992,15 +992,15 @@ while satisfying the hard constraints in <span class="arithmatex"><span class="M
 </tr>
 <tr id="ref-Wolfe15">
 <td>Wolfe15</td>
-<td><p>Wolfe B.R., Pierce N.A.: <i>Nucleic Acid Sequence Design for a Test Tube of Interacting Nucleic Acid Strands</i>. ACS Synth. Biol.. <b>4</b>, (2015)</p></td>
+<td><p>Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design for a test tube of interacting nucleic acid strands</i>. ACS Synth. Biol.. <b>4</b>, (2015)</p></td>
 </tr>
 <tr id="ref-Wolfe17">
 <td>Wolfe17</td>
-<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained Multistate Sequence Design for Nucleic Acid Reaction Pathway Engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained multistate sequence design for nucleic acid reaction pathway engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
 </tr>
 <tr id="ref-Hochrein13">
 <td>Hochrein13</td>
-<td><p>Hochrein L.M., Schwarzkopf M., Shahgholi M., Yin P., Pierce N.A.: <i>Conditional Dicer Substrate Formation via Shape and Sequence Transduction with Small Conditional RNAs</i>. J. Am. Chem. Soc.. <b>135</b>, (2013)</p></td>
+<td><p>Hochrein L.M., Schwarzkopf M., Shahgholi M., Yin P., Pierce N.A.: <i>Conditional dicer substrate formation via shape and sequence transduction with small conditional RNAs</i>. J. Am. Chem. Soc.. <b>135</b>, (2013)</p></td>
 </tr>
 <tr id="ref-Porubsky20">
 <td>Porubsky20</td>

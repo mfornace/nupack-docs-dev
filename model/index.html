@@ -134,7 +134,10 @@
 <p>NUPACK 4 algorithms use the following temperature-dependent RNA and DNA free energy parameter sets specified by the keyword <code>material</code> (default: <code>material='rna'</code>):</p>
 <ul>
 <li>
-<p><code>rna06</code> (shorthand: <code>rna</code>)
+<p><code>rna</code> Shorthand for <code>rna06</code>.</p>
+</li>
+<li>
+<p><code>rna06</code>
 Based on [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] and [<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] with additional parameters [<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
 </li>
 <li>
@@ -142,17 +145,24 @@ Based on [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews9
 Based on [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
 </li>
 <li>
-<p><code>dna04</code> (shorthand: <code>dna</code>)
-Based on [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>] and [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
+<p><code>dna</code> Shorthand for <code>dna04.2</code>.</p>
+</li>
+<li>
+<p><code>dna04.2</code> Updated GT internal mismatch values [<a class="citation" href="#ref-Allawi97" id="cite-Allawi97">Allawi97</a>,<a class="citation" href="#ref-Allawi98a" id="cite-Allawi98a">Allawi98a</a>,<a class="citation" href="#ref-Allawi98b" id="cite-Allawi98b">Allawi98b</a>,<a class="citation" href="#ref-Allawi98c" id="cite-Allawi98c">Allawi98c</a>,<a class="citation" href="#ref-Peyret99" id="cite-Peyret99">Peyret99</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], internal asymmetry values [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], and terminal mismatch values [<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>,<a class="citation" href="#ref-Mittal24" id="cite-Mittal24">Mittal24</a>];
+in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
+</li>
+<li>
+<p><code>dna04.1</code>
+Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>] and [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
 including coaxial stacking [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>] and dangle stacking [<a class="citation" href="#ref-Bommarito00" id="cite-Bommarito00">Bommarito00</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
-in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
+in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
 </li>
 <li>
 <p><code>custom-parameters</code>
 Custom parameters provided in a JSON file (e.g., <code>custom-parameters.json</code>) using the same format as the provided parameter files. Provide <span class="arithmatex"><span class="MathJax_Preview">\Delta G_{37}(\mathrm{loop})</span><script type="math/tex">\Delta G_{37}(\mathrm{loop})</script></span> and <span class="arithmatex"><span class="MathJax_Preview">\Delta H(\mathrm{loop})</span><script type="math/tex">\Delta H(\mathrm{loop})</script></span> values to allow calculations at different temperatures or only <span class="arithmatex"><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span> values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify <code>material = 'custom-parameters'</code>) or specify the full path to the file (<code>material = 'path/to/my/custom-parameters.json'</code>).</p>
 </li>
 </ul>
-<p>Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> <code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA). Note that for DNA, <code>G</code> and <code>T</code> form a mismatch and not a wobble pair [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
+<p>Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> <code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA). Note that for DNA, <code>G</code> and <code>T</code> form a mismatch and not a wobble pair [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
 <p>DNA/RNA hybrids are not allowed.</p>
 <hr>
 
@@ -192,7 +202,7 @@ Alternatively, the temperature can be specified in K using the keyword <code>kel
 <ul>
 <li>
 <p><code>sodium</code>
-Based on [<a class="citation" href="#ref-Santalucia98" id="cite-Santalucia98">Santalucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, <span class="arithmatex"><span class="MathJax_Preview">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</span><script type="math/tex">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</script></span>, is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword <code>sodium</code>.</p>
+Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, <span class="arithmatex"><span class="MathJax_Preview">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</span><script type="math/tex">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</script></span>, is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword <code>sodium</code>.</p>
 </li>
 <li>
 <p><code>magnesium</code>
@@ -250,7 +260,7 @@ Same as <code>rna95</code> except that terminal mismatch free energies in exteri
 </li>
 <li>
 <p><code>dna04-nupack3</code>
-Same as <code>dna04</code> except that G<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T was treated as a wobble pair (analogous to a <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> RNA wobble pair) instead of classifying <code>G</code> and <code>T</code> as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in <code>dna04</code>, as terminal mismatch parameters are not public for DNA [<a class="citation" href="#ref-Santalucia04" id="cite-Santalucia04">Santalucia04</a>].</p>
+Same as <code>dna04</code> except that G<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T was treated as a wobble pair (analogous to a <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> RNA wobble pair) instead of classifying <code>G</code> and <code>T</code> as a mismatch. Note that while terminal mismatch free energies in exterior loops and multiloops are replaced by two dangle stacking free energies, this is the same treatment as in <code>dna04</code>, as terminal mismatch parameters are not public for DNA [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
 </li>
 <li>
 <p><code>rna99-nupack3</code>
@@ -317,51 +327,71 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 <tbody>
 <tr id="ref-Mathews99">
 <td>Mathews99</td>
-<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded Sequence Dependence of Thermodynamic Parameters Improves Prediction of RNA Secondary Structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
+<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
 </tr>
 <tr id="ref-Lu06">
 <td>Lu06</td>
-<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A Set of Nearest Neighbor Parameters for Predicting the Enthalpy Change of RNA Secondary Structure Formation</i>. Nucleic acids research. <b>34</b>, (2006)</p></td>
+<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A set of nearest neighbor parameters for predicting the enthalpy change of RNA secondary structure formation</i>. Nucleic acids research. <b>34</b>, (2006)</p></td>
 </tr>
 <tr id="ref-Xia98">
 <td>Xia98</td>
-<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>Thermodynamic Parameters for an Expanded Nearest-Neighbor Model for Formation of RNA Duplexes with Watson-Crick Base Pairs</i>. Biochemistry. <b>37</b>, (1998)</p></td>
+<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>thermodynamic parameters for an expanded nearest-neighbor model for formation of RNA duplexes with Watson-Crick base pairs</i>. Biochemistry. <b>37</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Zuker03">
 <td>Zuker03</td>
-<td><p>Zuker M.: <i>Mfold Web Server for Nucleic Acid Folding and Hybridization Prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
+<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
 </tr>
 <tr id="ref-Turner10">
 <td>Turner10</td>
-<td><p>Turner D.H., Mathews D.H.: <i>NNDB: The Nearest Neighbor Parameter Database for Predicting Stability of Nucleic Acid Secondary Structure</i>. Nucleic Acids Res.. <b>38</b>, (2010)</p></td>
+<td><p>Turner D.H., Mathews D.H.: <i>NNDB: the nearest neighbor parameter database for predicting stability of nucleic acid secondary structure</i>. Nucleic Acids Res.. <b>38</b>, (2010)</p></td>
 </tr>
 <tr id="ref-Serra95">
 <td>Serra95</td>
-<td><p>Serra M.J., Turner D.H.: <i>Predicting Thermodynamic Properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
+<td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
 </tr>
-<tr id="ref-Santalucia98">
-<td>Santalucia98</td>
-<td><p>SantaLucia J.: <i>A Unified View of Polymer, Dumbbell, and Oligonucleotide DNA Nearest-Neighbor Thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
+<tr id="ref-Allawi97">
+<td>Allawi97</td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Thermodynamics and NMR of internal G.T mismatches in DNA</i>. Biochemistry. <b>36</b>, (1997)</p></td>
 </tr>
-<tr id="ref-Santalucia04">
-<td>Santalucia04</td>
-<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
+<tr id="ref-Allawi98a">
+<td>Allawi98a</td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Thermodynamics of internal C.T mismatches in DNA</i>. Nucleic Acids Res.. <b>26</b>, (1998)</p></td>
 </tr>
-<tr id="ref-Peyret00">
-<td>Peyret00</td>
-<td><p>Peyret N.: <i>Prediction of Nucleic Acid Hybridization: Parameters and Algorithms</i>. (2000)</p></td>
+<tr id="ref-Allawi98b">
+<td>Allawi98b</td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Nearest neighbor thermodynamic parameters for internal G.A mismatches in DNA</i>. Biochemistry. <b>37</b>, (1998)</p></td>
 </tr>
-<tr id="ref-Bommarito00">
-<td>Bommarito00</td>
-<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic Parameters for DNA Sequences with Dangling Ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
+<tr id="ref-Allawi98c">
+<td>Allawi98c</td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Nearest-neighbor thermodynamics of internal A.C mismatches in DNA: sequence dependence and pH effects</i>. Biochemistry. <b>37</b>, (1998)</p></td>
+</tr>
+<tr id="ref-Peyret99">
+<td>Peyret99</td>
+<td><p>Peyret N., Seneviratne P.A., Allawi H.T., SantaLucia J.: <i>Nearest-neighbor thermodynamics and NMR of DNA sequences with internal A.A, C.C, G.G, and T.T mismatches</i>. Biochemistry. <b>38</b>, (1999)</p></td>
 </tr>
 <tr id="ref-SantaLucia04">
 <td>SantaLucia04</td>
 <td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
 </tr>
+<tr id="ref-Mittal24">
+<td>Mittal24</td>
+<td><p>Mittal A., Turner D.H., Mathews D.H.: <i>NNDB: An expanded database of nearest neighbor parameters for predicting stability of nucleic acid secondary structures</i>. J. Mol. Biol.. <b>436</b>, (2024)</p></td>
+</tr>
+<tr id="ref-SantaLucia98">
+<td>SantaLucia98</td>
+<td><p>SantaLucia J.: <i>A unified view of polymer, dumbbell, and oligonucleotide DNA nearest-neighbor thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
+</tr>
+<tr id="ref-Peyret00">
+<td>Peyret00</td>
+<td><p>Peyret N.: <i>Prediction of nucleic acid hybridization: Parameters and algorithms</i>. (2000)</p></td>
+</tr>
+<tr id="ref-Bommarito00">
+<td>Bommarito00</td>
+<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic parameters for DNA sequences with dangling ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
+</tr>
 <tr id="ref-Koehler05">
 <td>Koehler05</td>
-<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic Properties of DNA Sequences: Characteristic Values for the Human Genome</i>. Bioinformatics. <b>21</b>, (2005)</p></td>
+<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic properties of DNA sequences: Characteristic values for the human genome</i>. Bioinformatics. <b>21</b>, (2005)</p></td>
 </tr>
 </tbody>
 </table>
