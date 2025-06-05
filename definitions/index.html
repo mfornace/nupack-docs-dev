@@ -291,7 +291,7 @@ A secondary structure is <strong>connected</strong> if no subset of the strands 
 
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<p><center></p>
+<center>
 <table>
 <thead>
 <tr>
@@ -318,7 +318,7 @@ A secondary structure is <strong>connected</strong> if no subset of the strands 
 </tr>
 </tbody>
 </table>
-<p></center></p>
+</center>
 <p><p style="text-align:center;"><b>Table</b>: Examples of dot-parens-plus, run-length-encoded (RLE) dot-parens-plus, and DU+ notation.</p></p>
 </div>
 <div class="admonition example">
@@ -376,7 +376,7 @@ complex of <span class="arithmatex"><span class="MathJax_Preview">L</span><scrip
 <p>The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span>, is modeled for the different loop types as follows:</p>
 <ul>
 <li>A <strong>hairpin loop</strong> is closed by a single base-pair <span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>. The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{hairpin}_{a,b}</span><script type="math/tex">\Delta G^\mathrm{hairpin}_{a,b}</script></span>, depends on sequence and loop size.</li>
-<li>An <strong>interior loop</strong> is closed by two base pairs (<span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span> and <span class="arithmatex"><span class="MathJax_Preview">d\cdot e</span><script type="math/tex">d\cdot e</script></span> with <span class="arithmatex"><span class="MathJax_Preview">a&lt;d&lt;e&lt;b</span><script type="math/tex">a<d<e<b</script></span>). The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{interior}_{a,d,e,b}</span><script type="math/tex">\Delta G^\mathrm{interior}_{a,d,e,b}</script></span> depends on sequence, loop size, and loop asymmetry. <strong>Bulge loops</strong> (where either <span class="arithmatex"><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> or <span class="arithmatex"><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) and <strong>stacked pairs</strong> (where both <span class="arithmatex"><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) are treated as special cases of interior loops.</li>
+<li>An <strong>interior loop</strong> is closed by two base pairs (<span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span> and <span class="arithmatex"><span class="MathJax_Preview">d\cdot e</span><script type="math/tex">d\cdot e</script></span> with <span class="arithmatex"><span class="MathJax_Preview">a&lt;d&lt;e&lt;b</span><script type="math/tex">a<d<e<b</script></span>). The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{interior}_{a,d,e,b}</span><script type="math/tex">\Delta G^\mathrm{interior}_{a,d,e,b}</script></span> depends on sequence, loop size, and loop asymmetry. <strong>Bulge loops</strong> (where either <span class="arithmatex"><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> or <span class="arithmatex"><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) and <strong>stack loops</strong> (where both <span class="arithmatex"><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) are treated as special cases of interior loops.</li>
 <li>A <strong>multiloop</strong> is closed by three or more base pairs.
 The loop free energy is modeled as the sum of three sequence-independent penalties:
 <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{init}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{init}</script></span> for formation of a multiloop, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{bp}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{bp}</script></span> for each closing base pair, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{nt}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{nt}</script></span> for each unpaired nucleotide inside the multiloop,

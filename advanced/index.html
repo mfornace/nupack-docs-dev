@@ -108,7 +108,7 @@
                 <h1 id="advanced">Advanced<a class="headerlink" href="#advanced" title="Permanent link">&para;</a></h1>
 <h2 id="parallelism">Parallelism<a class="headerlink" href="#parallelism" title="Permanent link">&para;</a></h2>
 <p>By default, NUPACK 4 is fully parallelized across each <a href="../analysis/#analysis-jobs">analysis job</a>, <a href="../design/#design-jobs">design trial</a>, and <a href="../utilities/#utilities-jobs">utilities job</a>. Parallelism may be further controlled using the <code>config.threads</code> setting (default <code>0</code> as of 4.0.1.1; previously <code>1</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">nupack</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="n">config</span><span class="o">.</span><span class="n">threads</span> <span class="o">=</span> <span class="mi">1</span>
 </code></pre></div>
 <p>This setting denotes the maximum number of threads that <em>all</em> NUPACK calculations can use concurrently within a single Python process. With the (recommended) default setting of <code>config.threads=0</code>, NUPACK jobs will be permitted to use all <code>N</code> cores on your machine. Two types of parallelism are enabled:</p>
@@ -123,7 +123,7 @@
 <p>An additional level of parallelism is enabled when running multiple independent design trials. For example, <code>tube_design</code> with <code>trials=4</code> and <code>config.threads == 1</code> will use <code>min(4,N)</code> threads. Hence, for design jobs, it is recommended that the value of <code>config.threads</code> be left at the default value of <code>0</code> or else be set to be no smaller than <code>min(trials,N)</code>. </p>
 <h2 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h2>
 <p>NUPACK 4 introduces subcomplex block caching to achieve dramatic speedups by avoiding recalculation of subcomplex intermediates for a multi-tube ensemble (see Figure 8 of [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]). The <code>config.cache</code> flag (GB; default 2.0) controls the gigabytes of memory that <em>each</em> <a href="../analysis/#analysis-jobs">analysis job</a>, <a href="../design/#design-jobs">design trial</a>, or <a href="../utilities/#utilities-jobs">utilities job</a> can use.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">nupack</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="n">config</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="c1"># GB</span>
 </code></pre></div>
 <p>This flag may be set to <code>0.0</code> to disable caching if your hardware has very little memory.</p>

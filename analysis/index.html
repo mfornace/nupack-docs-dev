@@ -493,7 +493,7 @@ Equilibrium pair probabilities:
  [1 0 0 0 0 0]]
 </code></pre></div>
 <p>The equilibrium pair probability matrix is returned as a <code>PairsMatrix</code> object, which can be converted to a <code>numpy</code> array via the <code>to_array()</code> method for display in a Jupyter notebook:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">my_result</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">to_array</span><span class="p">())</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Base index&#39;</span><span class="p">)</span>
@@ -514,7 +514,7 @@ Equilibrium pair probabilities:
 <p>For some use cases, you may wish to convert a <code>PairsMatrix</code> to a <code>scipy</code> matrix via the <code>to_sparse()</code> method.</p>
 <hr />
 <p>It is straightforward to collect information across complexes in an <code>AnalysisResult</code> object. Since <code>my_result.complexes</code> is an ordinary python <code>dict</code>, iterating through its <code>.items()</code> enables collection of each complex result. For example, to operate on the equilibrium pair probability matrix for each complex in <code>my_result</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="k">for</span> <span class="n">my_complex</span><span class="p">,</span> <span class="n">complex_result</span> <span class="ow">in</span> <span class="n">my_result</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">P</span> <span class="o">=</span> <span class="n">complex_result</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">to_array</span><span class="p">()</span>
