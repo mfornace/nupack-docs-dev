@@ -144,7 +144,7 @@ complex of $L$ strands:
 The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different loop types as follows:
 
 - A **hairpin loop** is closed by a single base-pair $a\cdot b$. The loop free energy, $\Delta G^\mathrm{hairpin}_{a,b}$, depends on sequence and loop size.
-- An **interior loop** is closed by two base pairs ($a\cdot b$ and $d\cdot e$ with $a<d<e<b$). The loop free energy, $\Delta G^\mathrm{interior}_{a,d,e,b}$ depends on sequence, loop size, and loop asymmetry. **Bulge loops** (where either $d=a+1$ or $e=b-1$) and **stacked pairs** (where both $d=a+1$ and $e=b-1$) are treated as special cases of interior loops.
+- An **interior loop** is closed by two base pairs ($a\cdot b$ and $d\cdot e$ with $a<d<e<b$). The loop free energy, $\Delta G^\mathrm{interior}_{a,d,e,b}$ depends on sequence, loop size, and loop asymmetry. **Bulge loops** (where either $d=a+1$ or $e=b-1$) and **stack loops** (where both $d=a+1$ and $e=b-1$) are treated as special cases of interior loops.
 - A **multiloop** is closed by three or more base pairs.
 The loop free energy is modeled as the sum of three sequence-independent penalties:
 $\Delta G^\mathrm{multi}_\mathrm{init}$ for formation of a multiloop, $\Delta G^\mathrm{multi}_\mathrm{bp}$ for each closing base pair, $\Delta G^\mathrm{multi}_\mathrm{nt}$ for each unpaired nucleotide inside the multiloop,
