@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.nupack.org/latest/analysis/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Analysis Jobs - NUPACK 4.0 User Guide</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+        <link href="../css/version-select.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Analysis Jobs";
+        var mkdocs_page_input_path = "analysis.md";
+        var mkdocs_page_url = "/latest/analysis/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../definitions/">Definitions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Model Specification</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Analysis Jobs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-strand">Specify a strand</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-complex-ensemble">Specify a complex ensemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-test-tube-ensemble">Specify a test tube ensemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-a-test-tube-analysis-job">Run a test tube analysis job</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specify-a-set-of-complexes">Specify a set of complexes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-a-complex-analysis-job">Run a complex analysis job</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-a-complex-concentrations-job">Run a complex concentrations job</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#job-options">Job options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#job-results">Job results</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tabular-display">Tabular display</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#textual-display">Textual display</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#programmatic-access">Programmatic access</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#results-for-individual-complexes">Results for individual complexes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#results-for-individual-test-tubes">Results for individual test tubes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#saving-a-job-summary">Saving a job summary</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#saving-and-reloading-job-results">Saving and reloading job results</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../design/">Design Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../advanced/">Advanced</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">NUPACK 4.0 User Guide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Analysis Jobs</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="analysis-jobs">Analysis Jobs<a class="headerlink" href="#analysis-jobs" title="Permanent link">&para;</a></h1>
+<p>NUPACK provides the capability to analyze equilibrium properties over one of two ensembles:</p>
+<ul>
+<li>
+<p><strong>Complex Analysis:</strong> analyze the equilibrium base-pairing properties of a complex of interacting nucleic acid strands [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>,<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>].</p>
+</li>
+<li>
+<p><strong>Test Tube Analysis:</strong> analyze the equilibrium concentrations and base-pairing properties for a test tube of interacting nucleic acid strands [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>,<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>].</p>
+</li>
+</ul>
+<p>Note that a complex ensemble is subsidiary to a test tube ensemble, so complex analysis is inherent in test tube analysis (but not vice versa). As it is typically infeasible to experimentally study a single complex in isolation, we recommend analyzing nucleic acid strands in a test tube ensemble that contains the complex of interest as well as other competing complexes that might form in solution. For example, if one is experimentally studying strands A and B that are intended to predominantly form a secondary structure within the ensemble of complex A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> B, one should not presuppose that the strands do indeed form A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> B and simply analyze the base-pairing properties of that complex. Instead, it is more physically relevant to analyze a test tube ensemble containing strands A and B interacting to form multiple complex species (e.g., A, B, A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>A, A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B, B<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B) so as to capture both concentration information (how much A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B forms?) and structural information (what are the base-pairing properties of A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>B when it does form?).</p>
+<p>NUPACK analysis algorithms enable simultaneous analysis of one or more test tube ensembles, providing significant cost savings if the same strands are present in more than one test tube. If for some reason, the test tube ensemble is not of interest for your application, NUPACK analysis algorithms also enable simultaneous analysis of one or more complex ensembles, providing significant cost savings if the same strands are present in more than one complex.</p>
+<hr>
+
+<h2 id="specify-a-strand">Specify a strand<a class="headerlink" href="#specify-a-strand" title="Permanent link">&para;</a></h2>
+<p>A <code>Strand</code> is a single RNA or DNA molecule specified as a sequence and a strand name (keyword <code>name</code>):
+<div class="highlight"><pre><span></span><code><span class="n">A</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;AGUCUAGGAUUCGGCGUGGGUUAA&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="c1"># name is required for strands</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;UUAACCCACGCCGAAUCCUAGACUCAAAGUAGUCUAGGAUUCGGCGUG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;AGUCUAGGAUUCGGCGUGGGUUAACACGCCGAAUCCUAGACUACUUUG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>A <code>Strand</code> sequence must contain only <code>'ACGTU'</code>. Two strands are treated as indistinguishable only if they have the same name and the same sequence.</p>
+<p>A <code>Strand</code> object supports a <code>nt()</code> method for calculating the number of nucleotides, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span> <span class="c1"># --&gt; 24</span>
+</code></pre></div>
+<hr />
+<h2 id="specify-a-complex-ensemble">Specify a complex ensemble<a class="headerlink" href="#specify-a-complex-ensemble" title="Permanent link">&para;</a></h2>
+<p>A <code>Complex</code> of one or more interacting strands is specified as an ordered list of strands (i.e., an ordering of strands around a circle in a <a href="../definitions/#secondary-structure">polymer graph</a>) and an optional complex name (keyword <code>name</code>):
+<div class="highlight"><pre><span></span><code><span class="n">c1</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">([</span><span class="n">A</span><span class="p">])</span> <span class="c1"># name is optional for complexes</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ABBC&#39;</span><span class="p">)</span>
+<span class="n">c3</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AA&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Commands that expect a <code>Complex</code> as an argument (e.g., <code>c2</code>) will alternatively accept a strand ordering (e.g.,<code>[A, B, B, C]</code>). Two complexes are considered to be the same if they represent the same strand ordering around a circle independent of rotations (e.g., <code>Complex([A,B,C]) == Complex([B,C,A]) == Complex([C,A,B])</code>).</p>
+</div>
+<p>In certain cases, it may be desirable to adjust the free energy of a complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword <code>bonus</code> can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># destabilize c4 by 1 kcal/mol</span>
+<span class="n">c4</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ABC&#39;</span><span class="p">,</span> <span class="n">bonus</span><span class="o">=+</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># stabilize c5 by 10 kcal/mol</span>
+<span class="n">c5</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AB&#39;</span><span class="p">,</span> <span class="n">bonus</span><span class="o">=-</span><span class="mf">10.0</span><span class="p">)</span>
+</code></pre></div>
+<p>Additional fields and methods are available for a <code>Complex</code> object:</p>
+<ul>
+<li><code>.strands</code>: a tuple of strands</li>
+<li><code>.nstrands()</code>: the number of strands in the complex</li>
+<li><code>.nt()</code>: the number of nucleotides in the complex</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">c2</span><span class="o">.</span><span class="n">strands</span>    <span class="c1"># --&gt; (&lt;Strand A&gt;, &lt;Strand B&gt;, &lt;Strand B&gt;, &lt;Strand C&gt;)</span>
+<span class="n">c2</span><span class="o">.</span><span class="n">nstrands</span><span class="p">()</span> <span class="c1"># --&gt; 4</span>
+<span class="n">c2</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span>       <span class="c1"># --&gt; 168</span>
+</code></pre></div>
+<h2 id="specify-a-test-tube-ensemble">Specify a test tube ensemble<a class="headerlink" href="#specify-a-test-tube-ensemble" title="Permanent link">&para;</a></h2>
+<p>A <code>Tube</code> is specified as a tube name (keyword <code>name</code>) and a set of strands (keyword <code>strands</code>), each introduced at a user-specified concentration (units of <code>M</code>), that interact to form a set of complexes (keyword <code>complexes</code>: defaults to the strand set).
+The set of complexes is optionally specified using <code>SetSpec()</code> in any of three ways:</p>
+<ul>
+<li>Combinatorially using keyword <code>max_size</code> to automatically generate the set of all complexes up to a specified number of strands (default: <code>max_size=1</code>).</li>
+<li>Using keyword <code>include</code> to include an explicitly specified set of complexes (default: <code>None</code>).</li>
+<li>Using keyword <code>exclude</code> to exclude an explicitly specified set of complexes (default: <code>None</code>).</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">t1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">A</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">)</span> <span class="c1"># complexes defaults to [A, B]</span>
+
+<span class="n">t2</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">A</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">C</span><span class="p">:</span> <span class="mf">1e-12</span><span class="p">},</span>
+    <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">c2</span><span class="p">,[</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">]],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="n">c1</span><span class="p">]),</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>If desired, the complexes in a specified <code>Tube</code> can be queried as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">complexes</span><span class="p">)</span> <span class="c1"># --&gt; {&lt;Complex A&gt;, &lt;Complex B&gt;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">complexes</span><span class="p">)</span> <span class="c1"># --&gt; {&lt;Complex (C+C+B)&gt;, &lt;Complex (B)&gt;,</span>
+    <span class="c1"># &lt;Complex (A+C+B)&gt;, &lt;Complex (C+C+C)&gt;, &lt;Complex (C)&gt;, &lt;Complex (A+A+B)&gt;,</span>
+    <span class="c1"># &lt;Complex (A+C)&gt;, &lt;Complex (B+B+B+B)&gt;, &lt;Complex (A+A)&gt;, &lt;Complex (A+B+B)&gt;,</span>
+    <span class="c1"># &lt;Complex (B+B)&gt;, &lt;Complex (A+B)&gt;, &lt;Complex (B+B+B)&gt;, &lt;Complex (A+B+C)&gt;,</span>
+    <span class="c1"># &lt;Complex (A+C+C)&gt;, &lt;Complex (A+A+A)&gt;, &lt;Complex (C+C)&gt;, &lt;Complex (A+A+C)&gt;,</span>
+    <span class="c1"># &lt;Complex ABBC&gt;, &lt;Complex (C+B+B)&gt;, &lt;Complex (C+B)&gt;}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that <code>include</code> and <code>exclude</code> accept both complex identifiers (e.g., <code>c2</code>) and strand orderings (e.g., <code>[B, B, B, B]</code>).</p>
+</div>
+<hr />
+<h2 id="run-a-test-tube-analysis-job">Run a test tube analysis job<a class="headerlink" href="#run-a-test-tube-analysis-job" title="Permanent link">&para;</a></h2>
+<p>The <code>tube_analysis</code> command calculates the <a href="../definitions/#partition-function">partition function</a>, and <a href="../definitions/#equilibrium-complex-concentrations">equilibrium concentration</a>, for each complex species <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> in one or more test tube ensembles. The test tube ensembles to be analyzed are specified using the <code>tubes</code> keyword. If desired, a <a href="../model/#model-specification">physical model</a> is specified using the <code>model</code> keyword (otherwise the default physical model is used):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># specify strands</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CUGAUCGAU&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;GAUCGUAGUC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify tubes</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span> <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span> <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">)</span>
+
+<span class="c1"># analyze tubes</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">tube_results</span> <span class="o">=</span> <span class="n">tube_analysis</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
+</code></pre></div>
+<p><code>tube_analysis</code> returns an <code>AnalysisResult</code> object that can be viewed as a table in a Jupyter notebook, for example:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">tube_results</span>
+</code></pre></div>
+Output:</p>
+<blockquote>
+<p><img src="../figs/analysis/1-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="280" /></p>
+</blockquote>
+<p>For each complex in the ensemble, the <a href="../definitions/#partition-function">partition function</a> and <a href="../definitions/#complex-free-energy">complex free energy</a> (units of kcal/mol) are displayed. For each tube, the <a href="../definitions/#equilibrium-complex-concentrations">equilibrium complex concentration</a> of each complex in the tube is displayed (units of M).</p>
+<hr />
+<p>Optionally, additional quantities are calculated for each complex in the specified tubes (see <a href="./#job-options">Job Options</a>). For example, additionally calculate <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a>, the <a href="../definitions/#mfe-proxy-structure">MFE proxy structure(s)</a>, 100 <a href="../definitions/#boltzmann-sampled-structures">Boltzmann-sampled structures</a>, and the <a href="../definitions/#complex-ensemble-size">ensemble size</a> for each complex in the tube:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">tube_results2</span> <span class="o">=</span> <span class="n">tube_analysis</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;mfe&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;ensemble_size&#39;</span><span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_sample&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span> <span class="c1"># max_size=1 default</span>
+</code></pre></div>
+To display a summary table of results in a Jupyter notebook:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">tube_results2</span>
+</code></pre></div>
+Output:</p>
+<blockquote>
+<p><img src="../figs/analysis/2-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="480" /></p>
+</blockquote>
+<p>Note that <code>pairs</code> and <code>sample</code> results are too large to be included in the summary table. See below for <a href="#programmatic-access">programmatic access</a> to these results.</p>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If desired, the results of a <code>tube_analysis</code> job can alternatively be calculated in two steps:</p>
+<ul>
+<li>Step 1: run a <code>complex_analysis</code> job (to calculate the <a href="../definitions/#partition-function">partition function</a> for each complex);</li>
+<li>Step 2: run a <code>complex_concentrations</code> job (to calculate the <a href="../definitions/#equilibrium-complex-concentrations">equilibrium concentration</a> for each complex in the context of a test tube given user-specified strand concentrations).</li>
+</ul>
+<p>Most of the computational cost is in Step 1. The user-specified strand concentrations are used only in Step 2. Hence, if you intend to analyze N test tubes containing the same strand species but N different sets of strand concentrations, it is cheaper to call <code>complex_analysis</code> once and <code>complex_concentrations</code> N times, rather than to call <code>tube_analysis</code> N times.</p>
+</div>
+<h2 id="specify-a-set-of-complexes">Specify a set of complexes<a class="headerlink" href="#specify-a-set-of-complexes" title="Permanent link">&para;</a></h2>
+<p>A <code>ComplexSet</code> is specified as a set of strands (keyword <code>strands</code>) that interact to form a set of complexes (keyword <code>complexes</code>: defaults to the strand set). The set of complexes is optionally specified using <code>SetSpec()</code> in any of three ways:</p>
+<ul>
+<li>Combinatorially using keyword <code>max_size</code> to automatically generate the set of all complexes up to a specified number of strands (default: <code>max_size=1</code>).</li>
+<li>Using keyword <code>include</code> to include an explicitly specified set of complexes (default: <code>None</code>).</li>
+<li>Using keyword <code>exclude</code> to exclude an explicitly specified set of complexes (default: <code>None</code>).</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">set1</span> <span class="o">=</span> <span class="n">ComplexSet</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">])</span> <span class="c1"># complexes defaults to [[A], [B], [C]]</span>
+
+<span class="n">set2</span> <span class="o">=</span> <span class="n">ComplexSet</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span>
+    <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">c2</span><span class="p">,</span> <span class="p">[</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">]],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="n">c1</span><span class="p">]))</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that a <code>ComplexSet</code> and a <code>Tube</code> both specify a set of complexes <span class="arithmatex"><span class="MathJax_Preview">\Psi</span><script type="math/tex">\Psi</script></span> that form from a set of strands <span class="arithmatex"><span class="MathJax_Preview">\Psi^0</span><script type="math/tex">\Psi^0</script></span>. The difference is that <code>Tube</code> further specifies the concentration of each strand in <span class="arithmatex"><span class="MathJax_Preview">\Psi^0</span><script type="math/tex">\Psi^0</script></span> in order to specify a <a href="../definitions/#test-tube-ensemble">test tube ensemble</a>.</p>
+</div>
+<hr />
+<h2 id="run-a-complex-analysis-job">Run a complex analysis job<a class="headerlink" href="#run-a-complex-analysis-job" title="Permanent link">&para;</a></h2>
+<p>The <code>complex_analysis</code> command calculates one or more physical quantities (see <a href="./#job-options">Job Options</a>)
+for each complex in a <code>ComplexSet</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># specify strands</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CUGAUCGAU&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;GAUCGUAGUC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify complex set</span>
+<span class="n">set1</span> <span class="o">=</span> <span class="n">ComplexSet</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># calculate the partition function for each complex in the complex set</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">complex_results1</span> <span class="o">=</span> <span class="n">complex_analysis</span><span class="p">(</span><span class="n">complexes</span><span class="o">=</span><span class="n">set1</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">,</span> <span class="n">compute</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pfunc&#39;</span><span class="p">])</span>
+</code></pre></div>
+<hr />
+<p><code>complex_analysis</code> returns an <code>AnalysisResult</code> object that can be viewed as a table in a Jupyter notebook, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">complex_results1</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/analysis/3-complex.png" alt="Complex analysis output" title="Example complex analysis output" width="270" /></p>
+</blockquote>
+<p>If desired, a <code>Tube</code> can be specified in place of a <code>ComplexSet</code>, in which case the strand concentrations are ignored since <code>complex_analysis</code> does not calculate equilibrium complex concentrations, and hence does not require concentration information for the strand species. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># specify strands</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CUGAUCGAU&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;GAUCGUAGUC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify tube</span>
+<span class="n">tube1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span><span class="mf">1e-10</span><span class="p">},</span> <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+
+<span class="c1"># calculate the partition function for each complex in the tube</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">complex_results2</span> <span class="o">=</span> <span class="n">complex_analysis</span><span class="p">(</span><span class="n">complexes</span><span class="o">=</span><span class="n">tube1</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">,</span> <span class="n">compute</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pfunc&#39;</span><span class="p">])</span>
+</code></pre></div>
+<hr />
+<h2 id="run-a-complex-concentrations-job">Run a complex concentrations job<a class="headerlink" href="#run-a-complex-concentrations-job" title="Permanent link">&para;</a></h2>
+<p>Use the <code>complex_concentrations</code> command to calculate the <a href="../definitions/#equilibrium-complex-concentrations">equilibrium concentration</a> of each complex in a test tube ensemble (keyword <code>tube</code>) using the <code>AnalysisResult</code> data (keyword <code>data</code>) from a previous call to <code>complex_analysis</code> (which at minimum must contain the partition function for each complex). The tube ensemble can be specified either using <code>Tube</code> (which specifies strand concentrations) or as a <code>ComplexSet</code>, in which case the strand concentrations must additionally be specified (keyword <code>concentrations</code>):</p>
+<div class="highlight"><pre><span></span><code> <span class="c1"># specify strand concentrations for ComplexSet set1</span>
+<span class="n">concentration_results1</span> <span class="o">=</span> <span class="n">complex_concentrations</span><span class="p">(</span><span class="n">tube</span><span class="o">=</span><span class="n">set1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">complex_results1</span><span class="p">,</span>
+    <span class="n">concentrations</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">})</span>
+
+<span class="c1"># use strand concentrations previously specified for tube1</span>
+<span class="n">concentration_results2</span> <span class="o">=</span> <span class="n">complex_concentrations</span><span class="p">(</span><span class="n">tube</span><span class="o">=</span><span class="n">tube1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">complex_results2</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that <code>complex_concentrations</code> operates on a single tube ensemble at a time since each tube represents a separate coupled equilibrium problem and no savings can be achieved by considering multiple concentration solves at the same time.</p>
+</div>
+<hr />
+<p><code>complex_concentrations</code> returns an <code>AnalysisResult</code> object that can be viewed as a table in a Jupyter notebook, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">concentration_results2</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/analysis/4-concentration.png" alt="Concentration analysis output" title="Example concentration analysis output" width="180" /></p>
+</blockquote>
+<hr />
+<h2 id="job-options">Job options<a class="headerlink" href="#job-options" title="Permanent link">&para;</a></h2>
+<p>The <code>compute</code> keyword is optional for <code>tube_analysis</code> (default: <code>'pfunc'</code>) and required for <code>complex_analysis</code> (no default), specifying a list of strings denoting calculations to be performed for each complex [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]:</p>
+<ul>
+<li>
+<p><code>'pfunc'</code>: calculate the <a href="../definitions/#partition-function">partition function</a>.</p>
+</li>
+<li>
+<p><code>'pairs'</code>: calculate the matrix of <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a>. If <code>'pairs'</code> is specified, <code>tube_analysis</code> or <code>complex_concentrations</code> will further calculate the matrix of <a href="../definitions/#test-tube-ensemble-pair-fractions">test tube ensemble pair fractions</a>. See the <code>sparsity_fraction</code> and <code>sparsity_threshold</code> options below.</p>
+</li>
+<li>
+<p><code>'sample'</code>: calculate a set of <a href="../definitions/#boltzmann-sampled-structures">Boltzmann-sampled structures</a> from the complex ensemble. See option <code>num_sample</code> below.</p>
+</li>
+<li>
+<p><code>'mfe'</code>: calculate the <a href="../definitions/#mfe-proxy-structure">MFE proxy structure</a>, the free energy of the MFE proxy secondary structure and the free energy of the MFE stacking state. If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and with the (same) free energy of the MFE stacking state.</p>
+</li>
+<li>
+<p><code>'subopt'</code>: calculate the set of <a href="../definitions/#suboptimal-proxy-structures">suboptimal proxy structures</a> with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of the MFE proxy secondary structure, and with the free energy of its lowest-energy stacking state that falls within the energy gap. See option <code>subopt_gap</code> below.</p>
+</li>
+<li>
+<p><code>'ensemble_size'</code>: calculate the <a href="../definitions/#complex-ensemble-size">complex ensemble size</a> in terms of either the number of secondary structures (if using a <a href="../model/#model-specification">physical model</a> with <code>nostacking</code>) or the number of stacking states (if using a <a href="../model/#model-specification">physical model</a> with <code>stacking</code>).</p>
+</li>
+</ul>
+<p>The optional <code>options</code> keyword specifies options that modify the calculations performed for each complex:</p>
+<ul>
+<li>
+<p><code>'sparsity_fraction': f</code> can be used in conjuction with <code>'pairs'</code> to return a sparse matrix containing the fraction <code>f</code> of the largest pair probabilities for each base (default <code>'sparsity': 1</code> returns the full pair probability matrix).</p>
+</li>
+<li>
+<p><code>'sparsity_threshold': t</code> can be used in conjuction with <code>'pairs'</code> to return a sparse matrix containing the only pair probabilities greater than or equal to <code>t</code> (default <code>'sparsity_threshold': 0</code> returns the full pair probability matrix).</p>
+</li>
+<li>
+<p><code>'num_sample': n</code> can be used in conjunction with <code>'sample'</code> to specify the number of structures to be sampled (default <code>'num_sample': 1</code>).</p>
+</li>
+<li>
+<p><code>'subopt_gap': g</code> can be used in conjunction with <code>'subopt'</code> to specify the (non-negative) free energy gap in kcal/mol (default <code>'subopt_gap': 0</code>).</p>
+</li>
+</ul>
+<p>By default, NUPACK analysis jobs run in <a href="../advanced/#parallelism">parallel</a>.</p>
+<hr />
+<h2 id="job-results">Job results<a class="headerlink" href="#job-results" title="Permanent link">&para;</a></h2>
+<p>Scalar results of NUPACK analysis jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube analysis job:</p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CCG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CGG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">({</span><span class="n">a</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span> <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">({</span><span class="n">a</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span> <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">)</span>
+
+<span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">my_result</span> <span class="o">=</span> <span class="n">tube_analysis</span><span class="p">([</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pfunc&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;mfe&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;subopt&#39;</span><span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_sample&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;energy_gap&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="tabular-display">Tabular display<a class="headerlink" href="#tabular-display" title="Permanent link">&para;</a></h3>
+<p>You can display a summary table of results in a Jupyter notebook, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/analysis/5-tube.png" alt="Tube analysis output" title="Example tube analysis output" width="380" /></p>
+</blockquote>
+<h3 id="textual-display">Textual display<a class="headerlink" href="#textual-display" title="Permanent link">&para;</a></h3>
+<p>You can view an ASCII representation of the same data by using the <code>print</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="p">)</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<div class="highlight"><pre><span></span><code>Complex results:
+  Complex      Pfunc dG (kcal/mol) MFE (kcal/mol)
+0     (a)  1.0000e+0         0.000          0.000
+1     (b)  1.0000e+0         0.000          0.000
+2       c  1.3519e+3        -4.443         -4.081
+3   (a+a)  1.8846e+1        -1.810         -1.972
+4   (b+b)  1.7435e+2        -3.181         -3.523
+Concentration results:
+Complex    t1 (M)   Complex    t2 (M)
+    (a) 1.000e-06       (a) 1.000e-08
+    (b) 1.000e-09       (b) 1.000e-09
+  (a+a) 3.418e-13         c 2.452e-16
+      c 2.452e-14
+  (b+b) 3.162e-18
+</code></pre></div>
+</blockquote>
+<p>For convenience, you can print the identical ASCII result to a text file using the <code>save_text</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save_text</span><span class="p">(</span><span class="s1">&#39;my_result.txt&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="programmatic-access">Programmatic access<a class="headerlink" href="#programmatic-access" title="Permanent link">&para;</a></h3>
+<p>More detailed results can also be displayed by programmatic access into an <code>AnalysisResult</code> object. This class contains two fields:</p>
+<ul>
+<li><code>.complexes</code>: a Python <code>dict</code> mapping each <code>Complex</code> to a <code>ComplexResult</code></li>
+<li><code>.tubes</code>: a Python <code>dict</code> mapping each <code>Tube</code> to a <code>TubeResult</code></li>
+</ul>
+<p>The information contained in these two fields depends on which type of analysis calculation was performed:</p>
+<ul>
+<li>For <a href="#run-a-test-tube-analysis-job"><code>tube_analysis</code></a>, the <code>.tubes</code> and <code>.complexes</code> fields are both non-empty.</li>
+<li>For <a href="#run-a-complex-analysis-job"><code>complex_analysis</code></a>, only the <code>.complexes</code> field is non-empty.</li>
+<li>For <a href="#run-a-complex-concentrations-job"><code>complex_concentrations</code></a>, only the <code>.tubes</code> field is non-empty.</li>
+</ul>
+<p>For convenience, you can index into an <code>AnalysisResult</code> via a <code>Complex</code> or <code>Tube</code> identifier (or via the assigned or auto-generated name of a <code>Complex</code> or <code>Tube</code>) as described in the following two sections.</p>
+<h3 id="results-for-individual-complexes">Results for individual complexes<a class="headerlink" href="#results-for-individual-complexes" title="Permanent link">&para;</a></h3>
+<p>You can index into <code>AnalysisResult</code> object via a <code>Complex</code> identifier (or via the name of a <code>Complex</code>) to get a <code>ComplexResult</code> object containing all the complex ensemble quantities that were calculated in a <code>tube_analysis</code> or <code>complex_analysis</code> calculation. A <code>ComplexResult</code> contains the following fields (if a quantity was not computed, the field is set to <code>None</code>):</p>
+<ul>
+<li><code>pfunc</code>: the complex <a href="../definitions/#partition-function">partition function</a> (held as a <code>decimal.Decimal</code>; convert to a <code>float</code> via <code>float(pf)</code> or calculate the logarithm via <code>float(pf.log())</code>).</li>
+<li><code>free_energy</code>: the <a href="../definitions/#complex-free-energy">complex free energy</a> in kcal/mol (held as a <code>float</code>).</li>
+<li><code>pairs</code>: the matrix of <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a> (held as a <code>PairsMatrix</code> object containing a <code>.to_array()</code> method for conversion to numpy as illustrated below).</li>
+<li><code>sample</code>: a list of <a href="../definitions/#boltzmann-sampled-structures">Boltzmann-sampled structures</a>, each an instance of a <code>Structure</code> object.</li>
+<li><code>mfe</code>: a list of <a href="../definitions/#mfe-proxy-structure">MFE proxy structures</a>. Each entry contains fields <code>.structure</code>, <code>.energy</code>, and <code>.stack_energy</code>. <code>.energy</code> is the free energy of the MFE proxy secondary structure, while <code>.stack_energy</code> is the free energy of the MFE stacking state.</li>
+<li><code>subopt</code>: a list of <a href="../definitions/#suboptimal-proxy-structures">suboptimal proxy structures</a>. Each entry contains fields <code>.structure</code>, <code>.energy</code>, and <code>.stack_energy</code>. <code>.energy</code> is the free energy of the MFE proxy secondary structure, while <code>.stack_energy</code> is the free energy of its lowest-energy stacking state that falls within the energy gap.</li>
+<li><code>ensemble_size</code>: the <a href="../definitions/#complex-ensemble-size">complex ensemble size</a> (held as <code>int</code>) representing either the number of secondary structures (if using a <a href="../model/#model-specification">physical model</a> with <code>nostacking</code>) or the number of stacking states (if using a <a href="../model/#model-specification">physical model</a> with <code>stacking</code>).</li>
+<li><code>model</code>: the <code>Model</code> that was used for the analysis calculation.</li>
+</ul>
+<!-- - `mfe`: the [free energy of the MFE proxy structure(s)](definitions.md#mfe-proxy-structure) (held as `float`) -->
+<!-- - `mfe_stack`: the [free energy of the MFE stacking state](definitions.md#mfe-proxy-structure) (held as `float`) -->
+
+<hr />
+<p>For example, we can index the <code>AnalysisResult</code> object <code>my_result</code> with complex <code>c</code> (or by its name <code>'c'</code>) to obtain a <code>ComplexResult</code> object <code>c_result</code> that enables printing of specific physical quantities for that complex:</p>
+<div class="highlight"><pre><span></span><code><span class="n">c_result</span> <span class="o">=</span> <span class="n">my_result</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="c1"># equivalent to my_result[&#39;c&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Physical quantities for complex c&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Complex free energy: </span><span class="si">%.2f</span><span class="s1"> kcal/mol&#39;</span> <span class="o">%</span> <span class="n">c_result</span><span class="o">.</span><span class="n">free_energy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Partition function: </span><span class="si">%.2e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c_result</span><span class="o">.</span><span class="n">pfunc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MFE proxy structure: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c_result</span><span class="o">.</span><span class="n">mfe</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">structure</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Free energy of MFE proxy structure: </span><span class="si">%.2f</span><span class="s1"> kcal/mol&#39;</span> <span class="o">%</span> <span class="n">c_result</span><span class="o">.</span><span class="n">mfe</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Equilibrium pair probabilities: </span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c_result</span><span class="o">.</span><span class="n">pairs</span><span class="p">)</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>Physical quantities for complex c
+Complex free energy: -4.44 kcal/mol
+Partition function: 1.35e+03
+MFE proxy structure: (((+)))
+Free energy of MFE proxy structure: -4.08 kcal/mol
+Equilibrium pair probabilities:
+[[0.1000 0.0000 0.0000 0.0000 0.0061 0.8938]
+ [0.0000 0.0083 0.0000 0.0000 0.9873 0.0044]
+ [0.0000 0.0000 0.3839 0.6161 0.0000 0.0000]
+ [0.0000 0.0000 0.6161 0.3839 0.0000 0.0000]
+ [0.0061 0.9873 0.0000 0.0000 0.0066 0.0000]
+ [0.8938 0.0044 0.0000 0.0000 0.0000 0.1018]]
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that a complex such as <code>(a+a)</code> that was auto-generated as part of the test tube ensemble (using <code>max_size=2</code>) does not have an identifier, but does have an auto-generated name that can be used to index an <code>AnalysisResult</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">aa_result</span> <span class="o">=</span> <span class="n">my_result</span><span class="p">[</span><span class="s1">&#39;(a+a)&#39;</span><span class="p">]</span>
+</code></pre></div>
+</div>
+<p>If desired, the MFE proxy structure can be represented as a <a href="../definitions/#secondary-structure">structure matrix</a> of zeros and ones:</p>
+<div class="highlight"><pre><span></span><code><span class="n">c_result</span> <span class="o">=</span> <span class="n">my_result</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MFE proxy structure:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c_result</span><span class="o">.</span><span class="n">mfe</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">matrix</span><span class="p">())</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>MFE proxy structure:
+[[0 0 0 0 0 1]
+ [0 0 0 0 1 0]
+ [0 0 0 1 0 0]
+ [0 0 1 0 0 0]
+ [0 1 0 0 0 0]
+ [1 0 0 0 0 0]]
+</code></pre></div>
+<p>The equilibrium pair probability matrix is returned as a <code>PairsMatrix</code> object, which can be converted to a <code>numpy</code> array via the <code>to_array()</code> method for display in a Jupyter notebook:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">my_result</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">to_array</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Base index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Base index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pair probabilities for complex c&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;my-figure.pdf&#39;</span><span class="p">)</span> <span class="c1"># optionally, save a PDF of your figure</span>
+</code></pre></div>
+<p>Output:</p>
+<blockquote>
+<p><img src="../figs/analysis/6-pairs.png" alt="Pair probability output" title="Example pair probability output" width="400" /></p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your installation of matplotlib is not up-to-date, you may need to include <code>%matplotlib inline</code> at the top of the Jupyter notebook for the pairs plot to appear in your notebook instead of in a separate window.</p>
+</div>
+<p>For some use cases, you may wish to convert a <code>PairsMatrix</code> to a <code>scipy</code> matrix via the <code>to_sparse()</code> method.</p>
+<hr />
+<p>It is straightforward to collect information across complexes in an <code>AnalysisResult</code> object. Since <code>my_result.complexes</code> is an ordinary python <code>dict</code>, iterating through its <code>.items()</code> enables collection of each complex result. For example, to operate on the equilibrium pair probability matrix for each complex in <code>my_result</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">for</span> <span class="n">my_complex</span><span class="p">,</span> <span class="n">complex_result</span> <span class="ow">in</span> <span class="n">my_result</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">complex_result</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">to_array</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;Expected number of unpaired nucleotides at equilibrium in complex </span><span class="si">%s</span><span class="s1"> = </span><span class="si">%.2f</span><span class="s1">&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span> <span class="o">%</span> <span class="p">(</span><span class="n">my_complex</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>Expected number of unpaired nucleotides at equilibrium in complex c = 0.98
+Expected number of unpaired nucleotides at equilibrium in complex (b) = 3.00
+Expected number of unpaired nucleotides at equilibrium in complex (a+a) = 2.70
+Expected number of unpaired nucleotides at equilibrium in complex (b+b) = 2.25
+Expected number of unpaired nucleotides at equilibrium in complex (a) = 3.00
+</code></pre></div>
+<p>To collect a <code>dict</code> of MFEs for each complex:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_mfes</span> <span class="o">=</span> <span class="p">{</span><span class="n">my_complex</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">complex_result</span><span class="o">.</span><span class="n">mfe</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span>
+    <span class="k">for</span> <span class="n">my_complex</span><span class="p">,</span> <span class="n">complex_result</span> <span class="ow">in</span> <span class="n">my_result</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_mfes</span><span class="p">)</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>{&#39;c&#39;: -4.081351280212402, &#39;(b)&#39;: 0.0, &#39;(a+a)&#39;: -1.9719057083129883, &#39;(b+b)&#39;: -3.5225014686584473, &#39;(a)&#39;: 0.0}
+</code></pre></div>
+<p>To print out the complex concentrations for a given tube:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">my_complex</span><span class="p">,</span> <span class="n">conc</span> <span class="ow">in</span> <span class="n">my_result</span><span class="o">.</span><span class="n">tubes</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span><span class="o">.</span><span class="n">complex_concentrations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The equilibrium concentration of </span><span class="si">%s</span><span class="s1"> is </span><span class="si">%.2e</span><span class="s1"> M&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">my_complex</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">conc</span><span class="p">))</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>The equilibrium concentration of c is 2.45e-14 M
+The equilibrium concentration of (b) is 1.00e-09 M
+The equilibrium concentration of (a+a) is 3.42e-13 M
+The equilibrium concentration of (b+b) is 3.16e-18 M
+The equilibrium concentration of (a) is 1.00e-06 M
+</code></pre></div>
+<hr />
+<h3 id="results-for-individual-test-tubes">Results for individual test tubes<a class="headerlink" href="#results-for-individual-test-tubes" title="Permanent link">&para;</a></h3>
+<p>You can index into an <code>AnalysisResult</code> object via a <code>Tube</code> identifier (or via the name of a <code>Tube</code>) to get a <code>TubeResult</code> object containing all the tube ensemble quantities that were calculated in a <code>tube_analysis</code> or <code>complex_concentrations</code> calculation. This class contains the following fields:</p>
+<ul>
+<li><code>complex_concentrations</code>: a <code>dict</code> from <code>Complex</code> to its <a href="../definitions/#equilibrium-complex-concentrations">equilibrium concentration</a> in molar (held as a <code>float</code>).</li>
+<li><code>fraction_bases_unpaired</code>: a <code>float</code> in <span class="arithmatex"><span class="MathJax_Preview">[0,1]</span><script type="math/tex">[0,1]</script></span> denoting the equilibrium fraction of nucleotides that are unpaired in the test tube ensemble. </li>
+<li><code>ensemble_pair_fractions</code>: a square matrix of <a href="../definitions/#test-tube-ensemble-pair-fractions">test tube ensemble pair fractions</a>. Row and column indices refer to the concatenated base index formed by concatenating the strands of the input <code>Tube</code> (in order). This field is <code>None</code> if  pair probabilities were not calculated (i.e., if option <code>pairs</code> was not specified for the <code>tube_analysis</code> or <code>complex_analysis</code> job).</li>
+</ul>
+<p>Concentrations may be printed as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="n">t1_result</span> <span class="o">=</span> <span class="n">my_result</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span> <span class="c1"># equivalent to my_result[&#39;t1&#39;]</span>
+<span class="k">for</span> <span class="n">my_complex</span><span class="p">,</span> <span class="n">conc</span> <span class="ow">in</span> <span class="n">t1_result</span><span class="o">.</span><span class="n">complex_concentrations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The equilibrium concentration of </span><span class="si">%s</span><span class="s1"> is </span><span class="si">%.3e</span><span class="s1"> M&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">my_complex</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">conc</span><span class="p">))</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>The equilibrium concentration of c is 2.452e-14 M
+The equilibrium concentration of (b) is 1.000e-09 M
+The equilibrium concentration of (a+a) is 3.418e-13 M
+The equilibrium concentration of (b+b) is 3.162e-18 M
+The equilibrium concentration of (a) is 1.000e-06 M
+</code></pre></div>
+<p>Test tube ensemble pair fractions may be printed as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">t1_result</span><span class="o">.</span><span class="n">ensemble_pair_fractions</span><span class="p">)</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>[[1.0000 0.0000 0.0000 0.0000 0.0000 0.0000]
+ [0.0000 1.0000 0.0000 0.0000 0.0000 0.0000]
+ [0.0000 0.0000 1.0000 0.0000 0.0000 0.0000]
+ [0.0000 0.0000 0.0000 1.0000 0.0000 0.0000]
+ [0.0000 0.0000 0.0000 0.0000 1.0000 0.0000]
+ [0.0000 0.0000 0.0000 0.0000 0.0000 1.0000]]
+</code></pre></div>
+<h3 id="saving-a-job-summary">Saving a job summary<a class="headerlink" href="#saving-a-job-summary" title="Permanent link">&para;</a></h3>
+<p>To save a textual job summary using the <code>save_text</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save_text</span><span class="p">(</span><span class="s1">&#39;my-result.txt&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="saving-and-reloading-job-results">Saving and reloading job results<a class="headerlink" href="#saving-and-reloading-job-results" title="Permanent link">&para;</a></h3>
+<p>Save an <code>AnalysisResult</code> as a binary file using the <code>save</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my-result.o&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>to enable reloading during a future session using the <code>load</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_result</span> <span class="o">=</span> <span class="n">AnalysisResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my-result.o&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>This functionality uses Python&rsquo;s built-in <code>pickle</code> module.</p>
+<div class="references">
+<table>
+<tbody>
+<tr id="ref-Dirks07">
+<td>Dirks07</td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic analysis of interacting nucleic acid strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
+</tr>
+<tr id="ref-Fornace20">
+<td>Fornace20</td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol.. (2020)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../model/" class="btn btn-neutral float-left" title="Model Specification"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../design/" class="btn btn-neutral float-right" title="Design Jobs">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="http://nupack.org/" class="fa fa-code-fork" style="color: #fcfcfc"> Nupack</a>
+        </span>
+    
+    
+      <span><a href="../model/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../design/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../search/main.js"></script>
+      <script src="../js/version-select.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

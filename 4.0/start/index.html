@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.nupack.org/latest/start/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Getting Started - NUPACK 4.0 User Guide</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+        <link href="../css/version-select.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Getting Started";
+        var mkdocs_page_input_path = "start.md";
+        var mkdocs_page_url = "/latest/start/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../definitions/">Definitions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Model Specification</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../design/">Design Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting Started</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#example-jupyter-notebooks">Example Jupyter notebooks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#analysis-examples">Analysis examples</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#design-examples">Design examples</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utilities-examples">Utilities examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation-requirements">Installation requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#macoslinux-installation">macOS/Linux installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#windows-installation">Windows installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#source-installation">Source installation</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../advanced/">Advanced</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">NUPACK 4.0 User Guide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<h2 id="example-jupyter-notebooks">Example Jupyter notebooks<a class="headerlink" href="#example-jupyter-notebooks" title="Permanent link">&para;</a></h2>
+<p>Here, we provide Jupyter notebooks for a variety of examples that can be <a href="https://piercelab-caltech.github.io/nupack-docs/examples.zip">downloaded</a> for interactive use.</p>
+<h3 id="analysis-examples">Analysis examples<a class="headerlink" href="#analysis-examples" title="Permanent link">&para;</a></h3>
+<p>Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles) &mdash; these are the <a href="../analysis/">all-purpose sequence analysis tools</a>.</p>
+<ul>
+<li><strong>Tube analysis:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/tube-analysis.ipynb">analyze a test tube ensemble</a></li>
+<li><strong>Multi-tube analysis:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/multi-tube-analysis.ipynb">analyze a set of test tube ensembles</a></li>
+<li><strong>Complex analysis:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/complex-analysis.ipynb">analyze a complex ensemble</a></li>
+<li><strong>Multi-complex analysis:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/analysis/multi-complex-analysis.ipynb">analyze a set of complex ensembles</a></li>
+</ul>
+<h3 id="design-examples">Design examples<a class="headerlink" href="#design-examples" title="Permanent link">&para;</a></h3>
+<p>Design the the sequences for one or more test tube ensembles (or one or more complex ensembles) &mdash; these are the <a href="../design/">all-purpose sequence design tools</a>.</p>
+<ul>
+<li><strong>Tube design:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/tube-design.ipynb">design a test tube ensemble</a></li>
+<li><strong>Multi-tube design (simple):</strong><ul>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.pdf">design specification</a> (<a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.tex">tex</a>)</li>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple.ipynb">design a one-step reaction pathway</a></li>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple-ortho.ipynb">design N orthogonal one-step reaction pathways</a></li>
+</ul>
+</li>
+<li><strong>Multi-tube design (advanced):</strong><ul>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.pdf">design specification</a> (<a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.tex">tex</a>)</li>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced.ipynb">design a multi-step reaction pathway</a></li>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced-ortho.ipynb">design N orthogonal multi-step reaction pathways</a></li>
+</ul>
+</li>
+<li><strong>Complex design:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/complex-design.ipynb">design a complex ensemble</a></li>
+</ul>
+<p>Sample <span class="arithmatex"><span class="MathJax_Preview">\LaTeX</span><script type="math/tex">\LaTeX</script></span> files are provided for the multi-tube design specifications to assist with making new design specs in a standardized format.</p>
+<h3 id="utilities-examples">Utilities examples<a class="headerlink" href="#utilities-examples" title="Permanent link">&para;</a></h3>
+<p>Analyze or design a single complex ensemble &mdash; these are <a href="../utilities/">quick tools</a> applicable when your ensemble is a single complex.</p>
+<ul>
+<li><strong>Utilities:</strong> <a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/utilities/utilities.ipynb">analyze or design a complex ensemble</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that each Jupyter notebook starts by loading the NUPACK Python module:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</div>
+<h2 id="installation-requirements">Installation requirements<a class="headerlink" href="#installation-requirements" title="Permanent link">&para;</a></h2>
+<p>NUPACK 4 is a C++ library distributed as a Python package. The following Python packages are required:</p>
+<ul>
+<li>Python 3.8-3.13</li>
+<li>numpy</li>
+<li>scipy</li>
+<li>pandas</li>
+</ul>
+<p>The following packages are recommended to facilitate interactive usage:</p>
+<ul>
+<li>matplotlib</li>
+<li>jupyterlab</li>
+</ul>
+<p>NUPACK 4 Python packages can be installed for macOS/Linux operating systems or on the Linux subsystem of Windows 10/11. Alternatively, NUPACK may be compiled from source on macOS/Linux.</p>
+<p>An easy way to install all of these dependencies is by installing <a href="https://www.anaconda.com/distribution/">Anaconda</a>.</p>
+<h2 id="macoslinux-installation">macOS/Linux installation<a class="headerlink" href="#macoslinux-installation" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that for new Macs using an M1 or M2 (arm64) architecture, you must make sure to use a <em>native</em> Python distribution. Separate downloads for the <a href="https://www.anaconda.com/products/distribution">Anaconda</a> or <a href="https://docs.conda.io/en/latest/miniconda.html#macos-installers">miniconda</a> distributions are available &ndash; make sure to choose the distributions labeled &ldquo;M1&rdquo;. Importing NUPACK will only function correctly using a native Python distribution. You may use the command 
+<div class="highlight"><pre><span></span><code>python3 -c &quot;import platform; print(platform.machine())&quot;
+</code></pre></div>
+to see your installed architecture; this should be <code>arm64</code> when using an M-series Mac.</p>
+</div>
+<ol>
+<li>
+<p>Verify your Python installation (make sure you have Python 3.8 or newer):</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>--version
+</code></pre></div>
+<p>If this command does not run, troubleshoot your Python installation. You may not have your <code>$PATH</code> environment variable set correctly.</p>
+</li>
+<li>
+<p>Update your installation of <code>pip</code> and install the optional dependencies. Run the following commands</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>matplotlib<span class="w"> </span>jupyterlab
+</code></pre></div>
+<p>Alternatively, if you are using Anaconda, replace the above commands with:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>--update-all<span class="w"> </span>pip<span class="w"> </span>matplotlib<span class="w"> </span>jupyterlab
+</code></pre></div>
+<p>If this command does not run, troubleshoot your Anaconda installation. You may not have your <code>$PATH</code> environment variable set correctly.</p>
+</li>
+<li>
+<p>After <a href="http://www.nupack.org/downloads/register">agreeing to the NUPACK license</a>, download the NUPACK package (e.g., <code>nupack-4.0.0</code>) into your Downloads folder and make sure it is unzipped.</p>
+</li>
+<li>
+<p>Install the NUPACK 4 Python module by running the following command in your terminal (type <code>y</code> when prompted):</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>nupack<span class="w"> </span>-f<span class="w"> </span>~/Downloads/nupack-VERSION/package
+</code></pre></div>
+<p>Make sure to replace <code>nupack-VERSION</code> with the correct folder name (e.g., <code>nupack-4.0.0</code>).</p>
+</li>
+<li>
+<p>Check that the correct <code>nupack</code> version is now installed by running the following commmand:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>nupack
+</code></pre></div>
+<p>If the version is not correct, go back to Step 4, double-check the folder name, and rerun the command.</p>
+</li>
+<li>
+<p>Validate your NUPACK 4 installation by running the following commands:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pytest
+python3<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-v<span class="w"> </span>--pyargs<span class="w"> </span>nupack
+</code></pre></div>
+</li>
+<li>
+<p>You can now conveniently run NUPACK 4 jobs as Jupyter notebooks (see above for <a href="./#example-jupyter-notebooks">example notebooks</a>). You can launch a web-based Jupyter notebook browser from the command line:</p>
+<div class="highlight"><pre><span></span><code>jupyter<span class="w"> </span>lab
+</code></pre></div>
+<p>and browse to open your notebook of choice. Click <code>Run-&gt;Run All Cells</code> to run the entire notebook. If no browser window appears, try navigating to the displayed link in your terminal. If this doesn&rsquo;t work, troubleshoot your Jupyter installation.</p>
+</li>
+</ol>
+<hr />
+<h2 id="windows-installation">Windows installation<a class="headerlink" href="#windows-installation" title="Permanent link">&para;</a></h2>
+<p>NUPACK may be installed on Windows 10/11 using the Windows Subsystem for Linux 2 (WSL2).</p>
+<ol>
+<li>Click the start menu and search for &ldquo;Windows Features&rdquo;. Click on &ldquo;Turn Windows features on or off&rdquo;. Check the &ldquo;Windows Subsystem for Linux&rdquo; icon</li>
+</ol>
+<blockquote>
+<p><img src="../figs/windows/winfeatures.PNG" alt="Windows features" title="Windows features" width="400" /></p>
+</blockquote>
+<ol start="2">
+<li>Download Ubuntu from the Microsoft Store</li>
+</ol>
+<blockquote>
+<p><img src="../figs/windows/ubuntudl.PNG" alt="Windows store" title="Windows store" width="400" /></p>
+</blockquote>
+<ol start="3">
+<li>
+<p>Open the Ubuntu app and set a username and password</p>
+<blockquote>
+<p><img src="../figs/windows/ubuntusetup2.PNG" alt="Ubuntu setup" title="Ubuntu setup" width="400" /></p>
+</blockquote>
+</li>
+<li>
+<p>(Optional) Open the properties window and enable copy paste</p>
+</li>
+</ol>
+<blockquote>
+<p><img src="../figs/windows/properties.PNG" alt="Ubuntu properties" title="Ubuntu properties" width="400" /></p>
+</blockquote>
+<ol start="5">
+<li>Install NUPACK as if using Linux using the following commands (type <code>y</code> when prompted):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>nupack-latest
+<span class="nb">cd</span><span class="w"> </span>nupack-latest
+cp<span class="w"> </span>/mnt/c/Users/YOUR-USERNAME/Downloads/nupack-VERSION.zip<span class="w"> </span>./
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>unzip
+unzip<span class="w"> </span>nupack-latest.zip
+<span class="nb">cd</span><span class="w"> </span>..
+
+wget<span class="w"> </span>https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+/bin/bash<span class="w"> </span>Miniconda3-latest-Linux-x86_64.sh<span class="w"> </span>-b
+miniconda3/bin/conda<span class="w"> </span>update<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>defaults<span class="w"> </span>conda
+rm<span class="w"> </span>Miniconda3-latest-Linux-x86_64.sh
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/miniconda3/bin:<span class="nv">$PATH</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=$HOME/miniconda3/bin:$PATH&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+
+conda<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>pip<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>jupyterlab
+pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>nupack<span class="w"> </span>-f<span class="w"> </span>./nupack-VERSION/package
+
+jupyter<span class="w"> </span>lab
+</code></pre></div>
+<p>Make sure to replace <code>/YOUR-USERNAME/Downloads</code> above with the appropriate directory and <code>nupack-VERSION</code> with the correct version (e.g., <code>nupack-4.0.0</code>).</p>
+<ol start="6">
+<li>Use your web browser to open localhost:8888 and use Jupyter Lab to open an <a href="./#example-jupyter-notebooks">example notebook</a>.</li>
+</ol>
+<hr />
+<h2 id="source-installation">Source installation<a class="headerlink" href="#source-installation" title="Permanent link">&para;</a></h2>
+<p>For macOS/Linux users, installation of binaries via <code>pip</code> is by far the easiest option and is strongly recommended. However, if necessary, NUPACK can be built from source.</p>
+<p>The following are required:</p>
+<ul>
+<li>C++17 compliant compiler (Clang or AppleClang); note that we do not support GCC or Intel compilers</li>
+<li>CMake (&gt; 3.10)</li>
+</ul>
+<p>On macOS, it is recommended to use the Clang provided by <a href="https://brew.sh">Homebrew</a> as it is generally kept more up to date than Apple&rsquo;s builtin version. After installing Homebrew, install Clang via <code>brew install llvm</code>. Then add the flag <code>-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++</code> or <code>-DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++</code> to your cmake command (use the one corresponding to where <code>brew</code> installed binaries).</p>
+<p>Directions:</p>
+<ol>
+<li>On a macOS/Linux system, navigate to the <code>source</code> directory within the NUPACK download:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/nupack-VERSION/source
+</code></pre></div>
+<p>Make sure to replace <code>nupack-VERSION</code> with the correct folder name (e.g., <code>nupack-4.0.0</code>).</p>
+<ol start="2">
+<li>Make a build directory and navigate into it:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+</code></pre></div>
+<ol start="3">
+<li>Run the CMake configuration:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
+</code></pre></div>
+<p>You may add custom compilation options as flags to the <code>cmake</code> command if desired. Some examples might be:</p>
+<ul>
+<li>Add <code>-DCMAKE_CXX_COMPILER=clang++</code> to use the <code>clang++</code> compiler. <strong>As noted above, compilers besides <code>clang</code> are not generally supported.</strong></li>
+<li>Add <code>-DREBIND_PYTHON=/usr/local/bin/python3</code> to build for a specific Python executable (by default, the <code>python</code> in the user&rsquo;s <code>$PATH</code> is used).</li>
+<li>Add <code>-DCMAKE_CXX_FLAGS="&lt;custom compile options&gt;"</code> to add custom C++ compilation flags.</li>
+<li>Add <code>-DCMAKE_POSITION_INDEPENDENT_CODE=ON</code> in the offchance you run into a compilation error asking you to recompile with <code>-fPIC</code>.</li>
+</ul>
+<ol start="4">
+<li>Build the C++ code:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>--build<span class="w"> </span>.<span class="w"> </span>--target<span class="w"> </span>nupack-python
+</code></pre></div>
+<ol start="5">
+<li>Install the NUPACK Python module:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>.
+</code></pre></div>
+<p>Troubleshooting:
+- If you are on a Mac and experience an error within the <code>vcpkg</code> submodule, it may help to run the command <code>./external/vcpkg/bootstrap-vcpkg.sh --useSystemBinaries --allowAppleClang</code> between steps 1 and 2.
+- If you are using CMake 4.0 or newer and experience a CMake related error, set the environment variable <code>export CMAKE_POLICY_VERSION_MINIMUM=3.5</code> and try again. Otherwise, install and use a CMake of version &lt; 4.0.</p>
+<div class="references"></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../utilities/" class="btn btn-neutral float-left" title="Utilities Jobs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../advanced/" class="btn btn-neutral float-right" title="Advanced">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="http://nupack.org/" class="fa fa-code-fork" style="color: #fcfcfc"> Nupack</a>
+        </span>
+    
+    
+      <span><a href="../utilities/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../advanced/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../search/main.js"></script>
+      <script src="../js/version-select.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
