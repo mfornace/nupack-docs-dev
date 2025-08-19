@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.nupack.org/latest/advanced/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Advanced - NUPACK 4.0 User Guide</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+        <link href="../css/version-select.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Advanced";
+        var mkdocs_page_input_path = "advanced.md";
+        var mkdocs_page_url = "/latest/advanced/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> NUPACK 4.0 User Guide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../definitions/">Definitions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Model Specification</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../design/">Design Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../utilities/">Utilities Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Advanced</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#parallelism">Parallelism</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#caching">Caching</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#naming-conventions">Naming conventions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#design-orthogonal-reaction-pathways">Design orthogonal reaction pathways</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">NUPACK 4.0 User Guide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Advanced</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="advanced">Advanced<a class="headerlink" href="#advanced" title="Permanent link">&para;</a></h1>
+<h2 id="parallelism">Parallelism<a class="headerlink" href="#parallelism" title="Permanent link">&para;</a></h2>
+<p>By default, NUPACK 4 is fully parallelized across each <a href="../analysis/#analysis-jobs">analysis job</a>, <a href="../design/#design-jobs">design trial</a>, and <a href="../utilities/#utilities-jobs">utilities job</a>. Parallelism may be further controlled using the <code>config.threads</code> setting (default <code>0</code> as of 4.0.1.1; previously <code>1</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">config</span><span class="o">.</span><span class="n">threads</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div>
+<p>This setting denotes the maximum number of threads that <em>all</em> NUPACK calculations can use concurrently within a single Python process. With the (recommended) default setting of <code>config.threads=0</code>, NUPACK jobs will be permitted to use all <code>N</code> cores on your machine. Two types of parallelism are enabled:</p>
+<ul>
+<li>
+<p><strong>Block-level parallelism</strong>. Subcomplex blocks in the dynamic program will be calculated in parallel (e.g., triangular blocks <code>A</code>, <code>B</code>, <code>C</code>, and rectangular blocks <code>AB</code>, <code>BC</code>, and <code>ABC</code> for complex <code>ABC</code>; see Figure 8 of [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]). This mode of parallelism will be enabled for all complexes in a multi-tube ensemble.</p>
+</li>
+<li>
+<p><strong>Element-level parallelism</strong>. Subsequence elements will be calculated in parallel within a subcomplex block. This mode of parallelism will only be employed for subcomplex blocks containing at least 100 nt.</p>
+</li>
+</ul>
+<p>An additional level of parallelism is enabled when running multiple independent design trials. For example, <code>tube_design</code> with <code>trials=4</code> and <code>config.threads == 1</code> will use <code>min(4,N)</code> threads. Hence, for design jobs, it is recommended that the value of <code>config.threads</code> be left at the default value of <code>0</code> or else be set to be no smaller than <code>min(trials,N)</code>. </p>
+<h2 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h2>
+<p>NUPACK 4 introduces subcomplex block caching to achieve dramatic speedups by avoiding recalculation of subcomplex intermediates for a multi-tube ensemble (see Figure 8 of [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]). The <code>config.cache</code> flag (GB; default 2.0) controls the gigabytes of memory that <em>each</em> <a href="../analysis/#analysis-jobs">analysis job</a>, <a href="../design/#design-jobs">design trial</a>, or <a href="../utilities/#utilities-jobs">utilities job</a> can use.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">config</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="c1"># GB</span>
+</code></pre></div>
+<p>This flag may be set to <code>0.0</code> to disable caching if your hardware has very little memory.</p>
+<h2 id="naming-conventions">Naming conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h2>
+<p>Analysis objects of type <code>Strand</code>, <code>Complex</code>, <code>Tube</code> and design objects of type <code>Domain</code>, <code>TargetStrand</code>, <code>TargetComplex</code>, and <code>TargetTube</code> all accept a name specified using the <code>name</code> keyword.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Within the context of a single calculation, every object name must be unique (e.g., each <code>Strand</code>, <code>Complex</code>, and <code>Tube</code> in an analysis calculation must have a unique name).</p>
+</div>
+<p>The name may specified as a <code>tuple</code> or <code>list</code> instead of a <code>str</code>, in which case a <code>'[]'</code>-based string will be automatically generated. This convention is especially useful for repeated definitions:</p>
+<div class="highlight"><pre><span></span><code><span class="n">domains</span> <span class="o">=</span> <span class="p">[</span><span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">domains</span><span class="p">])</span> <span class="c1"># --&gt; [&#39;a[0]&#39;, &#39;a[1]&#39;, &#39;a[2]&#39;, &#39;a[3]&#39;]</span>
+</code></pre></div>
+<p>See the examples below that make use of this convention to specify designs for orthogonal reaction pathways.</p>
+<h2 id="design-orthogonal-reaction-pathways">Design orthogonal reaction pathways<a class="headerlink" href="#design-orthogonal-reaction-pathways" title="Permanent link">&para;</a></h2>
+<p><a href="../definitions/#reaction-pathways">Reaction pathways</a> can be designed by specifying <a href="../definitions/#target-test-tubes">target test tubes</a> and formulating a <a href="../definitions/#constrained-multi-tube-design-problem">constrained multi-tube design problem</a>. Following the target test tube specification of [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>] (see Supplemenatary Section S2.2), for a reaction pathway with M elementary steps, to design N orthogonal systems, there are N*(M+1) elementary step tubes plus 1 global crosstalk tube. Below, we provide example design specifications and Jupyter notebooks for designing N orthogonal systems for 1-step and multi-step reaction pathways:</p>
+<ul>
+<li><strong>Multi-tube design (simple):</strong><ul>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.pdf">design specification</a> (<a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.tex">tex</a>)</li>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple-ortho.ipynb">design N orthogonal one-step reaction pathways</a></li>
+</ul>
+</li>
+<li><strong>Multi-tube design (advanced):</strong><ul>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.pdf">design specification</a> (<a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.tex">tex</a>)</li>
+<li><a href="https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced-ortho.ipynb">design N orthogonal multi-step reaction pathways</a></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that target test tubes for N orthogonal systems can be concisely defined using a Python loop.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sample <span class="arithmatex"><span class="MathJax_Preview">\LaTeX</span><script type="math/tex">\LaTeX</script></span> files are provided for the above multi-tube design specifications to assist with making new design specs in a standardized format.</p>
+</div>
+<div class="references">
+<table>
+<tbody>
+<tr id="ref-Fornace20">
+<td>Fornace20</td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol.. (2020)</p></td>
+</tr>
+<tr id="ref-Wolfe17">
+<td>Wolfe17</td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained multistate sequence design for nucleic acid reaction pathway engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../start/" class="btn btn-neutral float-left" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="http://nupack.org/" class="fa fa-code-fork" style="color: #fcfcfc"> Nupack</a>
+        </span>
+    
+    
+      <span><a href="../start/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../search/main.js"></script>
+      <script src="../js/version-select.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

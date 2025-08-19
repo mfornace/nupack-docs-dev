@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><link rel="canonical" href="https://docs.nupack.org/latest/" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>NUPACK 4.0 User Guide</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="extra.css" rel="stylesheet" />
+        <link href="css/version-select.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Overview";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = "/latest/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> NUPACK 4.0 User Guide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Overview</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#about">About</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#problem-categories">Problem Categories</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#license">License</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#acknowledgments">Acknowledgments</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#versions">Versions</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="definitions/">Definitions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="model/">Model Specification</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="analysis/">Analysis Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="design/">Design Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="utilities/">Utilities Jobs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="advanced/">Advanced</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">NUPACK 4.0 User Guide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Overview</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>NEW VERSION!</p>
+<h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">&para;</a></h2>
+<p>NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences more broadly. Much of this software can be conveniently run using the NUPACK web application at <a href="http://www.nupack.org">nupack.org</a> [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>]. This User Guide provides documentation for the NUPACK Python module.</p>
+<p>When finishing a project that has benefited from NUPACK calculations, please remember to <a href="./#citation">cite</a> the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
+<p>— The NUPACK Team</p>
+<hr>
+
+<h2 id="problem-categories">Problem Categories<a class="headerlink" href="#problem-categories" title="Permanent link">&para;</a></h2>
+<p>NUPACK algorithms address two fundamental classes of problems:</p>
+<ul>
+<li><strong>Sequence analysis:</strong> given a set of DNA or RNA strands, analyze the equilibrium base-pairing properties over a specified ensemble.</li>
+<li><strong>Sequence design:</strong> given a set of desired equilibrium base-pairing properties, design the sequences of a set of DNA or RNA strands over a specified ensemble. Sequence design is performed subject to diverse user-specified sequence constraints including composition constraints, complementarity constraints, pattern prevention constraints, and biological constraints.</li>
+</ul>
+<p align="center">
+<img src="./figs/NUPACK.png" alt="NUPACK Analysis and Design" title="NUPACK Analysis and Design" width="700"/>
+</p>
+
+<p style="text-align:center;"><b>Figure</b>: Sequence analysis and design using NUPACK.</p>
+
+<p>NUPACK algorithms operate over two fundamental ensembles:</p>
+<ul>
+<li><strong>Complex ensemble:</strong> the ensemble of all (unpseudoknotted connected) secondary structures for an arbitrary number of interacting RNA or DNA strands.</li>
+<li><strong>Test tube ensemble:</strong> the ensemble of a dilute solution containing an arbitrary number of RNA or DNA strand species (introduced at user-specified concentrations) interacting to form an arbitrary number of complex species.</li>
+</ul>
+<p>Furthermore, to enable reaction pathway engineering of dynamic hybridization cascades or large-scale structural engineering including pseudoknots, NUPACK generalizes sequence analysis and design to multi-complex and multi-tube ensembles [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>].</p>
+<p>NUPACK capabilities are presented in three categories:</p>
+<ul>
+<li><strong>Analysis:</strong> Analyze the equilibrium base-pairing properties one or more test tube ensembles (or one or more complex ensembles). These are the all-purpose sequence analysis tools.</li>
+<li><strong>Design:</strong> Design the the sequences for one or more test tube ensembles (or one or more complex ensembles). These are the all-purpose sequence design tools.</li>
+<li><strong>Utilities:</strong> Analyze or design a single complex ensemble. These are quick tools applicable when your ensemble is a single complex.</li>
+</ul>
+<div class="admonition examples">
+<p class="admonition-title">Examples</p>
+<p>Load Python NUPACK module</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+<p><a href="model/">Specify a physical model</a>
+<div class="highlight"><pre><span></span><code><span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;rna&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">37</span><span class="p">)</span>
+</code></pre></div></p>
+<p><a href="analysis/">Analyze a test tube</a></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># specify strands</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CTGATCGAT&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;GATCGTAGTC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify tube</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">A</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span>
+    <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tube 1&#39;</span><span class="p">)</span> <span class="c1"># all complexes of up to 2 strands</span>
+
+<span class="c1"># run tube analysis job</span>
+<span class="n">my_results</span> <span class="o">=</span> <span class="n">tube_analysis</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">t1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
+</code></pre></div>
+<p><a href="design/">Design a test tube</a></p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain b&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;R5N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain c&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify target strands</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>  <span class="c1"># ~e denotes the reverse complement of e</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify target complexes</span>
+<span class="n">C1</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.8(10+)10(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Complex C1&#39;</span><span class="p">)</span>
+<span class="n">C2</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Complex C2&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify target tube</span>
+<span class="n">tt1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">(</span><span class="n">on_targets</span><span class="o">=</span><span class="p">{</span><span class="n">C1</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">C2</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span>
+    <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>  <span class="c1"># all off-target complexes of up to 3 strands</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;TargetTube 1&#39;</span><span class="p">)</span>
+
+<span class="c1"># specify tube design problem</span>
+<span class="n">my_des</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">tt1</span><span class="p">],</span>
+    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
+
+<span class="c1"># run tube design job</span>
+<span class="n">des_results</span> <span class="o">=</span> <span class="n">my_des</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># run 3 independent design trials</span>
+</code></pre></div>
+</div>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p><strong>NUPACK Software License Agreement for Non-Commercial Academic Use</strong>  <br />
+Copyright &copy; 2003–2022. California Institute of Technology. All rights reserved.</p>
+<p>Use of the NUPACK Python module and/or source code (“Software”) in source form and/or binary form, with or without modification, is permitted for non-commercial academic purposes only, subject to the conditions and disclaimer stated below.</p>
+<p><strong>Conditions</strong><br />
+1. Redistribution of the Software in source form and/or binary form is not permitted.<br />
+2. Web applications that use the Software in source form and/or binary form are not permitted.<br />
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote derivative works without specific prior written permission.  </p>
+<p><strong>Disclaimer</strong>  <br />
+<em>The Software is provided by the copyright holders and contributors &ldquo;as is&rdquo; and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.  In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.</em></p>
+<p><strong>Contact</strong><br />
+For any questions about this Software License Agreement please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#105;&#110;&#102;&#111;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
+<hr>
+
+<h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
+<p>For citation, please select from the list below as appropriate for your application:</p>
+<p><strong>NUPACK Web Application</strong></p>
+<ul>
+<li>Run jobs online at <a href="http://www.nupack.org">nupack.org</a><ul>
+<li>J. N. Zadeh, C. D. Steenberg, J. S. Bois, B. R. Wolfe, M. B. Pierce, A. R. Khan, R. M. Dirks, N. A. Pierce. NUPACK: analysis and design of nucleic acid systems. <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.21596/abstract"><em>J Comput Chem</em></a>, 32:170–173, 2011. (<a href="http://www.nupack.org/downloads/serve_public_file/jcc11a.pdf?type=pdf">pdf</a>)</li>
+</ul>
+</li>
+</ul>
+<p><strong>NUPACK Analysis Algorithms</strong></p>
+<ul>
+<li>
+<p>Complex analysis and test tube analysis</p>
+<ul>
+<li>M.E. Fornace, N.J. Porubsky, and N.A. Pierce (2020). A unified dynamic programming framework for the analysis of interacting nucleic acid strands: enhanced models, scalability, and speed. <a href="https://pubs.acs.org/doi/abs/10.1021/acssynbio.9b00523"><em>ACS Synth Biol</em></a>, 9:2665-2678, 2020. (<a href="http://www.nupack.org/downloads/serve_public_file/fornace20.pdf?type=pdf">pdf</a>, <a href="http://www.nupack.org/downloads/serve_public_file/fornace20_supp.pdf?type=pdf">supp info</a>)</li>
+<li>R. M. Dirks, J. S. Bois, J. M. Schaeffer, E. Winfree, and N. A. Pierce. Thermodynamic analysis of interacting nucleic acid strands. <a href="http://epubs.siam.org/doi/abs/10.1137/060651100"><em>SIAM Rev</em></a>, 49:65-88, 2007. (<a href="http://www.nupack.org/downloads/serve_public_file/sirev07.pdf?type=pdf">pdf</a>)</li>
+</ul>
+</li>
+<li>
+<p>Pseudoknot analysis</p>
+<ul>
+<li>R. M. Dirks and N. A. Pierce. An algorithm for computing nucleic acid base-pairing probabilities including pseudoknots. <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.10296/abstract"><em>J Comput Chem</em></a>, 25:1295-1304, 2004. (<a href="http://www.nupack.org/downloads/serve_public_file/jcc04.pdf?type=pdf">pdf</a>)</li>
+<li>R. M. Dirks and N. A. Pierce. A partition function algorithm for nucleic acid secondary structure including pseudoknots. <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.20057/abstract"><em>J Comput Chem</em></a>, 24:1664-1677, 2003. (<a href="http://www.nupack.org/downloads/serve_public_file/jcc03.pdf?type=pdf">pdf</a>, <a href="http://www.nupack.org/downloads/serve_public_file/jcc03_supp.pdf?type=pdf">supp info</a>)</li>
+</ul>
+</li>
+</ul>
+<p><strong>NUPACK Design Algorithms</strong></p>
+<ul>
+<li>
+<p>Multi-tube design</p>
+<ul>
+<li>B. R. Wolfe, N. J. Porubsky, J. N. Zadeh, R. M. Dirks, and N. A. Pierce. Constrained multistate sequence design for nucleic acid reaction pathway engineering. <a href="http://pubs.acs.org/doi/abs/10.1021/jacs.6b12693"><em>J Am Chem Soc</em></a>, 139:3134-3144, 2017. (<a href="http://www.nupack.org/downloads/serve_public_file/wolfe17.pdf?type=pdf">pdf</a>, <a href="http://www.nupack.org/downloads/serve_public_file/wolfe17_supp.pdf?type=pdf">supp info</a>)</li>
+</ul>
+</li>
+<li>
+<p>Test tube design</p>
+<ul>
+<li>B. R. Wolfe and N. A. Pierce. Sequence design for a test tube of interacting nucleic acid strands. <a href="http://pubs.acs.org/doi/abs/10.1021/sb5002196"><em>ACS Synth Biol</em></a>, 4:1086-1100, 2015. (<a href="http://www.nupack.org/downloads/serve_public_file/sb5002196.pdf?type=pdf">pdf</a>, <a href="http://www.nupack.org/downloads/serve_public_file/sb5002196_si_001.pdf?type=pdf">supp info</a>, <a href="http://www.nupack.org/downloads/serve_public_file/sb5002196_si_002.zip?type=zip">supp tests</a>)</li>
+</ul>
+</li>
+<li>
+<p>Complex design</p>
+<ul>
+<li>J. N. Zadeh, B. R. Wolfe, and N. A. Pierce. Nucleic acid sequence design via efficient ensemble defect optimization. <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.21633/abstract"><em>J Comput Chem</em></a>, 32:439–452, 2011. (<a href="http://www.nupack.org/downloads/serve_public_file/jcc11b.pdf?type=pdf">pdf</a>, <a href="http://www.nupack.org/downloads/serve_public_file/JCC_21633_sm_suppinfo.pdf?type=pdf">supp info</a>, <a href="http://www.nupack.org/downloads/serve_public_file/JCC_21633_sm_supptests.zip?type=zip">supp tests</a>)</li>
+</ul>
+</li>
+<li>
+<p>Design paradigms</p>
+<ul>
+<li>R. M. Dirks, M. Lin, E. Winfree, and N. A. Pierce. Paradigms for computational nucleic acid design. <a href="https://academic.oup.com/nar/article/32/4/1392/1038453"><em>Nucl Acids Res</em></a>, 32:1392-1403, 2004. (<a href="http://www.nupack.org/downloads/serve_public_file/nar04.pdf?type=pdf">pdf</a>, <a href="http://www.nupack.org/downloads/serve_public_file/nar04_supp.pdf?type=pdf">supp info</a>, <a href="http://www.nupack.org/downloads/serve_public_file/nar04_sequences.tar.gz?type=zip">supp seqs</a>)</li>
+</ul>
+</li>
+</ul>
+<h2 id="acknowledgments">Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permanent link">&para;</a></h2>
+<p>We thank all the NUPACK users that have helped out as beta testers over the years, as well as the many NUPACK users that have emailed <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a> to request features or report bugs.
+NUPACK is supported by the National Science Foundation (NSF-OAC-1835414) and by the Beckman Institute at Caltech (PMTC).
+NUPACK has previously been supported by the National Science Foundation
+(NSF-CCF-1317694, NSF-CCF-0832824, NSF-CHE-0533064, NSF-DMS-0506468, NSF-CAREER-0448835),
+by the Gordon and Betty Moore Foundation (GBMF2809), by the John Simon Guggenheim Memorial Foundation,
+by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Foundation, and by the Charles Lee Powell Foundation.</p>
+<h2 id="versions">Versions<a class="headerlink" href="#versions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>NUPACK 3.0</strong><ul>
+<li>Features:<ul>
+<li>complex analysis [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]</li>
+<li>complex design [<a class="citation" href="#ref-Zadeh11b" id="cite-Zadeh11b">Zadeh11b</a>]</li>
+<li>test tube analysis [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]</li>
+</ul>
+</li>
+<li>Executables:<ul>
+<li><code>pfunc</code>,<code>pairs</code>, <code>mfe</code>, <code>subopt</code>, <code>count</code>, <code>energy</code>, <code>prob</code>, <code>pairs</code>,
+    <code>defect</code>, <code>complexes</code>, <code>concentrations</code>, <code>distributions</code>, <code>design</code></li>
+<li>These executables read input files containing comment lines preceded by <code>%</code>; blank lines are not permitted.</li>
+</ul>
+</li>
+<li>Terminology and notation:<ul>
+<li>details in [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>NUPACK 3.1</strong></p>
+<ul>
+<li>New features:<ul>
+<li>test tube design [<a class="citation" href="#ref-Wolfe15" id="cite-Wolfe15">Wolfe15</a>]</li>
+</ul>
+</li>
+<li>New executables:<ul>
+<li><code>tubedesign</code> and <code>tubedefect</code></li>
+<li>These executables read <code>*.np</code> script files written in v1 of the NUPACK scripting language
+<!-- (see ``Future Version: Script files'' below). --></li>
+<li>In <code>*.np</code> script files, a comment begins with <code>#</code> and continues for the rest of the line; blank lines are permitted.</li>
+</ul>
+</li>
+<li>Changes to existing executables:<ul>
+<li>Name of executable <code>design</code> changed to <code>complexdesign</code>.</li>
+<li>Name of executable <code>defect</code> changed to <code>complexdefect</code>.</li>
+<li>Updates to the default options and
+        output file formats for executables <code>complexes</code>,
+        <code>concentrations</code>, and
+        <code>distributions</code>. Use option <code>-v3.0</code> to revert to NUPACK 3.0 behavior using NUPACK 3.1.</li>
+</ul>
+</li>
+<li>Terminology and notation:<ul>
+<li>details in Section 1.1 of NUPACK 3.1 User Guide</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>NUPACK 3.2</strong></p>
+<ul>
+<li>New features:<ul>
+<li>constrained multistate test tube design [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>]</li>
+</ul>
+</li>
+<li>New executables:<ul>
+<li><code>multitubedesign</code> and  <code>multitubedefect</code><ul>
+<li>These executables read <code>*.np</code> script files written in v2 of the NUPACK scripting language.</li>
+<li>In <code>*.np</code> script files, a comment begins with <code>#</code> and continues for the rest of the line; blank lines are permitted.</li>
+</ul>
+</li>
+<li>Terminology and notation:<ul>
+<li>details in Section 1.1 of NUPACK 3.2 User Guide</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>NUPACK 4.0</strong></p>
+<ul>
+<li>New features:<ul>
+<li>unified dynamic programming framework [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]</li>
+<li>all-new code base</li>
+<li>all-new NUPACK Python module</li>
+</ul>
+</li>
+<li>Commands:<ul>
+<li>Scripting is done in Python</li>
+<li>Indices start at 0 (previous versions indexed starting at 1)</li>
+</ul>
+</li>
+<li>Terminology and notation:<ul>
+<li>details in [<a class="citation" href="#ref-Fornace20" id="cite-Fornace20">Fornace20</a>]</li>
+</ul>
+</li>
+<li>Revision notes:<ul>
+<li>4.0.0.20: Release of first public beta</li>
+<li>4.0.0.21: Fix SSM display issue and wobble evaluation bug in design</li>
+<li>4.0.0.23: Fix incorrect rounding of ensemble_size result</li>
+<li>4.0.0.24: Fix diverging estimate of defects seen in design checkpoints</li>
+<li>4.0.0.25: Fix concentration failure resulting from division by 0</li>
+<li>4.0.0.26: Fix number of samples given for indistinguishable complexes</li>
+<li>4.0.0.27: Add native support for Mac arm64 (M1) architectures</li>
+<li>4.0.0.28: Add native support for Linux arch64 architecture, support Python 3.10, fix similarity soft constraint when specifying multiple domains</li>
+<li>4.0.1.0: Add <code>fraction_unpaired_bases</code> functionality, revise implementation of parallelism and cache usage, improve input validation</li>
+<li>4.0.1.1: Enable <a href="advanced/#parallelism">parallelism</a> by default, add the <code>threads</code> setting, and set design to only use up to <code>N</code> threads on a machine with <code>N</code> cores</li>
+<li>4.0.1.2: Remove support for Python 3.6, fix several bugs in 4.0.1 to do with parallel submission of designs, reloading designs, and other minor user interface problems</li>
+<li>4.0.1.3: Fix unbounded growth in memory cache, optimize parallelism in design further, minor interface improvements</li>
+<li>4.0.1.4: Fix concentration equilibration initial guess which occasionally caused lack of convergence</li>
+<li>4.0.1.5: Fix large memory usage in analysis jobs containing many complexes, improve cache constraint</li>
+<li>4.0.1.6: Fix missing <code>nt()</code> method in Domain class</li>
+<li>4.0.1.7: Fix memory leak in Python when running many analyses sequentially</li>
+<li>4.0.1.8: Add support for Python 3.11</li>
+<li>4.0.1.9: Add support for Python 3.12 and fix rare issue in equilibrium concentration convergence</li>
+<li>4.0.1.10: Fix issue when specifying mixtures of sequences containing U and T and provide binaries with more conservative instruction sets for Linux</li>
+<li>4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible</li>
+<li>4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names</li>
+<li>4.0.2.0: updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="references">
+<table>
+<tbody>
+<tr id="ref-Zadeh11a">
+<td>Zadeh11a</td>
+<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+</tr>
+<tr id="ref-Wolfe17">
+<td>Wolfe17</td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained multistate sequence design for nucleic acid reaction pathway engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
+</tr>
+<tr id="ref-Dirks07">
+<td>Dirks07</td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic analysis of interacting nucleic acid strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
+</tr>
+<tr id="ref-Zadeh11b">
+<td>Zadeh11b</td>
+<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design via efficient ensemble defect optimization</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+</tr>
+<tr id="ref-Wolfe15">
+<td>Wolfe15</td>
+<td><p>Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design for a test tube of interacting nucleic acid strands</i>. ACS Synth. Biol.. <b>4</b>, (2015)</p></td>
+</tr>
+<tr id="ref-Fornace20">
+<td>Fornace20</td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol.. (2020)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="definitions/" class="btn btn-neutral float-right" title="Definitions">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="http://nupack.org/" class="fa fa-code-fork" style="color: #fcfcfc"> Nupack</a>
+        </span>
+    
+    
+    
+      <span><a href="definitions/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="search/main.js"></script>
+      <script src="js/version-select.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-08-19 00:08:04.906762+00:00
+-->
