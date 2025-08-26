@@ -2,6 +2,7 @@
   display: block;
   margin: -10px auto 0.809em;
   padding: 2px;
+  width: 500px;
 }
 
 #version-selector::before {
