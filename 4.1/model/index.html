@@ -62,7 +62,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#temperature">Temperature</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#salt">Salt</a>
+    <li class="toctree-l3"><a class="reference internal" href="#salts">Salts</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#historical-options">Historical options</a>
     </li>
@@ -132,39 +132,38 @@
 <h2 id="model-options">Model options<a class="headerlink" href="#model-options" title="Permanent link">&para;</a></h2>
 <p>The valid options for each property are described below.</p>
 <h3 id="material">Material<a class="headerlink" href="#material" title="Permanent link">&para;</a></h3>
-<p>NUPACK 4 algorithms use the following temperature-dependent RNA and DNA free energy parameter sets specified by the keyword <code>material</code> (default: <code>material='rna'</code>):</p>
+<p>NUPACK 4.1 algorithms use the following temperature-dependent free energy parameter sets for single-material jobs (RNA, DNA, or 2’OMe-RNA), mixed-material jobs (RNA/DNA or RNA/2’OMe-RNA), or custom-material jobs, specified by the keyword <code>material</code> (default: <code>material='rna'</code>):</p>
 <ul>
-<li>
-<p><code>rna</code> Shorthand for <code>rna06</code>.</p>
+<li>RNA single-material parameter sets: <ul>
+<li><code>rna</code> Shorthand for <code>rna06</code>.</li>
+<li><code>rna06</code> Based on [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] and [<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] with additional parameters [<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in a user specified concentration of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</li>
+<li><code>rna95</code> Based on [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1.0 M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</li>
+</ul>
 </li>
-<li>
-<p><code>rna06</code>
-Based on [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>] and [<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] with additional parameters [<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
+<li>DNA single-material parameter sets: <ul>
+<li><code>dna</code> Shorthand for <code>dna04.2</code>.</li>
+<li><code>dna04.2</code> Updated GT internal mismatch values [<a class="citation" href="#ref-Allawi97" id="cite-Allawi97">Allawi97</a>,<a class="citation" href="#ref-Allawi98a" id="cite-Allawi98a">Allawi98a</a>,<a class="citation" href="#ref-Allawi98b" id="cite-Allawi98b">Allawi98b</a>,<a class="citation" href="#ref-Allawi98c" id="cite-Allawi98c">Allawi98c</a>,<a class="citation" href="#ref-Peyret99" id="cite-Peyret99">Peyret99</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], internal asymmetry values [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], and terminal mismatch values [<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>,<a class="citation" href="#ref-Mittal24" id="cite-Mittal24">Mittal24</a>]; in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>, K<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>, NH<span class="arithmatex"><span class="MathJax_Preview">^+_4</span><script type="math/tex">^+_4</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</li>
+<li><code>dna04.1</code> Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>] and [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>] and dangle stacking [<a class="citation" href="#ref-Bommarito00" id="cite-Bommarito00">Bommarito00</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>, K<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>, NH<span class="arithmatex"><span class="MathJax_Preview">^+_4</span><script type="math/tex">^+_4</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</li>
+</ul>
 </li>
-<li>
-<p><code>rna95</code>
-Based on [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>] including coaxial stacking [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] and dangle stacking [<a class="citation" href="#ref-Serra95" id="cite-Serra95">Serra95</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>] in 1M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</p>
+<li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA single-material parameter sets: <ul>
+<li><code>merna06</code> Based on [<a class="citation" href="#ref-Kierzek06" id="cite-Kierzek06">Kierzek06</a>] using stack loop, coaxial stacking, terminal base pair, and strand association values from <code>rna_merna06</code> and all other values from <code>rna06</code>; in 0.12 M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>. </li>
+</ul>
 </li>
-<li>
-<p><code>dna</code> Shorthand for <code>dna04.2</code>.</p>
+<li>RNA/DNA mixed-material parameter sets:<ul>
+<li><code>rna_dna06</code> Using hybrid stack loops [<a class="citation" href="#ref-Sugimoto95" id="cite-Sugimoto95">Sugimoto95</a>], hybrid internal mismatches [<a class="citation" href="#ref-Watkins11" id="cite-Watkins11">Watkins11</a>,<a class="citation" href="#ref-Sugimoto00" id="cite-Sugimoto00">Sugimoto00</a>], and chimeric stack loops [<a class="citation" href="#ref-Nakano04" id="cite-Nakano04">Nakano04</a>] with additional parameters for mixed-material loops [<a class="citation" href="#ref-Nanjundiah25" id="cite-Nanjundiah25">Nanjundiah25</a>] in a user-specified concentration of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>; for use in conjunction with single-material parameter sets <code>rna06</code> and <code>dna04</code>.</li>
+</ul>
 </li>
-<li>
-<p><code>dna04.2</code> Updated GT internal mismatch values [<a class="citation" href="#ref-Allawi97" id="cite-Allawi97">Allawi97</a>,<a class="citation" href="#ref-Allawi98a" id="cite-Allawi98a">Allawi98a</a>,<a class="citation" href="#ref-Allawi98b" id="cite-Allawi98b">Allawi98b</a>,<a class="citation" href="#ref-Allawi98c" id="cite-Allawi98c">Allawi98c</a>,<a class="citation" href="#ref-Peyret99" id="cite-Peyret99">Peyret99</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], internal asymmetry values [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], and terminal mismatch values [<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>,<a class="citation" href="#ref-Mittal24" id="cite-Mittal24">Mittal24</a>];
-in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
+<li>RNA/2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA mixed-material parameter sets: <ul>
+<li><code>rna_merna06</code> Based on hybrid stack loops [<a class="citation" href="#ref-Kierzek06" id="cite-Kierzek06">Kierzek06</a>] with additional parameters for mixed-material loops [<a class="citation" href="#ref-Nanjundiah25" id="cite-Nanjundiah25">Nanjundiah25</a>]; for use in conjunction with single-material parameter sets <code>rna06</code> and <code>merna06</code> in 0.12 M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>.</li>
+</ul>
 </li>
-<li>
-<p><code>dna04.1</code>
-Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>] and [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] with additional parameters [<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
-including coaxial stacking [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>] and dangle stacking [<a class="citation" href="#ref-Bommarito00" id="cite-Bommarito00">Bommarito00</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>]
-in user-specified concentrations of Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span> and Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span> [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
-</li>
-<li>
-<p><code>custom-parameters</code>
-Custom parameters provided in a JSON file (e.g., <code>custom-parameters.json</code>) using the same format as the provided parameter files. Provide <span class="arithmatex"><span class="MathJax_Preview">\Delta G_{37}(\mathrm{loop})</span><script type="math/tex">\Delta G_{37}(\mathrm{loop})</script></span> and <span class="arithmatex"><span class="MathJax_Preview">\Delta H(\mathrm{loop})</span><script type="math/tex">\Delta H(\mathrm{loop})</script></span> values to allow calculations at different temperatures or only <span class="arithmatex"><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span> values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify <code>material = 'custom-parameters'</code>) or specify the full path to the file (<code>material = 'path/to/my/custom-parameters.json'</code>).</p>
+<li>Custom parameter sets: <ul>
+<li><code>custom-parameters</code> Custom parameters provided in a JSON file (e.g., <code>custom-parameters.json</code>) using the same format as the provided parameter files. Provide <span class="arithmatex"><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span>G<span class="arithmatex"><span class="MathJax_Preview">_{37}</span><script type="math/tex">_{37}</script></span>(loop) and <span class="arithmatex"><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span>H(loop) values to allow calculations at different temperatures or only <span class="arithmatex"><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span>G(loop) values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify <code>material = 'custom-parameters'</code>) or specify the full path to the file (<code>material = 'path/to/my/custom-parameters.json'</code>).</li>
+</ul>
 </li>
 </ul>
-<p>Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span> <code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA; <code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>C</code> and <code>A</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>T</code> for DNA) or wobble pairs (<code>G</code><span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span><code>U</code> for RNA). Note that for DNA, <code>G</code> and <code>T</code> form a mismatch and not a wobble pair [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>].</p>
-<p>DNA/RNA hybrids are not allowed.</p>
+<p>Free energies are expressed in kcal/mol. Base pairs are either <a href="../definitions/#watson-crick-pairs">Watson-Crick pairs</a> or <a href="../definitions/#watson-crick-pairs">wobble pairs</a>.</p>
 <hr>
 
 <h3 id="stacking">Stacking<a class="headerlink" href="#stacking" title="Permanent link">&para;</a></h3>
@@ -198,17 +197,27 @@ Alternatively, the temperature can be specified in K using the keyword <code>kel
 </ul>
 <hr>
 
-<h3 id="salt">Salt<a class="headerlink" href="#salt" title="Permanent link">&para;</a></h3>
-<p>The default salt conditions for RNA and DNA parameter sets are <span class="arithmatex"><span class="MathJax_Preview">[\mathrm{Na}^+] = 1 {\rm M}</span><script type="math/tex">[\mathrm{Na}^+] = 1 {\rm M}</script></span>; these are the only salt conditions for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.</p>
+<h3 id="salts">Salts<a class="headerlink" href="#salts" title="Permanent link">&para;</a></h3>
+<p>NUPACK 4.1 algorithms support the following salt conditions: </p>
 <ul>
-<li>
-<p><code>sodium</code>
-Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, <span class="arithmatex"><span class="MathJax_Preview">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</span><script type="math/tex">[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]</script></span>, is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword <code>sodium</code>.</p>
+<li>For RNA single-material jobs using <code>rna06</code>:  <ul>
+<li><code>sodium</code> Based on [<a class="citation" href="#ref-Nanjundiah25" id="cite-Nanjundiah25">Nanjundiah25</a>], the concentration of sodium ions, [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>], is specified in units of molar (default: 1.0, range: [0.05,1.0]) using the keyword <code>sodium</code>.</li>
+<li><code>magnesium</code> Only 0.0 M [Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span>] is supported. </li>
+</ul>
 </li>
-<li>
-<p><code>magnesium</code>
-Based on [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>] the concentration of (divalent) magnesium ions, <span class="arithmatex"><span class="MathJax_Preview">[{\rm Mg}^{++}]</span><script type="math/tex">[{\rm Mg}^{++}]</script></span>, is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword <code>magnesium</code>.</p>
+<li>For RNA single-material jobs using <code>rna95</code>, the only supported salt conditions [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>, <a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] are 1.0 M [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]. </li>
+<li>For DNA single-material jobs using <code>dna04.1</code>/<code>dna04.2</code>:<ul>
+<li><code>sodium</code> Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]+[K<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]+[NH<span class="arithmatex"><span class="MathJax_Preview">^+_4</span><script type="math/tex">^+_4</script></span>], is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword sodium.</li>
+<li><code>magnesium</code> Based on [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>], the concentration of (divalent) magnesium ions, [Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span>], is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword <code>magnesium</code>.</li>
+</ul>
 </li>
+<li>For 2’OMe-RNA single-material jobs [<a class="citation" href="#ref-Kierzek06" id="cite-Kierzek06">Kierzek06</a>] using <code>merna06</code>, the only supported salt conditions are 0.12 M [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]. </li>
+<li>For RNA/DNA mixed-material jobs using <code>rna_dna06</code>:  <ul>
+<li><code>sodium</code> Based on [<a class="citation" href="#ref-Nanjundiah25" id="cite-Nanjundiah25">Nanjundiah25</a>], the concentration of sodium ions, [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>], is specified in units of molar (default: 1.0, range: [0.12,1.0]) using the keyword <code>sodium</code>.</li>
+<li><code>magnesium</code> Only 0.0 M [Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span>] is supported.</li>
+</ul>
+</li>
+<li>For RNA/2’OMe-RNA mixed-material jobs [<a class="citation" href="#ref-Kierzek06" id="cite-Kierzek06">Kierzek06</a>] using <code>rna_merna06</code>, the only supported salt conditions are 0.12 M [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]. </li>
 </ul>
 <hr>
 
@@ -389,6 +398,30 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 <tr id="ref-Bommarito00">
 <td>Bommarito00</td>
 <td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic parameters for DNA sequences with dangling ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
+</tr>
+<tr id="ref-Kierzek06">
+<td>Kierzek06</td>
+<td>Missing citation</td>
+</tr>
+<tr id="ref-Sugimoto95">
+<td>Sugimoto95</td>
+<td>Missing citation</td>
+</tr>
+<tr id="ref-Watkins11">
+<td>Watkins11</td>
+<td>Missing citation</td>
+</tr>
+<tr id="ref-Sugimoto00">
+<td>Sugimoto00</td>
+<td>Missing citation</td>
+</tr>
+<tr id="ref-Nakano04">
+<td>Nakano04</td>
+<td>Missing citation</td>
+</tr>
+<tr id="ref-Nanjundiah25">
+<td>Nanjundiah25</td>
+<td><p>Nanjundiah A., Fornace M.E., Schulte S.J., Pierce N.A.: <i>Models and algorithms for equilibrium analysis of mixed-material nucleic acid systems</i>. bioRxiv. (2025)</p></td>
 </tr>
 <tr id="ref-Koehler05">
 <td>Koehler05</td>

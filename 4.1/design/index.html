@@ -178,7 +178,7 @@
 <li><strong>Multi-complex ensemble:</strong> the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.</li>
 <li><strong>Multi-tube ensemble:</strong> the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.</li>
 </ul>
-<p>We <a href="../definitions/#complex-design-vs-test-tube-design">recommend</a> using the <a href="../definitions/#multi-tube-design">multi-tube design ensemble</a> as it captures concentration and crosstalk effects that are critical in most experimental settings.</p>
+<p>We <a href="../definitions/#complex-design-vs-test-tube-design">recommend</a> using the <a href="../definitions/#multi-tube-design-ensemble">multi-tube design ensemble</a> as it captures concentration and crosstalk effects that are critical in most experimental settings.</p>
 <p>For reaction pathway engineering, sequence design is formulated as a multistate optimization problem using a set of target test tubes to represent reactant, intermediate, and product states of the system, as well as to model crosstalk between components. Note that we achieve <em>kinetic design</em> of a test tube ensemble by performing <em>equilibrium optimization</em> of a multi-tube ensemble: each target test tube isolates different subsets of components in local equilibrium, enabling optimization of kinetically significant states that would appear insignificant if all components were allowed to interact in a single ensemble.
 For large-scale structural engineering including the possibility of pseudoknots, each target test tube is unpseudoknotted, but by imposing sequence constraints between tubes, it is possible to collectively impose pseudoknotted design requirements.</p>
 <p>In a <a href="../definitions/#multi-tube-design-ensemble">multi-tube design ensemble</a>, each target test tube contains a set of desired &ldquo;on-target&rdquo; complexes, each with a target
@@ -195,7 +195,21 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 <span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;R5N5&#39;</span><span class="p">,</span>       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span>        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
 </code></pre></div>
-<p>The reverse complement of domain <code>a</code> is denoted <code>~a</code>. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U wobble pairs for RNA if wobble mutations are permitted (see <a href="./#job-options">Job Options</a>).</p>
+<p>For mixed-material jobs, a material prefix specifies the material of each nucleotide: </p>
+<ul>
+<li>RNA:  {<code>rA</code>, <code>rC</code>, <code>rG</code>, <code>rU</code>} </li>
+<li>DNA: {<code>dA</code>, <code>dC</code>, <code>dG</code>, <code>dT</code>} </li>
+<li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA: {<code>mA</code>, <code>mC</code>, <code>mG</code>, <code>mU</code>} </li>
+</ul>
+<p>which need only be specified when there is a change in material:</p>
+<div class="highlight"><pre><span></span><code><span class="n">h</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;rRRRRRdNNNNN&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span> <span class="c1"># 5 RNA nucleotides followed by 5 DNA nucleotides</span>
+</code></pre></div>
+<p>For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for domains <code>a-b</code> in the examples above). </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Material prefixes must be lowercase (e.g., <code>r</code>, <code>d</code>, <code>m</code>). Degenerate nucleotide codes must be uppercase (e.g., <code>M</code>, <code>R</code>, <code>S</code>, <code>N</code>). Unique nucleotide codes can be either uppercase or lowercase (e.g., <code>A</code>, <code>C</code>, <code>G</code>, <code>U</code>, <code>T</code>, <code>a</code>, <code>c</code>, <code>g</code>, <code>u</code>, <code>t</code>).  </p>
+</div>
+<p>The reverse complement of domain <code>a</code> is denoted <code>~a</code>. Complementarity refers to <a href="../definitions/#watson-crick-pairs">Watson-Crick</a> if wobble mutations are prohibited (default) or includes the possibility of <a href="../definitions/#wobble-pairs">wobble pairs</a> if wobble mutations are permitted (see <a href="./#job-options">Job Options</a>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain <code>a</code> as <code>a*</code> because that would not be valid Python syntax.</p>
@@ -387,7 +401,7 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 </code></pre></div>
 <hr />
 <h2 id="run-a-complex-design-job">Run a complex design job<a class="headerlink" href="#run-a-complex-design-job" title="Permanent link">&para;</a></h2>
-<p>The <code>complex_design</code> class enables specification of a <a href="../definitions/#constrained-multi-complex-design-problem">constrained multi-complex design</a> for a specified set of target complexes (keyword <code>complexes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
+<p>The <code>complex_design</code> class enables specification of a <a href="../definitions/#design-formulation">constrained multi-complex design</a> for a specified set of target complexes (keyword <code>complexes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
 <span class="n">my_complexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">]</span>
 <span class="n">my_design</span> <span class="o">=</span> <span class="n">complex_design</span><span class="p">(</span><span class="n">complexes</span><span class="o">=</span><span class="n">my_complexes</span><span class="p">,</span>
@@ -869,13 +883,13 @@ The primary difference is that a weight can be supplied to control the relative 
     <span class="n">f_redecomp</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>  <span class="c1"># in interval (0,1)</span>
     <span class="n">f_refocus</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
     <span class="n">f_sparse</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span>   <span class="c1"># threshold pair probs for sparse storage in decomposition tree</span>
-    <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># allow wobble pairs in user-assigned domain complements (e.g. between a and a*/~a)</span>
+    <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># allow wobble pairs in user-assigned domain complements (e.g. between a and ~a)</span>
     <span class="n">max_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>       <span class="c1"># max design time in seconds (if nonzero)</span>
 <span class="p">)</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Enable <code>wobble_mutations</code> (default <code>False</code>) so that the designer will consider sequences which may 1) yield wobble (<code>GU</code>) pairs in target structures and 2) contain wobble complements in domain reverse complements (e.g. <code>a</code> = <code>GGG</code>, <code>a*</code> = <code>UUU</code>).</p>
+<p>Enable <code>wobble_mutations</code> (default <code>False</code>) so that the designer will consider sequences which may 1) yield <a href="../definitions/#wobble-pairs">wobble pairs</a> in target structures and 2) contain wobble complements in domain reverse complements (e.g. <code>a</code> = <code>GGG</code>, <code>~a</code> = <code>UUU</code> for RNA).</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

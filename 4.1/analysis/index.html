@@ -147,12 +147,25 @@
 <hr>
 
 <h2 id="specify-a-strand">Specify a strand<a class="headerlink" href="#specify-a-strand" title="Permanent link">&para;</a></h2>
-<p>A <code>Strand</code> is a single RNA or DNA molecule specified as a sequence and a strand name (keyword <code>name</code>):
+<p>A <code>Strand</code> is a single molecule specified as a sequence and a strand name (keyword <code>name</code>):
 <div class="highlight"><pre><span></span><code><span class="n">A</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;AGUCUAGGAUUCGGCGUGGGUUAA&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="c1"># name is required for strands</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;UUAACCCACGCCGAAUCCUAGACUCAAAGUAGUCUAGGAUUCGGCGUG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;AGUCUAGGAUUCGGCGUGGGUUAACACGCCGAAUCCUAGACUACUUUG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 </code></pre></div></p>
-<p>A <code>Strand</code> sequence must contain only <code>'ACGTU'</code>. Two strands are treated as indistinguishable only if they have the same name and the same sequence.</p>
+<p>For mixed-material jobs, a material prefix specifies the material of each nucleotide: </p>
+<ul>
+<li>RNA:  {<code>rA</code>, <code>rC</code>, <code>rG</code>, <code>rU</code>} </li>
+<li>DNA: {<code>dA</code>, <code>dC</code>, <code>dG</code>, <code>dT</code>} </li>
+<li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA: {<code>mA</code>, <code>mC</code>, <code>mG</code>, <code>mU</code>} </li>
+</ul>
+<p>which need only be specified when there is a change in material:
+<div class="highlight"><pre><span></span><code><span class="n">D</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;rACGdAT&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span> <span class="c1"># 3 RNA nucleotides followed by 2 DNA nucleotides</span>
+</code></pre></div></p>
+<p>For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for strands A, B, C in the examples above). </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Material prefixes must be lowercase. </p>
+</div>
 <p>A <code>Strand</code> object supports a <code>nt()</code> method for calculating the number of nucleotides, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span> <span class="c1"># --&gt; 24</span>
 </code></pre></div>

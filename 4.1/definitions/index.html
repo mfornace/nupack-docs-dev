@@ -58,6 +58,10 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#secondary-structure">Secondary structure</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#watson-crick-pairs">Watson-Crick pairs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wobble-pairs">Wobble pairs</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#dot-parens-plus-notation">Dot-parens-plus notation</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#run-length-encoded-dot-parens-plus-notation">Run-length encoded dot-parens-plus notation</a>
@@ -190,11 +194,18 @@
               
                 <h1 id="definitions">Definitions<a class="headerlink" href="#definitions" title="Permanent link">&para;</a></h1>
 <h2 id="sequence">Sequence<a class="headerlink" href="#sequence" title="Permanent link">&para;</a></h2>
-<p>The <strong>sequence</strong>, <span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>, of one or more interacting RNA strands is specified as a list of bases <span class="arithmatex"><span class="MathJax_Preview">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{U}\}</span><script type="math/tex">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{U}\}</script></span> for <span class="arithmatex"><span class="MathJax_Preview">a=1,\dots,|\phi|</span><script type="math/tex">a=1,\dots,|\phi|</script></span>. For DNA, <span class="arithmatex"><span class="MathJax_Preview">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}</span><script type="math/tex">\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}</script></span>.
-Nucleic acid sequences are listed <span class="arithmatex"><span class="MathJax_Preview">5'</span><script type="math/tex">5'</script></span> to <span class="arithmatex"><span class="MathJax_Preview">3'</span><script type="math/tex">3'</script></span>.</p>
+<p>The <strong>sequence</strong>, <span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>, of one or more interacting strands is specified as a list of nucleotides <span class="arithmatex"><span class="MathJax_Preview">\phi^a</span><script type="math/tex">\phi^a</script></span> for <span class="arithmatex"><span class="MathJax_Preview">a=1,\dots,|\phi|</span><script type="math/tex">a=1,\dots,|\phi|</script></span>, where <span class="arithmatex"><span class="MathJax_Preview">\phi^a</span><script type="math/tex">\phi^a</script></span> specifies both the material and base.</p>
+<ul>
+<li>For RNA nucleotides: <span class="arithmatex"><span class="MathJax_Preview">\phi^a\in\{</span><script type="math/tex">\phi^a\in\{</script></span><code>rA</code>, <code>rC</code>, <code>rG</code>, <code>rU</code><span class="arithmatex"><span class="MathJax_Preview">\}</span><script type="math/tex">\}</script></span></li>
+<li>For DNA nucleotides: <span class="arithmatex"><span class="MathJax_Preview">\phi^a\in\{</span><script type="math/tex">\phi^a\in\{</script></span><code>dA</code>, <code>dC</code>, <code>dG</code>, <code>dT</code><span class="arithmatex"><span class="MathJax_Preview">\}</span><script type="math/tex">\}</script></span></li>
+<li>For 2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA nucleotides: <span class="arithmatex"><span class="MathJax_Preview">\phi^a\in\{</span><script type="math/tex">\phi^a\in\{</script></span><code>mA</code>, <code>mC</code>, <code>mG</code>, <code>mU</code><span class="arithmatex"><span class="MathJax_Preview">\}</span><script type="math/tex">\}</script></span></li>
+</ul>
+<p>Hence, for a mixed-material system (RNA/DNA or RNA/2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA), the sequence alphabet contains eight letters rather than four.</p>
+<p>Sequences are specified 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>. The material need only be specified when there is a change in material (e.g., <code>rACGdAT</code> denotes a strand with 3 RNA nucleotides followed by 2 DNA nucleotides). </p>
+<p>For single-material jobs, the material prefix can be omitted for all nucleotides (e.g., <code>ACGUU</code> for an RNA-only job or <code>ACGTT</code> for a DNA-only job), and nucleotides <code>rU</code>, <code>mU</code>, and <code>dT</code> are converted interchangeably as appropriate. </p>
 <!-- Unlike NUPACK 3, NUPACK 4 uses zero-based indices exclusively. The first index of any sequence is 0, not 1. -->
 <p>Unlike NUPACK 3, bases in NUPACK 4 are indexed starting with 0 at the <span class="arithmatex"><span class="MathJax_Preview">5'</span><script type="math/tex">5'</script></span>-most base of the first strand and ending at the <span class="arithmatex"><span class="MathJax_Preview">3'</span><script type="math/tex">3'</script></span>-most base of the last strand.
-For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39. Valid bases are <code>A</code>, <code>C</code>, <code>G</code>, <code>T</code>, and <code>U</code>. For RNA calculations, <code>T</code> is automatically converted to <code>U</code>, and vice versa for DNA calculations.</p>
+For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39. </p>
 <!--
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
 
@@ -209,52 +220,56 @@ A sequence may also contain any of the [degenerate nucleotides codes](https://ww
 </thead>
 <tbody>
 <tr>
-<td>M</td>
-<td>A or C</td>
+<td>rM</td>
+<td>rA or rC</td>
 </tr>
 <tr>
-<td>R</td>
-<td>A or G</td>
+<td>rR</td>
+<td>rA or rG</td>
 </tr>
 <tr>
-<td>W</td>
-<td>A or U</td>
+<td>rW</td>
+<td>rA or rU</td>
 </tr>
 <tr>
-<td>S</td>
-<td>C or G</td>
+<td>rS</td>
+<td>rC or rG</td>
 </tr>
 <tr>
-<td>Y</td>
-<td>C or U</td>
+<td>rY</td>
+<td>rC or rU</td>
 </tr>
 <tr>
-<td>K</td>
-<td>G or U</td>
+<td>rK</td>
+<td>rG or rU</td>
 </tr>
 <tr>
-<td>V</td>
-<td>A, C, or G</td>
+<td>rV</td>
+<td>rA, rC, or rG</td>
 </tr>
 <tr>
-<td>H</td>
-<td>A, C, or U</td>
+<td>rH</td>
+<td>rA, rC, or rU</td>
 </tr>
 <tr>
-<td>D</td>
-<td>A, G, or U</td>
+<td>rD</td>
+<td>rA, rG, or rU</td>
 </tr>
 <tr>
-<td>B</td>
-<td>C, G, or U</td>
+<td>rB</td>
+<td>rC, rG, or rU</td>
 </tr>
 <tr>
-<td>N</td>
-<td>A, C, G, or U</td>
+<td>rN</td>
+<td>rA, rC, rG, or rU</td>
 </tr>
 </tbody>
 </table>
-<p>For DNA, T replaces U.</p>
+<p>For 2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA codes, “m” replaces “r” (e.g., “mS” instead of “rS”). For DNA codes, “d” replaces “r” and T replaces U (e.g., “dT” instead of “rU”). For mixed-material jobs, a nucleotide that can be either material has a wildcard prefix “w” (e.g., for an RNA/DNA job, “wS” is equivalent to “rS or dS”). </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Material prefixes must be lowercase (e.g., <code>r</code>, <code>d</code>, <code>m</code>). Degenerate nucleotide codes must be uppercase (e.g., <code>M</code>, <code>R</code>, <code>S</code>, <code>N</code>). Unique nucleotide codes can be either uppercase or lowercase (e.g., <code>A</code>, <code>C</code>, <code>G</code>, <code>U</code>, <code>T</code>, <code>a</code>, <code>c</code>, <code>g</code>, <code>u</code>, <code>t</code>).  </p>
+</div>
 <h3 id="sequence-distance">Sequence distance<a class="headerlink" href="#sequence-distance" title="Permanent link">&para;</a></h3>
 <p>The <strong>sequence distance</strong> between two sequences <span class="arithmatex"><span class="MathJax_Preview">\phi_1</span><script type="math/tex">\phi_1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">\phi_2</span><script type="math/tex">\phi_2</script></span> of equal length (<span class="arithmatex"><span class="MathJax_Preview">|\phi_1|=|\phi_2|=N</span><script type="math/tex">|\phi_1|=|\phi_2|=N</script></span>) is the number of (possibly degenerate) nucleotide codes that are non-intersecting in the two sequences:</p>
 <div class="arithmatex">
@@ -265,7 +280,7 @@ d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a \cap \phi_2^a \neq \emptyset\\ 1: &\phi_1^a \cap \phi_2^a = \emptyset\end{array} \right.
 \end{align}</script>
 </div>
-<p>For example, <span class="arithmatex"><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(ACGU, SSWW) = 2. If <span class="arithmatex"><span class="MathJax_Preview">\phi_1</span><script type="math/tex">\phi_1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">\phi_2</span><script type="math/tex">\phi_2</script></span> contain no degenerate nucleotide codes, this definition simplifies to the number of nucleotides that are different in the two sequences:</p>
+<p>For example, <span class="arithmatex"><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(rACGU, rSSWW) = 2 and <span class="arithmatex"><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(dACGrU, rSSWW) = 3. If <span class="arithmatex"><span class="MathJax_Preview">\phi_1</span><script type="math/tex">\phi_1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">\phi_2</span><script type="math/tex">\phi_2</script></span> contain no degenerate nucleotide codes, this definition simplifies to the number of nucleotides that are different in the two sequences:</p>
 <div class="arithmatex">
 <div class="MathJax_Preview">\begin{align}
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &amp;\phi_1^a = \phi_2^a\\ 1: &amp;\phi_1^a \neq \phi_2^a \end{array} \right.
@@ -274,12 +289,37 @@ d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a = \phi_2^a\\ 1: &\phi_1^a \neq \phi_2^a \end{array} \right.
 \end{align}</script>
 </div>
-<p>For example, <span class="arithmatex"><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(ACGU, ACUU) = 1.</p>
+<p>For example, <span class="arithmatex"><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(rACGU, rACUU) = 1 and <span class="arithmatex"><span class="MathJax_Preview">d_\textrm{seq}</span><script type="math/tex">d_\textrm{seq}</script></span>(dArCGU, rACUU) = 2.</p>
 <hr>
 
 <h2 id="secondary-structure">Secondary structure<a class="headerlink" href="#secondary-structure" title="Permanent link">&para;</a></h2>
-<p>A <strong>secondary structure</strong>, <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>, of one or more interacting RNA strands is defined by a set of base pairs, each a Watson&ndash;Crick pair [A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U or C<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G] or a wobble pair [G<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U]). For DNA, the corresponding Watson&ndash;Crick pairs are A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T or C<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G and there are no wobble pairs.
-A <strong>polymer graph</strong> representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> around the circumference with a <em>nick</em> between each strand, and drawing straight lines connecting paired bases.
+<p>A <strong>secondary structure</strong>, <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>, of one or more interacting nucleic acid strands is defined by a set of base pairs, each a Watson&ndash;Crick pair or a wobble pair.</p>
+<h3 id="watson-crick-pairs">Watson-Crick pairs<a class="headerlink" href="#watson-crick-pairs" title="Permanent link">&para;</a></h3>
+<p>Single-material Watson–Crick pairs:</p>
+<ul>
+<li>RNA: <code>rG</code>·<code>rC</code> and <code>rA</code>·<code>rU</code>,</li>
+<li>DNA: <code>dG</code>·<code>dC</code> and <code>dA</code>·<code>dT</code>,</li>
+<li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA: <code>mG</code>·<code>mC</code> and <code>mA</code>·<code>mU</code>,</li>
+</ul>
+<p>Mixed-material Watson-Crick pairs: </p>
+<ul>
+<li>RNA/DNA: <code>rG</code>·<code>dC</code>, <code>dG</code>·<code>rC</code>, <code>rA</code>·<code>dT</code>, <code>dA</code>·<code>rU</code>,</li>
+<li>RNA/2’OMe-RNA: <code>rG</code>·<code>mC</code>, <code>mG</code>·<code>rC</code>, <code>rA</code>·<code>mU</code>, and <code>mA</code>·<code>rU</code>. </li>
+</ul>
+<h3 id="wobble-pairs">Wobble pairs<a class="headerlink" href="#wobble-pairs" title="Permanent link">&para;</a></h3>
+<p>Single-material wobble pairs:</p>
+<ul>
+<li>RNA: <code>rG</code>·<code>rU</code>,</li>
+<li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA: <code>mG</code>·<code>mU</code>,</li>
+</ul>
+<p>Mixed-material wobble pairs: </p>
+<ul>
+<li>RNA/DNA: <code>rG</code>·<code>dT</code>, </li>
+<li>RNA/2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA: <code>rG</code>·<code>mU</code> and <code>mG</code>·<code>rU</code>.</li>
+</ul>
+<p>Note that for DNA, <code>dG</code> and <code>dT</code> are considered to form a mismatch <code>dG</code>×<code>dT</code> and not a wobble pair [<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>]. 
+Similarly for RNA/DNA, <code>dG</code> and <code>rU</code> are considered to form a mismatch <code>dG</code>×<code>rU</code> and not a wobble pair [<a class="citation" href="#ref-Sugimoto00" id="cite-Sugimoto00">Sugimoto00</a>].</p>
+<p>A <strong>polymer graph</strong> representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> around the circumference with a <em>nick</em> between each strand, and drawing straight lines connecting paired bases.
 A secondary structure is <strong>unpseudoknotted</strong> if there exists a strand ordering for which the polymer graph has no crossing lines, or <strong>pseudoknotted</strong> if all strand orderings contain crossing lines. In NUPACK 4, pseudoknots are excluded from the structural ensemble.
 A secondary structure is <strong>connected</strong> if no subset of the strands is free of the others. Secondary structures may be specified one of three ways for NUPACK calculations as described in the following three sections.</p>
 <h3 id="dot-parens-plus-notation">Dot-parens-plus notation<a class="headerlink" href="#dot-parens-plus-notation" title="Permanent link">&para;</a></h3>
@@ -374,16 +414,16 @@ complex of <span class="arithmatex"><span class="MathJax_Preview">L</span><scrip
 \overline{\Delta G}(\phi,s) = (L-1)\,\Delta G^\textrm{assoc}\, + \sum_{\mathrm{loop} \in s} \Delta G(\mathrm{loop}). \label{eq:dGbar}
 \end{align}</p>
 <h3 id="loop-free-energies">Loop free energies<a class="headerlink" href="#loop-free-energies" title="Permanent link">&para;</a></h3>
-<p>The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span>, is modeled for the different loop types as follows:</p>
+<p>The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G(\mathrm{loop})</span><script type="math/tex">\Delta G(\mathrm{loop})</script></span>, is modeled for the different loop types as follows [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-Xia98" id="cite-Xia98">Xia98</a>,<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>,<a class="citation" href="#ref-Zuker03" id="cite-Zuker03">Zuker03</a>,<a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>,<a class="citation" href="#ref-Turner10" id="cite-Turner10">Turner10</a>]:</p>
 <ul>
-<li>A <strong>hairpin loop</strong> is closed by a single base-pair <span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>. The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{hairpin}_{a,b}</span><script type="math/tex">\Delta G^\mathrm{hairpin}_{a,b}</script></span>, depends on sequence and loop size.</li>
-<li>An <strong>interior loop</strong> is closed by two base pairs (<span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span> and <span class="arithmatex"><span class="MathJax_Preview">d\cdot e</span><script type="math/tex">d\cdot e</script></span> with <span class="arithmatex"><span class="MathJax_Preview">a&lt;d&lt;e&lt;b</span><script type="math/tex">a<d<e<b</script></span>). The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{interior}_{a,d,e,b}</span><script type="math/tex">\Delta G^\mathrm{interior}_{a,d,e,b}</script></span> depends on sequence, loop size, and loop asymmetry. <strong>Bulge loops</strong> (where either <span class="arithmatex"><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> or <span class="arithmatex"><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) and <strong>stack loops</strong> (where both <span class="arithmatex"><span class="MathJax_Preview">d=a+1</span><script type="math/tex">d=a+1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">e=b-1</span><script type="math/tex">e=b-1</script></span>) are treated as special cases of interior loops.</li>
+<li>A <strong>hairpin loop</strong> is closed by a single base-pair <span class="arithmatex"><span class="MathJax_Preview">i\cdot j</span><script type="math/tex">i\cdot j</script></span>. The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{hairpin}_{i,j}</span><script type="math/tex">\Delta G^\mathrm{hairpin}_{i,j}</script></span>, depends on sequence and loop size.</li>
+<li>An <strong>interior loop</strong> is closed by two base pairs (<span class="arithmatex"><span class="MathJax_Preview">i\cdot j</span><script type="math/tex">i\cdot j</script></span> and <span class="arithmatex"><span class="MathJax_Preview">d\cdot e</span><script type="math/tex">d\cdot e</script></span> with <span class="arithmatex"><span class="MathJax_Preview">i&lt;d&lt;e&lt;j</span><script type="math/tex">i<d<e<j</script></span>). The loop free energy, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{interior}_{i,d,e,j}</span><script type="math/tex">\Delta G^\mathrm{interior}_{i,d,e,j}</script></span> depends on sequence, loop size, and loop asymmetry. <strong>Bulge loops</strong> (where either <span class="arithmatex"><span class="MathJax_Preview">d=i+1</span><script type="math/tex">d=i+1</script></span> or <span class="arithmatex"><span class="MathJax_Preview">e=j-1</span><script type="math/tex">e=j-1</script></span>) and <strong>stack loops</strong> (where joth <span class="arithmatex"><span class="MathJax_Preview">d=i+1</span><script type="math/tex">d=i+1</script></span> and <span class="arithmatex"><span class="MathJax_Preview">e=j-1</span><script type="math/tex">e=j-1</script></span>) are treated as special cases of interior loops.</li>
 <li>A <strong>multiloop</strong> is closed by three or more base pairs.
-The loop free energy is modeled as the sum of three sequence-independent penalties:
-<span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{init}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{init}</script></span> for formation of a multiloop, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{bp}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{bp}</script></span> for each closing base pair, <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{nt}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{nt}</script></span> for each unpaired nucleotide inside the multiloop,
-plus a sequence-dependent penalty: <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{terminalbp}_{a, b}</span><script type="math/tex">\Delta G^\mathrm{terminalbp}_{a, b}</script></span> for each closing pair <span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>.</li>
+The loop free energy is modeled as the sum of three material-dependent penalties:
+(1) <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{init}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{init}</script></span> for formation of a multiloop, (2) <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{bp}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{bp}</script></span> for each closing base pair, (3) <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{multi}_\mathrm{nt}</span><script type="math/tex">\Delta G^\mathrm{multi}_\mathrm{nt}</script></span> for each unpaired nucleotide inside the multiloop, 
+plus two sequence-dependent terms: (4) <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{terminalbp}_{i, j}</span><script type="math/tex">\Delta G^\mathrm{terminalbp}_{i, j}</script></span> for each closing pair <span class="arithmatex"><span class="MathJax_Preview">i\cdot j</span><script type="math/tex">i\cdot j</script></span>, (5) <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\text{stacking}</span><script type="math/tex">\Delta G^\text{stacking}</script></span>, an optional coaxial and dangle stacking bonus.</li>
 <li>An <strong>exterior loop</strong> contains a nick between strands and any number of closing base pairs.
-The exterior loop free energy is the sum of <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{terminalbp}_{a, b}</span><script type="math/tex">\Delta G^\mathrm{terminalbp}_{a, b}</script></span> over all closing base pairs <span class="arithmatex"><span class="MathJax_Preview">a\cdot b</span><script type="math/tex">a\cdot b</script></span>. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>].</li>
+The exterior loop free energy is the sum of <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\mathrm{terminalbp}_{i, j}</span><script type="math/tex">\Delta G^\mathrm{terminalbp}_{i, j}</script></span> over all closing base pairs <span class="arithmatex"><span class="MathJax_Preview">i\cdot j</span><script type="math/tex">i\cdot j</script></span> and an optional optional coaxial and dangle stacking bonus <span class="arithmatex"><span class="MathJax_Preview">\Delta G^\text{stacking}</span><script type="math/tex">\Delta G^\text{stacking}</script></span>. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [<a class="citation" href="#ref-Dirks07" id="cite-Dirks07">Dirks07</a>].</li>
 </ul>
 <p><p align="center">
 <img src="../figs/looptypes.png" alt="Loop Types" width="450"/>
@@ -923,6 +963,14 @@ while satisfying the hard constraints in <span class="arithmatex"><span class="M
 <div class="references">
 <table>
 <tbody>
+<tr id="ref-SantaLucia04">
+<td>SantaLucia04</td>
+<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
+</tr>
+<tr id="ref-Sugimoto00">
+<td>Sugimoto00</td>
+<td>Missing citation</td>
+</tr>
 <tr id="ref-Zadeh11a">
 <td>Zadeh11a</td>
 <td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
@@ -974,10 +1022,6 @@ while satisfying the hard constraints in <span class="arithmatex"><span class="M
 <tr id="ref-Serra95">
 <td>Serra95</td>
 <td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
-</tr>
-<tr id="ref-SantaLucia04">
-<td>SantaLucia04</td>
-<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
 </tr>
 <tr id="ref-Peyret00">
 <td>Peyret00</td>
