@@ -27,32 +27,27 @@ The valid options for each property are described below.
 
 ### Material
 
-NUPACK 4 algorithms use the following temperature-dependent RNA and DNA free energy parameter sets specified by the keyword `material` (default: `material='rna'`):
+NUPACK 4.1 algorithms use the following temperature-dependent free energy parameter sets for single-material jobs (RNA, DNA, or 2’OMe-RNA), mixed-material jobs (RNA/DNA or RNA/2’OMe-RNA), or custom-material jobs, specified by the keyword `material` (default: `material='rna'`):
 
-- `rna` Shorthand for `rna06`.
+- RNA single-material parameter sets: 
+    - `rna` Shorthand for `rna06`.
+    - `rna06` Based on [@Mathews99] and [@Lu06] with additional parameters [@Xia98,@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in a user specified concentration of Na$^+$.
+    - `rna95` Based on [@Serra95] with additional parameters [@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in 1.0 M Na$^+$.
+- DNA single-material parameter sets: 
+    - `dna` Shorthand for `dna04.2`.
+    - `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@SantaLucia04], internal asymmetry values [@SantaLucia04], and terminal mismatch values [@Turner10,@Mittal24]; in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
+    - `dna04.1` Based on [@SantaLucia98] and [@SantaLucia04] with additional parameters [@Zuker03] including coaxial stacking [@Peyret00] and dangle stacking [@Bommarito00,@Zuker03] in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
+- 2$'$OMe-RNA single-material parameter sets: 
+    - `merna06` Based on [@Kierzek06] using stack loop, coaxial stacking, terminal base pair, and strand association values from `rna_merna06` and all other values from `rna06`; in 0.12 M Na$^+$. 
+- RNA/DNA mixed-material parameter sets:
+    - `rna_dna06` Using hybrid stack loops [@Sugimoto95], hybrid internal mismatches [@Watkins11,@Sugimoto00], and chimeric stack loops [@Nakano04] with additional parameters for mixed-material loops [@Nanjundiah25] in a user-specified concentration of Na$^+$; for use in conjunction with single-material parameter sets `rna06` and `dna04`.
+- RNA/2$'$OMe-RNA mixed-material parameter sets: 
+    - `rna_merna06` Based on hybrid stack loops [@Kierzek06] with additional parameters for mixed-material loops [@Nanjundiah25]; for use in conjunction with single-material parameter sets `rna06` and `merna06` in 0.12 M Na$^+$.
+- Custom parameter sets: 
+    - `custom-parameters` Custom parameters provided in a JSON file (e.g., `custom-parameters.json`) using the same format as the provided parameter files. Provide $\Delta$G$_{37}$(loop) and $\Delta$H(loop) values to allow calculations at different temperatures or only $\Delta$G(loop) values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify `material = 'custom-parameters'`) or specify the full path to the file (`material = 'path/to/my/custom-parameters.json'`).
 
-- `rna06`
-Based on [@Mathews99] and [@Lu06] with additional parameters [@Xia98,@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in 1M Na$^+$.
+Free energies are expressed in kcal/mol. Base pairs are either [Watson-Crick pairs](definitions.md#watson-crick-pairs) or [wobble pairs](definitions.md#watson-crick-pairs).
 
-- `rna95`
-Based on [@Serra95] with additional parameters [@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in 1M Na$^+$.
-
-- `dna` Shorthand for `dna04.2`.
-
-- `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@SantaLucia04], internal asymmetry values [@SantaLucia04], and terminal mismatch values [@Turner10,@Mittal24];
-in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
-
-- `dna04.1`
-Based on [@SantaLucia98] and [@SantaLucia04] with additional parameters [@Zuker03]
-including coaxial stacking [@Peyret00] and dangle stacking [@Bommarito00,@Zuker03]
-in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
-
-- `custom-parameters`
-Custom parameters provided in a JSON file (e.g., `custom-parameters.json`) using the same format as the provided parameter files. Provide $\Delta G_{37}(\mathrm{loop})$ and $\Delta H(\mathrm{loop})$ values to allow calculations at different temperatures or only $\Delta G(\mathrm{loop})$ values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify `material = 'custom-parameters'`) or specify the full path to the file (`material = 'path/to/my/custom-parameters.json'`).
-
-Free energies are expressed in kcal/mol. Base pairs are either Watson-Crick pairs (`G`$\cdot$ `C` and `A`$\cdot$`U` for RNA; `G`$\cdot$`C` and `A`$\cdot$`T` for DNA) or wobble pairs (`G`$\cdot$`U` for RNA). Note that for DNA, `G` and `T` form a mismatch and not a wobble pair [@SantaLucia04].
-
-DNA/RNA hybrids are not allowed.
 
 <hr>
 
@@ -86,15 +81,24 @@ Alternatively, the temperature can be specified in K using the keyword `kelvin`.
 
 <hr>
 
-### Salt
+### Salts
 
-The default salt conditions for RNA and DNA parameter sets are $[\mathrm{Na}^+] = 1 {\rm M}$; these are the only salt conditions for RNA. Salt corrections are available for DNA parameters to permit calculations in user-specified sodium, potassium, ammonium, and magnesium ion concentrations.
+NUPACK 4.1 algorithms support the following salt conditions: 
 
-- `sodium`
-Based on [@SantaLucia98,@SantaLucia04] the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, $[{\rm Na}^+] + [\mathrm{K}^+] + [\mathrm{NH}_4^+]$, is specified in units of molar (default: 1.0, range: \[0.05,1.1\]) using the keyword `sodium`.
+- For RNA single-material jobs using `rna06`:  
+    - `sodium` Based on [@Nanjundiah25], the concentration of sodium ions, [Na$^+$], is specified in units of molar (default: 1.0, range: [0.05,1.0]) using the keyword `sodium`.
+    - `magnesium` Only 0.0 M [Mg$^{++}$] is supported. 
+- For RNA single-material jobs using `rna95`, the only supported salt conditions [@Mathews99, @Lu06] are 1.0 M [Na$^+$]. 
+- For DNA single-material jobs using `dna04.1`/`dna04.2`:
+    - `sodium` Based on [@SantaLucia98,@SantaLucia04], the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, [Na$^+$]+[K$^+$]+[NH$^+_4$], is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword sodium.
+    - `magnesium` Based on [@Peyret00,@Koehler05], the concentration of (divalent) magnesium ions, [Mg$^{++}$], is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword `magnesium`.
+- For 2’OMe-RNA single-material jobs [@Kierzek06] using `merna06`, the only supported salt conditions are 0.12 M [Na$^+$]. 
+- For RNA/DNA mixed-material jobs using `rna_dna06`:  
+    - `sodium` Based on [@Nanjundiah25], the concentration of sodium ions, [Na$^+$], is specified in units of molar (default: 1.0, range: [0.12,1.0]) using the keyword `sodium`.
+    - `magnesium` Only 0.0 M [Mg$^{++}$] is supported.
+- For RNA/2’OMe-RNA mixed-material jobs [@Kierzek06] using `rna_merna06`, the only supported salt conditions are 0.12 M [Na$^+$]. 
 
-- `magnesium`
-Based on [@Peyret00,@Koehler05] the concentration of (divalent) magnesium ions, $[{\rm Mg}^{++}]$, is specified in units of molar (default: 0.0, range: \[0.0,0.2\]) using the keyword `magnesium`.
+
 
 <hr>
 

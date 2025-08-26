@@ -4,11 +4,21 @@
 
 ## Sequence
 
-The **sequence**, $\phi$, of one or more interacting RNA strands is specified as a list of bases $\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{U}\}$ for $a=1,\dots,|\phi|$. For DNA, $\phi^a\in\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}$.
-Nucleic acid sequences are listed $5'$ to $3'$.
+The **sequence**, $\phi$, of one or more interacting strands is specified as a list of nucleotides $\phi^a$ for $a=1,\dots,|\phi|$, where $\phi^a$ specifies both the material and base.
+
+- For RNA nucleotides: $\phi^a\in\{$`rA`, `rC`, `rG`, `rU`$\}$
+- For DNA nucleotides: $\phi^a\in\{$`dA`, `dC`, `dG`, `dT`$\}$
+- For 2$'$OMe-RNA nucleotides: $\phi^a\in\{$`mA`, `mC`, `mG`, `mU`$\}$
+
+Hence, for a mixed-material system (RNA/DNA or RNA/2$'$OMe-RNA), the sequence alphabet contains eight letters rather than four.
+
+Sequences are specified 5$'$ to 3$'$. The material need only be specified when there is a change in material (e.g., `rACGdAT` denotes a strand with 3 RNA nucleotides followed by 2 DNA nucleotides). 
+
+For single-material jobs, the material prefix can be omitted for all nucleotides (e.g., `ACGUU` for an RNA-only job or `ACGTT` for a DNA-only job), and nucleotides `rU`, `mU`, and `dT` are converted interchangeably as appropriate. 
+
 <!-- Unlike NUPACK 3, NUPACK 4 uses zero-based indices exclusively. The first index of any sequence is 0, not 1. -->
 Unlike NUPACK 3, bases in NUPACK 4 are indexed starting with 0 at the $5'$-most base of the first strand and ending at the $3'$-most base of the last strand.
-For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39. Valid bases are `A`, `C`, `G`, `T`, and `U`. For RNA calculations, `T` is automatically converted to `U`, and vice versa for DNA calculations.
+For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39. 
 <!--
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
 
@@ -17,19 +27,22 @@ Sequence constraints can be specified using IUPAC **degenerate nucleotide codes*
 
 Code | Nucleotides
 -----|------------
-  M  | A or C
-  R  | A or G
-  W  | A or U
-  S  | C or G
-  Y  | C or U
-  K  | G or U
-  V  | A, C, or G
-  H  | A, C, or U
-  D  | A, G, or U
-  B  | C, G, or U
-  N  | A, C, G, or U
+  rM  | rA or rC
+  rR  | rA or rG
+  rW  | rA or rU
+  rS  | rC or rG
+  rY  | rC or rU
+  rK  | rG or rU
+  rV  | rA, rC, or rG
+  rH  | rA, rC, or rU
+  rD  | rA, rG, or rU
+  rB  | rC, rG, or rU
+  rN  | rA, rC, rG, or rU
 
-  For DNA, T replaces U.
+For 2$'$OMe-RNA codes, “m” replaces “r” (e.g., “mS” instead of “rS”). For DNA codes, “d” replaces “r” and T replaces U (e.g., “dT” instead of “rU”). For mixed-material jobs, a nucleotide that can be either material has a wildcard prefix “w” (e.g., for an RNA/DNA job, “wS” is equivalent to “rS or dS”). 
+
+!!! Note
+    Material prefixes must be lowercase (e.g., `r`, `d`, `m`). Degenerate nucleotide codes must be uppercase (e.g., `M`, `R`, `S`, `N`). Unique nucleotide codes can be either uppercase or lowercase (e.g., `A`, `C`, `G`, `U`, `T`, `a`, `c`, `g`, `u`, `t`).  
 
 ### Sequence distance
 The **sequence distance** between two sequences $\phi_1$ and $\phi_2$ of equal length ($|\phi_1|=|\phi_2|=N$) is the number of (possibly degenerate) nucleotide codes that are non-intersecting in the two sequences:
@@ -38,19 +51,49 @@ The **sequence distance** between two sequences $\phi_1$ and $\phi_2$ of equal l
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a \cap \phi_2^a \neq \emptyset\\ 1: &\phi_1^a \cap \phi_2^a = \emptyset\end{array} \right.
 \end{align}
 
-For example, $d_\textrm{seq}$(ACGU, SSWW) = 2. If $\phi_1$ and $\phi_2$ contain no degenerate nucleotide codes, this definition simplifies to the number of nucleotides that are different in the two sequences:
+For example, $d_\textrm{seq}$(rACGU, rSSWW) = 2 and $d_\textrm{seq}$(dACGrU, rSSWW) = 3. If $\phi_1$ and $\phi_2$ contain no degenerate nucleotide codes, this definition simplifies to the number of nucleotides that are different in the two sequences:
 
 \begin{align}
 d_\textrm{seq}(\phi_1,\phi_2) = \sum_{1\le a \le N} \left\{\begin{array}[ll] 0 0: &\phi_1^a = \phi_2^a\\ 1: &\phi_1^a \neq \phi_2^a \end{array} \right.
 \end{align}
 
-For example, $d_\textrm{seq}$(ACGU, ACUU) = 1.
+For example, $d_\textrm{seq}$(rACGU, rACUU) = 1 and $d_\textrm{seq}$(dArCGU, rACUU) = 2.
 
 <hr>
 
 ## Secondary structure
 
-A **secondary structure**, $s$, of one or more interacting RNA strands is defined by a set of base pairs, each a Watson--Crick pair \[A$\cdot$U or C$\cdot$G\] or a wobble pair \[G$\cdot$U\]). For DNA, the corresponding Watson--Crick pairs are A$\cdot$T or C$\cdot$G and there are no wobble pairs.
+A **secondary structure**, $s$, of one or more interacting nucleic acid strands is defined by a set of base pairs, each a Watson--Crick pair or a wobble pair.
+
+### Watson-Crick pairs
+
+Single-material Watson–Crick pairs:
+
+- RNA: `rG`·`rC` and `rA`·`rU`,
+- DNA: `dG`·`dC` and `dA`·`dT`,
+- 2$'$OMe-RNA: `mG`·`mC` and `mA`·`mU`,
+
+Mixed-material Watson-Crick pairs: 
+
+- RNA/DNA: `rG`·`dC`, `dG`·`rC`, `rA`·`dT`, `dA`·`rU`,
+- RNA/2’OMe-RNA: `rG`·`mC`, `mG`·`rC`, `rA`·`mU`, and `mA`·`rU`. 
+
+### Wobble pairs
+
+Single-material wobble pairs:
+
+- RNA: `rG`·`rU`,
+- 2$'$OMe-RNA: `mG`·`mU`,
+
+Mixed-material wobble pairs: 
+
+- RNA/DNA: `rG`·`dT`, 
+- RNA/2$'$OMe-RNA: `rG`·`mU` and `mG`·`rU`.
+
+Note that for DNA, `dG` and `dT` are considered to form a mismatch `dG`×`dT` and not a wobble pair [@SantaLucia04]. 
+Similarly for RNA/DNA, `dG` and `rU` are considered to form a mismatch `dG`×`rU` and not a wobble pair [@Sugimoto00].
+
+
 A **polymer graph** representation of a secondary structure is constructed by ordering the strands around a circle, drawing the backbones in succession from 5$'$ to 3$'$ around the circumference with a *nick* between each strand, and drawing straight lines connecting paired bases.
 A secondary structure is **unpseudoknotted** if there exists a strand ordering for which the polymer graph has no crossing lines, or **pseudoknotted** if all strand orderings contain crossing lines. In NUPACK 4, pseudoknots are excluded from the structural ensemble.
 A secondary structure is **connected** if no subset of the strands is free of the others. Secondary structures may be specified one of three ways for NUPACK calculations as described in the following three sections.
@@ -131,6 +174,7 @@ It is often convenient to define $\Psi$ to contain all complex species of up to 
 **Figure:** A test tube ensemble containing strain species $\Psi^0 = \{$A,B,C$\}$ interacting to form all complex species $\Psi$ of up to $L_{\rm max} = 3$ strands.
 
 ## Free energy model
+
 For each (unpseudoknotted connected) secondary structure $s\in\overline{\Gamma}(\phi)$, the free energy,
 $\overline{\Delta G}(\phi,s)$, is estimated as the sum of the empirically determined free energies of the
 constituent loops [@SantaLucia98,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10] plus a strand association penalty [@Bloomfield00], $\Delta
@@ -141,16 +185,17 @@ complex of $L$ strands:
 \end{align}
 
 ### Loop free energies
-The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different loop types as follows:
 
-- A **hairpin loop** is closed by a single base-pair $a\cdot b$. The loop free energy, $\Delta G^\mathrm{hairpin}_{a,b}$, depends on sequence and loop size.
-- An **interior loop** is closed by two base pairs ($a\cdot b$ and $d\cdot e$ with $a<d<e<b$). The loop free energy, $\Delta G^\mathrm{interior}_{a,d,e,b}$ depends on sequence, loop size, and loop asymmetry. **Bulge loops** (where either $d=a+1$ or $e=b-1$) and **stack loops** (where both $d=a+1$ and $e=b-1$) are treated as special cases of interior loops.
+The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different loop types as follows [@SantaLucia98,@Xia98,@Mathews99,@Zuker03,@Lu06,@Turner10]:
+
+- A **hairpin loop** is closed by a single base-pair $i\cdot j$. The loop free energy, $\Delta G^\mathrm{hairpin}_{i,j}$, depends on sequence and loop size.
+- An **interior loop** is closed by two base pairs ($i\cdot j$ and $d\cdot e$ with $i<d<e<j$). The loop free energy, $\Delta G^\mathrm{interior}_{i,d,e,j}$ depends on sequence, loop size, and loop asymmetry. **Bulge loops** (where either $d=i+1$ or $e=j-1$) and **stack loops** (where joth $d=i+1$ and $e=j-1$) are treated as special cases of interior loops.
 - A **multiloop** is closed by three or more base pairs.
-The loop free energy is modeled as the sum of three sequence-independent penalties:
-$\Delta G^\mathrm{multi}_\mathrm{init}$ for formation of a multiloop, $\Delta G^\mathrm{multi}_\mathrm{bp}$ for each closing base pair, $\Delta G^\mathrm{multi}_\mathrm{nt}$ for each unpaired nucleotide inside the multiloop,
-plus a sequence-dependent penalty: $\Delta G^\mathrm{terminalbp}_{a, b}$ for each closing pair $a\cdot b$.
+The loop free energy is modeled as the sum of three material-dependent penalties:
+(1) $\Delta G^\mathrm{multi}_\mathrm{init}$ for formation of a multiloop, (2) $\Delta G^\mathrm{multi}_\mathrm{bp}$ for each closing base pair, (3) $\Delta G^\mathrm{multi}_\mathrm{nt}$ for each unpaired nucleotide inside the multiloop, 
+plus two sequence-dependent terms: (4) $\Delta G^\mathrm{terminalbp}_{i, j}$ for each closing pair $i\cdot j$, (5) $\Delta G^\text{stacking}$, an optional coaxial and dangle stacking bonus.
 - An **exterior loop** contains a nick between strands and any number of closing base pairs.
-The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{a, b}$ over all closing base pairs $a\cdot b$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
+The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{i, j}$ over all closing base pairs $i\cdot j$ and an optional optional coaxial and dangle stacking bonus $\Delta G^\text{stacking}$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
 
 <p align="center">
 <img src="../figs/looptypes.png" alt="Loop Types" width="450"/>

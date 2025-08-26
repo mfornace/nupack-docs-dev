@@ -14,14 +14,28 @@ NUPACK analysis algorithms enable simultaneous analysis of one or more test tube
 
 ## Specify a strand
 
-A `Strand` is a single RNA or DNA molecule specified as a sequence and a strand name (keyword `name`):
+A `Strand` is a single molecule specified as a sequence and a strand name (keyword `name`):
 ```python
 A = Strand('AGUCUAGGAUUCGGCGUGGGUUAA', name='A') # name is required for strands
 B = Strand('UUAACCCACGCCGAAUCCUAGACUCAAAGUAGUCUAGGAUUCGGCGUG', name='B')
 C = Strand('AGUCUAGGAUUCGGCGUGGGUUAACACGCCGAAUCCUAGACUACUUUG', name='C')
 ```
 
-A `Strand` sequence must contain only `'ACGTU'`. Two strands are treated as indistinguishable only if they have the same name and the same sequence.
+For mixed-material jobs, a material prefix specifies the material of each nucleotide: 
+
+- RNA:  {`rA`, `rC`, `rG`, `rU`} 
+- DNA: {`dA`, `dC`, `dG`, `dT`} 
+- 2$'$OMe-RNA: {`mA`, `mC`, `mG`, `mU`} 
+
+which need only be specified when there is a change in material:
+```python
+D = Strand('rACGdAT', name='D') # 3 RNA nucleotides followed by 2 DNA nucleotides
+```
+
+For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for strands A, B, C in the examples above). 
+
+!!! Note
+    Material prefixes must be lowercase. 
 
 A `Strand` object supports a `nt()` method for calculating the number of nucleotides, for example:
 

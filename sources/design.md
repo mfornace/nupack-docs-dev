@@ -6,7 +6,7 @@ To enable **reaction pathway engineering** of dynamic hybridization cascades (e.
 -  **Multi-complex ensemble:** the ensemble of an arbitrary number of strand species interacting to form an arbitrary number of complex species.
 -  **Multi-tube ensemble:** the ensemble of an arbitrary number of test tubes containing different subsets of an arbitrary number of strand species introduced at user-specified concentrations.
 
-We [recommend](definitions.md#complex-design-vs-test-tube-design) using the [multi-tube design ensemble](definitions.md#multi-tube-design) as it captures concentration and crosstalk effects that are critical in most experimental settings.
+We [recommend](definitions.md#complex-design-vs-test-tube-design) using the [multi-tube design ensemble](definitions.md#multi-tube-design-ensemble) as it captures concentration and crosstalk effects that are critical in most experimental settings.
 
 
 
@@ -37,7 +37,25 @@ f = Domain('R5N5',       name='f') # equivalent sequence specification
 g = Domain('N10',        name='g')
 ```
 
-The reverse complement of domain `a` is denoted `~a`. Complementarity refers to Watson-Crick complementarity if wobble mutations are prohibited (default) or includes the possibility of G$\cdot$U wobble pairs for RNA if wobble mutations are permitted (see [Job Options](design.md#job-options)).
+For mixed-material jobs, a material prefix specifies the material of each nucleotide: 
+
+- RNA:  {`rA`, `rC`, `rG`, `rU`} 
+- DNA: {`dA`, `dC`, `dG`, `dT`} 
+- 2$'$OMe-RNA: {`mA`, `mC`, `mG`, `mU`} 
+
+which need only be specified when there is a change in material:
+
+```python
+h = Domain('rRRRRRdNNNNN', name='h') # 5 RNA nucleotides followed by 5 DNA nucleotides
+```
+
+For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for domains `a-b` in the examples above). 
+
+!!! Note
+    Material prefixes must be lowercase (e.g., `r`, `d`, `m`). Degenerate nucleotide codes must be uppercase (e.g., `M`, `R`, `S`, `N`). Unique nucleotide codes can be either uppercase or lowercase (e.g., `A`, `C`, `G`, `U`, `T`, `a`, `c`, `g`, `u`, `t`).  
+
+
+The reverse complement of domain `a` is denoted `~a`. Complementarity refers to [Watson-Crick](definitions.md#watson-crick-pairs) if wobble mutations are prohibited (default) or includes the possibility of [wobble pairs](definitions.md#wobble-pairs) if wobble mutations are permitted (see [Job Options](design.md#job-options)).
 
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.
@@ -309,7 +327,7 @@ my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
 
 ## Run a complex design job
 
-The `complex_design` class enables specification of a [constrained multi-complex design](definitions.md#constrained-multi-complex-design-problem) for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
+The `complex_design` class enables specification of a [constrained multi-complex design](definitions.md#design-formulation) for a specified set of target complexes (keyword `complexes`) and a specified [physical model](model.md#model-specification) (keyword `model`). You may optionally: [specify hard constraints](design.md#specify-hard-constraints) (keyword `hard_constraints`), [specify soft constraints](design.md#specify-soft-constraints) (keyword `soft_constraints`), [specify defect weights](design.md#specify-defect-weights) (keyword `defect_weights`), and [specify job options](design.md#job-options) (keyword `options`):
 
 
 ```python
@@ -891,13 +909,13 @@ options = DesignOptions(
     f_redecomp=0.03,  # in interval (0,1)
     f_refocus=0.03,   # in interval (0,1)
     f_sparse=1e-05,   # threshold pair probs for sparse storage in decomposition tree
-    wobble_mutations=False, # allow wobble pairs in user-assigned domain complements (e.g. between a and a*/~a)
+    wobble_mutations=False, # allow wobble pairs in user-assigned domain complements (e.g. between a and ~a)
     max_time=0,       # max design time in seconds (if nonzero)
 )
 ```
 
 !!! Note
-    Enable `wobble_mutations` (default `False`) so that the designer will consider sequences which may 1) yield wobble (`GU`) pairs in target structures and 2) contain wobble complements in domain reverse complements (e.g. `a` = `GGG`, `a*` = `UUU`).
+    Enable `wobble_mutations` (default `False`) so that the designer will consider sequences which may 1) yield [wobble pairs](definitions.md#wobble-pairs) in target structures and 2) contain wobble complements in domain reverse complements (e.g. `a` = `GGG`, `~a` = `UUU` for RNA).
 
 !!! Note
     Set `max_time` to a positive number to manually control how long a design will take (in seconds). Note that this time limit is somewhat loose as the designer will only stop at timepoints in which the current design may be fully evaluated. Consider using [checkpointing](design.md#launch-design-trials-in-the-background) as an alternative to optimize the tradeoff between design quality and CPU time.

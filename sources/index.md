@@ -1,9 +1,10 @@
 # Overview
 
-NEW VERSION!
-
 ## About
-NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences more broadly. Much of this software can be conveniently run using the NUPACK web application at [nupack.org](http://www.nupack.org) [@Zadeh11a]. This User Guide provides documentation for the NUPACK Python module.
+NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences. 
+NUPACK algorithms are formulated in terms of nucleic acid secondary structure (i.e., the base pairs of a set of nucleic acid strands) and employ empirical free energy parameters. Mixed-material calculations are supported (RNA/DNA or RNA/2$'$OMe-RNA) with the material specified at nucleotide resolution [@Nanjundiah25].
+Much of this software can be conveniently run using the NUPACK web app at [nupack.org](http://www.nupack.org) [@Zadeh11a,@Fornace25]. 
+This User Guide provides documentation for the NUPACK Python module.
 
 When finishing a project that has benefited from NUPACK calculations, please remember to [cite](index.md#citation) the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <support@nupack.org>.
 
@@ -15,8 +16,8 @@ When finishing a project that has benefited from NUPACK calculations, please rem
 ## Problem Categories
 NUPACK algorithms address two fundamental classes of problems:
 
-- **Sequence analysis:** given a set of DNA or RNA strands, analyze the equilibrium base-pairing properties over a specified ensemble.
-- **Sequence design:** given a set of desired equilibrium base-pairing properties, design the sequences of a set of DNA or RNA strands over a specified ensemble. Sequence design is performed subject to diverse user-specified sequence constraints including composition constraints, complementarity constraints, pattern prevention constraints, and biological constraints.
+- **Sequence analysis:** given a set of nucleic acid strands, analyze the equilibrium base-pairing properties over a specified ensemble.
+- **Sequence design:** given a set of desired equilibrium base-pairing properties, design the sequences of a set of nucleic acid strands over a specified ensemble. Sequence design is performed subject to diverse hard and soft constraints.
 
 <p align="center">
 <img src="./figs/NUPACK.png" alt="NUPACK Analysis and Design" title="NUPACK Analysis and Design" width="700"/>
@@ -26,8 +27,8 @@ NUPACK algorithms address two fundamental classes of problems:
 
 NUPACK algorithms operate over two fundamental ensembles:
 
-- **Complex ensemble:** the ensemble of all (unpseudoknotted connected) secondary structures for an arbitrary number of interacting RNA or DNA strands.
-- **Test tube ensemble:** the ensemble of a dilute solution containing an arbitrary number of RNA or DNA strand species (introduced at user-specified concentrations) interacting to form an arbitrary number of complex species.
+- **Complex ensemble:** the ensemble of all (unpseudoknotted connected) secondary structures for an arbitrary number of interacting nucleic acid strands.
+- **Test tube ensemble:** the ensemble of a dilute solution containing an arbitrary number of nucleic acid strand species (introduced at user-specified concentrations) interacting to form an arbitrary number of complex species.
 
 Furthermore, to enable reaction pathway engineering of dynamic hybridization cascades or large-scale structural engineering including pseudoknots, NUPACK generalizes sequence analysis and design to multi-complex and multi-tube ensembles [@Wolfe17].
 
@@ -127,9 +128,10 @@ For citation, please select from the list below as appropriate for your applicat
 
 
 
-**NUPACK Web Application**
+**NUPACK Web App**
 
 - Run jobs online at [nupack.org](http://www.nupack.org)
+    - M. E. Fornace, J. Huang, C. T. Newman, A. Nanjundiah, N. J. Porubsky, M. B. Pierce, N. A. Pierce. NUPACK: analysis and design of nucleic acid structures, devices, and systems. [*ChemRxiv*](https://chemrxiv.org/engage/chemrxiv/article-details/636c7089b588507d0045f283), 2025. ([pdf](https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/636c7089b588507d0045f283/original/nupack-analysis-and-design-of-nucleic-acid-structures-devices-and-systems.pdf))
 	- J. N. Zadeh, C. D. Steenberg, J. S. Bois, B. R. Wolfe, M. B. Pierce, A. R. Khan, R. M. Dirks, N. A. Pierce. NUPACK: analysis and design of nucleic acid systems. [*J Comput Chem*](http://onlinelibrary.wiley.com/doi/10.1002/jcc.21596/abstract), 32:170–173, 2011. ([pdf](http://www.nupack.org/downloads/serve_public_file/jcc11a.pdf?type=pdf))
 
 **NUPACK Analysis Algorithms**
@@ -161,10 +163,7 @@ For citation, please select from the list below as appropriate for your applicat
 
 ## Acknowledgments
 We thank all the NUPACK users that have helped out as beta testers over the years, as well as the many NUPACK users that have emailed <support@nupack.org> to request features or report bugs.
-NUPACK is supported by the National Science Foundation (NSF-OAC-1835414) and by the Beckman Institute at Caltech (PMTC).
-NUPACK has previously been supported by the National Science Foundation
-(NSF-CCF-1317694, NSF-CCF-0832824, NSF-CHE-0533064, NSF-DMS-0506468, NSF-CAREER-0448835),
-by the Gordon and Betty Moore Foundation (GBMF2809), by the John Simon Guggenheim Memorial Foundation,
+NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XSEDE NSF-ACI-1548562) and by the Beckman Institute at Caltech (PMTC). NUPACK has previously been supported by the National Science Foundation (Software Elements NSF-OAC-1835414, INSPIRE NSF-CHE-1643606, Expeditions in Computing NSF-CCF-0832824, Expeditions in Computing NSF-CCF-1317694, Chemical Bonding Center NSF-CHE-0533064, Multiscale Modeling NSF-DMS-0506468, Information Technology Research NSF-CCF-0204932, CAREER NSF-CCF-0448835), by the National Institutes of Health (CEGS P50 HG004071, National Research Service Award T32 GM007616), by the Gordon and Betty Moore Foundation (GBMF2809), by the Schmidt Academy for Software Engineering at Caltech, by the AWS/IST cloud credit program at Caltech, by the John Simon Guggenheim Memorial Foundation,
 by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Foundation, and by the Charles Lee Powell Foundation.
 
 
@@ -246,5 +245,9 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible
         - 4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names
         - 4.0.2.0: updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)
-
+- **NUPACK 4.1**
+    - New features:
+    	- Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [@Nanjundiah25]
+	- Revision notes: 
+		- 4.1.0.0: Release of first public beta
 

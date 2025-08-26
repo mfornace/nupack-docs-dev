@@ -49,7 +49,7 @@ nav:
 # - Other: other.md
 
   #site_dir: _build/site
-site_name: NUPACK 4.0 User Guide
+site_name: NUPACK 4 User Guide
 repo_url: http://nupack.org/
 site_url: https://docs.nupack.org
 
@@ -80,13 +80,12 @@ theme:
 plugins:
   - search
   - mike:
-      # These fields are all optional; the defaults are as below...
       alias_type: symlink
       redirect_template: null
       deploy_prefix: ''
       canonical_version: latest
       version_selector: true
-      css_dir: css
+      css_dir: ./sources
       javascript_dir: js
   # - pdf-export
 
