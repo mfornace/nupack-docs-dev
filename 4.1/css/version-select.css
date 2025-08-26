@@ -1,5 +1,5 @@
-#version-selector {
-  display: block;
-  margin: -10px auto 0.809em;
-  padding: 2px;
+
+#version-selector::before {
+  content: "Version: ";
+  display: inline-block;  /* ensure it displays */
 }
