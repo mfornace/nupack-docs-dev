@@ -147,7 +147,8 @@
 </ul>
 </li>
 <li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA single-material parameter sets: <ul>
-<li><code>merna06</code> Based on [<a class="citation" href="#ref-Kierzek06" id="cite-Kierzek06">Kierzek06</a>] using stack loop, coaxial stacking, terminal base pair, and strand association values from <code>rna_merna06</code> and all other values from <code>rna06</code>; in 0.12 M Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>. </li>
+<li><code>merna06</code> Based on [<a class="citation" href="#ref-Kierzek06" id="cite-Kierzek06">Kierzek06</a>] using stack loop, coaxial stacking, terminal base pair, and strand association values from <code>rna_merna06</code> and all other values from <code>rna06</code>; in 0.12 M<br />
+    Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>. </li>
 </ul>
 </li>
 <li>RNA/DNA mixed-material parameter sets:<ul>
@@ -163,7 +164,7 @@
 </ul>
 </li>
 </ul>
-<p>Free energies are expressed in kcal/mol. Base pairs are either <a href="../definitions/#watson-crick-pairs">Watson-Crick pairs</a> or <a href="../definitions/#watson-crick-pairs">wobble pairs</a>.</p>
+<p>Free energies are expressed in kcal/mol. Base pairs are either <a href="../definitions/#watson-crick-pairs">Watson-Crick pairs</a> or <a href="../definitions/#wobble-pairs">wobble pairs</a>.</p>
 <hr>
 
 <h3 id="stacking">Stacking<a class="headerlink" href="#stacking" title="Permanent link">&para;</a></h3>
@@ -207,7 +208,7 @@ Alternatively, the temperature can be specified in K using the keyword <code>kel
 </li>
 <li>For RNA single-material jobs using <code>rna95</code>, the only supported salt conditions [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">Mathews99</a>, <a class="citation" href="#ref-Lu06" id="cite-Lu06">Lu06</a>] are 1.0 M [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]. </li>
 <li>For DNA single-material jobs using <code>dna04.1</code>/<code>dna04.2</code>:<ul>
-<li><code>sodium</code> Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]+[K<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]+[NH<span class="arithmatex"><span class="MathJax_Preview">^+_4</span><script type="math/tex">^+_4</script></span>], is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword sodium.</li>
+<li><code>sodium</code> Based on [<a class="citation" href="#ref-SantaLucia98" id="cite-SantaLucia98">SantaLucia98</a>,<a class="citation" href="#ref-SantaLucia04" id="cite-SantaLucia04">SantaLucia04</a>], the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, [Na<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]+[K<span class="arithmatex"><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span>]+[NH<span class="arithmatex"><span class="MathJax_Preview">^+_4</span><script type="math/tex">^+_4</script></span>], is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword <code>sodium</code>.</li>
 <li><code>magnesium</code> Based on [<a class="citation" href="#ref-Peyret00" id="cite-Peyret00">Peyret00</a>,<a class="citation" href="#ref-Koehler05" id="cite-Koehler05">Koehler05</a>], the concentration of (divalent) magnesium ions, [Mg<span class="arithmatex"><span class="MathJax_Preview">^{++}</span><script type="math/tex">^{++}</script></span>], is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword <code>magnesium</code>.</li>
 </ul>
 </li>
