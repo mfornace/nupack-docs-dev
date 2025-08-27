@@ -55,7 +55,7 @@ For single-material jobs, the material prefix can be omitted for all nucleotides
     Material prefixes must be lowercase (e.g., `r`, `d`, `m`). Degenerate nucleotide codes must be uppercase (e.g., `M`, `R`, `S`, `N`). Unique nucleotide codes can be either uppercase or lowercase (e.g., `A`, `C`, `G`, `U`, `T`, `a`, `c`, `g`, `u`, `t`).  
 
 
-The reverse complement of domain `a` is denoted `~a`. Complementarity refers to [Watson-Crick](definitions.md#watson-crick-pairs) if wobble mutations are prohibited (default) or includes the possibility of [wobble pairs](definitions.md#wobble-pairs) if wobble mutations are permitted (see [Job Options](design.md#job-options)).
+The reverse complement of domain `a` is denoted `~a`. Complementarity refers to [Watson-Crick pairs](definitions.md#watson-crick-pairs) if wobble mutations are prohibited (default) or includes the possibility of [wobble pairs](definitions.md#wobble-pairs) if wobble mutations are permitted (see [Job Options](design.md#job-options)).
 
 !!! Note
     Note that starting with NUPACK 4 and the all-new NUPACK Python module, scripts no longer denote the reverse complement of domain `a` as `a*` because that would not be valid Python syntax.

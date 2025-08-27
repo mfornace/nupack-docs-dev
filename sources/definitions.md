@@ -17,7 +17,7 @@ Sequences are specified 5$'$ to 3$'$. The material need only be specified when t
 For single-material jobs, the material prefix can be omitted for all nucleotides (e.g., `ACGUU` for an RNA-only job or `ACGTT` for a DNA-only job), and nucleotides `rU`, `mU`, and `dT` are converted interchangeably as appropriate. 
 
 <!-- Unlike NUPACK 3, NUPACK 4 uses zero-based indices exclusively. The first index of any sequence is 0, not 1. -->
-Unlike NUPACK 3, bases in NUPACK 4 are indexed starting with 0 at the $5'$-most base of the first strand and ending at the $3'$-most base of the last strand.
+Unlike NUPACK 3, bases in NUPACK 4 are indexed starting with 0 at the 5$'$-most base of the first strand and ending at the 3$'$-most base of the last strand.
 For example, if a complex has three strands of length 15, 20, and 13, respectively, the fifth base of the third strand has index 39. 
 <!--
 A sequence may also contain any of the [degenerate nucleotides codes](https://www.bioinformatics.org/sms/iupac.html): `R`, `M`, `S`, `W`, `K`, `Y`, `V`, `H`, `D`, `B`, or `N`. Such sequences are primarily useful in a design context, and any sequence used in analysis must be fully determined.-->
@@ -134,7 +134,8 @@ Using DU+ notation, a duplex is represented by `D` and an unpaired region of len
 In mathematical expressions, it is convenient to represent secondary structure $s$ using a **structure matrix** $S(s)$ with entries $S^{a,b}(s) = 1$ if structure $s$ contains base pair $a\cdot b$ and $S^{a,b}(s) = 0$ otherwise. Abusing notation, the entry $S^{a,a}(s) = 1$ if base $a$ is unpaired in structure $s$ and $0$ otherwise. Hence, $S(s)$ is a symmetric matrix with row and column sums of 1.
 
 ### Structure distance
-The **structure distance** between two secondary structures $s_1$ and $s_2$ of equal size ($|s_1|=|s_2|=N$) is the number of nucleotides in a different base-pairing state in the two structures:
+The **structure distance** between two secondary structures $s_1$ and $s_2$ of equal size  
+($|s_1|=|s_2|=N$) is the number of nucleotides in a different base-pairing state in the two structures:
 \begin{align}
 d_\textrm{struc}(s_1,s_2)=N-\sum_{1\le a\le N,~1\le b \le N} S_{a,b}(s_1)S_{a,b}(s_2)
 \end{align}
@@ -193,9 +194,9 @@ The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different lo
 - A **multiloop** is closed by three or more base pairs.
 The loop free energy is modeled as the sum of three material-dependent penalties:
 (1) $\Delta G^\mathrm{multi}_\mathrm{init}$ for formation of a multiloop, (2) $\Delta G^\mathrm{multi}_\mathrm{bp}$ for each closing base pair, (3) $\Delta G^\mathrm{multi}_\mathrm{nt}$ for each unpaired nucleotide inside the multiloop, 
-plus two sequence-dependent terms: (4) $\Delta G^\mathrm{terminalbp}_{i, j}$ for each closing pair $i\cdot j$, (5) $\Delta G^\text{stacking}$, an optional coaxial and dangle stacking bonus.
+plus two sequence-dependent terms: (4) a penalty $\Delta G^\mathrm{terminalbp}_{i, j}$ for each closing pair $i\cdot j$, (5) $\Delta G^\text{stacking}$, an optional coaxial and dangle stacking bonus.
 - An **exterior loop** contains a nick between strands and any number of closing base pairs.
-The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{i, j}$ over all closing base pairs $i\cdot j$ and an optional optional coaxial and dangle stacking bonus $\Delta G^\text{stacking}$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
+The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{i, j}$ over all closing base pairs $i\cdot j$ and an optional coaxial and dangle stacking bonus $\Delta G^\text{stacking}$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
 
 <p align="center">
 <img src="../figs/looptypes.png" alt="Loop Types" width="450"/>
