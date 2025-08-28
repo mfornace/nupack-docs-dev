@@ -49,7 +49,7 @@ which need only be specified when there is a change in material:
 h = Domain('rRRRRRdNNNNN', name='h') # 5 RNA nucleotides followed by 5 DNA nucleotides
 ```
 
-For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for domains `a-b` in the examples above). 
+For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for domains `a-g` in the examples above). 
 
 !!! Note
     Material prefixes must be lowercase (e.g., `r`, `d`, `m`). Degenerate nucleotide codes must be uppercase (e.g., `M`, `R`, `S`, `N`). Unique nucleotide codes can be either uppercase or lowercase (e.g., `A`, `C`, `G`, `U`, `T`, `a`, `c`, `g`, `u`, `t`).  

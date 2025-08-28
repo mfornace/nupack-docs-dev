@@ -194,7 +194,7 @@ The loop free energy, $\Delta G(\mathrm{loop})$, is modeled for the different lo
 - A **multiloop** is closed by three or more base pairs.
 The loop free energy is modeled as the sum of three material-dependent penalties:
 (1) $\Delta G^\mathrm{multi}_\mathrm{init}$ for formation of a multiloop, (2) $\Delta G^\mathrm{multi}_\mathrm{bp}$ for each closing base pair, (3) $\Delta G^\mathrm{multi}_\mathrm{nt}$ for each unpaired nucleotide inside the multiloop, 
-plus two sequence-dependent terms: (4) a penalty $\Delta G^\mathrm{terminalbp}_{i, j}$ for each closing pair $i\cdot j$, (5) $\Delta G^\text{stacking}$, an optional coaxial and dangle stacking bonus.
+plus two sequence-dependent terms: (4) $\Delta G^\mathrm{terminalbp}_{i, j}$, a penalty for each closing pair $i\cdot j$, (5) $\Delta G^\text{stacking}$, an optional coaxial and dangle stacking bonus.
 - An **exterior loop** contains a nick between strands and any number of closing base pairs.
 The exterior loop free energy is the sum of $\Delta G^\mathrm{terminalbp}_{i, j}$ over all closing base pairs $i\cdot j$ and an optional coaxial and dangle stacking bonus $\Delta G^\text{stacking}$. Hence, an unpaired strand has a free energy of zero, corresponding to the reference state [@Dirks07].
 
