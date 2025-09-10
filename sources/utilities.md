@@ -231,10 +231,12 @@ print(s4.rle_dotparensplus()) # --> (3+)3.
 `seq_distance` calculates the [sequence distance](definitions.md#secondary-structure) for two sequences that have the same number of nucleotides:
 
 ```python
-seq_distance('ACGUUUU+ACCC','ACGUUUU+AGGG') # --> 3
-
-seq_distance('G5', 'G3C2') # --> 2
+my_model = Model()
+my_model.alphabet.seq_distance('ACGUUUU+ACCC','ACGUUUU+AGGG') # --> 3
+my_model.alphabet.seq_distance('G5', 'G3C2') # --> 2
 ```
+
+An `Alphabet` object (most often associated with a `Model`) must be specified to avoid ambiguities with material specifier characters.
 
 
 ## Compute structure distance
