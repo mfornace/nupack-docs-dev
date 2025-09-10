@@ -77,14 +77,16 @@ Additional fields and methods are available for a `TargetStrand` object:
 
 - `.domains`: a tuple of the domains comprising the strand
 - `.ndomains()`: the number of domains in the strand
-- `.nt()`: the number of nucleotides in the strand
+- `.nt(alphabet)`: the number of nucleotides in the strand
 
 For example:
 
 ```python
 A.domains    # --> (<Domain a>, <Domain b>, <Domain g>)
 A.ndomains() # --> 3
-A.nt()       # --> 18
+
+my_model = Model()
+A.nt(my_model.alphabet) # --> 18
 ```
 
 The reverse complement of a `TargetStrand` maybe analogous obtained, for example, as `~A`.
@@ -127,14 +129,14 @@ Additional fields and methods are available for a `TargetComplex` object:
 
 - `.strands`: a tuple of the strands
 - `.nstrands()`: the number of strands in the complex
-- `.nt()`: the number of nucleotides in the complex
+- `.nt(alphabet)`: the number of nucleotides in the complex
 
 For example:
 
 ```python
 C1.strands    # --> (<TargetStrand Strand A>, <TargetStrand Strand B>, <TargetStrand Strand C>)
 C1.nstrands() # --> 3
-C1.nt()       # --> 62
+C1.nt(my_model.alphabet)       # --> 62
 ```
 
 In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword `bonus` can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):

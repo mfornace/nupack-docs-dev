@@ -37,11 +37,13 @@ For single-material jobs, the material prefix can be omitted for all nucleotides
 !!! Note
     Material prefixes must be lowercase. 
 
-A `Strand` object supports a `nt()` method for calculating the number of nucleotides, for example:
+A `Strand` object supports a `nt(alphabet)` method for calculating the number of nucleotides given the alphabet of a specified `Model`, for example:
 
 ```python
-A.nt() # --> 24
+my_model = Model()
+A.nt(my_model.alphabet) # --> 24
 ```
+The alphabet is now a required argument to avoid any interpretation issues with material specifiers in a sequence.
 
 ---
 
@@ -71,7 +73,7 @@ Additional fields and methods are available for a `Complex` object:
 
 - `.strands`: a tuple of strands
 - `.nstrands()`: the number of strands in the complex
-- `.nt()`: the number of nucleotides in the complex
+- `.nt(alphabet)`: the number of nucleotides in the complex
 
 
 For example:
@@ -79,7 +81,7 @@ For example:
 ```python
 c2.strands    # --> (<Strand A>, <Strand B>, <Strand B>, <Strand C>)
 c2.nstrands() # --> 4
-c2.nt()       # --> 168
+c2.nt(my_model.alphabet) # --> 168
 ```
 
 
