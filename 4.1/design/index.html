@@ -226,12 +226,14 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 <ul>
 <li><code>.domains</code>: a tuple of the domains comprising the strand</li>
 <li><code>.ndomains()</code>: the number of domains in the strand</li>
-<li><code>.nt()</code>: the number of nucleotides in the strand</li>
+<li><code>.nt(alphabet)</code>: the number of nucleotides in the strand</li>
 </ul>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">A</span><span class="o">.</span><span class="n">domains</span>    <span class="c1"># --&gt; (&lt;Domain a&gt;, &lt;Domain b&gt;, &lt;Domain g&gt;)</span>
 <span class="n">A</span><span class="o">.</span><span class="n">ndomains</span><span class="p">()</span> <span class="c1"># --&gt; 3</span>
-<span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span>       <span class="c1"># --&gt; 18</span>
+
+<span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">alphabet</span><span class="p">)</span> <span class="c1"># --&gt; 18</span>
 </code></pre></div>
 <p>The reverse complement of a <code>TargetStrand</code> maybe analogous obtained, for example, as <code>~A</code>.</p>
 <hr />
@@ -266,12 +268,12 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 <ul>
 <li><code>.strands</code>: a tuple of the strands</li>
 <li><code>.nstrands()</code>: the number of strands in the complex</li>
-<li><code>.nt()</code>: the number of nucleotides in the complex</li>
+<li><code>.nt(alphabet)</code>: the number of nucleotides in the complex</li>
 </ul>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">C1</span><span class="o">.</span><span class="n">strands</span>    <span class="c1"># --&gt; (&lt;TargetStrand Strand A&gt;, &lt;TargetStrand Strand B&gt;, &lt;TargetStrand Strand C&gt;)</span>
 <span class="n">C1</span><span class="o">.</span><span class="n">nstrands</span><span class="p">()</span> <span class="c1"># --&gt; 3</span>
-<span class="n">C1</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span>       <span class="c1"># --&gt; 62</span>
+<span class="n">C1</span><span class="o">.</span><span class="n">nt</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">alphabet</span><span class="p">)</span>       <span class="c1"># --&gt; 62</span>
 </code></pre></div>
 <p>In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword <code>bonus</code> can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># destabilize C6 by 1 kcal/mol</span>

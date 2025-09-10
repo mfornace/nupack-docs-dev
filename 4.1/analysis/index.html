@@ -166,9 +166,11 @@
 <p class="admonition-title">Note</p>
 <p>Material prefixes must be lowercase. </p>
 </div>
-<p>A <code>Strand</code> object supports a <code>nt()</code> method for calculating the number of nucleotides, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span> <span class="c1"># --&gt; 24</span>
+<p>A <code>Strand</code> object supports a <code>nt(alphabet)</code> method for calculating the number of nucleotides given the alphabet of a specified <code>Model</code>, for example:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">alphabet</span><span class="p">)</span> <span class="c1"># --&gt; 24</span>
 </code></pre></div>
+The alphabet is now a required argument to avoid any interpretation issues with material specifiers in a sequence.</p>
 <hr />
 <h2 id="specify-a-complex-ensemble">Specify a complex ensemble<a class="headerlink" href="#specify-a-complex-ensemble" title="Permanent link">&para;</a></h2>
 <p>A <code>Complex</code> of one or more interacting strands is specified as an ordered list of strands (i.e., an ordering of strands around a circle in a <a href="../definitions/#secondary-structure">polymer graph</a>) and an optional complex name (keyword <code>name</code>):
@@ -191,12 +193,12 @@
 <ul>
 <li><code>.strands</code>: a tuple of strands</li>
 <li><code>.nstrands()</code>: the number of strands in the complex</li>
-<li><code>.nt()</code>: the number of nucleotides in the complex</li>
+<li><code>.nt(alphabet)</code>: the number of nucleotides in the complex</li>
 </ul>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">c2</span><span class="o">.</span><span class="n">strands</span>    <span class="c1"># --&gt; (&lt;Strand A&gt;, &lt;Strand B&gt;, &lt;Strand B&gt;, &lt;Strand C&gt;)</span>
 <span class="n">c2</span><span class="o">.</span><span class="n">nstrands</span><span class="p">()</span> <span class="c1"># --&gt; 4</span>
-<span class="n">c2</span><span class="o">.</span><span class="n">nt</span><span class="p">()</span>       <span class="c1"># --&gt; 168</span>
+<span class="n">c2</span><span class="o">.</span><span class="n">nt</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">alphabet</span><span class="p">)</span> <span class="c1"># --&gt; 168</span>
 </code></pre></div>
 <h2 id="specify-a-test-tube-ensemble">Specify a test tube ensemble<a class="headerlink" href="#specify-a-test-tube-ensemble" title="Permanent link">&para;</a></h2>
 <p>A <code>Tube</code> is specified as a tube name (keyword <code>name</code>) and a set of strands (keyword <code>strands</code>), each introduced at a user-specified concentration (units of <code>M</code>), that interact to form a set of complexes (keyword <code>complexes</code>: defaults to the strand set).
