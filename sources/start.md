@@ -18,11 +18,11 @@ Design the the sequences for one or more test tube ensembles (or one or more com
 
 - **Tube design:** [design a test tube ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/tube-design.ipynb)
 - **Multi-tube design (simple):**
-    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-displacement.tex))
+    - [design specification](examples/design-specs/design-spec-displacement.pdf) ([tex](examples/design-specs/design-spec-displacement.tex))
     - [design a one-step reaction pathway](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple.ipynb)
     - [design N orthogonal one-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-simple-ortho.ipynb)
 - **Multi-tube design (advanced):**
-    - [design specification](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.pdf) ([tex](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design-specs/design-spec-dicer.tex))
+    - [design specification](examples/design-specs/design-spec-dicer.pdf) ([tex](examples/design-specs/design-spec-dicer.tex))
     - [design a multi-step reaction pathway](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced.ipynb)
     -  [design N orthogonal multi-step reaction pathways](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/multi-tube-design-advanced-ortho.ipynb)
 - **Complex design:** [design a complex ensemble](https://nbviewer.jupyter.org/github/Piercelab-Caltech/nupack-docs/tree/main/examples/design/complex-design.ipynb)
