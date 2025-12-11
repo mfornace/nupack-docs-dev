@@ -1,4 +1,4 @@
-git pull && cd sources && zip -r examples.zip examples && cd .. && mkdocs gh-deploy -r deploy -b main
+git pull && cd sources && zip -r examples.zip examples && cd .. && mkdocs gh-deploy --ignore-version -r deploy -b main
 
 # development: 
 # mike deploy 4.1 -r dev -b main --push
