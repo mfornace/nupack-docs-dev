@@ -38,12 +38,12 @@ NUPACK 4.1 algorithms use the following temperature-dependent free energy parame
     - `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@SantaLucia04], internal asymmetry values [@SantaLucia04], and terminal mismatch values [@Turner10,@Mittal24]; in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
     - `dna04.1` Based on [@SantaLucia98] and [@SantaLucia04] with additional parameters [@Zuker03] including coaxial stacking [@Peyret00] and dangle stacking [@Bommarito00,@Zuker03] in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
 - 2$'$OMe-RNA single-material parameter sets: 
-    - `merna06` Based on [@Kierzek06] using stack loop, coaxial stacking, terminal base pair, and strand association values from `rna_merna06` and all other values from `rna06`; in 0.12 M  
+    - `merna06` Based on [@Kierzek06] using stack loop, coaxial stacking, terminal base pair, and strand association values from `rna-merna06` and all other values from `rna06`; in 0.12 M  
         Na$^+$. 
 - RNA/DNA mixed-material parameter sets:
-    - `rna_dna06` Using hybrid stack loops [@Sugimoto95], hybrid internal mismatches [@Watkins11,@Sugimoto00], and chimeric stack loops [@Nakano04] with additional parameters for mixed-material loops [@Nanjundiah25] in a user-specified concentration of Na$^+$; for use in conjunction with single-material parameter sets `rna06` and `dna04`.
+    - `rna-dna06` Using hybrid stack loops [@Sugimoto95], hybrid internal mismatches [@Watkins11,@Sugimoto00], and chimeric stack loops [@Nakano04] with additional parameters for mixed-material loops [@Nanjundiah25] in a user-specified concentration of Na$^+$; for use in conjunction with single-material parameter sets `rna06` and `dna04`.
 - RNA/2$'$OMe-RNA mixed-material parameter sets: 
-    - `rna_merna06` Based on hybrid stack loops [@Kierzek06] with additional parameters for mixed-material loops [@Nanjundiah25]; for use in conjunction with single-material parameter sets `rna06` and `merna06` in 0.12 M Na$^+$.
+    - `rna-merna06` Based on hybrid stack loops [@Kierzek06] with additional parameters for mixed-material loops [@Nanjundiah25]; for use in conjunction with single-material parameter sets `rna06` and `merna06` in 0.12 M Na$^+$.
 - Custom parameter sets: 
     - `custom-parameters` Custom parameters provided in a JSON file (e.g., `custom-parameters.json`) using the same format as the provided parameter files. Provide $\Delta$G$_{37}$(loop) and $\Delta$H(loop) values to allow calculations at different temperatures or only $\Delta$G(loop) values to allow calculations at one temperature. Place the JSON file in the same directory as the default parameter files (specify `material = 'custom-parameters'`) or specify the full path to the file (`material = 'path/to/my/custom-parameters.json'`).
 
@@ -94,10 +94,10 @@ NUPACK 4.1 algorithms support the following salt conditions:
     - `sodium` Based on [@SantaLucia98,@SantaLucia04], the sum of the concentrations of (monovalent) sodium, potassium, and ammonium ions, [Na$^+$]+[K$^+$]+[NH$^+_4$], is specified in units of molar (default: 1.0, range: [0.05,1.1]) using the keyword `sodium`.
     - `magnesium` Based on [@Peyret00,@Koehler05], the concentration of (divalent) magnesium ions, [Mg$^{++}$], is specified in units of molar (default: 0.0, range: [0.0,0.2]) using the keyword `magnesium`.
 - For 2’OMe-RNA single-material jobs [@Kierzek06] using `merna06`, the only supported salt conditions are 0.12 M [Na$^+$]. 
-- For RNA/DNA mixed-material jobs using `rna_dna06`:  
+- For RNA/DNA mixed-material jobs using `rna-dna06`:  
     - `sodium` Based on [@Nanjundiah25], the concentration of sodium ions, [Na$^+$], is specified in units of molar (default: 1.0, range: [0.12,1.0]) using the keyword `sodium`.
     - `magnesium` Only 0.0 M [Mg$^{++}$] is supported.
-- For RNA/2’OMe-RNA mixed-material jobs [@Kierzek06] using `rna_merna06`, the only supported salt conditions are 0.12 M [Na$^+$]. 
+- For RNA/2’OMe-RNA mixed-material jobs [@Kierzek06] using `rna-merna06`, the only supported salt conditions are 0.12 M [Na$^+$]. 
 
 
 
