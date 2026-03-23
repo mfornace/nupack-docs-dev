@@ -159,7 +159,7 @@ Optionally, additional quantities are calculated for each complex in the specifi
 model1 = Model()
 tube_results2 = tube_analysis(tubes=[t1, t2], model=model1,
     compute=['pairs', 'mfe', 'sample', 'ensemble_size'],
-    options={'num_sample': 100}) # max_size=1 default
+    options={'num_sample': 100}) # num_sample=1 (default)
 ```
 To display a summary table of results in a Jupyter notebook:
 
@@ -296,9 +296,9 @@ The `compute` keyword is optional for `tube_analysis` (default: `'pfunc'`) and r
 
 - `'sample'`: calculate a set of [Boltzmann-sampled structures](definitions.md#boltzmann-sampled-structures) from the complex ensemble. See option `num_sample` below.
 
-- `'mfe'`: calculate the [MFE proxy structure](definitions.md#mfe-proxy-structure), the free energy of the MFE proxy secondary structure and the free energy of the MFE stacking state. If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and with the (same) free energy of the MFE stacking state.
+- `'mfe'`: calculate the [MFE proxy structure](definitions.md#mfe-proxy-structure), the free energy of the MFE proxy secondary structure and the free energy of the MFE stacking state. If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and with the (same) free energy of the MFE stacking state. See detailed options `indistinguishable_search` and `max_subopt_count` below.
 
-- `'subopt'`: calculate the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of the MFE proxy secondary structure, and with the free energy of its lowest-energy stacking state that falls within the energy gap. See option `subopt_gap` below.
+- `'subopt'`: calculate the set of [suboptimal proxy structures](definitions.md#suboptimal-proxy-structures) with a stacking state within a specified free energy gap of the MFE stacking state. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of the MFE proxy secondary structure, and with the free energy of its lowest-energy stacking state that falls within the energy gap. See option `subopt_gap` (and detailed options `indistinguishable_search` and `max_subopt_count`) below.
 
 
 - `'ensemble_size'`: calculate the [complex ensemble size](definitions.md#complex-ensemble-size) in terms of either the number of secondary structures (if using a [physical model](model.md#model-specification) with `nostacking`) or the number of stacking states (if using a [physical model](model.md#model-specification) with `stacking`).
@@ -312,6 +312,10 @@ The optional `options` keyword specifies options that modify the calculations pe
 - `'num_sample': n` can be used in conjunction with `'sample'` to specify the number of structures to be sampled (default `'num_sample': 1`).
 
 - `'subopt_gap': g` can be used in conjunction with `'subopt'` to specify the (non-negative) free energy gap in kcal/mol (default `'subopt_gap': 0`).
+
+- `'indistinguishable_search': False/True` (default `False`) whether to perform an additional suboptimal structure search to strictly apply indistinguishability corrections; only relevant for `mfe` or `subopt` jobs.
+
+- `'max_subopt_count': n` (default `100000`): the maximum number of suboptimal structures to consider before throwing an error; only relevant for `mfe` or `subopt` jobs.
 
 By default, NUPACK analysis jobs run in [parallel](advanced.md#parallelism).
 

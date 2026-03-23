@@ -107,7 +107,7 @@ MFE proxy structure as structure matrix:
 ```
 
 
-If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state.
+If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state. `mfe` also accepts the optional keywords `max_subopt_count` (default `100000`) and `indistinguishable_search` (default `False`). See the corresponding [analysis options](analysis.md#job-options) for their definitions.
 
 ---
 
@@ -121,6 +121,8 @@ print(subopt_structures)
 # --> [StructureEnergy(Structure('(((+)))'), energy=-4.981351375579834, stack_energy=-4.981351375579834),
 #      StructureEnergy(Structure('((.+)).'), energy=-4.000725746154785, stack_energy=-3.781351089477539)]
 ```
+
+`subopt` also accepts the optional keywords `max_subopt_count` (default `100000`) and `indistinguishable_search` (default `False`). See the corresponding [analysis options](analysis.md#job-options) for their definitions.
 
 ---
 
