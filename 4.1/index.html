@@ -147,50 +147,46 @@ This User Guide provides documentation for the NUPACK Python module.</p>
 <div class="admonition examples">
 <p class="admonition-title">Examples</p>
 <p>Load Python NUPACK module</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">from nupack import *</code></pre>
 <p><a href="model/">Specify a physical model</a>
-<div class="highlight"><pre><span></span><code><span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;rna&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">37</span><span class="p">)</span>
-</code></pre></div></p>
+<pre class="highlight"><code class="language-python">model1 = Model(material='rna', celsius=37)</code></pre></p>
 <p><a href="analysis/">Analyze a test tube</a></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># specify strands</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CTGATCGAT&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;GATCGTAGTC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python"># specify strands
+A = Strand('CTGATCGAT', name='Strand A')
+B = Strand('GATCGTAGTC', name='Strand B')
 
-<span class="c1"># specify tube</span>
-<span class="n">t1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">A</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span>
-    <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tube 1&#39;</span><span class="p">)</span> <span class="c1"># all complexes of up to 2 strands</span>
+# specify tube
+t1 = Tube(strands={A: 1e-8, B: 1e-9},
+    complexes=SetSpec(max_size=2), name='Tube 1') # all complexes of up to 2 strands
 
-<span class="c1"># run tube analysis job</span>
-<span class="n">my_results</span> <span class="o">=</span> <span class="n">tube_analysis</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">t1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
-</code></pre></div>
+# run tube analysis job
+my_results = tube_analysis(tubes=[t1], model=model1)</code></pre>
 <p><a href="design/">Design a test tube</a></p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain b&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;R5N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain c&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('A4', name='Domain a')
+b = Domain('N10', name='Domain b') # equivalent sequence specification
+c = Domain('R5N5', name='Domain c')
 
-<span class="c1"># specify target strands</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>  <span class="c1"># ~e denotes the reverse complement of e</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+# specify target strands
+A = TargetStrand([a, a, b], name='Strand A')
+B = TargetStrand([~b, ~c], name='Strand B')  # ~e denotes the reverse complement of e
+C = TargetStrand([c], name='Strand C')
 
-<span class="c1"># specify target complexes</span>
-<span class="n">C1</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.8(10+)10(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Complex C1&#39;</span><span class="p">)</span>
-<span class="n">C2</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Complex C2&#39;</span><span class="p">)</span>
+# specify target complexes
+C1 = TargetComplex([A, B, C], '.8(10+)10(10+)10', name='Complex C1')
+C2 = TargetComplex([B, C], '.10(10+)10', name='Complex C2')
 
-<span class="c1"># specify target tube</span>
-<span class="n">tt1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">(</span><span class="n">on_targets</span><span class="o">=</span><span class="p">{</span><span class="n">C1</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">C2</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span>
-    <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>  <span class="c1"># all off-target complexes of up to 3 strands</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;TargetTube 1&#39;</span><span class="p">)</span>
+# specify target tube
+tt1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8},
+    off_targets=SetSpec(max_size=3),  # all off-target complexes of up to 3 strands
+    name='TargetTube 1')
 
-<span class="c1"># specify tube design problem</span>
-<span class="n">my_des</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">tt1</span><span class="p">],</span>
-    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
-    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
+# specify tube design problem
+my_des = tube_design(tubes=[tt1],
+    hard_constraints=[], soft_constraints=[],
+    defect_weights=None, options=None, model=model1)
 
-<span class="c1"># run tube design job</span>
-<span class="n">des_results</span> <span class="o">=</span> <span class="n">my_des</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># run 3 independent design trials</span>
-</code></pre></div>
+# run tube design job
+des_results = my_des.run(trials=3) # run 3 independent design trials</code></pre>
 </div>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p><strong>NUPACK Software License Agreement for Non-Commercial Academic Use</strong>  <br />
@@ -483,5 +479,5 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-09-10 22:35:12.703986+00:00
+Build Date UTC : 2026-03-23 22:45:19.611146+00:00
 -->

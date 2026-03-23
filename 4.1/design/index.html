@@ -187,14 +187,13 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 <hr />
 <h2 id="specify-a-domain">Specify a domain<a class="headerlink" href="#specify-a-domain" title="Permanent link">&para;</a></h2>
 <p>A <code>domain</code> is a set of consecutive nucleotides that appear as a subsequence of one or more strands in a design. A domain is specified as a sequence (specified 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> using <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a>) and a domain name (keyword <code>name</code>). Consecutive repeats of a single nucleotide code can be represented by the nucleotide code followed by the total number of repeats:</p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;AAAA&#39;</span><span class="p">,</span>       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span>         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;NNNNNNNNNN&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span>        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;RRRRRNNNNN&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;R5N5&#39;</span><span class="p">,</span>       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span>        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">a = Domain('AAAA',       name='a')
+b = Domain('A4',         name='b') # equivalent sequence specification
+c = Domain('NNNNNNNNNN', name='c')
+d = Domain('N10',        name='d') # equivalent sequence specification
+e = Domain('RRRRRNNNNN', name='e')
+f = Domain('R5N5',       name='f') # equivalent sequence specification
+g = Domain('N10',        name='g')</code></pre>
 <p>For mixed-material jobs, a material prefix specifies the material of each nucleotide: </p>
 <ul>
 <li>RNA:  {<code>rA</code>, <code>rC</code>, <code>rG</code>, <code>rU</code>} </li>
@@ -202,8 +201,7 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 <li>2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA: {<code>mA</code>, <code>mC</code>, <code>mG</code>, <code>mU</code>} </li>
 </ul>
 <p>which need only be specified when there is a change in material:</p>
-<div class="highlight"><pre><span></span><code><span class="n">h</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;rRRRRRdNNNNN&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span> <span class="c1"># 5 RNA nucleotides followed by 5 DNA nucleotides</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">h = Domain('rRRRRRdNNNNN', name='h') # 5 RNA nucleotides followed by 5 DNA nucleotides</code></pre>
 <p>For single-material jobs, the material prefix can be omitted for all nucleotides (as seen for domains <code>a-g</code> in the examples above). </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -217,11 +215,10 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 <hr />
 <h2 id="specify-a-target-strand">Specify a target strand<a class="headerlink" href="#specify-a-target-strand" title="Permanent link">&para;</a></h2>
 <p>A <code>TargetStrand</code> is a single RNA or DNA molecule specified as a sequence (specified 5<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> to 3<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span> in terms of previously defined domains) and a target strand name (keyword <code>name</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="o">~</span><span class="n">e</span><span class="p">],</span>   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>  <span class="c1"># ~e denotes the reverse complement of e</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">e</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">f</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand D&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">A = TargetStrand([a, b, g], name='Strand A')
+B = TargetStrand([d, ~e],   name='Strand B')  # ~e denotes the reverse complement of e
+C = TargetStrand([e, a, f], name='Strand C')
+D = TargetStrand([d, d, d], name='Strand D')</code></pre>
 <p>Additional fields and methods are available for a <code>TargetStrand</code> object:</p>
 <ul>
 <li><code>.domains</code>: a tuple of the domains comprising the strand</li>
@@ -229,12 +226,11 @@ implements both a positive design paradigm, explicitly designing for on-pathway 
 <li><code>.nt(alphabet)</code>: the number of nucleotides in the strand</li>
 </ul>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">A</span><span class="o">.</span><span class="n">domains</span>    <span class="c1"># --&gt; (&lt;Domain a&gt;, &lt;Domain b&gt;, &lt;Domain g&gt;)</span>
-<span class="n">A</span><span class="o">.</span><span class="n">ndomains</span><span class="p">()</span> <span class="c1"># --&gt; 3</span>
+<pre class="highlight"><code class="language-python">A.domains    # --&gt; (&lt;Domain a&gt;, &lt;Domain b&gt;, &lt;Domain g&gt;)
+A.ndomains() # --&gt; 3
 
-<span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
-<span class="n">A</span><span class="o">.</span><span class="n">nt</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">alphabet</span><span class="p">)</span> <span class="c1"># --&gt; 18</span>
-</code></pre></div>
+my_model = Model()
+A.nt(my_model.alphabet) # --&gt; 18</code></pre>
 <p>The reverse complement of a <code>TargetStrand</code> maybe analogous obtained, for example, as <code>~A</code>.</p>
 <hr />
 <h2 id="specify-a-target-complex">Specify a target complex<a class="headerlink" href="#specify-a-target-complex" title="Permanent link">&para;</a></h2>
@@ -249,17 +245,18 @@ c2 = TargetComplex([A, B, B, C], structure='.17(+).18(+).18(+).23', name='c2')
 c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 ``` -->
 
-<div class="highlight"><pre><span></span><code><span class="c1"># dot-parens-plus notation</span>
-<span class="n">C1</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;........((((((((((+))))))))))((((((((((+))))))))))..............&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python"># dot-parens-plus notation
+C1 = TargetComplex([A, B, C], '........((((((((((+))))))))))((((((((((+))))))))))..............', name='C1')
 
-<span class="c1"># run-length encoded dot-parens-plus notation</span>
-<span class="n">C2</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10.14&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+# run-length encoded dot-parens-plus notation
+C2 = TargetComplex([B, C], '.10(10+)10.14', name='C2')
 
-<span class="c1"># DU+ notation</span>
-<span class="n">C3</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">D</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="s1">&#39;D30 +&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">)</span>
-<span class="n">C4</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;D10(D10 + D10 +)&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
-<span class="n">C5</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;D8(U12 +) D10(+) U10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C5&#39;</span><span class="p">)</span>
-</code></pre></div>
+# DU+ notation
+C3 = TargetComplex([D, D], 'D30 +', name='C3')
+C4 = TargetComplex([B, B, B], 'D10(D10 + D10 +)', name='C4')
+C5 = TargetComplex([B, A, B], 'D8(U12 +) D10(+) U10', name='C5')
+
+</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The target structure will be used in all target test tubes in which a complex appears as an on-target complex and will be ignored in those target test tubes where a complex appears as an off-target complex.</p>
@@ -271,17 +268,15 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 <li><code>.nt(alphabet)</code>: the number of nucleotides in the complex</li>
 </ul>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">C1</span><span class="o">.</span><span class="n">strands</span>    <span class="c1"># --&gt; (&lt;TargetStrand Strand A&gt;, &lt;TargetStrand Strand B&gt;, &lt;TargetStrand Strand C&gt;)</span>
-<span class="n">C1</span><span class="o">.</span><span class="n">nstrands</span><span class="p">()</span> <span class="c1"># --&gt; 3</span>
-<span class="n">C1</span><span class="o">.</span><span class="n">nt</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">alphabet</span><span class="p">)</span>       <span class="c1"># --&gt; 62</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">C1.strands    # --&gt; (&lt;TargetStrand Strand A&gt;, &lt;TargetStrand Strand B&gt;, &lt;TargetStrand Strand C&gt;)
+C1.nstrands() # --&gt; 3
+C1.nt(my_model.alphabet)       # --&gt; 62</code></pre>
 <p>In certain cases, it may be desirable to adjust the free energy of an on-target complex (for example, if a protein is known to stabilize the complex). For such cases, the optional keyword <code>bonus</code> can be used to specify an additional free energy in kcal/mol (default: 0; negative value is stabilizing, postive value is destabilizing):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># destabilize C6 by 1 kcal/mol</span>
-<span class="n">C6</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10.14&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C6&#39;</span><span class="p">,</span> <span class="n">bonus</span><span class="o">=+</span><span class="mf">1.0</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python"># destabilize C6 by 1 kcal/mol
+C6 = TargetComplex([B, C], '.10(10+)10.14', name='C6', bonus=+1.0)
 
-<span class="c1"># stabilize C7 by 10 kcal/mol</span>
-<span class="n">C7</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10.14&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C7&#39;</span><span class="p">,</span> <span class="n">bonus</span><span class="o">=-</span><span class="mf">10.0</span><span class="p">)</span>
-</code></pre></div>
+# stabilize C7 by 10 kcal/mol
+C7 = TargetComplex([B, C], '.10(10+)10.14', name='C7', bonus=-10.0)</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that a bonus applied to the <a href="../definitions/#complex-free-energy">complex free energy</a> is equivalent to applying the bonus to every <a href="../definitions/#structure-free-energy">structure free energy</a> in the complex ensemble. As a result, the bonus alters the <a href="../definitions/#equilibrium-complex-concentrations">equilibrium complex concentration</a> within the <a href="../definitions/#test-tube-ensemble">test tube ensemble</a>, but does not alter the <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a> within the <a href="../definitions/#complex-ensemble">complex ensemble</a>.</p>
@@ -295,21 +290,19 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 <li>Using keyword <code>exclude</code> to exclude an explicitly specified set of complexes (default: <code>None</code>).</li>
 </ul>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">t1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">(</span><span class="n">on_targets</span><span class="o">=</span><span class="p">{</span><span class="n">C1</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">C2</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">,</span>
-    <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[[</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">]],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="n">C4</span><span class="p">]))</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">t1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8}, name='t1',
+    off_targets=SetSpec(max_size=3, include=[[B, B, B, B]], exclude=[C4]))</code></pre>
 <p>If desired, the on-target and off-target sets for a specified <code>TargetTube</code> can be queried as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">on_targets</span><span class="p">)</span>  <span class="c1"># --&gt; {&lt;TargetComplex C1&gt;: 1e-08, &lt;TargetComplex C2&gt;: 1e-08}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">off_targets</span><span class="p">)</span> <span class="c1"># --&gt; {&lt;TargetComplex (Strand A+Strand A+Strand B)&gt;, &lt;TargetComplex (Strand B)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand A+Strand A)&gt;, &lt;TargetComplex (Strand C+Strand B+Strand B)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand A+Strand B+Strand B)&gt;, &lt;TargetComplex (Strand A+Strand C+Strand C)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand C)&gt;, &lt;TargetComplex (Strand C+Strand C+Strand C)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand A+Strand C+Strand B)&gt;, &lt;TargetComplex (Strand C+Strand C)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand A+Strand C)&gt;, &lt;TargetComplex (Strand A+Strand A+Strand C)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand A)&gt;, &lt;TargetComplex (Strand B+Strand B)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand A+Strand B)&gt;, &lt;TargetComplex (Strand A+Strand A+Strand A)&gt;,</span>
-                      <span class="c1"># &lt;TargetComplex (Strand C+Strand C+Strand B)&gt;, &lt;TargetComplex (Strand B+Strand B+Strand B+Strand B)&gt;}</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">print(t1.on_targets)  # --&gt; {&lt;TargetComplex C1&gt;: 1e-08, &lt;TargetComplex C2&gt;: 1e-08}
+print(t1.off_targets) # --&gt; {&lt;TargetComplex (Strand A+Strand A+Strand B)&gt;, &lt;TargetComplex (Strand B)&gt;,
+                      # &lt;TargetComplex (Strand A+Strand A)&gt;, &lt;TargetComplex (Strand C+Strand B+Strand B)&gt;,
+                      # &lt;TargetComplex (Strand A+Strand B+Strand B)&gt;, &lt;TargetComplex (Strand A+Strand C+Strand C)&gt;,
+                      # &lt;TargetComplex (Strand C)&gt;, &lt;TargetComplex (Strand C+Strand C+Strand C)&gt;,
+                      # &lt;TargetComplex (Strand A+Strand C+Strand B)&gt;, &lt;TargetComplex (Strand C+Strand C)&gt;,
+                      # &lt;TargetComplex (Strand A+Strand C)&gt;, &lt;TargetComplex (Strand A+Strand A+Strand C)&gt;,
+                      # &lt;TargetComplex (Strand A)&gt;, &lt;TargetComplex (Strand B+Strand B)&gt;,
+                      # &lt;TargetComplex (Strand A+Strand B)&gt;, &lt;TargetComplex (Strand A+Strand A+Strand A)&gt;,
+                      # &lt;TargetComplex (Strand C+Strand C+Strand B)&gt;, &lt;TargetComplex (Strand B+Strand B+Strand B+Strand B)&gt;}</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that <code>include</code> and <code>exclude</code> accept both target complex identifiers (e.g., <code>C4</code>) and strand orderings (e.g., <code>[B, B, B, B]</code>).</p>
@@ -323,12 +316,11 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 </div>
 <h2 id="run-a-test-tube-design-job">Run a test tube design job<a class="headerlink" href="#run-a-test-tube-design-job" title="Permanent link">&para;</a></h2>
 <p>The <code>tube_design</code> class performs <a href="../definitions/#constrained-multi-tube-design-problem">constrained multi-tube design</a> for a specified set of target test tubes (keyword <code>tubes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
-<span class="n">my_tubes</span> <span class="o">=</span> <span class="p">[</span><span class="n">t1</span><span class="p">]</span>
-<span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="n">my_tubes</span><span class="p">,</span>
-    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
-    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_model = Model()
+my_tubes = [t1]
+my_design = tube_design(tubes=my_tubes,
+    hard_constraints=[], soft_constraints=[],
+    defect_weights=None, options=None, model=my_model)</code></pre>
 <p>A <code>tube_design</code> object supports two methods for performing sequence design:</p>
 <ul>
 <li><code>run()</code>: <a href="./#run-design-trials-in-the-foreground">run multiple independent design trials in the foreground</a>.</li>
@@ -342,11 +334,9 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 <hr />
 <h3 id="run-design-trials-in-the-foreground">Run design trials in the foreground<a class="headerlink" href="#run-design-trials-in-the-foreground" title="Permanent link">&para;</a></h3>
 <p>Once a test tube design has been specified using <code>tube_design</code>, use <code>run()</code> to run a specified number of independent design trials (keyword <code>trials</code>) in parallel in the foreground and return a list of <code>DesignResult</code> objects:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_results</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># run 2 independent design trials</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_results = my_design.run(trials=2) # run 2 independent design trials</code></pre>
 <p>A <code>DesignResult</code> object can be viewed as a table in a Jupyter notebook, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># display results table for first design trial</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_results[0]  # display results table for first design trial</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/1-optimization.png" alt="Optimization output" title="Example optimization output" width="620" /></p>
@@ -363,56 +353,46 @@ c3 = TargetComplex([A, A], structure='U8 D10 + U8', name='c3')
 <li>Significant off-target complex concentrations in each tube (those off-targets with concentration <span class="arithmatex"><span class="MathJax_Preview">\ge</span><script type="math/tex">\ge</script></span> 1% the maximum complex concentration in the tube).</li>
 </ul>
 <p>The keyword <code>restart</code> may be included to run a design by providing a list of <code>DesignResult</code> objects from a previous design job:</p>
-<p><div class="highlight"><pre><span></span><code><span class="n">new_results</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">restart</span><span class="o">=</span><span class="n">my_results</span><span class="p">)</span>
-</code></pre></div>
+<p><pre class="highlight"><code class="language-python">new_results = my_design.run(trials=2, restart=my_results)</code></pre>
 An error will be thrown if <code>trials</code> and <code>restart</code> specify different numbers of design trials and <code>DesignResult</code> objects.</p>
 <h3 id="launch-design-trials-in-the-background">Launch design trials in the background<a class="headerlink" href="#launch-design-trials-in-the-background" title="Permanent link">&para;</a></h3>
 <p>Once a test tube design has been specified using <code>tube_design</code>, use <code>launch()</code> to start a specified number of independent design trials (keyword <code>trials</code>) in parallel in the background. Intermediate results will be saved to a directory specified with keyword <code>checkpoint</code> at a regular interval specified with keyword <code>interval</code> (in seconds, default 600):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># start 2 independent design trials</span>
-<span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python"># start 2 independent design trials
+my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints', interval=600)</code></pre>
 <p>Whereas <code>run()</code> returns a list of <code>DesignResult</code> objects representing completed design trials, <code>launch()</code> returns a list of trial monitors. The design trials will continue in the background.</p>
 <p>To examine current results based on the latest checkpoint file for each trial, use the <code>current_results()</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_current_results</span> <span class="o">=</span> <span class="n">my_jobs</span><span class="o">.</span><span class="n">current_results</span><span class="p">()</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_current_results = my_jobs.current_results()</code></pre>
 <p>which returns a list with an entry for each trial that is either a <code>DesignResult</code> object (if a checkpoint file or final result is available) or <code>None</code> (otherwise). As illustrated above, a <code>DesignResult</code> object can be viewed as a table in a Jupyter notebook. For example if a checkpoint is available for the first trial, a table is generated by typing:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_current_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># display results table for first design trial</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_current_results[0]  # display results table for first design trial</code></pre>
 <p>If only final results are of interest, use the <code>final_results()</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_final_results</span> <span class="o">=</span> <span class="n">my_jobs</span><span class="o">.</span><span class="n">final_results</span><span class="p">()</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_final_results = my_jobs.final_results()</code></pre>
 <p>which returns a list with an entry for each trial that is either a <code>DesignResult</code> object (if a final result is available) or <code>None</code> (otherwise).</p>
 <p>To lock up the interface and wait for all trials to finish, use the <code>wait()</code> method to return a list of <code>DesignResult</code> objects:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_final_results</span> <span class="o">=</span> <span class="n">my_jobs</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_final_results = my_jobs.wait()</code></pre>
 <p>To stop all trials, use the <code>stop()</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_jobs</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_jobs.stop()</code></pre>
 <p>To restart designs from previous results, use the <code>restart</code> keyword, providing either a list of <code>DesignResult</code> objects from a previous design, or a directory name containing checkpoint files:</p>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># restart from a list of DesignResult objects</span>
-<span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;new_checkpoints&#39;</span><span class="p">,</span>
-    <span class="n">restart</span><span class="o">=</span><span class="n">my_current_results</span><span class="p">)</span>
+<p><pre class="highlight"><code class="language-python"># restart from a list of DesignResult objects
+my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints',
+    restart=my_current_results)
 
-<span class="c1"># restart from a checkpoint directory</span>
-<span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;new_checkpoints&#39;</span><span class="p">,</span>
-    <span class="n">restart</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">)</span>
-</code></pre></div>
+# restart from a checkpoint directory
+my_jobs = my_design.launch(trials=2, checkpoint='new_checkpoints',
+    restart='my_checkpoints')</code></pre>
 An error will be returned if <code>trials</code> and <code>restart</code> specify different numbers of design trials and <code>DesignResult</code> objects. However, if no results exist in the supplied <code>restart</code> directory, the design will be started afresh without any error messages. Hence, you can create a rerunnable design by supplying the same directory to <code>checkpoint</code> and <code>restart</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_jobs</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">,</span>
-    <span class="n">restart</span><span class="o">=</span><span class="s1">&#39;my_checkpoints&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_jobs = my_design.launch(trials=2, checkpoint='my_checkpoints',
+    restart='my_checkpoints')</code></pre>
 <hr />
 <h2 id="run-a-complex-design-job">Run a complex design job<a class="headerlink" href="#run-a-complex-design-job" title="Permanent link">&para;</a></h2>
 <p>The <code>complex_design</code> class enables specification of a <a href="../definitions/#design-formulation">constrained multi-complex design</a> for a specified set of target complexes (keyword <code>complexes</code>) and a specified <a href="../model/#model-specification">physical model</a> (keyword <code>model</code>). You may optionally: <a href="./#specify-hard-constraints">specify hard constraints</a> (keyword <code>hard_constraints</code>), <a href="./#specify-soft-constraints">specify soft constraints</a> (keyword <code>soft_constraints</code>), <a href="./#specify-defect-weights">specify defect weights</a> (keyword <code>defect_weights</code>), and <a href="./#job-options">specify job options</a> (keyword <code>options</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
-<span class="n">my_complexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">]</span>
-<span class="n">my_design</span> <span class="o">=</span> <span class="n">complex_design</span><span class="p">(</span><span class="n">complexes</span><span class="o">=</span><span class="n">my_complexes</span><span class="p">,</span>
-    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
-    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">my_model = Model()
+my_complexes = [C1, C2]
+my_design = complex_design(complexes=my_complexes,
+    hard_constraints=[], soft_constraints=[],
+    defect_weights=None, options=None, model=my_model)
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># run 2 independent design trials in the foreground</span>
-<span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</code></pre></div>
+result = my_design.run(trials=2) # run 2 independent design trials in the foreground
+result[0]</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/2-complex.png" alt="Complex design output" title="Example complex design output" width="350" /></p>
@@ -425,38 +405,37 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <hr />
 <h2 id="specify-hard-constraints">Specify hard constraints<a class="headerlink" href="#specify-hard-constraints" title="Permanent link">&para;</a></h2>
 <p><a href="../definitions/#hard-constraints">Hard constraints</a> for a design job are specified as a list, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># specify domains</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python"># specify domains
+a = Domain('N4', name='a')
+b = Domain('N4', name='b')
+c = Domain('N5', name='c')
+d = Domain('N5', name='d')
+e = Domain('N5', name='e')
+f = Domain('N5', name='f')
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+A = TargetStrand([a, b, c], name='A')
 
-<span class="c1"># source sequence for window constraint</span>
-<span class="n">gfp</span> <span class="o">=</span> <span class="s1">&#39;auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag&#39;</span>
+# source sequence for window constraint
+gfp = 'auggugagcaagggcgaggagcuguucaccgggguggugcccauccuggucgagcuggacggcgacguaaacggccacaaguucagcguguccggcgagggcgagggcgaugccaccuacggcaagcugacccugaaguucaucugcaccaccggcaagcugcccgugcccuggcccacccucgugaccacccugaccuacggcgugcagugcuucagccgcuaccccgaccacaugaagcagcacgacuucuucaaguccgccaugcccgaaggcuacguccaggagcgcaccaucuucuucaaggacgacggcaacuacaag'
 
-<span class="c1"># define list of hard constraints</span>
-<span class="n">my_hard_constraints</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Match</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">]),</span>
-    <span class="n">Match</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="p">],</span> <span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">a</span><span class="p">]),</span>
-    <span class="n">Complementarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="n">Similarity</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="s1">&#39;S5&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]),</span> <span class="c1"># GC content</span>
-    <span class="n">Library</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">catalog</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;CTAC&#39;</span><span class="p">,</span> <span class="s1">&#39;TAAT&#39;</span><span class="p">]]),</span>
-    <span class="n">Window</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">]),</span>
-    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;G5&#39;</span><span class="p">,</span> <span class="s1">&#39;U5&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">A</span><span class="p">),</span>
-    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">]),</span>
-    <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-    <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
-<span class="p">]</span>
+# define list of hard constraints
+my_hard_constraints = [
+    Match([a], [b]),
+    Match([a, b, f, f], [d, a, d, a]),
+    Complementarity([a, b, f, a, a, b], [c, d, e, c, c], wobble_mutations=True),
+    Similarity([c], 'S5', limits=[0.2, 0.8]), # GC content
+    Library([a], catalog=[['CTAC', 'TAAT']]),
+    Window([a, ~b], sources=[gfp]),
+    Pattern(['A5', 'C5', 'G5', 'U5'], scope=A),
+    Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6']),
+    Diversity(word=4, types=2),
+    Diversity(word=6, types=3),
+    Diversity(word=10, types=4, scope=[a, b])
+]
 
-<span class="c1">#two ways to add another constraint to the constraint set</span>
-<span class="n">my_hard_constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">Complementarity</span><span class="p">([</span><span class="n">e</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
-<span class="n">my_hard_constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Complementarity</span><span class="p">([</span><span class="n">e</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</code></pre></div>
+#two ways to add another constraint to the constraint set
+my_hard_constraints += [Complementarity([e], [f], wobble_mutations=True)]
+my_hard_constraints.append(Complementarity([e], [f], wobble_mutations=True))</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that the specification of a domain using <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a> (as in the example above) is an implicit hard sequence constraint.</p>
@@ -473,19 +452,18 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>a first list of domains for concatenation; alternatively, a target strand may be specified</li>
 <li>a second list of domains for concatenation; alternatively, a target strand may be specified</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N10', name='a')
+b = Domain('N4', name='b')
+c = Domain('H6', name='c')
+d = Domain('N6', name='d')
+e = Domain('S2', name='e')
+A = TargetStrand([a, b], name='Strand A')
 
-<span class="n">match1</span> <span class="o">=</span> <span class="n">Match</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">e</span><span class="p">])</span>  <span class="c1"># ~e is the reverse complement of e</span>
-<span class="n">match2</span> <span class="o">=</span> <span class="n">Match</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+match1 = Match([c], [b, ~e])  # ~e is the reverse complement of e
+match2 = Match([a, b], [d, d, e])
 
-<span class="c1"># specifying target strand A is equivalent to specifying list of domains [a, b]</span>
-<span class="n">match3</span> <span class="o">=</span> <span class="n">Match</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
-</code></pre></div>
+# specifying target strand A is equivalent to specifying list of domains [a, b]
+match3 = Match(A, [d, d, e])</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Constraints that expect a list of domains for concatenation will alternatively accept a target strand.</p>
@@ -497,23 +475,21 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>a first list of domains for concatenation; alternatively, a target strand may be specified</li>
 <li>a second list of domains for concatenation; alternatively, a target strand may be specified</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">comp1</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+<pre class="highlight"><code class="language-python">
+comp1 = Complementarity([a, b], [c, d, e])
 
-<span class="c1"># specifying target strand A is equivalent to specifying list of domains [a, b]</span>
-<span class="n">comp2</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
-</code></pre></div>
+# specifying target strand A is equivalent to specifying list of domains [a, b]
+comp2 = Complementarity(A, [c, d, e])</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Nucleotides that are base-paired in the target structure of an on-target complex are automatically assigned a complementarity constraint.</p>
 </div>
 <p>By default, complementary sequences are required to have Watson-Crick base-pairing (A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U or C<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G for RNA, A<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>T or C<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>G for DNA). To permit wobble mutations for RNA (G<span class="arithmatex"><span class="MathJax_Preview">\cdot</span><script type="math/tex">\cdot</script></span>U) globally throughout a design, use the <code>wobble_mutations</code> <a href="./#job-options">job option</a>. Alternatively, wobble mutations can be allowed for individual complementarity constraints (keyword <code>wobble_mutations</code>, default: <code>False</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="n">comp2</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">comp2 = Complementarity([a, b], [c, d, e], wobble_mutations=True)</code></pre>
 <p>It is also possible to force base pairs to be wobble pairs:</p>
-<div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
-<span class="n">comp3</span> <span class="o">=</span> <span class="n">Complementarity</span><span class="p">([</span><span class="n">f</span><span class="p">],</span> <span class="p">[</span><span class="n">g</span><span class="p">],</span> <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">f = Domain('S2', name='f')
+g = Domain('S2', name='g')
+comp3 = Complementarity([f], [g], wobble_mutations=True)</code></pre>
 <hr />
 <h3 id="similarity">Similarity<a class="headerlink" href="#similarity" title="Permanent link">&para;</a></h3>
 <p>A <a href="../definitions/#hard-constraints">similarity constraint</a> forces a concatentation of domains to match a reference sequence of the same length to within a specified fractional range. A <code>Similarity</code> hard constraint is specified as:</p>
@@ -522,19 +498,18 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>a reference sequence of the same length as the concatenated domains</li>
 <li>a fractional range, <span class="arithmatex"><span class="MathJax_Preview">[l, u]</span><script type="math/tex">[l, u]</script></span>, where <span class="arithmatex"><span class="MathJax_Preview">0 \leq l &lt; u \leq 1</span><script type="math/tex">0 \leq l < u \leq 1</script></span></li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N10', name='a')
+b = Domain('N20', name='b')
+C = TargetStrand([a, b, a], name='Strand C')
 
-<span class="c1"># similarity constraint for a concatenation of domains</span>
-<span class="n">sim1</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S5K35&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+# similarity constraint for a concatenation of domains
+sim1 = Similarity([a, ~a, b], 'S5K35', limits=[0.25, 0.75])
 
-<span class="c1"># similarity constraint for a target strand</span>
-<span class="n">sim2</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="s1">&#39;S30K10&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span> <span class="c1"># for a strand</span>
+# similarity constraint for a target strand
+sim2 = Similarity(C, 'S30K10', limits=[0.25, 0.75]) # for a strand
 
-<span class="c1"># use similarity constraint to enforce 45-55% GC content</span>
-<span class="n">sim3</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S30&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">])</span>
-</code></pre></div>
+# use similarity constraint to enforce 45-55% GC content
+sim3 = Similarity([a, b], 'S30', limits=[0.45, 0.55])</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A similarity constraint can be used to constrain sequence composition (e.g., 45-55% GC content as in the example above).</p>
@@ -547,25 +522,24 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>Specify a list of domains for concatenation; alternatively, specify a target strand</li>
 <li>Specify a list of sources from which the window should be selected</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N10', name='a')
+b = Domain('N10', name='b')
+c = Domain('N10', name='c')
+e = Domain('N10', name='e')
+A = TargetStrand([a, ~b], name='Strand A')
 
-<span class="n">gfp</span> <span class="o">=</span> <span class="s1">&#39;AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACGGCCACAAGUUCAGCGUGUCCGGCGAGGGCGAGGGCGAUGCCACCUACGGCAAGCUGACCCUGAAGUUCAUCUGCACCACCGGCAAGCUGCCCGUGCCCUGGCCCACCCUCGUGACCACCCUGACCUACGGCGUGCAGUGCUUCAGCCGCUACCCCGACCACAUGAAGCAGCACGACUUCUUCAAGUCCGCCAUGCCCGAAGGCUACGUCCAGGAGCGCACCAUCUUCUUCAAGGACGACGGCAACUACAAG&#39;</span>
+gfp = 'AUGGUGAGCAAGGGCGAGGAGCUGUUCACCGGGGUGGUGCCCAUCCUGGUCGAGCUGGACGGCGACGUAAACGGCCACAAGUUCAGCGUGUCCGGCGAGGGCGAGGGCGAUGCCACCUACGGCAAGCUGACCCUGAAGUUCAUCUGCACCACCGGCAAGCUGCCCGUGCCCUGGCCCACCCUCGUGACCACCCUGACCUACGGCGUGCAGUGCUUCAGCCGCUACCCCGACCACAUGAAGCAGCACGACUUCUUCAAGUCCGCCAUGCCCGAAGGCUACGUCCAGGAGCGCACCAUCUUCUUCAAGGACGACGGCAACUACAAG'
 
-<span class="n">rfp</span> <span class="o">=</span> <span class="s1">&#39;CCUGCAGGACGGCGAGUUCAUCUACAAGGUGAAGCUGCGCGGCACCAACUUCCCCUCCGACGGCCCCGUAAUGCAGAAGAAGACCAUGGGCUGGGAGGCCUCCUCCGAGCGGAUGUACCCCGAGGACGGCGCCCUGAAGGGCGAGAUCAAGCAGAGGCUGAAGCUGAAGGACGGCGGCCACUACGACGCUGAGGUCAAGACCACCUACAAGGCCAAGAAGCCCGUGCAGCUGCCCGGCGCCUACAACGUCAACAUCAAGUUGGACAUCACCUCCCACAACGAGGACUACACCAUCGUGGAACAGUACGAACGCGCCGAGGGCCGCCACUCCACCGGCGGCAUGGACGAGCUGUACAAGUAA&#39;</span>
+rfp = 'CCUGCAGGACGGCGAGUUCAUCUACAAGGUGAAGCUGCGCGGCACCAACUUCCCCUCCGACGGCCCCGUAAUGCAGAAGAAGACCAUGGGCUGGGAGGCCUCCUCCGAGCGGAUGUACCCCGAGGACGGCGCCCUGAAGGGCGAGAUCAAGCAGAGGCUGAAGCUGAAGGACGGCGGCCACUACGACGCUGAGGUCAAGACCACCUACAAGGCCAAGAAGCCCGUGCAGCUGCCCGGCGCCUACAACGUCAACAUCAAGUUGGACAUCACCUCCCACAACGAGGACUACACCAUCGUGGAACAGUACGAACGCGCCGAGGGCCGCCACUCCACCGGCGGCAUGGACGAGCUGUACAAGUAA'
 
-<span class="c1"># constrain window to be drawn from a source</span>
-<span class="n">window1</span> <span class="o">=</span> <span class="n">Window</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">])</span>
+# constrain window to be drawn from a source
+window1 = Window([a, ~b], sources=[gfp])
 
-<span class="c1"># window constraint for a target strand</span>
-<span class="n">window2</span> <span class="o">=</span> <span class="n">Window</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">])</span>
+# window constraint for a target strand
+window2 = Window(A, sources=[gfp])
 
-<span class="c1"># constrain window to be drawn from more either of two sources</span>
-<span class="n">window3</span> <span class="o">=</span> <span class="n">Window</span><span class="p">([</span><span class="o">~</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">],</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">gfp</span><span class="p">,</span> <span class="n">rfp</span><span class="p">])</span>
-</code></pre></div>
+# constrain window to be drawn from more either of two sources
+window3 = Window([~c, e], sources=[gfp, rfp])</code></pre>
 <hr />
 <h3 id="library">Library<a class="headerlink" href="#library" title="Permanent link">&para;</a></h3>
 <p>A <a href="../definitions/#hard-constraints">library constraint</a> forces a concatenated list of domains to have sequences drawn from a concatenated list of libraries. Each library contains a set of alternative sequences of equal length. A <code>Library</code> hard constraint is specified as:</p>
@@ -575,48 +549,47 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>Specify a list of libraries for concatenation</li>
 </ul>
 <p>The sum of the length of the domains must equal the sum of the length of the libraries (where we define the length of a library to be the length of any of its elements).</p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N6&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N3&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N3&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N6', name='a')
+b = Domain('N10', name='b')
+c = Domain('N2', name='c')
+d = Domain('N3', name='d')
+e = Domain('N3', name='e')
+A = TargetStrand([d, e], name='Strand A')
 
-<span class="c1"># define a library of sequences</span>
-<span class="n">toeholds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CAGUGG&#39;</span><span class="p">,</span> <span class="s1">&#39;AGCUCG&#39;</span><span class="p">,</span> <span class="s1">&#39;CAGGGC&#39;</span><span class="p">]</span>
+# define a library of sequences
+toeholds = ['CAGUGG', 'AGCUCG', 'CAGGGC']
 
-<span class="c1"># define a library of codons for each amino acid</span>
-<span class="n">aaI</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AUU&#39;</span><span class="p">,</span> <span class="s1">&#39;AUC&#39;</span><span class="p">,</span> <span class="s1">&#39;AUA&#39;</span><span class="p">]</span>
-<span class="n">aaL</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CUU&#39;</span><span class="p">,</span> <span class="s1">&#39;CUC&#39;</span><span class="p">,</span> <span class="s1">&#39;CUA&#39;</span><span class="p">,</span> <span class="s1">&#39;CUG&#39;</span><span class="p">,</span> <span class="s1">&#39;UUA&#39;</span><span class="p">,</span> <span class="s1">&#39;UUG&#39;</span><span class="p">]</span>
-<span class="n">aaV</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GUU&#39;</span><span class="p">,</span> <span class="s1">&#39;GUC&#39;</span><span class="p">,</span> <span class="s1">&#39;GUA&#39;</span><span class="p">,</span> <span class="s1">&#39;GUG&#39;</span><span class="p">]</span>
-<span class="n">aaF</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UUU&#39;</span><span class="p">,</span> <span class="s1">&#39;UUC&#39;</span><span class="p">]</span>
-<span class="n">aaM</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AUG&#39;</span><span class="p">]</span>
-<span class="n">aaC</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UGU&#39;</span><span class="p">,</span> <span class="s1">&#39;UGC&#39;</span><span class="p">]</span>
-<span class="n">aaA</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GCU&#39;</span><span class="p">,</span> <span class="s1">&#39;GCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GCA&#39;</span><span class="p">,</span> <span class="s1">&#39;GCG&#39;</span><span class="p">]</span>
-<span class="n">aaG</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GGU&#39;</span><span class="p">,</span> <span class="s1">&#39;GGC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGA&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">]</span>
-<span class="n">aaP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CCU&#39;</span><span class="p">,</span> <span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;CCA&#39;</span><span class="p">,</span> <span class="s1">&#39;CCG&#39;</span><span class="p">]</span>
-<span class="n">aaT</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ACU&#39;</span><span class="p">,</span> <span class="s1">&#39;ACC&#39;</span><span class="p">,</span> <span class="s1">&#39;ACA&#39;</span><span class="p">,</span> <span class="s1">&#39;ACG&#39;</span><span class="p">]</span>
-<span class="n">aaS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UCU&#39;</span><span class="p">,</span> <span class="s1">&#39;UCC&#39;</span><span class="p">,</span> <span class="s1">&#39;UCA&#39;</span><span class="p">,</span> <span class="s1">&#39;UCG&#39;</span><span class="p">,</span> <span class="s1">&#39;AGU&#39;</span><span class="p">,</span> <span class="s1">&#39;AGC&#39;</span><span class="p">]</span>
-<span class="n">aaY</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UAU&#39;</span><span class="p">,</span> <span class="s1">&#39;UAC&#39;</span><span class="p">]</span>
-<span class="n">aaW</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UGG&#39;</span><span class="p">]</span>
-<span class="n">aaQ</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CAA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAG&#39;</span><span class="p">]</span>
-<span class="n">aaN</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAU&#39;</span><span class="p">,</span> <span class="s1">&#39;AAC&#39;</span><span class="p">]</span>
-<span class="n">aaH</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CAU&#39;</span><span class="p">,</span> <span class="s1">&#39;CAC&#39;</span><span class="p">]</span>
-<span class="n">aaE</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GAA&#39;</span><span class="p">,</span> <span class="s1">&#39;GAG&#39;</span><span class="p">]</span>
-<span class="n">aaD</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GAU&#39;</span><span class="p">,</span> <span class="s1">&#39;GAC&#39;</span><span class="p">]</span>
-<span class="n">aaK</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAA&#39;</span><span class="p">,</span> <span class="s1">&#39;AAG&#39;</span><span class="p">]</span>
-<span class="n">aaR</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CGU&#39;</span><span class="p">,</span> <span class="s1">&#39;CGC&#39;</span><span class="p">,</span> <span class="s1">&#39;CGA&#39;</span><span class="p">,</span> <span class="s1">&#39;CGG&#39;</span><span class="p">,</span> <span class="s1">&#39;AGA&#39;</span><span class="p">,</span> <span class="s1">&#39;AGG&#39;</span><span class="p">]</span>
-<span class="n">aaSTOP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UAA&#39;</span><span class="p">,</span> <span class="s1">&#39;UAG&#39;</span><span class="p">,</span> <span class="s1">&#39;UGA&#39;</span><span class="p">]</span>
+# define a library of codons for each amino acid
+aaI = ['AUU', 'AUC', 'AUA']
+aaL = ['CUU', 'CUC', 'CUA', 'CUG', 'UUA', 'UUG']
+aaV = ['GUU', 'GUC', 'GUA', 'GUG']
+aaF = ['UUU', 'UUC']
+aaM = ['AUG']
+aaC = ['UGU', 'UGC']
+aaA = ['GCU', 'GCC', 'GCA', 'GCG']
+aaG = ['GGU', 'GGC', 'GGA', 'GGG']
+aaP = ['CCU', 'CCC', 'CCA', 'CCG']
+aaT = ['ACU', 'ACC', 'ACA', 'ACG']
+aaS = ['UCU', 'UCC', 'UCA', 'UCG', 'AGU', 'AGC']
+aaY = ['UAU', 'UAC']
+aaW = ['UGG']
+aaQ = ['CAA', 'CAG']
+aaN = ['AAU', 'AAC']
+aaH = ['CAU', 'CAC']
+aaE = ['GAA', 'GAG']
+aaD = ['GAU', 'GAC']
+aaK = ['AAA', 'AAG']
+aaR = ['CGU', 'CGC', 'CGA', 'CGG', 'AGA', 'AGG']
+aaSTOP = ['UAA', 'UAG', 'UGA']
 
-<span class="c1"># domain a is drawn from a toehold library</span>
-<span class="n">lib1</span> <span class="o">=</span> <span class="n">Library</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="p">[</span><span class="n">toeholds</span><span class="p">])</span>
+# domain a is drawn from a toehold library
+lib1 = Library([a], [toeholds])
 
-<span class="c1"># target strand A is drawn from a toehold library</span>
-<span class="n">lib1</span> <span class="o">=</span> <span class="n">Library</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">toeholds</span><span class="p">])</span>
+# target strand A is drawn from a toehold library
+lib1 = Library(A, [toeholds])
 
-<span class="c1"># concatenation [b, c] is drawn from a concatenation of 4 codon libraries</span>
-<span class="n">lib2</span> <span class="o">=</span> <span class="n">Library</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="p">[</span><span class="n">aaI</span><span class="p">,</span> <span class="n">aaM</span><span class="p">,</span> <span class="n">aaC</span><span class="p">,</span> <span class="n">aaG</span><span class="p">])</span>
-</code></pre></div>
+# concatenation [b, c] is drawn from a concatenation of 4 codon libraries
+lib2 = Library([b, c], [aaI, aaM, aaC, aaG])</code></pre>
 <hr />
 <h3 id="pattern-prevention">Pattern Prevention<a class="headerlink" href="#pattern-prevention" title="Permanent link">&para;</a></h3>
 <p>A <a href="../definitions/#hard-constraints">pattern prevention constraint</a> prevents a list of patterns from appearing globally or in a concatenated list of domains. A <code>Pattern</code> hard constraint is specified as:</p>
@@ -625,20 +598,19 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>optionally a list of domains for concatenation (keyword <code>scope</code>) where the patterns should be prevented; alternatively, a target strand may be specified</li>
 <li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = TargetStrand([a, ~a], name='A')
+B = TargetStrand([b, ~b], name='B')
 
-<span class="c1"># pattern prevention for concatenation [a, b]</span>
-<span class="n">pattern1</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+# pattern prevention for concatenation [a, b]
+pattern1 = Pattern(['A4', 'U4'], scope=[a, b])
 
-<span class="c1"># pattern prevention for target strand B</span>
-<span class="n">pattern2</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">B</span><span class="p">)</span>
+# pattern prevention for target strand B
+pattern2 = Pattern(['A4', 'U4'], scope=B)
 
-<span class="c1"># global pattern prevention</span>
-<span class="n">pattern3</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">])</span>
-</code></pre></div>
+# global pattern prevention
+pattern3 = Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'])</code></pre>
 <hr />
 <h3 id="diversity">Diversity<a class="headerlink" href="#diversity" title="Permanent link">&para;</a></h3>
 <p>A <a href="../definitions/#hard-constraints">diversity constraint</a> forces every word of a specified length to contain a specified degree of sequence diversity, either globally or for a concatenated list of domains. A <code>Diversity</code> hard constraint is specified as:</p>
@@ -648,21 +620,20 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <li>optionally a list of domains for concatenation (keyword <code>scope</code>) where the diversity should be imposed; alternatively, a target strand may be specified</li>
 <li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A+A&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = TargetStrand([a, ~a], name='A')
+C = TargetComplex([A, A], name='A+A')
 
-<span class="c1"># global constraints</span>
-<span class="n">div1</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">div2</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+# global constraints
+div1 = Diversity(word=4, types=2)
+div2 = Diversity(word=6, types=3)
 
-<span class="c1"># local constraint on concatenation [a, b]</span>
-<span class="n">div3</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+# local constraint on concatenation [a, b]
+div3 = Diversity(word=10, types=4, scope=[a, b])
 
-<span class="c1"># local constraint on target strand A</span>
-<span class="n">div4</span> <span class="o">=</span> <span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">A</span><span class="p">)</span>
-</code></pre></div>
+# local constraint on target strand A
+div4 = Diversity(word=10, types=4, scope=A)</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A diversity constraint that forces every window of length 4 to contain at least 2 nucleotide types is equivalent to a pattern prevention contraint that prevents patterns: AAAA, CCCC, GGGG, UUUU. Likewise, a diversity constraint that forces every window of length 6 to contain at least 3 nucleotide types is equivalent to a pattern prevention constraint that prevents: MMMMMM, KKKKKK, WWWWWW, SSSSSS, RRRRRR, YYYYYY.</p>
@@ -672,17 +643,16 @@ An error will be returned if <code>trials</code> and <code>restart</code> specif
 <hr />
 <h2 id="specify-soft-constraints">Specify soft constraints<a class="headerlink" href="#specify-soft-constraints" title="Permanent link">&para;</a></h2>
 <p><a href="../definitions/#soft-constraints">Soft constraints</a> for a design job are specified as a list, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># define soft for soft constraints</span>
-<span class="n">my_soft_constraints</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">a</span><span class="p">),</span>
-    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;G5&#39;</span><span class="p">,</span> <span class="s1">&#39;U5&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">A</span><span class="p">),</span> <span class="c1"># default weight 1</span>
-    <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
-    <span class="n">Similarity</span><span class="p">([</span><span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S12&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">),</span>
-    <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.15</span><span class="p">),</span>
-    <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]),</span> <span class="c1"># min energy diff to median</span>
-    <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">energy_ref</span><span class="o">=-</span><span class="mi">17</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1"># energy diff to reference</span>
-<span class="p">]</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python"># define soft for soft constraints
+my_soft_constraints = [
+    Pattern(['A4', 'U4'], scope=a),
+    Pattern(['A5', 'C5', 'G5', 'U5'], scope=A), # default weight 1
+    Pattern(['A4', 'C4', 'G4', 'U4', 'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5),
+    Similarity([b], 'S12', limits=[0.45, 0.55], weight=0.25),
+    SSM(word=4, scope=[C], weight=0.15),
+    EnergyMatch([a, b]), # min energy diff to median
+    EnergyMatch([a, b], energy_ref=-17, weight=0.5) # energy diff to reference
+]</code></pre>
 <hr />
 <h3 id="similarity_1">Similarity<a class="headerlink" href="#similarity_1" title="Permanent link">&para;</a></h3>
 <p>Similarity soft constraints are specified in nearly the same way as similarity hard constraints.
@@ -694,19 +664,18 @@ The primary difference is that a weight can be supplied to control the relative 
 <li>a fractional range, <span class="arithmatex"><span class="MathJax_Preview">[l, u]</span><script type="math/tex">[l, u]</script></span>, where <span class="arithmatex"><span class="MathJax_Preview">0 \leq l &lt; u \leq 1</span><script type="math/tex">0 \leq l < u \leq 1</script></span></li>
 <li>an optional weight <span class="arithmatex"><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N10', name='a')
+b = Domain('N20', name='b')
+C = TargetStrand([a, b, a], name='Strand C')
 
-<span class="c1"># similarity constraint for a concatenation of domains</span>
-<span class="n">sim1</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S5K35&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+# similarity constraint for a concatenation of domains
+sim1 = Similarity([a, ~a, b], 'S5K35', limits=[0.25, 0.75])
 
-<span class="c1"># similarity constraint for a target strand</span>
-<span class="n">sim2</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="s1">&#39;S30K10&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span> <span class="c1"># for a strand</span>
+# similarity constraint for a target strand
+sim2 = Similarity(C, 'S30K10', limits=[0.25, 0.75], weight=2.0) # for a strand
 
-<span class="c1"># use similarity constraint to enforce 45-55% GC content</span>
-<span class="n">sim3</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="s1">&#39;S30&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-</code></pre></div>
+# use similarity constraint to enforce 45-55% GC content
+sim3 = Similarity([a, b], 'S30', limits=[0.45, 0.55], weight=0.25)</code></pre>
 <hr />
 <h3 id="pattern-prevention_1">Pattern prevention<a class="headerlink" href="#pattern-prevention_1" title="Permanent link">&para;</a></h3>
 <p>A <a href="../definitions/#soft-constraints">pattern prevention constraint</a> penalizes a list of patterns from appearing globally or in a concatenated list of domains. A <code>Pattern</code> soft constraint is specified as:</p>
@@ -716,21 +685,21 @@ The primary difference is that a weight can be supplied to control the relative 
 <li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
 <li>an optional weight <span class="arithmatex"><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = TargetStrand([a, ~a], name='A')
+B = TargetStrand([b, ~b], name='B')
 
-<span class="c1"># pattern prevention for concatenation [a, b]</span>
-<span class="n">pattern1</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+# pattern prevention for concatenation [a, b]
+pattern1 = Pattern(['A4', 'U4'], scope=[a, b], weight=2.0)
 
-<span class="c1"># pattern prevention for target strand B</span>
-<span class="n">pattern2</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">],</span> <span class="n">scope</span><span class="o">=</span><span class="n">B</span><span class="p">)</span>
+# pattern prevention for target strand B
+pattern2 = Pattern(['A4', 'U4'], scope=B)
 
-<span class="c1"># global pattern prevention</span>
-<span class="n">pattern3</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">([</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;U4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;M6&#39;</span><span class="p">,</span> <span class="s1">&#39;K6&#39;</span><span class="p">,</span> <span class="s1">&#39;W6&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;R6&#39;</span><span class="p">,</span> <span class="s1">&#39;Y6&#39;</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-</code></pre></div>
+# global pattern prevention
+pattern3 = Pattern(['A4', 'C4', 'G4', 'U4',
+    'M6', 'K6', 'W6', 'S6', 'R6', 'Y6'], weight=0.5)
+</code></pre>
 <hr />
 <h3 id="sequence-symmetry">Sequence symmetry<a class="headerlink" href="#sequence-symmetry" title="Permanent link">&para;</a></h3>
 <p>A <a href="../definitions/#soft-constraints">sequence symmetry constraint</a> penalizes a subsequence of a specified word length if the word appears in more than one location, if its reverse complement appears elsewhere in a location that is not intended to form a duplex with the word, or if the word is self-complementary. An <code>SSM</code> soft constraint is specified as:</p>
@@ -740,22 +709,21 @@ The primary difference is that a weight can be supplied to control the relative 
 <li>if the scope is unspecified (absence of keyword <code>scope</code>), the constraint is global</li>
 <li>an optional weight <span class="arithmatex"><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+A = TargetStrand([a, ~a], name='A')
+B = TargetStrand([b, ~b], name='B')
 
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">],</span> <span class="s2">&quot;(10.4)10&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="s2">&quot;D24 +&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+C = TargetComplex([A], "(10.4)10", name='C')
+D = TargetComplex([A, A], "D24 +", name='D')
 
-<span class="c1"># multiple SSM constraints with different word lengths applied to the same complexes</span>
-<span class="n">ssm1</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
-<span class="n">ssm2</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<span class="n">ssm3</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+# multiple SSM constraints with different word lengths applied to the same complexes
+ssm1 = SSM(word=4, scope=[C, D], weight=0.15)
+ssm2 = SSM(word=5, scope=[C, D], weight=0.25)
+ssm3 = SSM(word=6, scope=[C, D], weight=0.45)
 
-<span class="c1">#global SSM constraint applies to all on-target complexes in the design</span>
-<span class="n">ssm4</span> <span class="o">=</span> <span class="n">SSM</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-</code></pre></div>
+#global SSM constraint applies to all on-target complexes in the design
+ssm4 = SSM(word=6, weight=0.5)</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Multiple SSM constraints with different window sizes can be specified for a given complex (see example above).</p>
@@ -768,17 +736,16 @@ The primary difference is that a weight can be supplied to control the relative 
 <li>an optional reference free energy in kcal/mol (keyword <code>energy_ref</code>)</li>
 <li>an optional weight <span class="arithmatex"><span class="MathJax_Preview">\in[0,\infty)</span><script type="math/tex">\in[0,\infty)</script></span>  (default: 1) that can be used to prioritize or de-prioritize design effort</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N12&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N12', name='a')
+b = Domain('N12', name='b')
+c = Domain('N12', name='c')
+d = Domain('N12', name='d')
 
-<span class="c1"># match each duplex free energy to the median value</span>
-<span class="n">diff1</span> <span class="o">=</span> <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">])</span>
+# match each duplex free energy to the median value
+diff1 = EnergyMatch([a, b, c, d])
 
-<span class="c1"># match each duplex free energy to the specified reference free energy</span>
-<span class="n">diff2</span> <span class="o">=</span> <span class="n">EnergyMatch</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">],</span> <span class="n">energy_ref</span><span class="o">=-</span><span class="mi">17</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-</code></pre></div>
+# match each duplex free energy to the specified reference free energy
+diff2 = EnergyMatch([a, b, c, d], energy_ref=-17, weight=0.5)</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>An energy match constraint can be used to design a set of toeholds of comparable strength.</p>
@@ -786,61 +753,57 @@ The primary difference is that a weight can be supplied to control the relative 
 <hr />
 <h2 id="specify-defect-weights">Specify defect weights<a class="headerlink" href="#specify-defect-weights" title="Permanent link">&para;</a></h2>
 <p><a href="../definitions/#defect-weights">Defect weights</a> can be specified to reprioritize design effort at any subset of levels (tube, complex, strand, domain) within design ensemble. A <code>Weights</code> object is created for the set of <code>TargetTube</code> objects to be designed:</p>
-<div class="highlight"><pre><span></span><code><span class="n">a1</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a1&#39;</span><span class="p">)</span>
-<span class="n">a2</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a2&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a1 = Domain('N5', name='a1')
+a2 = Domain('N5', name='a2')
+b = Domain('N10', name='b')
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+A = TargetStrand([a1, a2], name='A')
+B = TargetStrand([b], name='B')
 
-<span class="n">AB</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AB&#39;</span><span class="p">)</span>
-<span class="n">AA</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AA&#39;</span><span class="p">)</span>
+AB = TargetComplex([A, B], structure='(10+)10', name='AB')
+AA = TargetComplex([A, A], structure='(10+)10', name='AA')
 
-<span class="n">t1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">AB</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">)</span>
-<span class="n">t2</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">AA</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="n">AB</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">)</span>
+t1 = TargetTube({AB: 1e-8}, name='t1')
+t2 = TargetTube({AA: 1e-9, AB: 1e-10}, name='t2')
 
-<span class="n">my_tubes</span> <span class="o">=</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">]</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="n">my_tubes</span><span class="p">)</span> <span class="c1"># All weights are initialized to 1</span>
-</code></pre></div>
+my_tubes = [t1, t2]
+weights = Weights(my_tubes) # All weights are initialized to 1</code></pre>
 <p>The weights are initialized to 1, but can be customized to take any value in the interval <span class="arithmatex"><span class="MathJax_Preview">[0,\infty)</span><script type="math/tex">[0,\infty)</script></span>. Weights can be manipulated by slicing on any subset of 4 indices (in the following order: Domain, TargetStrand, TargetComplex, TargetTube). For example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># weight on domain a1 in all target strands, target complexes, and target tubes</span>
-<span class="n">weights</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
+<pre class="highlight"><code class="language-python"># weight on domain a1 in all target strands, target complexes, and target tubes
+weights[a1] *= 2
 
-<span class="c1"># weight on target strand A in all target conplexes and target tubes</span>
-<span class="n">weights</span><span class="p">[:,</span> <span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+# weight on target strand A in all target conplexes and target tubes
+weights[:, A] = 4
 
-<span class="c1"># weight on tube t2</span>
-<span class="n">weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">t2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+# weight on tube t2
+weights[:, :, :, t2] = 2
 
-<span class="c1"># weight on target complex AB in tube t1</span>
-<span class="n">weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">AB</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+# weight on target complex AB in tube t1
+weights[:, :, AB, t1] = 5
 
-<span class="c1"># weight on domain a2 in target strand A in all target complexes in all tubes</span>
-<span class="n">weights</span><span class="p">[</span><span class="n">a2</span><span class="p">,</span> <span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
+# weight on domain a2 in target strand A in all target complexes in all tubes
+weights[a2, A] = 0.75
 
-<span class="c1"># weight on domain a1 in all target strands in target complex AA in tube t2</span>
-<span class="n">weights</span><span class="p">[</span><span class="n">a1</span><span class="p">,</span> <span class="p">:,</span> <span class="n">AA</span><span class="p">,</span> <span class="n">t2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+# weight on domain a1 in all target strands in target complex AA in tube t2
+weights[a1, :, AA, t2] = 0.5
 
-<span class="c1"># weight on domain b in all target strands and target complexes in tube t2</span>
-<span class="n">weights</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">t2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+# weight on domain b in all target strands and target complexes in tube t2
+weights[b, :, :, t2] = 3
 
-<span class="c1"># global weight on the entire multi-tube ensemble defect</span>
-<span class="n">weights</span><span class="p">[:]</span> <span class="o">*=</span><span class="mi">2</span>
-</code></pre></div>
+# global weight on the entire multi-tube ensemble defect
+weights[:] *=2</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that <a href="../definitions/#design-objective-function">multi-tube ensemble defect</a> <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M}</span><script type="math/tex">\mathcal{M}</script></span> varies between 0 and 1 so that specifying an increasing number of soft constraints in the <a href="../definitions/#constrained-multi-tube-design-problem">augmented objective function</a> will increasingly de-emphasize design effort on the ensemble defect. Specifying a global weight as part of the weighted ensemble defect <span class="arithmatex"><span class="MathJax_Preview">\mathcal{M_W}</span><script type="math/tex">\mathcal{M_W}</script></span> (see example above) can be used to balance effort on the ensemble defect against effort on the soft constraints.</p>
 </div>
 <p>A <code>Weights</code> object may be displayed as a table in a Jupyter notebook, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">weights</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">weights</code></pre>
 <p>Output:</p>
 <p><img src="../figs/design/3-weights.png" alt="Weights output" title="Example weights output" width="300" /></p>
 <p>Alternatively, you can view an ASCII representation of the same data by using the <code>print</code> function:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">print(weights)</code></pre>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code>Domain Strand Complex Tube  Weight
+<pre class="highlight"><code>Domain Strand Complex Tube  Weight
     a1      A      AA   t2     1.0
     a1      A      AB   t1    10.0
     a1      A      AB   t2     4.0
@@ -848,47 +811,44 @@ The primary difference is that a weight can be supplied to control the relative 
     a2      A      AB   t1     1.5
     a2      A      AB   t2     1.5
      b      B      AB   t1    10.0
-     b      B      AB   t2     6.0
-</code></pre></div>
+     b      B      AB   t2     6.0</code></pre>
 <p>For experienced Python users, a <code>Weights</code> object contains a <code>pandas.DataFrame</code> as a single member <code>.table</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For a <a href="./#run-a-complex-design-job">complex design job</a>, the <code>Weights</code> object is generated for a set of on-target complexes, in which case the 4th index (for tubes) is omitted:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_complexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">AB</span><span class="p">,</span> <span class="n">AA</span><span class="p">]</span>
-<span class="n">complex_weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="n">my_complexes</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">my_complexes = [AB, AA]
+complex_weights = Weights(my_complexes)
 
-<span class="c1"># weight on domain a1 in all target strands and target complexes</span>
-<span class="n">complex_weights</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
+# weight on domain a1 in all target strands and target complexes
+complex_weights[a1] *= 2
 
-<span class="c1"># weight on target strand A in all target complexes</span>
-<span class="n">complex_weights</span><span class="p">[:,</span> <span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+# weight on target strand A in all target complexes
+complex_weights[:, A] = 4
 
-<span class="c1"># weight on domain a2 in target strand A in target complex AA</span>
-<span class="n">complex_weights</span><span class="p">[</span><span class="n">a2</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">AA</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
-</code></pre></div>
+# weight on domain a2 in target strand A in target complex AA
+complex_weights[a2, A, AA] = 0.75</code></pre>
 </div>
 <hr />
 <h2 id="job-options">Job options<a class="headerlink" href="#job-options" title="Permanent link">&para;</a></h2>
 <p>Specify any non-default job options (See Supp Info of [<a class="citation" href="#ref-Wolfe17" id="cite-Wolfe17">Wolfe17</a>] for details). Defaults are shown below:</p>
-<div class="highlight"><pre><span></span><code><span class="n">options</span> <span class="o">=</span> <span class="n">DesignOptions</span><span class="p">(</span>
-    <span class="n">f_stop</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>      <span class="c1"># stop condition for sequence optimization</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>           <span class="c1"># random seed if 0; specified seed otherwise (reproducible trial)</span>
-    <span class="n">H_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>        <span class="c1"># default: 2 for RNA, 3 for DNA and custom</span>
-    <span class="n">N_split</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-    <span class="n">f_split</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>     <span class="c1"># in interal (0,1)</span>
-    <span class="n">f_stringent</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="c1"># in interval (0,1)</span>
-    <span class="n">dG_clamp</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span>     <span class="c1"># kcal/mol</span>
-    <span class="n">M_bad</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">M_reseed</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-    <span class="n">M_reopt</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">f_passive</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
-    <span class="n">f_redecomp</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>  <span class="c1"># in interval (0,1)</span>
-    <span class="n">f_refocus</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>   <span class="c1"># in interval (0,1)</span>
-    <span class="n">f_sparse</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span>   <span class="c1"># threshold pair probs for sparse storage in decomposition tree</span>
-    <span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># allow wobble pairs in user-assigned domain complements (e.g. between a and ~a)</span>
-    <span class="n">max_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>       <span class="c1"># max design time in seconds (if nonzero)</span>
-<span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">options = DesignOptions(
+    f_stop=0.02,      # stop condition for sequence optimization
+    seed=0,           # random seed if 0; specified seed otherwise (reproducible trial)
+    H_split=2,        # default: 2 for RNA, 3 for DNA and custom
+    N_split=12,
+    f_split=0.99,     # in interal (0,1)
+    f_stringent=0.99, # in interval (0,1)
+    dG_clamp=-20,     # kcal/mol
+    M_bad=300,
+    M_reseed=50,
+    M_reopt=3,
+    f_passive=0.01,   # in interval (0,1)
+    f_redecomp=0.03,  # in interval (0,1)
+    f_refocus=0.03,   # in interval (0,1)
+    f_sparse=1e-05,   # threshold pair probs for sparse storage in decomposition tree
+    wobble_mutations=False, # allow wobble pairs in user-assigned domain complements (e.g. between a and ~a)
+    max_time=0,       # max design time in seconds (if nonzero)
+)</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Enable <code>wobble_mutations</code> (default <code>False</code>) so that the designer will consider sequences which may 1) yield <a href="../definitions/#wobble-pairs">wobble pairs</a> in target structures and 2) contain wobble complements in domain reverse complements (e.g. <code>a</code> = <code>GGG</code>, <code>~a</code> = <code>UUU</code> for RNA).</p>
@@ -901,43 +861,39 @@ The primary difference is that a weight can be supplied to control the relative 
 <p class="admonition-title">Note</p>
 <p>Change <code>f_stop</code> to adjust the <a href="../definitions/#constrained-multi-tube-design-problem">stop condition</a> for sequence optimization. For multi-tube ensembles with many sequence constraints (especially biological sequence constraints) you may need to increase the stop condition.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="n">options</span> <span class="o">=</span> <span class="n">DesignOptions</span><span class="p">(</span>
-    <span class="n">f_stop</span><span class="o">=</span><span class="mf">0.05</span>
-<span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">options = DesignOptions(
+    f_stop=0.05
+)</code></pre>
 <p>By default, NUPACK design jobs run in <a href="../advanced/#parallelism">parallel</a>.</p>
 <hr />
 <h2 id="job-results">Job results<a class="headerlink" href="#job-results" title="Permanent link">&para;</a></h2>
 <p>The results of NUPACK design jobs can be conveniently displayed as a table, printed as text, or introspected programmatically. Consider the following test tube design job:</p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N20', name='a')
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
+C = TargetComplex([A, B], '(20+)20', name='C')
 
-<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 
-<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
-<span class="n">hard</span> <span class="o">=</span> <span class="p">[</span><span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">])]</span>
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+hard = [Diversity(word=4, types=2, scope=[a])]
 
-<span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(),</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span> <span class="n">hard_constraints</span><span class="o">=</span><span class="n">hard</span><span class="p">)</span>
-<span class="n">my_result</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</code></pre></div>
+my_design = tube_design([tube1], model=Model(), soft_constraints=soft, hard_constraints=hard)
+my_result = my_design.run(trials=1)[0]</code></pre>
 <hr />
 <h3 id="tabular-display">Tabular display<a class="headerlink" href="#tabular-display" title="Permanent link">&para;</a></h3>
 <p>You can display a summary table of results in a Jupyter notebook, for example:</p>
-<p><div class="highlight"><pre><span></span><code><span class="n">my_result</span>
-</code></pre></div>
+<p><pre class="highlight"><code class="language-python">my_result</code></pre>
 Output:</p>
 <blockquote>
 <p><img src="../figs/design/4-output.png" alt="Design output" title="Example design output" width="600" /></p>
 </blockquote>
 <h3 id="textual-display">Textual display<a class="headerlink" href="#textual-display" title="Permanent link">&para;</a></h3>
 <p>You can view an ASCII representation of the same data by using the <code>print</code> function:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">print(my_result)</code></pre>
 <p>Output:</p>
 <blockquote>
-<div class="highlight"><pre><span></span><code>Domain results:
+<pre class="highlight"><code>Domain results:
 Domain              Sequence
      a  GGGUGCAAAGGUAUGGGAGG
     a*  CCUCCCAUACCUUUGCACCC
@@ -972,8 +928,7 @@ On-target complex concentrations:
 
 Significant off-target complex concentrations (&gt;= 1% max complex concentration in tube):
   Tube Complex Concentration (M)
- tube1       -                 -
-</code></pre></div>
+ tube1       -                 -</code></pre>
 </blockquote>
 <hr />
 <h3 id="programmatic-access">Programmatic access<a class="headerlink" href="#programmatic-access" title="Permanent link">&para;</a></h3>
@@ -986,63 +941,56 @@ Significant off-target complex concentrations (&gt;= 1% max complex concentratio
 <li><code>.domains</code>: a <code>dict</code> from your input domains to their designed equivalents. You can easily retrieve the designed sequences as a simple <code>dict</code> via a usage like <code>{k.name: str(v) for k, v in my_result.domains.items()}</code>.</li>
 </ul>
 <p>Fields may be displayed individually, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result.to_analysis</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/5-mapping.png" alt="Design output" title="Example design output" width="220" /></p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result.defects</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/6-defects.png" alt="Design output" title="Example design output" width="600" /></p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">concentrations</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result.concentrations</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/7-concentrations.png" alt="Design output" title="Example design output" width="630" /></p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">analysis_result</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result.analysis_result</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/8-analysis.png" alt="Design output" title="Example design output" width="270" /></p>
 </blockquote>
 <p>You can query any field of the <code>DesignResult</code> using Python, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># print various designed sequences</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">tube1</span><span class="p">))</span> <span class="c1"># --&gt; Tube({A: 1e-06, B: 1e-06}, name=&#39;tube1&#39;)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">C</span><span class="p">))</span>    <span class="c1"># --&gt; GGGUGCAAAGGUAUGGGAGG+CCUCCCAUACCUUUGCACCC</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>    <span class="c1"># --&gt; CCUCCCAUACCUUUGCACCC</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>    <span class="c1"># --&gt; GGGUGCAAAGGUAUGGGAGG</span>
+<pre class="highlight"><code class="language-python"># print various designed sequences
+print(my_result.to_analysis(tube1)) # --&gt; Tube({A: 1e-06, B: 1e-06}, name='tube1')
+print(my_result.to_analysis(C))    # --&gt; GGGUGCAAAGGUAUGGGAGG+CCUCCCAUACCUUUGCACCC
+print(my_result.to_analysis(B))    # --&gt; CCUCCCAUACCUUUGCACCC
+print(my_result.to_analysis(a))    # --&gt; GGGUGCAAAGGUAUGGGAGG
 
-<span class="c1"># print specific defect contributions</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">ensemble_defect</span><span class="p">)</span> <span class="c1"># 0.007708701513018191</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">tubes</span><span class="p">)</span>           <span class="c1"># --&gt; each tube</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">complexes</span><span class="p">)</span>       <span class="c1"># --&gt; each on-target</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">my_result</span><span class="o">.</span><span class="n">defects</span><span class="o">.</span><span class="n">tube_complexes</span><span class="p">)</span>  <span class="c1"># --&gt; each on-target in each tube</span>
-</code></pre></div>
+# print specific defect contributions
+print(my_result.defects.ensemble_defect) # 0.007708701513018191
+print(my_result.defects.tubes)           # --&gt; each tube
+print(my_result.defects.complexes)       # --&gt; each on-target
+print(my_result.defects.tube_complexes)  # --&gt; each on-target in each tube</code></pre>
 <p>Each subfield (<code>tubes</code>, <code>complexes</code>, <code>tube_complexes</code>) is a <code>pandas.DataFrame</code>s. For convenience, these tables contain Python objects and the corresponding object name (e.g., <code>tube</code> object and corresponding <code>tube_name</code> string).</p>
 <h3 id="evaluate-a-design">Evaluate a design<a class="headerlink" href="#evaluate-a-design" title="Permanent link">&para;</a></h3>
 <p>The <code>evaluate()</code> method enables generation of a <code>DesignResult</code> object for a <code>tube_design</code> that has fully specified sequences (i.e., contains no <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a>), for example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;CAGAUAAGAACUGAGUAAGC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('CAGAUAAGAACUGAGUAAGC', name='a')
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
+C = TargetComplex([A, B], '(20+)20', name='C')
 
-<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 
-<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
-<span class="n">hard</span> <span class="o">=</span> <span class="p">[</span><span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">])]</span>
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+hard = [Diversity(word=4, types=2, scope=[a])]
 
-<span class="n">my_evaluated_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(),</span>
-    <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span> <span class="n">hard_constraints</span><span class="o">=</span><span class="n">hard</span><span class="p">)</span>
-<span class="n">my_evaluated_result</span> <span class="o">=</span> <span class="n">my_evaluated_design</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
-</code></pre></div>
+my_evaluated_design = tube_design([tube1], model=Model(),
+    soft_constraints=soft, hard_constraints=hard)
+my_evaluated_result = my_evaluated_design.evaluate()</code></pre>
 <p>An exception will be raised if any domain contains nucleotides other than <code>ACGTU</code>, or if the hard constraints are incompatible with the given domains. Just as for any <code>DesignResult</code> object, a convenient results table can be displayed in a Jupyter notebook:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_evaluated_result</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_evaluated_result</code></pre>
 <p>Output:</p>
 <blockquote>
 <p><img src="../figs/design/9-evaluation.png" alt="Evaluation output" title="Example evaluation output" width="650" /></p>
@@ -1050,94 +998,86 @@ Significant off-target complex concentrations (&gt;= 1% max complex concentratio
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Consider using the <code>evaluate()</code> method on an RNA design that was performed with <code>wobble_mutations</code> enabled and that uses both domain <code>a</code> and the reverse complement domain <code>~a</code> in the specification of the design ensemble. Then the definition of the reverse complement domain <code>~a</code> is not fully defined since a G in domain <code>a</code> could be paired to either a C or a U in the final designed version of <code>~a</code>. This ambiguity can be overcome by manually defining <code>~a</code> using the <code>complement</code> keyword:</p>
-<div class="highlight"><pre><span></span><code><span class="n">h</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;GGGG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">h</span><span class="p">)</span> <span class="c1"># --&gt; CCCC</span>
+<pre class="highlight"><code class="language-python">h = Domain('GGGG', name='h')
+print(~h) # --&gt; CCCC
 
-<span class="n">i</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;GGGG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">complement</span><span class="o">=</span><span class="s1">&#39;CUUC&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">i</span><span class="p">)</span> <span class="c1"># --&gt; CUUC</span>
-</code></pre></div>
+i = Domain('GGGG', name='i', complement='CUUC')
+print(~i) # --&gt; CUUC</code></pre>
 <p>The <code>evaluate()</code> method will raise an exception if <code>wobble_mutations</code> are active and a reverse complement domain has not been manually defined. The following example demonstrates use of the <code>complement</code> keyword to enable evaluation of a design performed with <code>wobble_mutations</code> enabled:</p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;CAGAUAAGAACUGAGUAAGC&#39;</span><span class="p">,</span> <span class="n">complement</span><span class="o">=</span><span class="s1">&#39;GCUUAUUCAGUUCUUAUCUG&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('CAGAUAAGAACUGAGUAAGC', complement='GCUUAUUCAGUUCUUAUCUG', name='a')
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
+C = TargetComplex([A, B], '(20+)20', name='C')
 
-<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 
-<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
-<span class="n">hard</span> <span class="o">=</span> <span class="p">[</span><span class="n">Diversity</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">])]</span>
-<span class="n">options</span> <span class="o">=</span> <span class="n">DesignOptions</span><span class="p">(</span><span class="n">wobble_mutations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
+hard = [Diversity(word=4, types=2, scope=[a])]
+options = DesignOptions(wobble_mutations=True)
 
-<span class="n">wobble_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;rna&#39;</span><span class="p">),</span>
-    <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span> <span class="n">hard_constraints</span><span class="o">=</span><span class="n">hard</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
-<span class="n">wobble_result</span> <span class="o">=</span> <span class="n">wobble_design</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
-</code></pre></div>
+wobble_design = tube_design([tube1], model=Model(material='rna'),
+    soft_constraints=soft, hard_constraints=hard, options=options)
+wobble_result = wobble_design.evaluate()</code></pre>
 </div>
 <h3 id="evaluate-a-design-using-a-different-model-soft-constraints-defect-weights-andor-domains">Evaluate a design using a different model, soft constraints, defect weights, and/or domains<a class="headerlink" href="#evaluate-a-design-using-a-different-model-soft-constraints-defect-weights-andor-domains" title="Permanent link">&para;</a></h3>
 <p>A <code>DesignResult</code> object can be evaluated using modified domains, a different free energy model, different soft constraints, and/or different defect weights using the <code>evaluate_with</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">a</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="s1">&#39;(20+)20&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('N20', name='a')
+A = TargetStrand([a], name='A')
+B = TargetStrand([~a], name='B')
+C = TargetComplex([A, B], '(20+)20', name='C')
 
-<span class="n">tube1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">({</span><span class="n">C</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span> <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tube1&#39;</span><span class="p">)</span>
+tube1 = TargetTube({C: 1e-6}, off_targets=SetSpec(max_size=2), name='tube1')
 
-<span class="n">soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;S20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span><span class="mf">0.55</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)]</span>
+soft = [Similarity([a], 'S20', limits=[0.45,0.55], weight=0.05)]
 
-<span class="n">my_design</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">([</span><span class="n">tube1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(),</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="n">soft</span><span class="p">)</span>
-<span class="n">my_result</span> <span class="o">=</span> <span class="n">my_design</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+my_design = tube_design([tube1], model=Model(), soft_constraints=soft)
+my_result = my_design.run(trials=1)[0]
 
-<span class="c1"># Evaluate the result with a different model</span>
-<span class="n">new_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">celsius</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
-<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">new_model</span><span class="p">)</span>
+# Evaluate the result with a different model
+new_model = Model(celsius=40)
+my_result.evaluate_with(model=new_model)
 
-<span class="c1"># Evaluate the result with a different model and soft constraints</span>
-<span class="n">new_soft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Similarity</span><span class="p">([</span><span class="n">a</span><span class="p">],</span> <span class="s1">&#39;G20&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)]</span>
-<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">new_model</span><span class="p">,</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="n">new_soft</span><span class="p">)</span>
+# Evaluate the result with a different model and soft constraints
+new_soft = [Similarity([a], 'G20', limits=[0.4,0.6], weight=0.5)]
+my_result.evaluate_with(model=new_model, soft_constraints=new_soft)
 
-<span class="c1"># Evaluate the result with different defect weights</span>
-<span class="n">new_weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">([</span><span class="n">tube1</span><span class="p">])</span>
-<span class="n">new_weights</span><span class="p">[:,</span> <span class="n">A</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">10</span>
-<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">defect_weights</span><span class="o">=</span><span class="n">new_weights</span><span class="p">)</span>
+# Evaluate the result with different defect weights
+new_weights = Weights([tube1])
+new_weights[:, A] *= 10
+my_result.evaluate_with(defect_weights=new_weights)
 
-<span class="c1"># Evaluate the result with a different model and domains</span>
-<span class="n">new_domains</span> <span class="o">=</span> <span class="p">[</span><span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;CAGAUAAGAACUGAGUAAGC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)]</span>
-<span class="n">my_result</span><span class="o">.</span><span class="n">evaluate_with</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="n">new_domains</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">new_model</span><span class="p">)</span>
-</code></pre></div>
+# Evaluate the result with a different model and domains
+new_domains = [Domain('CAGAUAAGAACUGAGUAAGC', name='a')]
+my_result.evaluate_with(domains=new_domains, model=new_model)</code></pre>
 <h3 id="analyze-additional-physical-quantities-for-a-designed-ensemble">Analyze additional physical quantities for a designed ensemble<a class="headerlink" href="#analyze-additional-physical-quantities-for-a-designed-ensemble" title="Permanent link">&para;</a></h3>
 <p>To analyze additional physical quantities for a designed ensemble (e.g., the MFE structure of each designed on-target complex), use the
 <code>to_analysis()</code> method to make a version of the design ensemble containing designed sequences and then run a <a href="../analysis/#run-a-test-tube-analysis-job">test tube analysis job</a> or <a href="../analysis/#run-a-complex-analysis-job">complex analysis job</a> as desired. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Tube object based on TargetTube with designed sequences</span>
-<span class="n">t1_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">tube1</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python"># Tube object based on TargetTube with designed sequences
+t1_designed = my_result.to_analysis(tube1)
 
-<span class="c1"># Calculate the MFE structure for each on-target complex in the design ensemble</span>
-<span class="n">tube_results</span> <span class="o">=</span> <span class="n">complex_analysis</span><span class="p">(</span><span class="n">t1_designed</span><span class="p">,</span> <span class="n">compute</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mfe&#39;</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-</code></pre></div>
+# Calculate the MFE structure for each on-target complex in the design ensemble
+tube_results = complex_analysis(t1_designed, compute=['mfe'], model=my_model)</code></pre>
 <h3 id="analyze-a-designed-ensemble-using-different-strand-concentrations">Analyze a designed ensemble using different strand concentrations<a class="headerlink" href="#analyze-a-designed-ensemble-using-different-strand-concentrations" title="Permanent link">&para;</a></h3>
 <p>To re-analyze designed sequences using strand concentrations that differ from those in the design ensemble, use the
 <code>to_analysis()</code> method to make a version of the design ensemble containing designed sequences, and
 use the <code>analysis_result</code> field to supply an <code>AnalysisResult</code> object to run a <a href="../analysis/#run-a-complex-concentrations-job">complex concentrations job</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">t1_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">tube1</span><span class="p">)</span> <span class="c1"># Tube object based on TargetTube with designed sequences</span>
-<span class="n">strandA_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="n">strandB_designed</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">to_analysis</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
-<span class="n">my_analysis_result</span> <span class="o">=</span> <span class="n">my_result</span><span class="o">.</span><span class="n">analysis_result</span>
+<pre class="highlight"><code class="language-python">t1_designed = my_result.to_analysis(tube1) # Tube object based on TargetTube with designed sequences
+strandA_designed = my_result.to_analysis(A)
+strandB_designed = my_result.to_analysis(B)
+my_analysis_result = my_result.analysis_result
 
-<span class="c1"># Re-compute complex concentrations for a different set of strand concentrations</span>
-<span class="n">conc_results</span> <span class="o">=</span> <span class="n">complex_concentrations</span><span class="p">(</span><span class="n">t1_designed</span><span class="p">,</span> <span class="n">my_analysis_result</span><span class="p">,</span>
-    <span class="n">concentrations</span><span class="o">=</span><span class="p">{</span><span class="n">strandA_designed</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">strandB_designed</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">})</span>
-</code></pre></div>
+# Re-compute complex concentrations for a different set of strand concentrations
+conc_results = complex_concentrations(t1_designed, my_analysis_result,
+    concentrations={strandA_designed: 1e-8, strandB_designed: 1e-9})</code></pre>
 <hr />
 <h3 id="save-a-job-summary">Save a job summary<a class="headerlink" href="#save-a-job-summary" title="Permanent link">&para;</a></h3>
 <p>To save a textual job summary using the <code>save_text</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save_text</span><span class="p">(</span><span class="s1">&#39;my-result.txt&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result.save_text('my-result.txt')</code></pre>
 <h3 id="save-and-reload-job-results">Save and reload job results<a class="headerlink" href="#save-and-reload-job-results" title="Permanent link">&para;</a></h3>
 <p>Save a <code>DesignResult</code> as a binary file using the <code>save</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my-result.o&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result.save('my-result.o')</code></pre>
 <p>to enable reloading during a future session using the <code>load</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_result</span> <span class="o">=</span> <span class="n">DesignResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my-result.o&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_result = DesignResult.load('my-result.o')</code></pre>
 <p>This functionality uses Python&rsquo;s built-in <code>pickle</code> module.</p>
 <hr />
 <div class="references">
