@@ -244,6 +244,7 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
         - 4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible
         - 4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names
         - 4.0.2.0: Updated internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)
+        - 4.0.2.1: Updated License
 - **NUPACK 4.1**
     - New features:
     	- Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [@Nanjundiah26]

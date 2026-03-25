@@ -109,7 +109,7 @@ MFE proxy structure as structure matrix:
 
 If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state.
 
-Use the keyword `indistinguishable_search` to specify that the structure search for mfe structure (s) is performed treating all strands as distinct (default `indistinguishable_search=False` ) or treating strands of the same species as indistinguishable (`indistinguishable_search=True`). Use the keyword `max_subopt_count` to specify that the structure search for mfe structure(s) will terminate upon generating this number of structures (default `max_subopt_count=100000`).
+Use the keyword `indistinguishable_search` to specify that the structure search for MFE structure(s) is performed treating all strands as distinct (default `indistinguishable_search=False` ) or treating strands of the same species as indistinguishable (`indistinguishable_search=True`). Use the keyword `max_subopt_count` to specify that the structure search for MFE structure(s) will terminate upon generating this number of structures (default `max_subopt_count=100000`).
 
 ---
 
@@ -124,7 +124,7 @@ print(subopt_structures)
 #      StructureEnergy(Structure('((.+)).'), energy=-4.000725746154785, stack_energy=-3.781351089477539)]
 ```
 
-Use the keyword `indistinguishable_search` to specify that the structure search for mfe structure (s) is performed treating all strands as distinct (default `indistinguishable_search=False` ) or treating strands of the same species as indistinguishable (`indistinguishable_search=True`). Use the keyword `max_subopt_count` to specify that the structure search for mfe structure(s) will terminate upon generating this number of structures (default `max_subopt_count=100000`).
+Use the keyword `indistinguishable_search` to specify that the structure search for suboptimal structure(s) is performed treating all strands as distinct (default `indistinguishable_search=False` ) or treating strands of the same species as indistinguishable (`indistinguishable_search=True`). Use the keyword `max_subopt_count` to specify that the structure search for suboptimal structure(s) will terminate upon generating this number of structures (default `max_subopt_count=100000`).
 
 ---
 
