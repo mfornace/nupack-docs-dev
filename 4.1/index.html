@@ -113,8 +113,8 @@
                 <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
 <h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">&para;</a></h2>
 <p>NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences. 
-NUPACK algorithms are formulated in terms of nucleic acid secondary structure (i.e., the base pairs of a set of nucleic acid strands) and employ empirical free energy parameters. Mixed-material calculations are supported (RNA/DNA or RNA/2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA) with the material specified at nucleotide resolution [<a class="citation" href="#ref-Nanjundiah25" id="cite-Nanjundiah25">Nanjundiah25</a>].
-Much of this software can be conveniently run using the NUPACK web app at <a href="http://www.nupack.org">nupack.org</a> [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>,<a class="citation" href="#ref-Fornace25" id="cite-Fornace25">Fornace25</a>]. 
+NUPACK algorithms are formulated in terms of nucleic acid secondary structure (i.e., the base pairs of a set of nucleic acid strands) and employ empirical free energy parameters. Mixed-material calculations are supported (RNA/DNA or RNA/2<span class="arithmatex"><span class="MathJax_Preview">'</span><script type="math/tex">'</script></span>OMe-RNA) with the material specified at nucleotide resolution [<a class="citation" href="#ref-Nanjundiah26" id="cite-Nanjundiah26">Nanjundiah26</a>].
+Much of this software can be conveniently run using the NUPACK web app at <a href="http://www.nupack.org">nupack.org</a> [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>,<a class="citation" href="#ref-Fornace26" id="cite-Fornace26">Fornace26</a>]. 
 This User Guide provides documentation for the NUPACK Python module.</p>
 <p>When finishing a project that has benefited from NUPACK calculations, please remember to <a href="./#citation">cite</a> the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
 <p>— The NUPACK Team</p>
@@ -190,12 +190,12 @@ des_results = my_des.run(trials=3) # run 3 independent design trials</code></pre
 </div>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p><strong>NUPACK Software License Agreement for Non-Commercial Academic Use</strong>  <br />
-Copyright &copy; 2003–2022. California Institute of Technology. All rights reserved.</p>
+Copyright &copy; 2003–2026. California Institute of Technology. All rights reserved.</p>
 <p>Use of the NUPACK Python module and/or source code (“Software”) in source form and/or binary form, with or without modification, is permitted for non-commercial academic purposes only, subject to the conditions and disclaimer stated below.</p>
 <p><strong>Conditions</strong><br />
-1. Redistribution of the Software in source form and/or binary form is not permitted.<br />
-2. Web applications that use the Software in source form and/or binary form are not permitted.<br />
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote derivative works without specific prior written permission.  </p>
+1. Redistribution of the Software or derivative works in source form and/or binary form is not permitted.<br />
+2. Web applications that use the Software or derivative works in source form and/or binary form are not permitted.<br />
+3. Licensee maintains an active NUPACK subscription.</p>
 <p><strong>Disclaimer</strong>  <br />
 <em>The Software is provided by the copyright holders and contributors &ldquo;as is&rdquo; and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.  In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.</em></p>
 <p><strong>Contact</strong><br />
@@ -370,14 +370,14 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
 <li>4.0.1.10: Fix issue when specifying mixtures of sequences containing U and T and provide binaries with more conservative instruction sets for Linux</li>
 <li>4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible</li>
 <li>4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names</li>
-<li>4.0.2.0: updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)</li>
+<li>4.0.2.0: Updated internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><strong>NUPACK 4.1</strong><ul>
 <li>New features:<ul>
-<li>Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [<a class="citation" href="#ref-Nanjundiah25" id="cite-Nanjundiah25">Nanjundiah25</a>]</li>
+<li>Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [<a class="citation" href="#ref-Nanjundiah26" id="cite-Nanjundiah26">Nanjundiah26</a>]</li>
 </ul>
 </li>
 <li>Revision notes: <ul>
@@ -390,17 +390,17 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
 <div class="references">
 <table>
 <tbody>
-<tr id="ref-Nanjundiah25">
-<td>Nanjundiah25</td>
-<td><p>Nanjundiah A., Fornace M.E., Schulte S.J., Pierce N.A.: <i>Models and algorithms for equilibrium analysis of mixed-material nucleic acid systems</i>. bioRxiv. (2025)</p></td>
+<tr id="ref-Nanjundiah26">
+<td>Nanjundiah26</td>
+<td><p>Nanjundiah A., Fornace M.E., Schulte S.J., Pierce N.A.: <i>Models and algorithms for equilibrium analysis of mixed-material nucleic acid systems</i>. ACS Synth. Biol.. <b>15</b>, (2026)</p></td>
 </tr>
 <tr id="ref-Zadeh11a">
 <td>Zadeh11a</td>
 <td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
 </tr>
-<tr id="ref-Fornace25">
-<td>Fornace25</td>
-<td><p>Fornace M.E., Huang J., Newman C.T., Nanjundiah A., Porubsky N.J., Pierce M.B., Pierce N.A.: <i>{NUPACK}: Analysis and design of nucleic acid structures, devices, and systems</i>. chemRxiv. (2025)</p></td>
+<tr id="ref-Fornace26">
+<td>Fornace26</td>
+<td><p>Fornace M.E., Huang J., Newman C.T., Nanjundiah A., Porubsky N.J., Pierce M.B., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid structures, devices, and systems</i>. ACS Synth. Biol.. <b>acssynbio.5c00817</b>, (2025)</p></td>
 </tr>
 <tr id="ref-Wolfe17">
 <td>Wolfe17</td>
@@ -479,5 +479,5 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-03-23 22:45:19.611146+00:00
+Build Date UTC : 2026-03-25 23:10:18.701314+00:00
 -->
