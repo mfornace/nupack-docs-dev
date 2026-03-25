@@ -313,6 +313,10 @@ The optional `options` keyword specifies options that modify the calculations pe
 
 - `'subopt_gap': g` can be used in conjunction with `'subopt'` to specify the (non-negative) free energy gap in kcal/mol (default `'subopt_gap': 0`).
 
+- `'indistinguishable_search': s`: can be used in conjunction with `'mfe'` or `'subopt'` to specify that the structure search for mfe or suboptimal structures is performed treating all strands as distinct (default `'indistinguishable_search': False`) or treating strands of the same species as indistinguishable (`'indistinguishable_search': True`).
+
+- `'max_subopt_count': c`: can be used in conjunction with `'mfe'` or `'subopt'` to specify that the structure search for mfe or suboptimal structures will terminate upon generating this number of structures (default `'max_subopt_count': 100000`)
+
 By default, NUPACK analysis jobs run in [parallel](advanced.md#parallelism).
 
 ---

@@ -2,8 +2,8 @@
 
 ## About
 NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences. 
-NUPACK algorithms are formulated in terms of nucleic acid secondary structure (i.e., the base pairs of a set of nucleic acid strands) and employ empirical free energy parameters. Mixed-material calculations are supported (RNA/DNA or RNA/2$'$OMe-RNA) with the material specified at nucleotide resolution [@Nanjundiah25].
-Much of this software can be conveniently run using the NUPACK web app at [nupack.org](http://www.nupack.org) [@Zadeh11a,@Fornace25]. 
+NUPACK algorithms are formulated in terms of nucleic acid secondary structure (i.e., the base pairs of a set of nucleic acid strands) and employ empirical free energy parameters. Mixed-material calculations are supported (RNA/DNA or RNA/2$'$OMe-RNA) with the material specified at nucleotide resolution [@Nanjundiah26].
+Much of this software can be conveniently run using the NUPACK web app at [nupack.org](http://www.nupack.org) [@Zadeh11a,@Fornace26]. 
 This User Guide provides documentation for the NUPACK Python module.
 
 When finishing a project that has benefited from NUPACK calculations, please remember to [cite](index.md#citation) the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <support@nupack.org>.
@@ -100,14 +100,14 @@ NUPACK capabilities are presented in three categories:
 ## License
 
 **NUPACK Software License Agreement for Non-Commercial Academic Use**    
-Copyright &copy; 2003–2022. California Institute of Technology. All rights reserved.
+Copyright &copy; 2003–2026. California Institute of Technology. All rights reserved.
 
 Use of the NUPACK Python module and/or source code (“Software”) in source form and/or binary form, with or without modification, is permitted for non-commercial academic purposes only, subject to the conditions and disclaimer stated below.
 
 **Conditions**  
-1. Redistribution of the Software in source form and/or binary form is not permitted.  
-2. Web applications that use the Software in source form and/or binary form are not permitted.  
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote derivative works without specific prior written permission.  
+1. Redistribution of the Software or derivative works in source form and/or binary form is not permitted.  
+2. Web applications that use the Software or derivative works in source form and/or binary form are not permitted.  
+3. Licensee maintains an active NUPACK subscription.
 
 
 **Disclaimer**    
@@ -243,10 +243,10 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
         - 4.0.1.10: Fix issue when specifying mixtures of sequences containing U and T and provide binaries with more conservative instruction sets for Linux
         - 4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible
         - 4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names
-        - 4.0.2.0: updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)
+        - 4.0.2.0: Updated internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)
 - **NUPACK 4.1**
     - New features:
-    	- Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [@Nanjundiah25]
+    	- Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [@Nanjundiah26]
 	- Revision notes: 
 		- 4.1.0.0: Release of first public beta
 

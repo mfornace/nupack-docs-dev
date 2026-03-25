@@ -144,7 +144,7 @@ d_\textrm{struc}(s_1,s_2)=N-\sum_{1\le a\le N,~1\le b \le N} S_{a,b}(s_1)S_{a,b}
 
 ## Complex ensemble
 Consider a complex of $L$ distinct strands (e.g., each with a unique identifier in $\{1,\dots,L\}$) corresponding to strand ordering $\pi$. The **complex ensemble** $\overline\Gamma(\phi)$ contains all connected polymer graphs with no crossing lines for sequence $\phi$ and strand ordering $\pi$ (i.e., all unpseudoknotted secondary structures) [@Dirks07]. (We dispense with our prior convention [@Dirks07,@Zadeh11a,@Zadeh11b] of calling this entity an ''ordered complex''.) As a matter of algorithmic necessity, all of the dynamic programs in NUPACK operate on complex ensemble $\overline\Gamma(\phi)$ treating all strands as distinct. However, in the laboratory, strands with the same sequence are typically indistinguishable with respect to experimental observables. For comparison to experimental data, physical quantities calculated over ensemble $\overline\Gamma(\phi)$ are post-processed
-to obtain the corresponding quantities calculated over **complex ensemble** $\Gamma(\phi)$ in which strands with the same sequence are treated as indistinguishable [@Fornace20]. The ensemble $\Gamma(\phi)\subseteq\overline\Gamma(\phi)$ is a maximal subset of distinct secondary structures for strand ordering $\pi$. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases;
+to obtain the corresponding quantities calculated over **complex ensemble** $\Gamma(\phi)$ in which strands of the same species are treated as indistinguishable [@Fornace20]. The ensemble $\Gamma(\phi)\subseteq\overline\Gamma(\phi)$ is a maximal subset of distinct secondary structures for strand ordering $\pi$. Two secondary structures are indistinguishable if their polymer graphs can be rotated so that all strands are mapped onto indistinguishable strands, all base pairs are mapped onto base pairs, and all unpaired bases are mapped onto unpaired bases;
 otherwise the structures are distinct [@Dirks07].
 <!-- A **complex** of $L$ interacting strands with strand ordering, $\pi$, has a **structural ensemble** containing all connected polymer graphs with no crossing lines [@Dirks07]. (We dispense with our prior convention [@Dirks07; @Zadeh11a; @Zadeh11b] of calling this entity an **ordered complex**.)
  -->
@@ -164,7 +164,7 @@ otherwise the structures are distinct [@Dirks07].
 Consider a complex of $L$ distinct strands (e.g., each with a unique identifier in $\{1,\dots,L\}$) corresponding to strand ordering $\pi$. The **complex ensemble** $\overline\Gamma(\phi)$ contains all connected polymer graphs with no crossing lines for sequence $\phi$ and strand ordering $\pi$ (i.e., all unpseudoknotted secondary structures) [@Dirks07]. (We dispense with our prior convention [\cite{@Dirks07,@Zadeh11a,@Zadeh11b] of calling this entity an **ordered complex**.) -->
 <hr>
 ## Test tube ensemble
-A **test tube ensemble** is a dilute solution containing a set of strand species, $\Psi^0$, introduced at user-specified concentrations, that interact to form a set of complex species, $\Psi$, each corresponding to a different strand ordering treating strands with the same sequence as indistinguishable [@Dirks07,@Fornace20].
+A **test tube ensemble** is a dilute solution containing a set of strand species, $\Psi^0$, introduced at user-specified concentrations, that interact to form a set of complex species, $\Psi$, each corresponding to a different strand ordering treating strands of the same species as indistinguishable [@Dirks07,@Fornace20].
 For $L$ strands, there are $(L-1)!$ strand orderings if all strands are different species (e.g., complexes $\pi$ = ABC and $\pi$ = ACB for $L=3$ and strands A, B, C), but fewer than $(L-1)!$ strand orderings if some strands are of the same species (e.g., complex $\pi$ = AAA for $L=3$ with three A strands). By the Representation Theorem [@Dirks07], a secondary structure in the complex ensemble for one strand ordering does not appear in the complex ensemble for any other strand ordering, averting redundancy.
 It is often convenient to define $\Psi$ to contain all complex species of up to $L_\mathrm{max}$ strands, although $\Psi$ can be defined to contain arbitrary complex species formed from the strand species in $\Psi^0$.
 
@@ -269,13 +269,13 @@ in user-specified concentrations of Na$^+$ and Mg$^{++}$ [@SantaLucia98,@Peyret0
 ## Physical quantities
 Consider a [test tube ensemble](definitions.md#test-tube-ensemble) containing an arbitrary set of strand species $\Psi^0$
 interacting to form an arbitrary set of complex species $\Psi$. Let $j\in\Psi$ denote a complex with sequence $\phi_j$ and [complex ensembles](definitions.md#complex-ensemble)
-$\overline\Gamma(\phi_j)$ (treating all strands as distinct) and $\Gamma(\phi_j)$ (treating strands with the same seqeuence as indistinguishable).
+$\overline\Gamma(\phi_j)$ (treating all strands as distinct) and $\Gamma(\phi_j)$ (treating strands of the same species as indistinguishable).
 NUPACK calculates [@Dirks07,@Fornace20] a number of physical quantities over these ensembles.
 
 
 ### Partition function
 For complex $j$, the partition function evaluated over ensemble $\Gamma(\phi_j)$ treating
-strands with the same sequence as indistinguishable is denoted
+strands of the same species as indistinguishable is denoted
 
 \begin{align}
 Q(\phi_j) = \sum_{s\in\Gamma(\phi_j)}e^{-\Delta G(\phi_j,s)/kT}.
@@ -288,7 +288,7 @@ For complex $j$, the corresponding complex free energy is
 \end{align}
 
 ### Structure free energy
-For complex $j$, the secondary structure free energy treating strands with the same sequence as indistinguishable is denoted
+For complex $j$, the secondary structure free energy treating strands of the same species as indistinguishable is denoted
 \begin{align}
 \Delta G(\phi_j,s).
 \end{align}
@@ -297,14 +297,14 @@ If the physical model includes [coaxial and dangle stacking](definitions.md#coax
 
 ### Equilibrium structure probability
 For complex $j$, the equilibrium structure probability of any secondary structure $s\in\Gamma(\phi_j)$ treating
-strands with the same sequence as indistinguishable is denoted
+strands of the same species as indistinguishable is denoted
 \begin{align}
 p(\phi_j,s)= e^{-\Delta G(\phi_j,s)/kT}/Q(\phi_j).
 \end{align}
 
 
 ### Boltzmann-sampled structures
-For complex $j$, a set of $J$ secondary structures Boltzmann-sampled from ensemble $\Gamma(\phi_j)$ treating strands with the same sequence as indistinguishable is denoted
+For complex $j$, a set of $J$ secondary structures Boltzmann-sampled from ensemble $\Gamma(\phi_j)$ treating strands of the same species as indistinguishable is denoted
 
 \begin{align}
 \Gamma_\mathrm{sample}(\phi,J) \in \Gamma(\phi)
@@ -340,12 +340,18 @@ s_\mathrm{MFE'} \equiv \{s\in\overline\Gamma(\phi_j) | s^\shortparallel_\mathrm{
 \end{align}
 
 defined as the secondary structure containing the MFE stacking state within its subensemble.
-The free energy of the MFE proxy structure is
+The free energy of the MFE proxy structure is reported as
 \begin{align}
-\overline{\Delta G}(\phi,s_\mathrm{MFE'}).
+\Delta G(\phi_j,s_{\mathrm{MFE}'}(\phi_j)),
 \end{align}
+treating strands of the same species as indistinguishable, which satisfies the inequality
+\begin{align}
+\Delta G(\phi_j,s_{\mathrm{MFE}'}(\phi_j)) \geq \Delta G(\phi_j)
+\end{align}
+relative to the complex free energy.
 There may be more than one MFE stacking state, each corresponding to the same or different MFE proxy structures.
 
+Optionally, the structure search used to determine the MFE proxy structure can be performed over ensemble $\Gamma(\phi_j)$ instead of $\overline{\Gamma}(\phi_j)$, so that the MFE proxy structure is determined treating strands of the same species as indistinguishable.
 
 
 ### Suboptimal proxy structures
@@ -355,7 +361,7 @@ For complex $j$, the set of suboptimal proxy secondary structures with stacking 
 \overline\Gamma_{\rm subopt}(\phi_j,\Delta G_{\rm gap}) = \{s\in\overline\Gamma(\phi_j) | s^\shortparallel\!\in\! s, \overline{\Delta G}(\phi_j,s^\shortparallel) \le \overline{\Delta G}(\phi_j,s^\shortparallel_{\rm MFE}) + \Delta G_{\rm gap}\}.
 \end{align}
 
-
+Optionally, this structure search can be performed over ensemble $\Gamma(\phi_j)$ instead of $\overline{\Gamma}(\phi_j)$, so that the MFE proxy structure and the suboptimal proxy structures in the requested energy gap are determined treating strands of the same species as indistinguishable.
 
 ### Complex ensemble defect
 
