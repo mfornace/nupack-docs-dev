@@ -249,5 +249,5 @@ NUPACK is supported by the National Science Foundation (CTMC NSF-CHE-2317395, XS
     - New features:
     	- Mixed-material calculations (RNA/DNA or RNA/2’OMe-RNA) [@Nanjundiah26]
 	- Revision notes: 
-		- 4.1.0.0: Release of first public beta
+		- 4.1.0.1: Mixed-material algorithms; updated Watson-Crick terminal mismatch values in parameter set `dna04.3` (DNA default)
 

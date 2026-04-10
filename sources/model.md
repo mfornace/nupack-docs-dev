@@ -34,14 +34,15 @@ NUPACK 4.1 algorithms use the following temperature-dependent free energy parame
     - `rna06` Based on [@Mathews99] and [@Lu06] with additional parameters [@Xia98,@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in a user specified concentration of Na$^+$.
     - `rna95` Based on [@Serra95] with additional parameters [@Zuker03] including coaxial stacking [@Mathews99,@Turner10] and dangle stacking [@Serra95,@Zuker03,@Turner10] in 1.0 M Na$^+$.
 - DNA single-material parameter sets: 
-    - `dna` Shorthand for `dna04.2`.
+    - `dna` Shorthand for `dna04.3`.
+    - `dna04.3` Updated Watson-Crick terminal mismatch values [@Turner10,@Mittal24]; in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
     - `dna04.2` Updated GT internal mismatch values [@Allawi97,@Allawi98a,@Allawi98b,@Allawi98c,@Peyret99,@SantaLucia04], internal asymmetry values [@SantaLucia04], and terminal mismatch values [@Turner10,@Mittal24]; in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
     - `dna04.1` Based on [@SantaLucia98] and [@SantaLucia04] with additional parameters [@Zuker03] including coaxial stacking [@Peyret00] and dangle stacking [@Bommarito00,@Zuker03] in user-specified concentrations of Na$^+$, K$^+$, NH$^+_4$ and Mg$^{++}$ [@SantaLucia98,@Peyret00,@SantaLucia04].
 - 2$'$OMe-RNA single-material parameter sets: 
     - `merna06` Based on [@Kierzek06] using stack loop, coaxial stacking, terminal base pair, and strand association values from `rna-merna06` and all other values from `rna06`; in 0.12 M  
         Na$^+$. 
 - RNA/DNA mixed-material parameter sets:
-    - `rna-dna06` Using hybrid stack loops [@Sugimoto95], hybrid internal mismatches [@Watkins11,@Sugimoto00], and chimeric stack loops [@Nakano04] with additional parameters for mixed-material loops [@Nanjundiah26] in a user-specified concentration of Na$^+$; for use in conjunction with single-material parameter sets `rna06` and `dna04`.
+    - `rna-dna06` Using hybrid stack loops [@Sugimoto95], hybrid internal mismatches [@Watkins11,@Sugimoto00], and chimeric stack loops [@Nakano04] with additional parameters for mixed-material loops [@Nanjundiah26] in a user-specified concentration of Na$^+$; for use in conjunction with single-material parameter sets `rna06` and `dna04.3`.
 - RNA/2$'$OMe-RNA mixed-material parameter sets: 
     - `rna-merna06` Based on hybrid stack loops [@Kierzek06] with additional parameters for mixed-material loops [@Nanjundiah26]; for use in conjunction with single-material parameter sets `rna06` and `merna06` in 0.12 M Na$^+$.
 - Custom parameter sets: 
