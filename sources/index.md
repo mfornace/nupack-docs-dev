@@ -98,25 +98,26 @@ NUPACK capabilities are presented in three categories:
 
 ## License
 
-**NUPACK Software License Agreement for Non-Commercial Academic Use**    
-Copyright &copy; 2003–2022. California Institute of Technology. All rights reserved.
+**NUPACK Software License Agreement for Non-Commercial Academic Use**
+
+Copyright &copy; 2003-2026. California Institute of Technology. All rights reserved.
 
 Use of the NUPACK Python module and/or source code (“Software”) in source form and/or binary form, with or without modification, is permitted for non-commercial academic purposes only, subject to the conditions and disclaimer stated below.
 
-**Conditions**  
-1. Redistribution of the Software in source form and/or binary form is not permitted.  
-2. Web applications that use the Software in source form and/or binary form are not permitted.  
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote derivative works without specific prior written permission.  
+**Conditions**
 
+1. Redistribution of the Software or derivative works in source form and/or binary form is not permitted. 
+2. Web applications and/or graphical user interfaces that use the Software or derivative works in source form and/or binary form are not permitted.
+3. Licensee is prohibited from using the Software to feed, train, validate, or prompt an artificial intelligence, machine learning, or automated system to create new code, translate the code into a different programming language, refactor the code, or produce derivative work. 
+4. Licensee maintains an active paid NUPACK subscription; License terminates and Software and all derivative works must be deleted if an active paid NUPACK subscription is not maintained. 
 
-**Disclaimer**    
-*The Software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.  In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.*
+**Disclaimer**
 
-**Contact**  
-For any questions about this Software License Agreement please contact <info@nupack.org>.
+*THE SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*
 
+**Contact**
 
-
+For any questions about this Software License Agreement please contact <info@nupack.org>
 
 <hr>
 
@@ -245,6 +246,7 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
         - 4.0.1.10: Fix issue when specifying mixtures of sequences containing U and T and provide binaries with more conservative instruction sets for Linux
         - 4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible
         - 4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names
-        - 4.0.2.0: updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)
+        - 4.0.2.0: Updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)
+        - 4.0.2.1: Updated License
 
 
