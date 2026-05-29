@@ -123,9 +123,8 @@
 
 <h2 id="specify-a-physical-model">Specify a physical model<a class="headerlink" href="#specify-a-physical-model" title="Permanent link">&para;</a></h2>
 <p>NUPACK 4 analysis and design jobs are run based on a physical model created using the <code>Model</code> class:</p>
-<div class="highlight"><pre><span></span><code><span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;rna&#39;</span><span class="p">,</span> <span class="n">ensemble</span><span class="o">=</span><span class="s1">&#39;stacking&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span>
-    <span class="n">sodium</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">magnesium</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">model1 = Model(material='rna', ensemble='stacking', celsius=37,
+    sodium=1.0, magnesium=0.0)</code></pre>
 <p>Any unspecified properties take on their default values (which happen to be the ones specified for <code>model1</code> above).</p>
 <hr>
 
@@ -227,15 +226,13 @@ In the historical ensembles, a duplex terminated by a wobble pair is forbidden.
 <ul>
 <li>Define a model for DNA calculations at 23 <span class="arithmatex"><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C in <span class="arithmatex"><span class="MathJax_Preview">[{\rm Na}^{+}]= 0.5</span><script type="math/tex">[{\rm Na}^{+}]= 0.5</script></span> M and <span class="arithmatex"><span class="MathJax_Preview">[{\rm Mg}^{++}]= 0.01</span><script type="math/tex">[{\rm Mg}^{++}]= 0.01</script></span> M:</li>
 </ul>
-<p><div class="highlight"><pre><span></span><code><span class="n">model2</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;dna&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span> <span class="n">sodium</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">magnesium</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-</code></pre></div>
+<p><pre class="highlight"><code class="language-python">model2 = Model(material='dna', celsius=23, sodium=0.5, magnesium=0.01)</code></pre>
 Note that <code>ensemble</code> is unspecified so it defaults to <code>ensemble='stacking'</code>.</p>
 <ul>
 <li>Define a model using custom parameters at 45 <span class="arithmatex"><span class="MathJax_Preview">^\circ</span><script type="math/tex">^\circ</script></span>C without coaxial and dangle stacking:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">model3</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;path/to/my/custom-parameters.json&#39;</span><span class="p">,</span>
-    <span class="n">ensemble</span><span class="o">=</span><span class="s1">&#39;nostacking&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">model3 = Model(material='path/to/my/custom-parameters.json',
+    ensemble='nostacking', celsius=45)</code></pre>
 </div>
 <h3 id="historical-options">Historical options<a class="headerlink" href="#historical-options" title="Permanent link">&para;</a></h3>
 <p>For backwards compatibility with NUPACK 3, the following historical complex ensembles without coaxial stacking and with approximate dangle stacking are supported:</p>
@@ -270,28 +267,27 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 </ul>
 <h2 id="compute-loop-free-energy">Compute loop free energy<a class="headerlink" href="#compute-loop-free-energy" title="Permanent link">&para;</a></h2>
 <p>The <code>loop_energy</code> method operates on a <code>Model</code> object to calculate the <a href="../definitions/#loop-free-energies">loop free energy</a> in kcal/mol. The loop sequence is specified with keyword <code>loop</code> and the loop structure is specified with keyword <code>structure</code>. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;RNA&#39;</span><span class="p">,</span> <span class="n">ensemble</span><span class="o">=</span><span class="s1">&#39;stacking&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">my_model = Model(material='RNA', ensemble='stacking')
 
-<span class="c1">#Calculate the free energy of an unstructured strand</span>
-<span class="n">dGloop2</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">loop_energy</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AAUU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;....&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dGloop2</span><span class="p">)</span>
-<span class="c1"># --&gt; 0.0</span>
+#Calculate the free energy of an unstructured strand
+dGloop2 = my_model.loop_energy(loop='AAUU', structure='....')
+print(dGloop2)
+# --&gt; 0.0
 
-<span class="c1">#Calculate the free energy of a hairpin loop</span>
-<span class="n">dGloop3</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">loop_energy</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AACCCUU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(.....)&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dGloop3</span><span class="p">)</span>
-<span class="c1"># --&gt; 5.15</span>
+#Calculate the free energy of a hairpin loop
+dGloop3 = my_model.loop_energy(loop='AACCCUU', structure='(.....)')
+print(dGloop3)
+# --&gt; 5.15
 
-<span class="c1">#Calculate the free energy of an exterior loop</span>
-<span class="n">dGloop4</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">loop_energy</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AA+UU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;((+))&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dGloop4</span><span class="p">)</span>
-<span class="c1"># --&gt; -0.9</span>
+#Calculate the free energy of an exterior loop
+dGloop4 = my_model.loop_energy(loop='AA+UU', structure='((+))')
+print(dGloop4)
+# --&gt; -0.9
 
-<span class="c1">#Calculate the free energy of a multiloop</span>
-<span class="n">dGloop5</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">loop_energy</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AAU+ACU+AGU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(.(+).(+).)&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dGloop5</span><span class="p">)</span>
-<span class="c1"># --&gt; 9.355</span>
-</code></pre></div>
+#Calculate the free energy of a multiloop
+dGloop5 = my_model.loop_energy(loop='AAU+ACU+AGU', structure='(.(+).(+).)')
+print(dGloop5)
+# --&gt; 9.355</code></pre>
 <h2 id="compute-stacking-state-free-energies">Compute stacking state free energies<a class="headerlink" href="#compute-stacking-state-free-energies" title="Permanent link">&para;</a></h2>
 <p>The <code>stack_energies</code> method operates on a <code>Model</code> object to calculate the <a href="../definitions/#loop-free-energies">stacking state free energies</a> for the subensemble of stacking states in a single loop. The loop sequence is specified with keyword <code>loop</code> and the loop structure is specified with keyword <code>structure</code>. The algorithm returns a list of stacking states and the free energy for each in kcal/mol.</p>
 <p>For a loop defined as a list of N snippets, a stacking state is specified as a string composed of one letter per snippet. For each snippet, the returned letter is:</p>
@@ -307,80 +303,78 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 <p><img src="../figs/stackingnotation.png" alt="Stacking notation" title="Stacking notation" width="600" /></p>
 </blockquote>
 <p>For a specified multiloop or exterior loop sequence and structure, the <code>stack_energies</code> method returns a set of stacking state strings each with a corresponding stacking state free energy (kcal/mol):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Calculate the dangle stacking state free energies for an exterior loop</span>
-<span class="n">my_model</span><span class="o">.</span><span class="n">stack_energies</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;CA+UC&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;.(+).&#39;</span><span class="p">)</span>
-<span class="c1"># --&gt; {&#39;35&#39;: -0.15, &#39;3n&#39;: 0.15, &#39;n5&#39;: 0.35, &#39;nn&#39;: 0.45}</span>
+<pre class="highlight"><code class="language-python"># Calculate the dangle stacking state free energies for an exterior loop
+my_model.stack_energies(loop='CA+UC', structure='.(+).')
+# --&gt; {'35': -0.15, '3n': 0.15, 'n5': 0.35, 'nn': 0.45}
 
-<span class="c1"># Calculate the coaxial stacking state free energies for an exterior loop</span>
-<span class="n">my_model</span><span class="o">.</span><span class="n">stack_energies</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AA+U+U&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;((+)+)&#39;</span><span class="p">)</span>
-<span class="c1"># --&gt; {&#39;nnn&#39;: 0.9, &#39;snn&#39;: 0.0}</span>
+# Calculate the coaxial stacking state free energies for an exterior loop
+my_model.stack_energies(loop='AA+U+U', structure='((+)+)')
+# --&gt; {'nnn': 0.9, 'snn': 0.0}
 
-<span class="c1"># Calculate the coxial stacking state free energies for a multiloop</span>
-<span class="n">my_model</span><span class="o">.</span><span class="n">stack_energies</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AU+AU+AU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;((+)(+))&#39;</span><span class="p">)</span>
-<span class="c1"># --&gt; {&#39;nnn&#39;: 11.9725, &#39;nns&#39;: 10.8725, &#39;nsn&#39;: 10.8725, &#39;snn&#39;: 10.8725}</span>
-</code></pre></div>
+# Calculate the coxial stacking state free energies for a multiloop
+my_model.stack_energies(loop='AU+AU+AU', structure='((+)(+))')
+# --&gt; {'nnn': 11.9725, 'nns': 10.8725, 'nsn': 10.8725, 'snn': 10.8725}</code></pre>
 <p>For loops that are not multiloops or exterior loops, the loop free energy is returned with a string indicating that there is no stacking state. For example, for a hairpin loop:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_model</span><span class="o">.</span><span class="n">stack_energies</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="s1">&#39;AAAAU&#39;</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(...)&#39;</span><span class="p">)</span>
-<span class="c1"># --&gt; {&#39;n&#39;: 5.85}</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_model.stack_energies(loop='AAAAU', structure='(...)')
+# --&gt; {'n': 5.85}</code></pre>
 <div class="references">
 <table>
 <tbody>
 <tr id="ref-Mathews99">
 <td>Mathews99</td>
-<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol.. <b>288</b>, (1999)</p></td>
+<td><p>Mathews D.H., Sabina J., Zuker M., Turner D.H.: <i>Expanded sequence dependence of thermodynamic parameters improves prediction of RNA secondary structure</i>. J. Mol. Biol., <b>288</b>, (1999)</p></td>
 </tr>
 <tr id="ref-Lu06">
 <td>Lu06</td>
-<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A set of nearest neighbor parameters for predicting the enthalpy change of RNA secondary structure formation</i>. Nucleic acids research. <b>34</b>, (2006)</p></td>
+<td><p>Lu Z.J., Turner D.H., Mathews D.H.: <i>A set of nearest neighbor parameters for predicting the enthalpy change of RNA secondary structure formation</i>. Nucleic acids research, <b>34</b>, (2006)</p></td>
 </tr>
 <tr id="ref-Xia98">
 <td>Xia98</td>
-<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>thermodynamic parameters for an expanded nearest-neighbor model for formation of RNA duplexes with Watson-Crick base pairs</i>. Biochemistry. <b>37</b>, (1998)</p></td>
+<td><p>Xia T., SantaLucia J., Burkard M., Kierzek R., Schroeder S., Jiao X., Cox C., Turner D.: <i>thermodynamic parameters for an expanded nearest-neighbor model for formation of RNA duplexes with Watson-Crick base pairs</i>. Biochemistry, <b>37</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Zuker03">
 <td>Zuker03</td>
-<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res.. <b>31</b>, (2003)</p></td>
+<td><p>Zuker M.: <i>Mfold web server for nucleic acid folding and hybridization prediction</i>. Nucleic Acids Res., <b>31</b>, (2003)</p></td>
 </tr>
 <tr id="ref-Turner10">
 <td>Turner10</td>
-<td><p>Turner D.H., Mathews D.H.: <i>NNDB: the nearest neighbor parameter database for predicting stability of nucleic acid secondary structure</i>. Nucleic Acids Res.. <b>38</b>, (2010)</p></td>
+<td><p>Turner D.H., Mathews D.H.: <i>NNDB: the nearest neighbor parameter database for predicting stability of nucleic acid secondary structure</i>. Nucleic Acids Res., <b>38</b>, (2010)</p></td>
 </tr>
 <tr id="ref-Serra95">
 <td>Serra95</td>
-<td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol.. <b>259</b>, (1995)</p></td>
+<td><p>Serra M.J., Turner D.H.: <i>Predicting thermodynamic properties of RNA</i>. Methods Enzymol., <b>259</b>, (1995)</p></td>
 </tr>
 <tr id="ref-Allawi97">
 <td>Allawi97</td>
-<td><p>Allawi H.T., SantaLucia J.: <i>Thermodynamics and NMR of internal G.T mismatches in DNA</i>. Biochemistry. <b>36</b>, (1997)</p></td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Thermodynamics and NMR of internal G.T mismatches in DNA</i>. Biochemistry, <b>36</b>, (1997)</p></td>
 </tr>
 <tr id="ref-Allawi98a">
 <td>Allawi98a</td>
-<td><p>Allawi H.T., SantaLucia J.: <i>Thermodynamics of internal C.T mismatches in DNA</i>. Nucleic Acids Res.. <b>26</b>, (1998)</p></td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Thermodynamics of internal C.T mismatches in DNA</i>. Nucleic Acids Res., <b>26</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Allawi98b">
 <td>Allawi98b</td>
-<td><p>Allawi H.T., SantaLucia J.: <i>Nearest neighbor thermodynamic parameters for internal G.A mismatches in DNA</i>. Biochemistry. <b>37</b>, (1998)</p></td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Nearest neighbor thermodynamic parameters for internal G.A mismatches in DNA</i>. Biochemistry, <b>37</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Allawi98c">
 <td>Allawi98c</td>
-<td><p>Allawi H.T., SantaLucia J.: <i>Nearest-neighbor thermodynamics of internal A.C mismatches in DNA: sequence dependence and pH effects</i>. Biochemistry. <b>37</b>, (1998)</p></td>
+<td><p>Allawi H.T., SantaLucia J.: <i>Nearest-neighbor thermodynamics of internal A.C mismatches in DNA: sequence dependence and pH effects</i>. Biochemistry, <b>37</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Peyret99">
 <td>Peyret99</td>
-<td><p>Peyret N., Seneviratne P.A., Allawi H.T., SantaLucia J.: <i>Nearest-neighbor thermodynamics and NMR of DNA sequences with internal A.A, C.C, G.G, and T.T mismatches</i>. Biochemistry. <b>38</b>, (1999)</p></td>
+<td><p>Peyret N., Seneviratne P.A., Allawi H.T., SantaLucia J.: <i>Nearest-neighbor thermodynamics and NMR of DNA sequences with internal A.A, C.C, G.G, and T.T mismatches</i>. Biochemistry, <b>38</b>, (1999)</p></td>
 </tr>
 <tr id="ref-SantaLucia04">
 <td>SantaLucia04</td>
-<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct.. <b>33</b>, (2004)</p></td>
+<td><p>SantaLucia J., Hicks D.: <i>The thermodynamics of DNA structural motifs</i>. Annu. Rev. Biophys. Biomol. Struct., <b>33</b>, (2004)</p></td>
 </tr>
 <tr id="ref-Mittal24">
 <td>Mittal24</td>
-<td><p>Mittal A., Turner D.H., Mathews D.H.: <i>NNDB: An expanded database of nearest neighbor parameters for predicting stability of nucleic acid secondary structures</i>. J. Mol. Biol.. <b>436</b>, (2024)</p></td>
+<td><p>Mittal A., Turner D.H., Mathews D.H.: <i>NNDB: An expanded database of nearest neighbor parameters for predicting stability of nucleic acid secondary structures</i>. J. Mol. Biol., <b>436</b>, (2024)</p></td>
 </tr>
 <tr id="ref-SantaLucia98">
 <td>SantaLucia98</td>
-<td><p>SantaLucia J.: <i>A unified view of polymer, dumbbell, and oligonucleotide DNA nearest-neighbor thermodynamics</i>. Proc. Natl. Acad. Sci. USA. <b>95</b>, (1998)</p></td>
+<td><p>SantaLucia J.: <i>A unified view of polymer, dumbbell, and oligonucleotide DNA nearest-neighbor thermodynamics</i>. Proc. Natl. Acad. Sci. USA, <b>95</b>, (1998)</p></td>
 </tr>
 <tr id="ref-Peyret00">
 <td>Peyret00</td>
@@ -388,11 +382,11 @@ Parameters from [<a class="citation" href="#ref-Mathews99" id="cite-Mathews99">M
 </tr>
 <tr id="ref-Bommarito00">
 <td>Bommarito00</td>
-<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic parameters for DNA sequences with dangling ends</i>. Nucleic Acids Res.. <b>28</b>, (2000)</p></td>
+<td><p>Bommarito S., Peyret N., SantaLucia J.: <i>Thermodynamic parameters for DNA sequences with dangling ends</i>. Nucleic Acids Res., <b>28</b>, (2000)</p></td>
 </tr>
 <tr id="ref-Koehler05">
 <td>Koehler05</td>
-<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic properties of DNA sequences: Characteristic values for the human genome</i>. Bioinformatics. <b>21</b>, (2005)</p></td>
+<td><p>Koehler R.T., Peyret N.: <i>Thermodynamic properties of DNA sequences: Characteristic values for the human genome</i>. Bioinformatics, <b>21</b>, (2005)</p></td>
 </tr>
 </tbody>
 </table>

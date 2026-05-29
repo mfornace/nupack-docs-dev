@@ -128,61 +128,54 @@
 <p>Utilities commands analyze or design a single complex ensemble. For each command, the strand ordering of the complex is specified using keyword <code>strands</code> and the <a href="../model/#model-specification">physical model</a> is specified using keyword <code>model</code>.
 For commands that require a structure (e.g., calculation of the equilibrium structure probability using <code>prob</code>), the structure is specified using the keyword <code>structure</code>. By default, NUPACK utilities jobs run in <a href="../advanced/#parallelism">parallel</a>.</p>
 <p>To initialize a model for the following examples, run the following code:</p>
-<div class="highlight"><pre><span></span><code><span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;RNA&#39;</span><span class="p">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">my_model = Model(material='RNA')</code></pre>
 <hr />
 <h2 id="compute-partition-function">Compute partition function<a class="headerlink" href="#compute-partition-function" title="Permanent link">&para;</a></h2>
 <p><code>pfunc</code> calculates the <a href="../definitions/#partition-function">partition function</a> of the complex as well as the free energy of the complex:</p>
-<div class="highlight"><pre><span></span><code><span class="n">partition_function</span> <span class="o">=</span> <span class="n">pfunc</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">partition_function</span><span class="p">)</span>
-<span class="c1"># --&gt; (Decimal(&#39;4525.512868&#39;), -5.187871791642832)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">partition_function = pfunc(strands=['CCC', 'GGG'], model=my_model)
+print(partition_function)
+# --&gt; (Decimal('4525.512868'), -5.187871791642832)</code></pre>
 <hr />
 <h2 id="compute-structure-free-energy">Compute structure free energy<a class="headerlink" href="#compute-structure-free-energy" title="Permanent link">&para;</a></h2>
 <p><code>structure_energy</code> calculates the <a href="../definitions/#structure-free-energy">structure free energy</a> for the specified secondary structure:</p>
-<div class="highlight"><pre><span></span><code><span class="n">dGstruc</span> <span class="o">=</span> <span class="n">structure_energy</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AAAA&#39;</span><span class="p">,</span> <span class="s1">&#39;UUUU&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;((((+))))&#39;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dGstruc</span><span class="p">)</span>
-<span class="c1"># --&gt; -0.18135141907945873</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">dGstruc = structure_energy(strands=['AAAA', 'UUUU'], structure='((((+))))',
+    model=my_model)
+print(dGstruc)
+# --&gt; -0.18135141907945873</code></pre>
 <hr />
 <h2 id="compute-equilibrium-structure-probability">Compute equilibrium structure probability<a class="headerlink" href="#compute-equilibrium-structure-probability" title="Permanent link">&para;</a></h2>
 <p><code>structure_probability</code> calculates the <a href="../definitions/#equilibrium-structure-probability">equilibrium structure probability</a> of a specified secondary structure contained in the complex ensemble:</p>
-<div class="highlight"><pre><span></span><code><span class="n">probability</span> <span class="o">=</span> <span class="n">structure_probability</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(((+)))&#39;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">probability</span><span class="p">)</span>
-<span class="c1"># --&gt; 0.7152766753194949</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">probability = structure_probability(strands=['CCC', 'GGG'], structure='(((+)))',
+    model=my_model)
+print(probability)
+# --&gt; 0.7152766753194949</code></pre>
 <hr />
 <h2 id="compute-boltzmann-sampled-structures">Compute Boltzmann-sampled structures<a class="headerlink" href="#compute-boltzmann-sampled-structures" title="Permanent link">&para;</a></h2>
 <p><code>sample</code> calculates a set of <a href="../definitions/#boltzmann-sampled-structures">Boltzmann-sampled structures</a> from the complex ensemble. The number of structures is specified using the keyword <code>num_sample</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">sampled_structures</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">num_sample</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sampled_structures</span><span class="p">)</span>
-<span class="c1"># --&gt; [Structure(&#39;(((+)))&#39;), Structure(&#39;(((+)))&#39;), Structure(&#39;(((+)))&#39;)]</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">sampled_structures = sample(strands=['CCC', 'GGG'], num_sample=3, model=my_model)
+print(sampled_structures)
+# --&gt; [Structure('(((+)))'), Structure('(((+)))'), Structure('(((+)))')]</code></pre>
 <hr />
 <h2 id="compute-equilibrium-base-pairing-probabilities">Compute equilibrium base-pairing probabilities<a class="headerlink" href="#compute-equilibrium-base-pairing-probabilities" title="Permanent link">&para;</a></h2>
 <p><code>pairs</code> calculates the matrix of <a href="../definitions/#equilibrium-base-pairing-probabilities">equilibrium base-pairing probabilities</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">probability_matrix</span> <span class="o">=</span> <span class="n">pairs</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">probability_matrix</span><span class="p">)</span>
-<span class="c1"># --&gt;</span>
-<span class="c1"># [[0.1002 0.0000 0.0000 0.0007 0.1474 0.7518]</span>
-<span class="c1">#  [0.0000 0.0037 0.0000 0.1474 0.8307 0.0182]</span>
-<span class="c1">#  [0.0000 0.0000 0.1904 0.7910 0.0185 0.0001]</span>
-<span class="c1">#  [0.0007 0.1474 0.7910 0.0609 0.0000 0.0000]</span>
-<span class="c1">#  [0.1474 0.8307 0.0185 0.0000 0.0035 0.0000]</span>
-<span class="c1">#  [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">probability_matrix = pairs(strands=['CCC', 'GGG'], model=my_model)
+print(probability_matrix)
+# --&gt;
+# [[0.1002 0.0000 0.0000 0.0007 0.1474 0.7518]
+#  [0.0000 0.0037 0.0000 0.1474 0.8307 0.0182]
+#  [0.0000 0.0000 0.1904 0.7910 0.0185 0.0001]
+#  [0.0007 0.1474 0.7910 0.0609 0.0000 0.0000]
+#  [0.1474 0.8307 0.0185 0.0000 0.0035 0.0000]
+#  [0.7518 0.0182 0.0001 0.0000 0.0000 0.2299]]</code></pre>
 <p>(Convert the result to a numpy array via <code>probability_matrix.to_array()</code>.)</p>
 <h2 id="compute-mfe-proxy-structures">Compute MFE proxy structure(s)<a class="headerlink" href="#compute-mfe-proxy-structures" title="Permanent link">&para;</a></h2>
 <p><code>mfe</code> calculates <a href="../definitions/#mfe-proxy-structure">MFE proxy structure</a>. The algorithm returns the MFE proxy secondary structure, the free energy of the MFE stacking state, and the free energy of the MFE proxy secondary structure:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mfe_structures</span> <span class="o">=</span> <span class="n">mfe</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Free energy of MFE proxy structure: </span><span class="si">%.2f</span><span class="s1"> kcal/mol&#39;</span> <span class="o">%</span> <span class="n">mfe_structures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MFE proxy structure in dot-parens-plus notation: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mfe_structures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">structure</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MFE proxy structure as structure matrix:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mfe_structures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">matrix</span><span class="p">())</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">mfe_structures = mfe(strands=['CCC', 'GGG'], model=my_model)
+print('Free energy of MFE proxy structure: %.2f kcal/mol' % mfe_structures[0].energy)
+print('MFE proxy structure in dot-parens-plus notation: %s' % mfe_structures[0].structure)
+print('MFE proxy structure as structure matrix:\n%s' % mfe_structures[0].structure.matrix())</code></pre>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code>Free energy of MFE proxy structure: -4.98 kcal/mol
+<pre class="highlight"><code>Free energy of MFE proxy structure: -4.98 kcal/mol
 MFE proxy structure in dot-parens-plus notation: (((+)))
 MFE proxy structure as structure matrix:
 [[0 0 0 0 0 1]
@@ -190,71 +183,63 @@ MFE proxy structure as structure matrix:
  [0 0 0 1 0 0]
  [0 0 1 0 0 0]
  [0 1 0 0 0 0]
- [1 0 0 0 0 0]]
-</code></pre></div>
+ [1 0 0 0 0 0]]</code></pre>
 <p>If there is more than one MFE stacking state, the algorithm returns a list of the corresponding MFE proxy secondary structures, each with the free energy of the MFE proxy secondary structure and the (same) free energy of the MFE stacking state.</p>
 <hr />
 <h2 id="compute-suboptimal-proxy-structures">Compute suboptimal proxy structures<a class="headerlink" href="#compute-suboptimal-proxy-structures" title="Permanent link">&para;</a></h2>
 <p><code>subopt</code> calculates the set of <a href="../definitions/#suboptimal-proxy-structures">suboptimal proxy structures</a> with a stacking state within a specified free energy gap of the MFE stacking state. The (non-negative) free energy gap is specified with keyword <code>energy_gap</code> in kcal/mol. The algorithm returns a list of suboptimal proxy secondary strutures, each with the free energy of the suboptimal proxy secondary structure and with the free energy of its lowest-energy stacking state that falls within the energy gap:</p>
-<div class="highlight"><pre><span></span><code><span class="n">subopt_structures</span> <span class="o">=</span> <span class="n">subopt</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">energy_gap</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">subopt_structures</span><span class="p">)</span>
-<span class="c1"># --&gt; [StructureEnergy(Structure(&#39;(((+)))&#39;), energy=-4.981351375579834, stack_energy=-4.981351375579834),</span>
-<span class="c1">#      StructureEnergy(Structure(&#39;((.+)).&#39;), energy=-4.000725746154785, stack_energy=-3.781351089477539)]</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">subopt_structures = subopt(strands=['CCC', 'GGG'], energy_gap=1.5, model=my_model)
+print(subopt_structures)
+# --&gt; [StructureEnergy(Structure('(((+)))'), energy=-4.981351375579834, stack_energy=-4.981351375579834),
+#      StructureEnergy(Structure('((.+)).'), energy=-4.000725746154785, stack_energy=-3.781351089477539)]</code></pre>
 <hr />
 <h2 id="compute-complex-ensemble-size">Compute complex ensemble size<a class="headerlink" href="#compute-complex-ensemble-size" title="Permanent link">&para;</a></h2>
 <p><code>ensemble_size</code> calculates the <a href="../definitions/#complex-ensemble-size">complex ensemble size</a> in terms of either number of secondary structures or number of stacking states. Specify a <a href="../model/#model-specification">physical model</a> with <code>nostacking</code> to obtain the number of secondary structures:</p>
-<div class="highlight"><pre><span></span><code><span class="n">num_struc</span> <span class="o">=</span> <span class="n">ensemble_size</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;RNA&#39;</span><span class="p">,</span> <span class="n">ensemble</span><span class="o">=</span><span class="s1">&#39;nostacking&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">num_struc</span><span class="p">)</span>
-<span class="c1"># --&gt; 18</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">num_struc = ensemble_size(strands=['CCC', 'GGG'],
+    model=Model(material='RNA', ensemble='nostacking'))
+print(num_struc)
+# --&gt; 18</code></pre>
 <p>Specify a physical model with <code>stacking</code> to obtain the number of stacking states:</p>
-<div class="highlight"><pre><span></span><code><span class="n">num_stack</span> <span class="o">=</span> <span class="n">ensemble_size</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;RNA&#39;</span><span class="p">,</span> <span class="n">ensemble</span><span class="o">=</span><span class="s1">&#39;stacking&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">num_stack</span><span class="p">)</span>
-<span class="c1"># --&gt; 90</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">num_stack = ensemble_size(strands=['CCC', 'GGG'],
+    model=Model(material='RNA', ensemble='stacking'))
+print(num_stack)
+# --&gt; 90</code></pre>
 <hr />
 <h2 id="design-a-sequence">Design a sequence<a class="headerlink" href="#design-a-sequence" title="Permanent link">&para;</a></h2>
 <p><code>des</code> performs complex design to generate a sequence intended to adopt a target secondary structure at equilibrium within the ensemble of the complex. The strand ordering of the complex can be specified using IUPAC <a href="../definitions/#degenerate-nucleotide-codes">degenerate nucleotide codes</a> to incorporate any sequence constraints (the strand ordering can be omitted if there are no sequence constraints). The target structure is specified using keyword <code>structure</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># design a sequence without sequence constraints</span>
-<span class="n">designed_sequence1</span> <span class="o">=</span> <span class="n">des</span><span class="p">(</span><span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(((+)))&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">designed_sequence1</span><span class="p">)</span>
-<span class="c1"># --&gt; [&#39;GGC&#39;, &#39;GCC&#39;]</span>
+<pre class="highlight"><code class="language-python"># design a sequence without sequence constraints
+designed_sequence1 = des(structure='(((+)))', model=my_model)
+print(designed_sequence1)
+# --&gt; ['GGC', 'GCC']
 
-<span class="c1"># alternative specification to design a sequence without sequence constraints</span>
-<span class="n">designed_sequence1</span> <span class="o">=</span> <span class="n">des</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NNN&#39;</span><span class="p">,</span><span class="s1">&#39;NNN&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(((+)))&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">designed_sequence1</span><span class="p">)</span>
-<span class="c1"># --&gt; [&#39;GGC&#39;, &#39;GCC&#39;]</span>
+# alternative specification to design a sequence without sequence constraints
+designed_sequence1 = des(strands=['NNN','NNN'], structure='(((+)))', model=my_model)
+print(designed_sequence1)
+# --&gt; ['GGC', 'GCC']
 
-<span class="c1"># design a sequence with sequence constraints</span>
-<span class="n">designed_sequence2</span> <span class="o">=</span> <span class="n">des</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;HHH&#39;</span><span class="p">,</span><span class="s1">&#39;BBW&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(((+)))&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">designed_sequence2</span><span class="p">)</span>
-<span class="c1"># --&gt; [&#39;ACC&#39;, &#39;GGU&#39;]</span>
-</code></pre></div>
+# design a sequence with sequence constraints
+designed_sequence2 = des(strands=['HHH','BBW'], structure='(((+)))', model=my_model)
+print(designed_sequence2)
+# --&gt; ['ACC', 'GGU']</code></pre>
 <hr />
 <h2 id="compute-complex-ensemble-defect">Compute complex ensemble defect<a class="headerlink" href="#compute-complex-ensemble-defect" title="Permanent link">&para;</a></h2>
 <p><code>defect</code> evaluates the normalized <a href="../definitions/#complex-ensemble-defect">complex ensemble defect</a> with respect to the structure specified using keyword <code>structure</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">ensemble_defect</span> <span class="o">=</span> <span class="n">defect</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CCC&#39;</span><span class="p">,</span> <span class="s1">&#39;GGG&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;(((+)))&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ensemble_defect</span><span class="p">)</span>
-<span class="c1"># --&gt; 0.20883411169052118</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">ensemble_defect = defect(strands=['CCC', 'GGG'], structure='(((+)))', model=my_model)
+print(ensemble_defect)
+# --&gt; 0.20883411169052118</code></pre>
 <hr />
 <h2 id="represent-a-structure">Represent a structure<a class="headerlink" href="#represent-a-structure" title="Permanent link">&para;</a></h2>
 <p>A <a href="../definitions/#secondary-structure">secondary structure</a> can be defined using any of three notations (keyword <code>Structure</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="n">s1</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="s1">&#39;((((((((((((+..........))))))))))))&#39;</span><span class="p">)</span> <span class="c1"># dot-parens-plus notation</span>
-<span class="n">s2</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="s1">&#39;(12+.10)12&#39;</span><span class="p">)</span> <span class="c1"># run-length-encoded dot-parens-plus notation</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="s1">&#39;D12 (+ U10)&#39;</span><span class="p">)</span> <span class="c1"># DU+ notation</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">s1 = Structure('((((((((((((+..........))))))))))))') # dot-parens-plus notation
+s2 = Structure('(12+.10)12') # run-length-encoded dot-parens-plus notation
+s3 = Structure('D12 (+ U10)') # DU+ notation</code></pre>
 <p>Any object or command that accepts a structure as an argument (e.g, <code>TargetComplex</code> in Design or <code>structure_probability</code> in Utilities) will accept either a structure defined in one of the above three notations, or a previously defined <code>Structure</code> object:</p>
-<div class="highlight"><pre><span></span><code><span class="n">dGstruc</span> <span class="o">=</span> <span class="n">structure_energy</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AAAA&#39;</span><span class="p">,</span> <span class="s1">&#39;TTTT&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="s1">&#39;((((+))))&#39;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure='((((+))))',
+    model=my_model)
 
-<span class="n">my_struc</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="s1">&#39;((((+))))&#39;</span><span class="p">)</span>
-<span class="n">dGstruc</span> <span class="o">=</span> <span class="n">structure_energy</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AAAA&#39;</span><span class="p">,</span> <span class="s1">&#39;TTTT&#39;</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="n">my_struc</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">my_model</span><span class="p">)</span>
-</code></pre></div>
+my_struc = Structure('((((+))))')
+dGstruc = structure_energy(strands=['AAAA', 'TTTT'], structure=my_struc,
+    model=my_model)</code></pre>
 <p><code>Structure</code> supports the following methods to assist with structure representation:</p>
 <ul>
 <li><code>pairlist()</code>: A pair list contains a list <span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> of zero-based indices such that <span class="arithmatex"><span class="MathJax_Preview">S_i = j</span><script type="math/tex">S_i = j</script></span> if bases <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> and <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> are paired, and <span class="arithmatex"><span class="MathJax_Preview">S_i = i</span><script type="math/tex">S_i = i</script></span> if base <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> is unpaired.</li>
@@ -264,33 +249,30 @@ MFE proxy structure as structure matrix:
 <li><code>rle_dotparensplus()</code>: Representation of the structure in run-length-encoded dot-parens-plus notation.</li>
 </ul>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">s4</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="s1">&#39;(((+))).&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">s4 = Structure('(((+))).')
 
-<span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="o">.</span><span class="n">pairlist</span><span class="p">())</span>          <span class="c1"># --&gt; [5 4 3 2 1 0 6]</span>
+print(s4.pairlist())          # --&gt; [5 4 3 2 1 0 6]
 
-<span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="o">.</span><span class="n">matrix</span><span class="p">())</span>            <span class="c1"># --&gt; [[0 0 0 0 0 1 0]</span>
-                              <span class="c1">#      [0 0 0 0 1 0 0]</span>
-                              <span class="c1">#      [0 0 0 1 0 0 0]</span>
-                              <span class="c1">#      [0 0 1 0 0 0 0]</span>
-                              <span class="c1">#      [0 1 0 0 0 0 0]</span>
-                              <span class="c1">#      [1 0 0 0 0 0 0]</span>
-                              <span class="c1">#      [0 0 0 0 0 0 1]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="o">.</span><span class="n">nicks</span><span class="p">())</span>             <span class="c1"># --&gt; [3 7]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="o">.</span><span class="n">dotparensplus</span><span class="p">())</span>     <span class="c1"># --&gt; (((+))).</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="o">.</span><span class="n">rle_dotparensplus</span><span class="p">())</span> <span class="c1"># --&gt; (3+)3.</span>
-</code></pre></div>
+print(s4.matrix())            # --&gt; [[0 0 0 0 0 1 0]
+                              #      [0 0 0 0 1 0 0]
+                              #      [0 0 0 1 0 0 0]
+                              #      [0 0 1 0 0 0 0]
+                              #      [0 1 0 0 0 0 0]
+                              #      [1 0 0 0 0 0 0]
+                              #      [0 0 0 0 0 0 1]]
+print(s4.nicks())             # --&gt; [3 7]
+print(s4.dotparensplus())     # --&gt; (((+))).
+print(s4.rle_dotparensplus()) # --&gt; (3+)3.</code></pre>
 <h2 id="compute-sequence-distance">Compute sequence distance<a class="headerlink" href="#compute-sequence-distance" title="Permanent link">&para;</a></h2>
 <p><code>seq_distance</code> calculates the <a href="../definitions/#secondary-structure">sequence distance</a> for two sequences that have the same number of nucleotides:</p>
-<div class="highlight"><pre><span></span><code><span class="n">seq_distance</span><span class="p">(</span><span class="s1">&#39;ACGUUUU+ACCC&#39;</span><span class="p">,</span><span class="s1">&#39;ACGUUUU+AGGG&#39;</span><span class="p">)</span> <span class="c1"># --&gt; 3</span>
+<pre class="highlight"><code class="language-python">seq_distance('ACGUUUU+ACCC','ACGUUUU+AGGG') # --&gt; 3
 
-<span class="n">seq_distance</span><span class="p">(</span><span class="s1">&#39;G5&#39;</span><span class="p">,</span> <span class="s1">&#39;G3C2&#39;</span><span class="p">)</span> <span class="c1"># --&gt; 2</span>
-</code></pre></div>
+seq_distance('G5', 'G3C2') # --&gt; 2</code></pre>
 <h2 id="compute-structure-distance">Compute structure distance<a class="headerlink" href="#compute-structure-distance" title="Permanent link">&para;</a></h2>
 <p><code>struc_distance</code> calculates the <a href="../definitions/#secondary-structure">structure distance</a> for two structures that have the same number of nucleotides:</p>
-<div class="highlight"><pre><span></span><code><span class="n">struc_distance</span><span class="p">(</span><span class="s1">&#39;((((((((+..........))))))))&#39;</span><span class="p">,</span> <span class="s1">&#39;(((((((.+...........)))))))&#39;</span><span class="p">)</span> <span class="c1"># --&gt; 2</span>
+<pre class="highlight"><code class="language-python">struc_distance('((((((((+..........))))))))', '(((((((.+...........)))))))') # --&gt; 2
 
-<span class="n">struc_distance</span><span class="p">(</span><span class="s1">&#39;.15&#39;</span><span class="p">,</span> <span class="s1">&#39;(5.5)5&#39;</span><span class="p">)</span> <span class="c1"># --&gt; 10</span>
-</code></pre></div>
+struc_distance('.15', '(5.5)5') # --&gt; 10</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that <a href="../definitions/#sequence">sequence distance</a> and <a href="../definitions/#secondary-structure">structure distance</a> are defined independent of whether the nick locations match between two sequences or two structures. However, <code>seq_distance</code> and <code>struc_distance</code> will return a warning if the nick locations do not match.</p>

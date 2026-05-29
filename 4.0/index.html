@@ -111,6 +111,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>NEW VERSION!</p>
 <h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">&para;</a></h2>
 <p>NUPACK is a growing software suite for the analysis and design of nucleic acid structures, devices, and systems serving the needs of researchers in the fields of nucleic acid nanotechnology, molecular programming, synthetic biology, and across the life sciences more broadly. Much of this software can be conveniently run using the NUPACK web application at <a href="http://www.nupack.org">nupack.org</a> [<a class="citation" href="#ref-Zadeh11a" id="cite-Zadeh11a">Zadeh11a</a>]. This User Guide provides documentation for the NUPACK Python module.</p>
 <p>When finishing a project that has benefited from NUPACK calculations, please remember to <a href="./#citation">cite</a> the NUPACK web application and algorithms appropriately; citations are an important component in helping to secure funding for NUPACK development and maintenance. Please email us with questions, comments, feature requests, and bug reports at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
@@ -144,63 +145,62 @@
 <div class="admonition examples">
 <p class="admonition-title">Examples</p>
 <p>Load Python NUPACK module</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nupack</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-python">from nupack import *</code></pre>
 <p><a href="model/">Specify a physical model</a>
-<div class="highlight"><pre><span></span><code><span class="n">model1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">material</span><span class="o">=</span><span class="s1">&#39;rna&#39;</span><span class="p">,</span> <span class="n">celsius</span><span class="o">=</span><span class="mi">37</span><span class="p">)</span>
-</code></pre></div></p>
+<pre class="highlight"><code class="language-python">model1 = Model(material='rna', celsius=37)</code></pre></p>
 <p><a href="analysis/">Analyze a test tube</a></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># specify strands</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;CTGATCGAT&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">Strand</span><span class="p">(</span><span class="s1">&#39;GATCGTAGTC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python"># specify strands
+A = Strand('CTGATCGAT', name='Strand A')
+B = Strand('GATCGTAGTC', name='Strand B')
 
-<span class="c1"># specify tube</span>
-<span class="n">t1</span> <span class="o">=</span> <span class="n">Tube</span><span class="p">(</span><span class="n">strands</span><span class="o">=</span><span class="p">{</span><span class="n">A</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span>
-    <span class="n">complexes</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tube 1&#39;</span><span class="p">)</span> <span class="c1"># all complexes of up to 2 strands</span>
+# specify tube
+t1 = Tube(strands={A: 1e-8, B: 1e-9},
+    complexes=SetSpec(max_size=2), name='Tube 1') # all complexes of up to 2 strands
 
-<span class="c1"># run tube analysis job</span>
-<span class="n">my_results</span> <span class="o">=</span> <span class="n">tube_analysis</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">t1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
-</code></pre></div>
+# run tube analysis job
+my_results = tube_analysis(tubes=[t1], model=model1)</code></pre>
 <p><a href="design/">Design a test tube</a></p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain a&#39;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;N10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain b&#39;</span><span class="p">)</span> <span class="c1"># equivalent sequence specification</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Domain</span><span class="p">(</span><span class="s1">&#39;R5N5&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Domain c&#39;</span><span class="p">)</span>
+<pre class="highlight"><code class="language-python">a = Domain('A4', name='Domain a')
+b = Domain('N10', name='Domain b') # equivalent sequence specification
+c = Domain('R5N5', name='Domain c')
 
-<span class="c1"># specify target strands</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand A&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="o">~</span><span class="n">b</span><span class="p">,</span> <span class="o">~</span><span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand B&#39;</span><span class="p">)</span>  <span class="c1"># ~e denotes the reverse complement of e</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">TargetStrand</span><span class="p">([</span><span class="n">c</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Strand C&#39;</span><span class="p">)</span>
+# specify target strands
+A = TargetStrand([a, a, b], name='Strand A')
+B = TargetStrand([~b, ~c], name='Strand B')  # ~e denotes the reverse complement of e
+C = TargetStrand([c], name='Strand C')
 
-<span class="c1"># specify target complexes</span>
-<span class="n">C1</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.8(10+)10(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Complex C1&#39;</span><span class="p">)</span>
-<span class="n">C2</span> <span class="o">=</span> <span class="n">TargetComplex</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">],</span> <span class="s1">&#39;.10(10+)10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Complex C2&#39;</span><span class="p">)</span>
+# specify target complexes
+C1 = TargetComplex([A, B, C], '.8(10+)10(10+)10', name='Complex C1')
+C2 = TargetComplex([B, C], '.10(10+)10', name='Complex C2')
 
-<span class="c1"># specify target tube</span>
-<span class="n">tt1</span> <span class="o">=</span> <span class="n">TargetTube</span><span class="p">(</span><span class="n">on_targets</span><span class="o">=</span><span class="p">{</span><span class="n">C1</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="n">C2</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">},</span>
-    <span class="n">off_targets</span><span class="o">=</span><span class="n">SetSpec</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>  <span class="c1"># all off-target complexes of up to 3 strands</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;TargetTube 1&#39;</span><span class="p">)</span>
+# specify target tube
+tt1 = TargetTube(on_targets={C1: 1e-8, C2: 1e-8},
+    off_targets=SetSpec(max_size=3),  # all off-target complexes of up to 3 strands
+    name='TargetTube 1')
 
-<span class="c1"># specify tube design problem</span>
-<span class="n">my_des</span> <span class="o">=</span> <span class="n">tube_design</span><span class="p">(</span><span class="n">tubes</span><span class="o">=</span><span class="p">[</span><span class="n">tt1</span><span class="p">],</span>
-    <span class="n">hard_constraints</span><span class="o">=</span><span class="p">[],</span> <span class="n">soft_constraints</span><span class="o">=</span><span class="p">[],</span>
-    <span class="n">defect_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model1</span><span class="p">)</span>
+# specify tube design problem
+my_des = tube_design(tubes=[tt1],
+    hard_constraints=[], soft_constraints=[],
+    defect_weights=None, options=None, model=model1)
 
-<span class="c1"># run tube design job</span>
-<span class="n">des_results</span> <span class="o">=</span> <span class="n">my_des</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># run 3 independent design trials</span>
-</code></pre></div>
+# run tube design job
+des_results = my_des.run(trials=3) # run 3 independent design trials</code></pre>
 </div>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p><strong>NUPACK Software License Agreement for Non-Commercial Academic Use</strong>  <br />
-Copyright &copy; 2003–2022. California Institute of Technology. All rights reserved.</p>
+<p><strong>NUPACK Software License Agreement for Non-Commercial Academic Use</strong></p>
+<p>Copyright &copy; 2003-2026. California Institute of Technology. All rights reserved.</p>
 <p>Use of the NUPACK Python module and/or source code (“Software”) in source form and/or binary form, with or without modification, is permitted for non-commercial academic purposes only, subject to the conditions and disclaimer stated below.</p>
-<p><strong>Conditions</strong><br />
-1. Redistribution of the Software in source form and/or binary form is not permitted.<br />
-2. Web applications that use the Software in source form and/or binary form are not permitted.<br />
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote derivative works without specific prior written permission.  </p>
-<p><strong>Disclaimer</strong>  <br />
-<em>The Software is provided by the copyright holders and contributors &ldquo;as is&rdquo; and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.  In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.</em></p>
-<p><strong>Contact</strong><br />
-For any questions about this Software License Agreement please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#105;&#110;&#102;&#111;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a>.</p>
+<p><strong>Conditions</strong></p>
+<ol>
+<li>Redistribution of the Software or derivative works in source form and/or binary form is not permitted. </li>
+<li>Web applications and/or graphical user interfaces that use the Software or derivative works in source form and/or binary form are not permitted.</li>
+<li>Licensee is prohibited from using the Software to feed, train, validate, or prompt an artificial intelligence, machine learning, or automated system to create new code, translate the code into a different programming language, refactor the code, or produce derivative work. </li>
+<li>Licensee maintains an active paid NUPACK subscription; License terminates and Software and all derivative works must be deleted if an active paid NUPACK subscription is not maintained. </li>
+</ol>
+<p><strong>Disclaimer</strong></p>
+<p><em>THE SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &ldquo;AS IS&rdquo; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</em></p>
+<p><strong>Contact</strong></p>
+<p>For any questions about this Software License Agreement please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;">&#105;&#110;&#102;&#111;&#64;&#110;&#117;&#112;&#97;&#99;&#107;&#46;&#111;&#114;&#103;</a></p>
 <hr>
 
 <h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
@@ -374,7 +374,8 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
 <li>4.0.1.10: Fix issue when specifying mixtures of sequences containing U and T and provide binaries with more conservative instruction sets for Linux</li>
 <li>4.0.1.11: Fix output printing for sequences containing U and T to match user inputs when possible</li>
 <li>4.0.1.12: Fix concentration solver convergence issue with extremely unstable complexes and issue a warning for clashing complex names</li>
-<li>4.0.2.0: updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)</li>
+<li>4.0.2.0: Updated GT internal mismatch values, internal asymmetry values, and terminal mismatch values in parameter set dna04.2 (DNA default)</li>
+<li>4.0.2.1: Updated License</li>
 </ul>
 </li>
 </ul>
@@ -385,27 +386,27 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
 <tbody>
 <tr id="ref-Zadeh11a">
 <td>Zadeh11a</td>
-<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid systems</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+<td><p>Zadeh J.N., Steenberg C.D., Bois J.S., Wolfe B.R., Pierce M.B., Khan A.R., Dirks R.M., Pierce N.A.: <i>NUPACK: Analysis and design of nucleic acid systems</i>. J. Comput. Chem., <b>32</b>, (2011)</p></td>
 </tr>
 <tr id="ref-Wolfe17">
 <td>Wolfe17</td>
-<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained multistate sequence design for nucleic acid reaction pathway engineering</i>. J Am. Chem. Soc.. <b>139</b>, (2017)</p></td>
+<td><p>Wolfe B.R., Porubsky N.J., Zadeh J.N., Dirks R.M., Pierce N.A.: <i>Constrained multistate sequence design for nucleic acid reaction pathway engineering</i>. J Am. Chem. Soc., <b>139</b>, (2017)</p></td>
 </tr>
 <tr id="ref-Dirks07">
 <td>Dirks07</td>
-<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic analysis of interacting nucleic acid strands</i>. SIAM Rev.. <b>49</b>, (2007)</p></td>
+<td><p>Dirks R.M., Bois J.S., Schaeffer J.M., Winfree E., Pierce N.A.: <i>Thermodynamic analysis of interacting nucleic acid strands</i>. SIAM Rev., <b>49</b>, (2007)</p></td>
 </tr>
 <tr id="ref-Zadeh11b">
 <td>Zadeh11b</td>
-<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design via efficient ensemble defect optimization</i>. J. Comput. Chem.. <b>32</b>, (2011)</p></td>
+<td><p>Zadeh J.N., Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design via efficient ensemble defect optimization</i>. J. Comput. Chem., <b>32</b>, (2011)</p></td>
 </tr>
 <tr id="ref-Wolfe15">
 <td>Wolfe15</td>
-<td><p>Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design for a test tube of interacting nucleic acid strands</i>. ACS Synth. Biol.. <b>4</b>, (2015)</p></td>
+<td><p>Wolfe B.R., Pierce N.A.: <i>Nucleic acid sequence design for a test tube of interacting nucleic acid strands</i>. ACS Synth. Biol., <b>4</b>, (2015)</p></td>
 </tr>
 <tr id="ref-Fornace20">
 <td>Fornace20</td>
-<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol.. (2020)</p></td>
+<td><p>Fornace M.E., Porubsky N.J., Pierce N.A.: <i>A unified dynamic programming framework for the analysis of interacting nucleic acid strands: Enhanced models, scalability, and speed</i>. ACS Synth. Biol., (2020)</p></td>
 </tr>
 </tbody>
 </table>
@@ -464,5 +465,5 @@ by the National Institutes of Health (P50 HG004071), by the Ralph M. Parsons Fou
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-08-19 00:03:35.992351+00:00
+Build Date UTC : 2026-05-29 18:23:41.384423+00:00
 -->
